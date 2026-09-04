@@ -10,6 +10,7 @@
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
+  <!-- Dynamic Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
 
   <style>
@@ -32,7 +33,7 @@
     header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); font-weight: bold; font-size: 15px; }
     
     /* 1-CLICK DIRECT INSTALL BANNER */
-    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 14px; display: none; }
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 14px; }
     .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
     .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
     .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
@@ -79,6 +80,7 @@
 
 <div class="wrap">
 
+  <!-- 1. PASSWORD SCREEN -->
   <div id="lockScreen">
     <div class="card-lock">
       <div class="lock-icon">🔐</div>
@@ -88,10 +90,11 @@
       <input type="password" id="passCode" class="pass-input" placeholder="••••" maxlength="6">
 
       <button class="btn-unlock" onclick="checkMasterPassword()">ॲप अनलॉक करा</button>
-      <div id="passErr" class="err-msg">चुकीचा पासवर्ड! कृपया योग्य पासवर्ड (2026) टाका.</div>
+      <div id="passErr" class="err-msg">चुकीचा पासवर्ड! योग्य पासवर्ड (2026) टाका.</div>
     </div>
   </div>
 
+  <!-- 2. MAIN TRACKER -->
   <div id="mainApp" style="display: none;">
     
     <header>
@@ -99,14 +102,16 @@
       <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 12px;">पशुपालक ॲप</span>
     </header>
 
+    <!-- 1-CLICK DIRECT INSTALL BANNER -->
     <div class="install-banner" id="installBanner">
-      <div class="install-title">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह करा</div>
-      <div class="install-sub">वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी:</div>
+      <div class="install-title">📲 हे ॲप मोबाईल स्क्रीनवर जोडा (Add to Home Screen)</div>
+      <div class="install-sub">वारंवार लिंक न शोधता १-क्लिकवर ॲप उघडण्यासाठी खाली दाबा:</div>
       <button class="btn-install" id="installBtn" onclick="installToHomeScreen()">
-        <span>⬇️ ॲप डाऊनलोड / Install करा</span>
+        <span>⬇️ ॲप डाऊनलोड / Add करा</span>
       </button>
     </div>
 
+    <!-- ENTRY FORM -->
     <div class="card-form">
       <div class="animal-btns">
         <div id="tabCow" class="an-btn active" onclick="setAnimal('cow')">
@@ -136,6 +141,7 @@
       <button class="btn-save" onclick="saveNewEntry()">नोंद जोडा आणि ट्रॅक करा</button>
     </div>
 
+    <!-- SAVED RECORDS -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
       <span style="font-size:13px; font-weight:bold; color:#334155;">📋 जतन केलेले रेकॉर्ड्स</span>
       <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
@@ -147,6 +153,7 @@
 
 </div>
 
+<!-- Reset Modal for Heat -->
 <div id="heatModal">
   <div class="modal-box">
     <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;">🔴 पशु पुन्हा माजावर आले?</h3>
@@ -160,7 +167,7 @@
 </div>
 
 <script>
-  // 1. DYNAMIC ZERO-FILE MANIFEST
+  // 1. MANIFEST
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
     short_name: "पशु ट्रॅकर",
@@ -177,37 +184,22 @@
   const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
   document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-  // 2. INLINE SERVICE WORKER
+  // 2. SERVICE WORKER
   if ('serviceWorker' in navigator) {
     const swCode = "self.addEventListener('fetch', function(e) {});";
     const swBlob = new Blob([swCode], { type: 'application/javascript' });
     navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
   }
 
-  // 3. तपासा की ॲप आधीच इन्स्टॉल / होम स्क्रीनवरून उघडले आहे का?
   function isRunningStandalone() {
     return (window.matchMedia('(display-mode: standalone)').matches) || 
-           (window.navigator.standalone === true) || 
-           (localStorage.getItem("pwa_already_installed") === "true");
+           (window.navigator.standalone === true);
   }
 
   var pwaPrompt = null;
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     pwaPrompt = e;
-    // जर ॲप आधीच इन्स्टॉल नसेल तरच बॅनर दाखवा
-    if (!isRunningStandalone()) {
-      var b = document.getElementById('installBanner');
-      if (b) b.style.display = 'block';
-    }
-  });
-
-  window.addEventListener('appinstalled', function() {
-    // ॲप डाऊनलोड झाल्यावर कायमचे बंद करा
-    localStorage.setItem("pwa_already_installed", "true");
-    var b = document.getElementById('installBanner');
-    if (b) b.style.display = 'none';
-    pwaPrompt = null;
   });
 
   function installToHomeScreen() {
@@ -215,17 +207,16 @@
       pwaPrompt.prompt();
       pwaPrompt.userChoice.then(function(choice) {
         if (choice.outcome === 'accepted') {
-          localStorage.setItem("pwa_already_installed", "true");
           document.getElementById('installBanner').style.display = 'none';
         }
         pwaPrompt = null;
       });
     } else {
-      alert("मोबाईल स्क्रीनवर ॲप सेव्ह करण्यासाठी:\n१. ब्राऊझरच्या वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install App' किंवा 'Add to Home screen' निवडा.");
+      alert("ॲप होम स्क्रीनवर जोडण्यासाठी:\n१. क्रोमच्या वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install app' किंवा 'Add to Home screen' वर क्लिक करा.");
     }
   }
 
-  // 4. AUTO-LOGIN CHECK
+  // 3. AUTO-LOGIN CHECK
   if (localStorage.getItem("pashu_final_unlocked_state") === "true") {
     showDashboard();
   }
@@ -246,15 +237,13 @@
     document.getElementById("lockScreen").style.display = "none";
     document.getElementById("mainApp").style.display = "block";
     
-    // जर ॲप होम स्क्रीनवरून उघडले असेल तर डाऊनलोड बॅनर कधीच दिसणार नाही
+    // जर ॲप होम स्क्रीनवरून उघडले असेल तर डाऊनलोड बॅनर लपवा
     if (isRunningStandalone()) {
-      var b = document.getElementById('installBanner');
-      if (b) b.style.display = 'none';
-    } else if (pwaPrompt) {
+      document.getElementById('installBanner').style.display = 'none';
+    } else {
       document.getElementById('installBanner').style.display = 'block';
     }
 
-    // आजची तारीख आपोआप सेट करा
     var today = new Date();
     var y = today.getFullYear();
     var m = String(today.getMonth() + 1).padStart(2, '0');
@@ -264,7 +253,7 @@
     renderList();
   }
 
-  // 5. ANIMAL TYPE SELECT
+  // 4. ANIMAL TYPE SELECT
   var curAnimal = 'cow';
   var activeResetId = null;
 
@@ -275,7 +264,7 @@
     document.getElementById("tabGoat").className = (type === 'goat') ? 'an-btn active' : 'an-btn';
   }
 
-  // 6. LOCAL STORAGE & DATA HANDLING
+  // 5. LOCAL STORAGE & DATA HANDLING
   function getDB() {
     return JSON.parse(localStorage.getItem("pashu_perfect_db_v1") || "[]");
   }
@@ -344,7 +333,7 @@
     return diff >= 0 ? diff : 0;
   }
 
-  // 7. RENDER LIST
+  // 6. RENDER LIST
   function renderList() {
     var container = document.getElementById("recordsList");
     var db = getDB();
