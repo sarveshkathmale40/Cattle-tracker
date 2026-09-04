@@ -13,56 +13,67 @@
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+    body { background: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
     
-    .box { background: white; padding: 26px 20px; border-radius: 20px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-    .app-icon { font-size: 50px; margin-bottom: 10px; background: #dcfce7; width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto; box-shadow: 0 4px 12px rgba(22,163,74,0.2); }
+    .box { background: white; padding: 28px 22px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .app-icon { font-size: 55px; margin-bottom: 12px; background: #dcfce7; width: 90px; height: 90px; line-height: 90px; border-radius: 50%; margin-left: auto; margin-right: auto; box-shadow: 0 6px 15px rgba(22,163,74,0.2); }
 
-    h2 { color: #166534; font-size: 20px; margin-bottom: 6px; font-weight: bold; }
-    p { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
+    h2 { color: #166534; font-size: 22px; margin-bottom: 8px; font-weight: bold; }
+    p { font-size: 14px; color: #475569; margin-bottom: 18px; line-height: 1.5; font-weight: 500; }
 
-    input { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; background: #fff; margin-bottom: 12px; }
-    input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
+    input, select { width: 100%; padding: 14px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 16px; outline: none; background: #fff; margin-bottom: 14px; font-weight: bold; color: #0f172a; }
+    input:focus, select:focus { border-color: #16a34a; box-shadow: 0 0 0 4px rgba(22,163,74,0.12); }
     
-    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.25); }
+    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(22,163,74,0.3); }
     
-    .trust-badge { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 8px; border-radius: 8px; font-size: 11px; font-weight: bold; margin-bottom: 14px; }
-    .guide-box { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px; border-radius: 8px; font-size: 11px; margin-top: 12px; text-align: left; line-height: 1.4; }
+    .trust-badge { background: #f0fdf4; border: 1.5px solid #bbf7d0; color: #166534; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-bottom: 16px; }
+    .guide-box { background: #eff6ff; border: 1.5px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 10px; font-size: 12px; margin-top: 14px; text-align: left; line-height: 1.5; font-weight: 500; }
   </style>
 </head>
 <body>
 
-  <!-- 🔒 टप्पा १: लॉगिन स्क्रीन -->
+  <!-- 🔒 टप्पा १: भाषा निवड आणि लॉगिन स्क्रीन -->
   <div id="lockScreen" class="box">
     <div class="app-icon">🐄</div>
-    <h2>पशु ट्रॅकर लॉगिन</h2>
+    <h2 id="lTitle">पशु ट्रॅकर लॉगिन</h2>
     <div class="trust-badge">🔒 MH Farmer's Official Secure App</div>
-    <p>ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:</p>
+    
+    <!-- भाषा निवडा -->
+    <div style="text-align: left; margin-bottom: 4px;">
+      <label style="font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; display: block;" id="langLbl">भाषा निवडा / Select Language:</label>
+      <select id="langSelect" onchange="changeLanguage()">
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <p id="lSub">ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:</p>
     
     <div style="text-align: left;">
-      <input type="tel" id="uPhone" placeholder="मोबाईल नंबर टाका (10 अंकी)" maxlength="10">
+      <input type="tel" id="uPhone" placeholder="मोबाईल नंबर (10 अंकी)" maxlength="10">
       <input type="password" id="uPin" placeholder="पासवर्ड (PIN) टाका">
     </div>
 
-    <button onclick="checkLogin()" class="btn">ॲप उघडा 🔓</button>
-    <p style="font-size: 10px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
+    <button id="loginBtn" onclick="checkLogin()" class="btn">ॲप उघडा 🔓</button>
+    <p style="font-size: 11px; color: #94a3b8; margin-top: 16px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
   </div>
 
   <!-- 📲 टप्पा २: डाऊनलोड / इन्स्टॉल स्क्रीन -->
   <div id="downloadScreen" class="box" style="display: none;">
     <div class="app-icon">📥</div>
-    <h2>होम स्क्रीनवर सेव्ह करा</h2>
+    <h2 id="dTitle">होम स्क्रीनवर सेव्ह करा</h2>
     <div class="trust-badge">✅ MH Farmer's Verified App</div>
-    <p>गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:</p>
+    <p id="dSub">गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:</p>
     
-    <button onclick="installApp()" class="btn" style="background: #2563eb; box-shadow: 0 4px 12px rgba(37,99,235,0.25);">⬇️ ॲप डाऊनलोड / इन्स्टॉल करा</button>
+    <button onclick="installApp()" id="installBtn" class="btn" style="background: #2563eb; box-shadow: 0 6px 15px rgba(37,99,235,0.3);">⬇️ ॲप डाऊनलोड / इन्स्टॉल करा</button>
     
-    <div class="guide-box">
+    <div class="guide-box" id="dGuide">
       <b>📌 महत्त्वाची सूचना:</b><br>
-      बटण दाबल्यानंतर २ सेकंद थांबा. मोबाईलच्या स्क्रीनवर पुढे जे पॉप-अप येईल, त्यावर <b>'Add'</b> किंवा <b>'Install'</b> वर क्लिक करा, म्हणजे ॲप तुमच्या होम स्क्रीनवर येईल!
+      बटण दाबल्यानंतर मोबाईलच्या स्क्रीनवर खाली किंवा वर <b>'Add'</b> किंवा <b>'Install'</b> असे येईल, त्यावर क्लिक करा. त्यानंतर ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर दिसेल!
     </div>
 
-    <p style="font-size: 10px; color: #94a3b8; margin-top: 12px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
+    <p style="font-size: 11px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
   </div>
 
 <script>
@@ -80,12 +91,57 @@
     pPrompt = e;
   });
 
+  // भाषा बदल त्यानुसार संपूर्ण मजकूर सेट करणे
+  function changeLanguage() {
+    var lang = document.getElementById('langSelect').value;
+    localStorage.setItem("pashu_lang", lang);
+
+    if(lang === 'en') {
+      document.getElementById('langLbl').innerText = "Select Language:";
+      document.getElementById('lTitle').innerText = "Pashu Tracker Login";
+      document.getElementById('lSub').innerText = "Enter mobile number and PIN to start:";
+      document.getElementById('uPhone').placeholder = "Mobile Number (10 digits)";
+      document.getElementById('uPin').placeholder = "Enter PIN";
+      document.getElementById('loginBtn').innerText = "Open App 🔓";
+      
+      document.getElementById('dTitle').innerText = "Save to Home Screen";
+      document.getElementById('dSub').innerText = "Click below to install the app directly on your phone:";
+      document.getElementById('installBtn').innerText = "⬇️ Install / Download App";
+      document.getElementById('dGuide').innerHTML = "<b>📌 Important Note:</b><br>After clicking, select <b>'Add'</b> or <b>'Install'</b> on the pop-up to place the app on your home screen!";
+    } else if(lang === 'hi') {
+      document.getElementById('langLbl').innerText = "भाषा चुनें:";
+      document.getElementById('lTitle').innerText = "पशु ट्रैकर लॉगिन";
+      document.getElementById('lSub').innerText = "ऐप शुरू करने के लिए मोबाइल नंबर और पिन दर्ज करें:";
+      document.getElementById('uPhone').placeholder = "मोबाइल नंबर (10 अंक)";
+      document.getElementById('uPin').placeholder = "पासवर्ड (PIN) दर्ज करें";
+      document.getElementById('loginBtn').innerText = "ऐप खोलें 🔓";
+      
+      document.getElementById('dTitle').innerText = "होम स्क्रीन पर सेव करें";
+      document.getElementById('dSub').innerText = "सीधे मोबाइल में ऐप चलाने के लिए नीचे दिए गए बटन पर क्लिक करें:";
+      document.getElementById('installBtn').innerText = "⬇️ ऐप डाउनलोड / इंस्टॉल करें";
+      document.getElementById('dGuide').innerHTML = "<b>📌 महत्वपूर्ण सूचना:</b><br>बटन दबाने के बाद स्क्रीन पर <b>'Add'</b> या <b>'Install'</b> का विकल्प आएगा, उस पर क्लिक करें!";
+    } else {
+      document.getElementById('langLbl').innerText = "भाषा निवडा:";
+      document.getElementById('lTitle').innerText = "पशु ट्रॅकर लॉगिन";
+      document.getElementById('lSub').innerText = "ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:";
+      document.getElementById('uPhone').placeholder = "मोबाईल नंबर (10 अंकी)";
+      document.getElementById('uPin').placeholder = "पासवर्ड (PIN) टाका";
+      document.getElementById('loginBtn').innerText = "ॲप उघडा 🔓";
+      
+      document.getElementById('dTitle').innerText = "होम स्क्रीनवर सेव्ह करा";
+      document.getElementById('dSub').innerText = "गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:";
+      document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड / इन्स्टॉल करा";
+      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर मोबाईलच्या स्क्रीनवर खाली किंवा वर <b>'Add'</b> किंवा <b>'Install'</b> असे येईल, त्यावर क्लिक करा. त्यानंतर ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर दिसेल!";
+    }
+  }
+
   function checkLogin() {
     var phone = document.getElementById("uPhone").value.trim();
     var pin = document.getElementById("uPin").value.trim();
+    var lang = document.getElementById('langSelect').value;
 
     if(phone.length < 10) {
-      alert("कृपया १० अंकी वैध मोबाईल नंबर टाका!");
+      alert(lang === 'en' ? "Please enter a valid 10-digit mobile number!" : (lang === 'hi' ? "कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें!" : "कृपया १० अंकी वैध मोबाईल नंबर टाका!"));
       return;
     }
 
@@ -100,7 +156,7 @@
     if (pin === expectedPin) {
       showDownloadScreen();
     } else {
-      alert("चुकीचा पासवर्ड! कृपया योग्य पिन टाका.");
+      alert(lang === 'en' ? "Incorrect PIN! Please enter correct password." : (lang === 'hi' ? "गलत पासवर्ड! कृपया सही पिन दर्ज करें।" : "चुकीचा पासवर्ड! कृपया योग्य पिन टाका."));
     }
   }
 
@@ -111,20 +167,28 @@
   }
 
   function installApp() {
+    var lang = document.getElementById('langSelect').value;
     if (pPrompt) {
       pPrompt.prompt();
       pPrompt.userChoice.then(function(res) {
         if (res.outcome === 'accepted') {
-          alert("ॲप यशस्वीरित्या होम स्क्रीनवर सेव्ह झाले आहे!");
+          alert(lang === 'en' ? "App successfully saved to home screen!" : (lang === 'hi' ? "ऐप सफलतापूर्वक होम स्क्रीन पर सेव हो गया है!" : "ॲप यशस्वीरित्या होम स्क्रीनवर सेव्ह झाले आहे!"));
         }
         pPrompt = null;
       });
     } else {
-      alert("मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या वरच्या किंवा खालच्या ३ टिंबांवर (⋮) क्लिक करा आणि 'Add to Home screen' किंवा 'Install app' निवडा.");
+      alert(lang === 'en' ? "To save on home screen, tap the 3 dots (⋮) in your browser and select 'Add to Home screen' or 'Install app'." : (lang === 'hi' ? "होम स्क्रीन पर सेव करने के लिए ब्राउज़र के 3 बिंदुओं (⋮) पर क्लिक करें और 'Add to Home screen' चुनें।" : "मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या ३ टिंबांवर (⋮) क्लिक करा आणि 'Add to Home screen' किंवा 'Install app' निवडा."));
     }
   }
 
   window.addEventListener('DOMContentLoaded', (event) => {
+    // आधी निवडलेली भाषा लोड करणे
+    var savedLang = localStorage.getItem("pashu_lang");
+    if (savedLang) {
+      document.getElementById('langSelect').value = savedLang;
+      changeLanguage();
+    }
+
     if (localStorage.getItem("pashu_unlocked") === "true") {
       document.getElementById("lockScreen").style.display = "none";
       document.getElementById("downloadScreen").style.display = "block";
