@@ -32,13 +32,12 @@
 </head>
 <body>
 
-  <!-- 🔒 टप्पा १: भाषा निवड आणि लॉगिन स्क्रीन -->
+  <!-- 🔒 भाषा निवड आणि लॉगिन स्क्रीन -->
   <div id="lockScreen" class="box">
     <div class="app-icon">🐄</div>
     <h2 id="lTitle">पशु ट्रॅकर लॉगिन</h2>
     <div class="trust-badge">🔒 MH Farmer's Official Secure App</div>
     
-    <!-- भाषा निवडा -->
     <div style="text-align: left; margin-bottom: 4px;">
       <label style="font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; display: block;" id="langLbl">भाषा निवडा / Select Language:</label>
       <select id="langSelect" onchange="changeLanguage()">
@@ -59,7 +58,7 @@
     <p style="font-size: 11px; color: #94a3b8; margin-top: 16px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
   </div>
 
-  <!-- 📲 टप्पा २: डाऊनलोड / इन्स्टॉल स्क्रीन -->
+  <!-- 📲 डाऊनलोड / इन्स्टॉल स्क्रीन -->
   <div id="downloadScreen" class="box" style="display: none;">
     <div class="app-icon">📥</div>
     <h2 id="dTitle">होम स्क्रीनवर सेव्ह करा</h2>
@@ -70,7 +69,7 @@
     
     <div class="guide-box" id="dGuide">
       <b>📌 महत्त्वाची सूचना:</b><br>
-      बटण दाबल्यानंतर मोबाईलच्या स्क्रीनवर खाली किंवा वर <b>'Add'</b> किंवा <b>'Install'</b> असे येईल, त्यावर क्लिक करा. त्यानंतर ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर दिसेल!
+      बटण दाबल्यानंतर स्क्रीनवर <b>'Add'</b> किंवा <b>'Install'</b> बटण येईल, त्यावर क्लिक करा म्हणजे ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर येईल!
     </div>
 
     <p style="font-size: 11px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
@@ -91,7 +90,6 @@
     pPrompt = e;
   });
 
-  // भाषा बदल त्यानुसार संपूर्ण मजकूर सेट करणे
   function changeLanguage() {
     var lang = document.getElementById('langSelect').value;
     localStorage.setItem("pashu_lang", lang);
@@ -131,7 +129,7 @@
       document.getElementById('dTitle').innerText = "होम स्क्रीनवर सेव्ह करा";
       document.getElementById('dSub').innerText = "गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:";
       document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड / इन्स्टॉल करा";
-      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर मोबाईलच्या स्क्रीनवर खाली किंवा वर <b>'Add'</b> किंवा <b>'Install'</b> असे येईल, त्यावर क्लिक करा. त्यानंतर ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर दिसेल!";
+      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर स्क्रीनवर <b>'Add'</b> किंवा <b>'Install'</b> बटण येईल, त्यावर क्लिक करा म्हणजे ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर येईल!";
     }
   }
 
@@ -171,9 +169,6 @@
     if (pPrompt) {
       pPrompt.prompt();
       pPrompt.userChoice.then(function(res) {
-        if (res.outcome === 'accepted') {
-          alert(lang === 'en' ? "App successfully saved to home screen!" : (lang === 'hi' ? "ऐप सफलतापूर्वक होम स्क्रीन पर सेव हो गया है!" : "ॲप यशस्वीरित्या होम स्क्रीनवर सेव्ह झाले आहे!"));
-        }
         pPrompt = null;
       });
     } else {
@@ -182,7 +177,6 @@
   }
 
   window.addEventListener('DOMContentLoaded', (event) => {
-    // आधी निवडलेली भाषा लोड करणे
     var savedLang = localStorage.getItem("pashu_lang");
     if (savedLang) {
       document.getElementById('langSelect').value = savedLang;
