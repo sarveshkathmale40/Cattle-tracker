@@ -9,7 +9,7 @@
   
   <title>पशु ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic PWA Manifest -->
+  <!-- PWA Manifest for 1-Click Install -->
   <link rel="manifest" id="manifestPlaceholder">
   
   <style>
@@ -17,7 +17,7 @@
     body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 40px; }
     .wrapper { width: 100%; max-width: 430px; padding: 12px; }
 
-    /* 1. LOCK SCREEN */
+    /* 1. LOCK SCREEN CARD */
     #lockSection { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
     .lock-card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
     .lock-icon { font-size: 40px; margin-bottom: 8px; }
@@ -37,19 +37,27 @@
     .btn-logout { background: #dc2626; color: white; border: none; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 20px; cursor: pointer; }
 
     /* 3. DOWNLOAD / INSTALL APP BANNER */
-    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 14px; }
-    .install-title { font-size: 14px; font-weight: bold; color: #166534; margin-bottom: 4px; }
-    .install-sub { font-size: 12px; color: #15803d; margin-bottom: 12px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
+    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
+    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
-    .success-card { background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #e2e8f0; }
+    /* 4. FORM CARD */
+    .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
+    .animal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .animal-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 4px; text-align: center; cursor: pointer; }
+    .animal-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
+    .animal-btn .emoji { font-size: 22px; display: block; }
+    .animal-btn .lbl { font-size: 11px; font-weight: bold; }
+
+    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
   </style>
 </head>
 <body>
 
 <div class="wrapper">
 
-  <!-- STEP 1: DUAL LANGUAGE LOCK SCREEN -->
+  <!-- STEP 1: LOCK SCREEN (नवीन युझरला आधी हेच दिसेल) -->
   <div id="lockSection">
     <div class="lock-card">
       <div class="lock-icon">🔐</div>
@@ -71,7 +79,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: DOWNLOAD & DASHBOARD SECTION -->
+  <!-- STEP 2: MAIN DASHBOARD & FORM (अनलॉक झाल्यावर हे उघडेल) -->
   <div id="trackerSection" style="display: none;">
     
     <header>
@@ -79,7 +87,7 @@
         <span>🛡️</span>
         <span>पशु ट्रॅकर / Cattle Tracker</span>
       </div>
-      <button class="btn-logout" onclick="logout()" title="बाहेर पडा">लॉगआऊट / Logout</button>
+      <button class="btn-logout" onclick="logout()" title="बाहेर पडा">लॉगआऊट</button>
     </header>
 
     <!-- DIRECT 1-CLICK INSTALL BANNER -->
@@ -91,11 +99,34 @@
       </button>
     </div>
 
-    <!-- SUCCESS INFO -->
-    <div class="success-card">
-      <div style="font-size: 32px; margin-bottom: 6px;">✅</div>
-      <h3 style="color: #16a34a; font-size: 16px; margin-bottom: 4px;">ॲप यशस्वीरीत्या अनलॉक झाले आहे!</h3>
-      <p style="color: #64748b; font-size: 12px;">App Unlocked Successfully.</p>
+    <!-- MAIN FORM (गाय/म्हैस/शेळी निवड व नाव/तारीख) -->
+    <div class="card">
+      <div class="animal-grid">
+        <div id="tabCow" class="animal-btn active" onclick="selectAnimal('cow')">
+          <span class="emoji">🐄</span>
+          <span class="lbl">गाय (२८२ दिवस)</span>
+        </div>
+        <div id="tabBuf" class="animal-btn" onclick="selectAnimal('buffalo')">
+          <span class="emoji">🐃</span>
+          <span class="lbl">म्हैस (३१० दिवस)</span>
+        </div>
+        <div id="tabGoat" class="animal-btn" onclick="selectAnimal('goat')">
+          <span class="emoji">🐐</span>
+          <span class="lbl">शेळी (१५० दिवस)</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>नाव किंवा टॅग नंबर / Tag No:</label>
+        <input type="text" id="cattleName" placeholder="उदा. कावेरी / Cow 01">
+      </div>
+
+      <div class="field">
+        <label>भरवल्याची तारीख / A.I. Date:</label>
+        <input type="date" id="breedDate">
+      </div>
+
+      <button class="btn-save" onclick="handleSaveClick()">नोंद जोडा आणि ट्रॅक करा</button>
     </div>
 
   </div>
@@ -103,7 +134,7 @@
 </div>
 
 <script>
-  // 1. INLINE MANIFEST
+  // 1. INLINE MANIFEST FOR INSTALLATION
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
     short_name: "पशु ट्रॅकर",
@@ -120,7 +151,7 @@
   const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
   document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-  // 2. 1-CLICK DIRECT INSTALL
+  // 2. 1-CLICK INSTALL TRIGGER
   var deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
@@ -141,7 +172,7 @@
     }
   }
 
-  // 3. AUTO-LOGIN CHECK (युझरने एकदा अनलॉक केले की कायमस्वरूपी थेट ॲप उघडेल)
+  // 3. AUTO-LOGIN CHECK (एकदा अनलॉक केल्यावर पुन्हा कधीही पासवर्ड विचारणार नाही)
   if (localStorage.getItem("pashu_auth_verified_user") === "true") {
     openAppDirectly();
   }
@@ -163,9 +194,8 @@
     var last4 = phone.slice(-4);
     var expectedFormulaPin = (parseInt(last4, 10) + 7).toString();
 
-    // पिन व्हॅलिडेशन: 2026 किंवा शेवटचे ४ आकडे + 7
+    // मास्टर पिन 2026 किंवा शेवटचे ४ आकडे + 7
     if (pin === expectedFormulaPin || pin === "2026") {
-      // कायमस्वरूपी सेव्ह करा जेणेकरून डाऊनलोड केल्यावर पुन्हा पासवर्ड मागणार नाही
       localStorage.setItem("pashu_auth_verified_user", "true");
       openAppDirectly();
     } else {
@@ -177,15 +207,35 @@
   function openAppDirectly() {
     document.getElementById("lockSection").style.display = "none";
     document.getElementById("trackerSection").style.display = "block";
+    document.getElementById("breedDate").valueAsDate = new Date();
   }
 
-  // फक्त टेस्टिंग किंवा बाहेर पडण्यासाठी
+  // फक्त टेस्टिंग किंवा लॉगआऊट करण्यासाठी
   function logout() {
     localStorage.removeItem("pashu_auth_verified_user");
     document.getElementById("trackerSection").style.display = "none";
     document.getElementById("lockSection").style.display = "flex";
     document.getElementById("userPhone").value = "";
     document.getElementById("userPin").value = "";
+  }
+
+  // जनावर निवडणे
+  var curAnimal = 'cow';
+  function selectAnimal(type) {
+    curAnimal = type;
+    document.getElementById("tabCow").className = (type === 'cow') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabGoat").className = (type === 'goat') ? "animal-btn active" : "animal-btn";
+  }
+
+  function handleSaveClick() {
+    var name = document.getElementById("cattleName").value.trim();
+    var date = document.getElementById("breedDate").value;
+    if (!date) {
+      alert("कृपया तारीख निवडा!");
+      return;
+    }
+    alert("तारीख आणि नाव निवडले गेले आहे!\nपुढच्या टप्प्यात आपण याचे थेट कॅल्क्युलेशन कार्ड जोडू.");
   }
 </script>
 
