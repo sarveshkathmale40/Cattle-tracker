@@ -10,7 +10,7 @@
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic Zero-File Manifest -->
+  <!-- Dynamic Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
 
   <style>
@@ -89,12 +89,12 @@
     <div class="card-lock">
       <div class="lock-icon">🔐</div>
       <div class="lock-title">पशु ट्रॅकर ॲक्टिव्हेशन</div>
-      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter Your Activation PIN</span></div>
+      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:</div>
 
-      <input type="password" id="userPinInput" class="pass-input" placeholder="••••" maxlength="6">
+      <input type="tel" id="userPinInput" class="pass-input" placeholder="••••" maxlength="6">
 
-      <button class="btn-unlock" onclick="validateUserPin()">ॲप अनलॉक करा / Unlock</button>
-      <div id="pinErrMsg" class="err-msg">चुकीचा पिन! योग्य पिन टाका.<br><span style="font-size: 11px; font-weight: normal;">Invalid PIN! Please enter correct PIN.</span></div>
+      <button class="btn-unlock" onclick="validateUserPin()">ॲप अनलॉक करा</button>
+      <div id="pinErrMsg" class="err-msg">चुकीचा पिन! कृपया बरोबर पिन टाका.</div>
     </div>
   </div>
 
@@ -181,16 +181,7 @@
 </div>
 
 <script>
-  // ==========================================
-  // 🔑 ऑथोराईज्ड पिन लिस्ट (AUTHORIZED PINS)
-  // ==========================================
-  var VALID_PINS = [
-    "2026", // मास्टर पिन
-    "1001", "1002", "1003", "1004", "1005",
-    "5883", "7788", "9900", "4455", "1122"
-  ];
-
-  // 1. INLINE MANIFEST
+  // 1. DYNAMIC MANIFEST
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
     short_name: "पशु ट्रॅकर",
@@ -214,7 +205,6 @@
     navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
   }
 
-  // 3. तपासा की ॲप होम स्क्रीनवरून उघडले आहे का?
   function isRunningStandalone() {
     return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone === true);
   }
@@ -239,7 +229,7 @@
     }
   }
 
-  // 4. भाषा शब्दकोश (DICTIONARY)
+  // 3. भाषा शब्दकोश
   var DICT = {
     mr: {
       header: "पशु ट्रॅकर",
@@ -337,17 +327,31 @@
   var curAnimal = "cow";
   var activeResetId = null;
 
-  // 5. पिन पडताळणी व ऑटो-लॉगिन
-  if (localStorage.getItem("pashu_paid_active_user") === "true") {
+  // 4. ऑटो-लॉगिन (कायमस्वरूपी अनलॉक)
+  if (localStorage.getItem("pashu_forever_unlocked") === "true") {
     showDashboard();
   }
 
+  // 5. पिन व्हॅलिडेशन (सोपे व थेट)
   function validateUserPin() {
-    var enteredPin = document.getElementById("userPinInput").value.trim();
+    var rawInput = document.getElementById("userPinInput").value;
+    var pin = rawInput.replace(/[^0-9]/g, ""); // फक्त आकडे मोजा
     var errMsg = document.getElementById("pinErrMsg");
 
-    if (VALID_PINS.indexOf(enteredPin) !== -1) {
-      localStorage.setItem("pashu_paid_active_user", "true");
+    // वैध पिन लिस्ट
+    var validPins = ["2026", "1000", "1001", "1002", "1003", "1004", "1005", "5883", "7788", "9900", "4455", "1122"];
+
+    var isValid = false;
+    for (var i = 0; i < validPins.length; i++) {
+      if (pin === validPins[i]) {
+        isValid = true;
+        break;
+      }
+    }
+
+    if (isValid) {
+      // कायमस्वरूपी सेव्ह करा (भविष्यात कधीही कोड बदलला तरी अनलॉक राहील)
+      localStorage.setItem("pashu_forever_unlocked", "true");
       showDashboard();
     } else {
       errMsg.style.display = "block";
@@ -371,7 +375,6 @@
     renderList();
   }
 
-  // 6. भाषा व व्हॉईस माईक
   function changeLanguage() {
     curLang = document.getElementById("langSelect").value;
     var t = DICT[curLang];
@@ -398,4 +401,9 @@
     var rec = new Speech();
     rec.lang = curLang === 'mr' ? 'mr-IN' : (curLang === 'hi' ? 'hi-IN' : 'en-US');
     rec.start();
- 
+    rec.onresult = function(e) {
+      document.getElementById("cName").value = e.results[0][0].transcript;
+    };
+  }
+
+  function
