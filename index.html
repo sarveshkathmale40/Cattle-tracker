@@ -7,39 +7,145 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
-  
+
   <title>पशु गाभण व खुराक ट्रॅकर</title>
   <link rel="manifest" id="mPlaceholder">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #f1f5f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
-    
-    .box { background: white; padding: 28px 22px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
-    .app-icon { font-size: 55px; margin-bottom: 12px; background: #dcfce7; width: 90px; height: 90px; line-height: 90px; border-radius: 50%; margin-left: auto; margin-right: auto; box-shadow: 0 6px 15px rgba(22,163,74,0.2); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    h2 { color: #166534; font-size: 22px; margin-bottom: 8px; font-weight: bold; }
-    p { font-size: 14px; color: #475569; margin-bottom: 18px; line-height: 1.5; font-weight: 500; }
+    body {
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
 
-    input, select { width: 100%; padding: 14px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 16px; outline: none; background: #fff; margin-bottom: 14px; font-weight: bold; color: #0f172a; }
-    input:focus, select:focus { border-color: #16a34a; box-shadow: 0 0 0 4px rgba(22,163,74,0.12); }
-    
-    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 6px 15px rgba(22,163,74,0.3); }
-    
-    .trust-badge { background: #f0fdf4; border: 1.5px solid #bbf7d0; color: #166534; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: bold; margin-bottom: 16px; }
-    .guide-box { background: #eff6ff; border: 1.5px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 10px; font-size: 12px; margin-top: 14px; text-align: left; line-height: 1.5; font-weight: 500; }
+    .box {
+      background: white;
+      padding: 28px 22px;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .app-icon {
+      font-size: 55px;
+      margin-bottom: 12px;
+      background: #dcfce7;
+      width: 90px;
+      height: 90px;
+      line-height: 90px;
+      border-radius: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 6px 15px rgba(22,163,74,0.2);
+    }
+
+    h2 {
+      color: #166534;
+      font-size: 22px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 18px;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+      margin-bottom: 14px;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 4px rgba(22,163,74,0.12);
+    }
+
+    .btn {
+      width: 100%;
+      background: #16a34a;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(22,163,74,0.3);
+    }
+
+    .trust-badge {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      color: #166534;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .guide-box {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1e40af;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-top: 14px;
+      text-align: left;
+      line-height: 1.5;
+      font-weight: 500;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- 🔒 भाषा निवड आणि लॉगिन स्क्रीन -->
   <div id="lockScreen" class="box">
+
     <div class="app-icon">🐄</div>
+
     <h2 id="lTitle">पशु ट्रॅकर लॉगिन</h2>
-    <div class="trust-badge">🔒 MH Farmer's Official Secure App</div>
-    
-    <div style="text-align: left; margin-bottom: 4px;">
-      <label style="font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; display: block;" id="langLbl">भाषा निवडा / Select Language:</label>
+
+    <div class="trust-badge">
+      🔒 MH Farmer's Official Secure App
+    </div>
+
+    <div style="text-align:left; margin-bottom:4px;">
+      <label
+        style="font-size:12px; font-weight:bold; color:#334155; margin-bottom:4px; display:block;"
+        id="langLbl">
+        भाषा निवडा / Select Language:
+      </label>
+
       <select id="langSelect" onchange="changeLanguage()">
         <option value="mr">मराठी</option>
         <option value="hi">हिंदी</option>
@@ -47,256 +153,508 @@
       </select>
     </div>
 
-    <p id="lSub">ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:</p>
-    
-    <div style="text-align: left;">
-      <input type="tel" id="uPhone" placeholder="मोबाईल नंबर (10 अंकी)" maxlength="10">
-      <input type="password" id="uPin" placeholder="पासवर्ड (PIN) टाका">
+    <p id="lSub">
+      ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:
+    </p>
+
+    <div style="text-align:left;">
+
+      <input
+        type="tel"
+        id="uPhone"
+        placeholder="मोबाईल नंबर (10 अंकी)"
+        maxlength="10"
+        inputmode="numeric"
+      >
+
+      <input
+        type="password"
+        id="uPin"
+        placeholder="पासवर्ड (PIN) टाका"
+        inputmode="numeric"
+      >
+
     </div>
 
-    <button id="loginBtn" onclick="checkLogin()" class="btn">ॲप उघडा 🔓</button>
-    <p style="font-size: 11px; color: #94a3b8; margin-top: 16px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
+    <button
+      id="loginBtn"
+      onclick="checkLogin()"
+      class="btn">
+      ॲप उघडा 🔓
+    </button>
+
+    <p style="font-size:11px; color:#94a3b8; margin-top:16px; margin-bottom:0;">
+      © मॉडर्न शेतकरी डिजिटल सेवा
+    </p>
+
   </div>
+
 
   <!-- 📲 डाऊनलोड स्क्रीन -->
-  <div id="downloadScreen" class="box" style="display: none;">
+  <div id="downloadScreen" class="box" style="display:none;">
+
     <div class="app-icon">📥</div>
+
     <h2 id="dTitle">ॲप डाऊनलोड करा</h2>
-    <div class="trust-badge">✅ MH Farmer's Verified App</div>
-    <p id="dSub">फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन तुमच्या मोबाईलमध्ये येईल:</p>
-    
-    <button onclick="installApp()" id="installBtn" class="btn" style="background: #2563eb; box-shadow: 0 6px 15px rgba(37,99,235,0.3);">⬇️ ॲप डाऊनलोड सुरू करा</button>
-    
-    <div class="guide-box" id="dGuide">
-      <b>📌 टीप:</b> बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या <b>'Install'</b> किंवा <b>'Add'</b> पर्यायावर क्लिक करा, म्हणजे ॲप थेट इन्स्टॉल होईल!
+
+    <div class="trust-badge">
+      ✅ MH Farmer's Verified App
     </div>
 
-    <p style="font-size: 11px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
+    <p id="dSub">
+      फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन
+      तुमच्या मोबाईलमध्ये येईल:
+    </p>
+
+    <button
+      onclick="installApp()"
+      id="installBtn"
+      class="btn"
+      style="background:#2563eb; box-shadow:0 6px 15px rgba(37,99,235,0.3);">
+      ⬇️ ॲप डाऊनलोड सुरू करा
+    </button>
+
+    <div class="guide-box" id="dGuide">
+      <b>📌 टीप:</b>
+      बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या
+      <b>'Install'</b> किंवा <b>'Add'</b>
+      पर्यायावर क्लिक करा.
+    </div>
+
+    <p style="font-size:11px; color:#94a3b8; margin-top:14px; margin-bottom:0;">
+      मॉडर्न शेतकरी ॲप
+    </p>
+
   </div>
 
-<script>
-  const mData = {
-    name: "पशु ट्रॅकर", short_name: "पशु ट्रॅकर",
-    start_url: window.location.href, display: "standalone",
-    background_color: "#ffffff", theme_color: "#16a34a",
-    icons: [{src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐄</text></svg>", sizes: "192x192", type: "image/svg+xml"}]
-  };
-  document.getElementById('mPlaceholder').setAttribute('href', URL.createObjectURL(new Blob([JSON.stringify(mData)], {type: 'application/json'})));
 
-  var pPrompt = null;
-  window.addEventListener('beforeinstallprompt', function(e) {
+<script>
+
+  /* =====================================================
+     PWA MANIFEST
+     ===================================================== */
+
+  const mData = {
+    name: "पशु ट्रॅकर",
+    short_name: "पशु ट्रॅकर",
+    start_url: window.location.href,
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#16a34a",
+
+    icons: [
+      {
+        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐄</text></svg>",
+        sizes: "192x192",
+        type: "image/svg+xml"
+      }
+    ]
+  };
+
+  const manifestBlob = new Blob(
+    [JSON.stringify(mData)],
+    { type: "application/json" }
+  );
+
+  const manifestURL = URL.createObjectURL(manifestBlob);
+
+  document
+    .getElementById("mPlaceholder")
+    .setAttribute("href", manifestURL);
+
+
+  /* =====================================================
+     INSTALL PROMPT
+     ===================================================== */
+
+  let pPrompt = null;
+
+  window.addEventListener("beforeinstallprompt", function(e) {
+
     e.preventDefault();
+
     pPrompt = e;
+
   });
+
+
+  /* =====================================================
+     LANGUAGE
+     ===================================================== */
 
   function changeLanguage() {
-    var lang = document.getElementById('langSelect').value;
+
+    const lang =
+      document.getElementById("langSelect").value;
+
     localStorage.setItem("pashu_lang", lang);
 
-    if(lang === 'en') {
-      document.getElementById('langLbl').innerText = "Select Language:";
-      document.getElementById('lTitle').innerText = "Pashu Tracker Login";
-      document.getElementById('lSub').innerText = "Enter mobile number and PIN to start:";
-      document.getElementById('uPhone').placeholder = "Mobile Number (10 digits)";
-      document.getElementById('uPin').placeholder = "Enter PIN";
-      document.getElementById('loginBtn').innerText = "Open App 🔓";
-      
-      document.getElementById('dTitle').innerText = "Download App";
-      document.getElementById('dSub').innerText = "Click below to download and install the app directly on your phone:";
-      document.getElementById('installBtn').innerText = "⬇️ Start App Download";
-      document.getElementById('dGuide').innerHTML = "<b>📌 Note:</b> Just tap <b>'Install'</b> or <b>'Add'</b> when prompted on your screen!";
-    } else if(lang === 'hi') {
-      document.getElementById('langLbl').innerText = "भाषा चुनें:";
-      document.getElementById('lTitle').innerText = "पशु ट्रैकर लॉगिन";
-      document.getElementById('lSub').innerText = "ऐप शुरू करने के लिए मोबाइल नंबर और पिन दर्ज करें:";
-      document.getElementById('uPhone').placeholder = "मोबाइल नंबर (10 अंक)";
-      document.getElementById('uPin').placeholder = "पासवर्ड (PIN) दर्ज करें";
-      document.getElementById('loginBtn').innerText = "ऐप खोलें 🔓";
-      
-      document.getElementById('dTitle').innerText = "ऐप डाउनलोड करें";
-      document.getElementById('dSub').innerText = "सीधे अपने फोन में ऐप डाउनलोड करने के लिए नीचे दिए गए बटन पर क्लिक करें:";
-      document.getElementById('installBtn').innerText = "⬇️ ऐप डाउनलोड शुरू करें";
-      document.getElementById('dGuide').innerHTML = "<b>📌 ध्यान दें:</b> स्क्रीन पर आने वाले <b>'Install'</b> या <b>'Add'</b> विकल्प पर क्लिक करें!";
-    } else {
-      document.getElementById('langLbl').innerText = "भाषा निवडा:";
-      document.getElementById('lTitle').innerText = "पशु ट्रॅकर लॉगिन";
-      document.getElementById('lSub').innerText = "ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:";
-      document.getElementById('uPhone').placeholder = "मोबाईल नंबर (10 अंकी)";
-      document.getElementById('uPin').placeholder = "पासवर्ड (PIN) टाका";
-      document.getElementById('loginBtn').innerText = "ॲप उघडा 🔓";
-      
-      document.getElementById('dTitle').innerText = "ॲप डाऊनलोड करा";
-      document.getElementById('dSub').innerText = "फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन तुमच्या मोबाईलमध्ये येईल:";
-      document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड सुरू करा";
-      document.getElementById('dGuide').innerHTML = "<b>📌 टीप:</b> बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या <b>'Install'</b> किंवा <b>'Add'</b> पर्यायावर क्लिक करा, म्हणजे ॲप थेट इन्स्टॉल होईल!";
+
+    /* ---------- ENGLISH ---------- */
+
+    if (lang === "en") {
+
+      document.getElementById("langLbl").innerText =
+        "Select Language:";
+
+      document.getElementById("lTitle").innerText =
+        "Pashu Tracker Login";
+
+      document.getElementById("lSub").innerText =
+        "Enter mobile number and PIN to start:";
+
+      document.getElementById("uPhone").placeholder =
+        "Mobile Number (10 digits)";
+
+      document.getElementById("uPin").placeholder =
+        "Enter PIN";
+
+      document.getElementById("loginBtn").innerText =
+        "Open App 🔓";
+
+
+      document.getElementById("dTitle").innerText =
+        "Download App";
+
+      document.getElementById("dSub").innerText =
+        "Click below to download and install the app directly on your phone:";
+
+      document.getElementById("installBtn").innerText =
+        "⬇️ Start App Download";
+
+      document.getElementById("dGuide").innerHTML =
+        "<b>📌 Note:</b> Just tap <b>'Install'</b> or <b>'Add'</b> when prompted on your screen!";
+
     }
+
+
+    /* ---------- HINDI ---------- */
+
+    else if (lang === "hi") {
+
+      document.getElementById("langLbl").innerText =
+        "भाषा चुनें:";
+
+      document.getElementById("lTitle").innerText =
+        "पशु ट्रैकर लॉगिन";
+
+      document.getElementById("lSub").innerText =
+        "ऐप शुरू करने के लिए मोबाइल नंबर और पिन दर्ज करें:";
+
+      document.getElementById("uPhone").placeholder =
+        "मोबाइल नंबर (10 अंक)";
+
+      document.getElementById("uPin").placeholder =
+        "पासवर्ड (PIN) दर्ज करें";
+
+      document.getElementById("loginBtn").innerText =
+        "ऐप खोलें 🔓";
+
+
+      document.getElementById("dTitle").innerText =
+        "ऐप डाउनलोड करें";
+
+      document.getElementById("dSub").innerText =
+        "सीधे अपने फोन में ऐप डाउनलोड करने के लिए नीचे दिए गए बटन पर क्लिक करें:";
+
+      document.getElementById("installBtn").innerText =
+        "⬇️ ऐप डाउनलोड शुरू करें";
+
+      document.getElementById("dGuide").innerHTML =
+        "<b>📌 ध्यान दें:</b> स्क्रीन पर आने वाले <b>'Install'</b> या <b>'Add'</b> विकल्प पर क्लिक करें!";
+
+    }
+
+
+    /* ---------- MARATHI ---------- */
+
+    else {
+
+      document.getElementById("langLbl").innerText =
+        "भाषा निवडा:";
+
+      document.getElementById("lTitle").innerText =
+        "पशु ट्रॅकर लॉगिन";
+
+      document.getElementById("lSub").innerText =
+        "ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:";
+
+      document.getElementById("uPhone").placeholder =
+        "मोबाईल नंबर (10 अंकी)";
+
+      document.getElementById("uPin").placeholder =
+        "पासवर्ड (PIN) टाका";
+
+      document.getElementById("loginBtn").innerText =
+        "ॲप उघडा 🔓";
+
+
+      document.getElementById("dTitle").innerText =
+        "ॲप डाऊनलोड करा";
+
+      document.getElementById("dSub").innerText =
+        "फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन तुमच्या मोबाईलमध्ये येईल:";
+
+      document.getElementById("installBtn").innerText =
+        "⬇️ ॲप डाऊनलोड सुरू करा";
+
+      document.getElementById("dGuide").innerHTML =
+        "<b>📌 टीप:</b> बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या <b>'Install'</b> किंवा <b>'Add'</b> पर्यायावर क्लिक करा!";
+
+    }
+
   }
+
+
+  /* =====================================================
+     LOGIN CHECK
+     ===================================================== */
 
   function checkLogin() {
-    var phone = document.getElementById("uPhone").value.trim();
-    var pin = document.getElementById("uPin").value.trim();
-    var lang = document.getElementById('langSelect').value;
 
-    if(phone.length < 10) {
-      alert(lang === 'en' ? "Please enter a valid 10-digit mobile number!" : (lang === 'hi' ? "कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें!" : "कृपया १० अंकी वैध मोबाईल नंबर टाका!"));
+    const phone =
+      document.getElementById("uPhone").value.trim();
+
+    const pin =
+      document.getElementById("uPin").value.trim();
+
+    const lang =
+      document.getElementById("langSelect").value;
+
+
+    /* ---------- PHONE VALIDATION ---------- */
+
+    if (!/^\d{10}$/.test(phone)) {
+
+      if (lang === "en") {
+
+        alert(
+          "Please enter a valid 10-digit mobile number!"
+        );
+
+      } else if (lang === "hi") {
+
+        alert(
+          "कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें!"
+        );
+
+      } else {
+
+        alert(
+          "कृपया १० अंकी वैध मोबाईल नंबर टाका!"
+        );
+
+      }
+
       return;
     }
+
+
+    /* =================================================
+       TEST / MASTER PIN
+       ================================================= */
 
     if (pin === "2026") {
+
       showDownloadScreen();
+
       return;
     }
 
-    var last4 = phone.slice(-4);
-    var expectedPin = (parseInt(last4) + 7).toString();
+
+    /* =================================================
+       PHONE BASED PIN
+       Last 4 digits + 7
+       Example:
+       1234 → 1241
+       ================================================= */
+
+    const last4 =
+      phone.slice(-4);
+
+    const expectedPin =
+      (parseInt(last4, 10) + 7).toString();
+
 
     if (pin === expectedPin) {
+
       showDownloadScreen();
+
     } else {
-      alert(lang === 'en' ? "Incorrect PIN! Please enter correct password." : (lang === 'hi' ? "गलत पासवर्ड! कृपया सही पिन दर्ज करें।" : "चुकीचा पासवर्ड! कृपया योग्य पिन टाका."));
+
+      if (lang === "en") {
+
+        alert(
+          "Incorrect PIN! Please enter the correct password."
+        );
+
+      } else if (lang === "hi") {
+
+        alert(
+          "गलत पासवर्ड! कृपया सही पिन दर्ज करें।"
+        );
+
+      } else {
+
+        alert(
+          "चुकीचा पासवर्ड! कृपया योग्य पिन टाका."
+        );
+
+      }
+
     }
+
   }
+
+
+  /* =====================================================
+     SHOW DOWNLOAD SCREEN
+     ===================================================== */
 
   function showDownloadScreen() {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("downloadScreen").style.display = "block";
-    localStorage.setItem("pashu_unlocked", "true");
+
+    document.getElementById("lockScreen").style.display =
+      "none";
+
+    document.getElementById("downloadScreen").style.display =
+      "block";
+
+    localStorage.setItem(
+      "pashu_unlocked",
+      "true"
+    );
+
   }
 
-  // थेट डाऊनलोड आणि इन्स्टॉल ट्रिगर करणे
+
+  /* =====================================================
+     INSTALL APP
+     ===================================================== */
+
   function installApp() {
-    var lang = document.getElementById('langSelect').value;
+
+    const lang =
+      document.getElementById("langSelect").value;
+
+
+    /* ---------- REAL PWA INSTALL ---------- */
+
     if (pPrompt) {
+
       pPrompt.prompt();
-      pPrompt.userChoice.then(function(res) {
+
+      pPrompt.userChoice.then(function(result) {
+
         pPrompt = null;
+
       });
-    } else {
-      // जर पीडब्लूए prompt तयार नसेल तर युजरसाठी फाईल डाऊनलोड किंवा थेट ॲप पेज रीलोड करून इन्स्टॉल मोड ट्रिगर करणे
-      var blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = 'Pashu_Tracker.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      
-      alert(lang === 'en' ? "Download started! Open the downloaded file or check browser menu to add to home screen." : (lang === 'hi' ? "डाउनलोड शुरू हो गया! होम स्क्रीन पर जोड़ने के लिए डाउनलोड की गई फ़ाइल खोलें।" : "डाऊनलोड सुरू झाले आहे! फाईल डाऊनलोड झाली की ती ओपन करा किंवा इन्स्टॉल करा."));
-    }
-  }
 
-  window.addEventListener('DOMContentLoaded', (event) => {
-    var savedLang = localStorage.getItem("pashu_lang");
-    if (savedLang) {
-      document.getElementById('langSelect').value = savedLang;
-      changeLanguage();
-    }
-
-    if (localStorage.getItem("pashu_unlocked") === "true") {
-      document.getElementById("lockScreen").style.display = "none";
-      document.getElementById("downloadScreen").style.display = "block";
-    }
-  });
-
-    box.innerHTML = html;
-  }
-
-  // फोटो अपलोड आणि डॅशबोर्ड लॉजिक 
-  function saveData() {
-    var dt = document.getElementById("cDate").value;
-    if (!dt) { alert("तारीख निवडा!"); return; }
-    var nm = document.getElementById("cName").value.trim() || (cur === 'cow' ? 'गाय' : (cur === 'buffalo' ? 'म्हैस' : 'शेळी'));
-    var nt = document.getElementById("cNote").value.trim();
-    var fileInput = document.getElementById("cPhoto");
-
-    if (fileInput.files && fileInput.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        pushToDB(nm, cur, dt, nt, e.target.result);
-      };
-      reader.readAsDataURL(fileInput.files[0]);
-    } else {
-      pushToDB(nm, cur, dt, nt, "");
-    }
-  }
-
-  function pushToDB(nm, type, dt, nt, photo) {
-    var db = getDB();
-    db.unshift({ id: Date.now(), name: nm, type: type, date: dt, note: nt, photo: photo });
-    localStorage.setItem("pashu_clean_db", JSON.stringify(db));
-    document.getElementById("cName").value = "";
-    document.getElementById("cNote").value = "";
-    document.getElementById("cPhoto").value = "";
-    draw();
-  }
-
-  function delData(id) {
-    var db = getDB().filter(function(i){ return i.id !== id; });
-    localStorage.setItem("pashu_clean_db", JSON.stringify(db));
-    draw();
-  }
-
-  function addD(str, days) {
-    var d = new Date(str);
-    d.setDate(d.getDate() + days);
-    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-  }
-
-  function getDays(str) {
-    var diff = Math.floor((new Date() - new Date(str)) / (1000 * 60 * 60 * 24));
-    return diff >= 0 ? diff : 0;
-  }
-
-  function draw() {
-    var box = document.getElementById("list");
-    var db = getDB();
-    if (db.length === 0) {
-      box.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:16px;">अद्याप कोणतीही नोंद नाही.</div>';
       return;
     }
 
-    var html = "";
-    for (var i = 0; i < db.length; i++) {
-      var it = db[i];
-      var tot = 282, dry = 210, ico = "🐄";
-      if (it.type === 'buffalo') { tot = 310; dry = 235; ico = "🐃"; }
-      if (it.type === 'goat') { tot = 150; dry = 100; ico = "🐐"; }
 
-      var daysIn = getDays(it.date);
-      var imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
+    /* ---------- FALLBACK DOWNLOAD ---------- */
 
-      var check21 = addD(it.date, 21); 
-      var dryDate = addD(it.date, dry); 
-      var transDate = addD(it.date, tot - 21); 
-      var deliveryDate = addD(it.date, tot); 
+    const html =
+      "<!DOCTYPE html>\n" +
+      document.documentElement.outerHTML;
 
-      html += '<div class="item" style="background:white; border-radius:14px; padding:14px; border:1px solid #e2e8f0; margin-bottom:12px; display:flex; gap:12px; align-items:flex-start;">';
-      html += '  <div class="cow-img" style="width:65px; height:65px; border-radius:10px; background:#f1f5f9; display:flex; justify-content:center; align-items:center; font-size:24px; flex-shrink:0; overflow:hidden; border:1px solid #cbd5e1;">' + imgHtml + '</div>';
-      html += '  <div class="item-info" style="flex-grow:1;">';
-      html += '    <div class="item-top" style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px; border-bottom:1px solid #f1f5f9; padding-bottom:4px; margin-bottom:6px; color:#0f172a;"><span>' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' दिवस पूर्ण</span></div>';
-      html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🔴 उलट तपासणी (२१ वा दिवस):</span><b>' + check21 + '</b></div>';
-      
-      if (it.type !== 'goat') {
-        html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🥛 दूध आटवणे (७ वा महिना):</span><b>' + dryDate + '</b></div>';
-        html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):</span><b>' + transDate + '</b></div>';
-      }
-      
-      html += '    <div class="row due" style="background:#ecfdf5; padding:6px; border-radius:6px; color:#166534; font-weight:bold; margin-top:6px; font-size:12px; display:flex; justify-content:space-between;"><span>🍼 अंदाजे विण्याची तारीख:</span><span>' + deliveryDate + '</span></div>';
-      
-      if(it.note) {
-        html += '    <div class="note-box" style="background:#fffbeb; border:1px solid #fef3c7; border-radius:6px; padding:6px; font-size:11px; color:#92400e; margin-top:6px;">📝 <b>टीप:</b> ' + it.note + '</div>';
-      }
 
-      html += '    <button class="btn-del" onclick="delData(' + it.id + ')" style="width:100%; background:#fee2e2; color:#b91c1c; border:none; padding:6px; border-radius:6px; font-weight:bold; font-size:11px; cursor:pointer; margin-top:8px;">🗑️ नोंद हटवा</button>';
-      html += '  </div>';
-      html += '</div>';
+    const blob =
+      new Blob(
+        [html],
+        { type: "text/html" }
+      );
+
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const a =
+      document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+      "Pashu_Tracker.html";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+
+    setTimeout(function() {
+      URL.revokeObjectURL(url);
+    }, 1000);
+
+
+    if (lang === "en") {
+
+      alert(
+        "Download started! Open the downloaded file or use your browser menu to add it to the home screen."
+      );
+
+    } else if (lang === "hi") {
+
+      alert(
+        "डाउनलोड शुरू हो गया! डाउनलोड की गई फ़ाइल खोलें या होम स्क्रीन पर जोड़ने के लिए ब्राउज़र मेनू का उपयोग करें।"
+      );
+
+    } else {
+
+      alert(
+        "डाऊनलोड सुरू झाले आहे! डाऊनलोड केलेली फाईल ओपन करा किंवा होम स्क्रीनवर जोडण्यासाठी ब्राउझर मेनू वापरा."
+      );
+
     }
-    box.innerHTML = html;
+
   }
+
+
+  /* =====================================================
+     PAGE LOAD
+     ===================================================== */
+
+  window.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+      const savedLang =
+        localStorage.getItem("pashu_lang");
+
+
+      if (savedLang) {
+
+        document.getElementById("langSelect").value =
+          savedLang;
+
+        changeLanguage();
+
+      }
+
+
+      /* ---------- PREVIOUS LOGIN ---------- */
+
+      if (
+        localStorage.getItem("pashu_unlocked")
+        === "true"
+      ) {
+
+        document.getElementById("lockScreen").style.display =
+          "none";
+
+        document.getElementById("downloadScreen").style.display =
+          "block";
+
+      }
+
+    }
+  );
+
 </script>
 
 </body>
 </html>
-
-  
