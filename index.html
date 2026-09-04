@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#16a34a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
+  
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
+
+  <!-- Dynamic Zero-File Web Manifest (1-Click PWA Install साठी) -->
+  <link rel="manifest" id="manifestPlaceholder">
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -33,7 +41,12 @@
     .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
     .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
     .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 11px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); animation: pulseBtn 2s infinite; }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
 
     /* 4. FORM CARD */
     .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
@@ -72,7 +85,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: MAIN DASHBOARD & DOWNLOAD SECTION -->
+  <!-- STEP 2: MAIN DASHBOARD & DIRECT DOWNLOAD SECTION -->
   <div id="trackerSection" style="display: none;">
     
     <header>
@@ -87,8 +100,8 @@
       </select>
     </header>
 
-    <!-- DOWNLOAD / SAVE TO HOME SCREEN PROMPT -->
-    <div class="install-banner">
+    <!-- DIRECT 1-CLICK INSTALL BANNER -->
+    <div class="install-banner" id="pwaBanner">
       <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा</div>
       <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:</div>
       <button class="btn-install" id="installBtn" onclick="triggerAppInstall()">
@@ -131,26 +144,59 @@
 </div>
 
 <script>
+  // 1. INLINE MANIFEST INJECTION (ब्राउझरला थेट इन्स्टॉल प्रॉम्ट दाखवण्यासाठी)
+  const manifestData = {
+    name: "पशु गाभण व खुराक ट्रॅकर",
+    short_name: "पशु ट्रॅकर",
+    start_url: window.location.href,
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#16a34a",
+    icons: [
+      {
+        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐄</text></svg>",
+        sizes: "192x192 512x512",
+        type: "image/svg+xml"
+      }
+    ]
+  };
+  const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+  document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
+
+  // 2. SERVICE WORKER INJECTION (PWA निकष पूर्ण करण्यासाठी)
+  if ('serviceWorker' in navigator) {
+    const swCode = "self.addEventListener('fetch', function(e) {});";
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+  }
+
+  // 3. 1-CLICK DIRECT INSTALL EVENT CAPTURE
   var deferredPrompt = null;
 
-  // Listen for browser install prompt
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     deferredPrompt = e;
+    var btn = document.getElementById('installBtn');
+    if (btn) btn.style.display = 'flex';
   });
 
   function triggerAppInstall() {
     if (deferredPrompt) {
+      // थेट ब्राउझरचा 'Install' डायलॉग उघडेल
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(choiceResult) {
+        if (choiceResult.outcome === 'accepted') {
+          document.getElementById('pwaBanner').style.display = 'none';
+        }
         deferredPrompt = null;
       });
     } else {
-      alert("मोबाईल स्क्रीनवर ॲप सेव्ह करण्यासाठी:\n१. वरच्या उजव्या बाजूला असलेल्या ३ टिंबांवर (⋮) दाबा.\n२. 'Add to Home screen' किंवा 'Install App' निवडा.");
+      // आधीच इन्स्टॉल असेल किंवा iOS Safari असेल तर सोपा अलर्ट
+      alert("तुमच्या फोनच्या ब्राउझर मेनूमध्ये जाऊन 'Add to Home screen' किंवा 'Install App' निवडा.");
     }
   }
 
-  // 1. AUTHENTICATION LOGIC (सुरक्षित आणि अचूक)
+  // 4. AUTHENTICATION LOGIC (सुरक्षित आणि अचूक)
   if (localStorage.getItem("pashu_auth_step_done") === "1") {
     openTracker();
   }
