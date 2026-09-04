@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>पशु ट्रॅकर</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
     body { background: #f1f5f9; min-height: 100vh; padding: 12px; display: flex; justify-content: center; }
-    .main-wrap { width: 100%; max-width: 380px; }
+    .main-wrap { width: 100%; max-width: 390px; }
 
-    /* LOCK SCREEN */
+    /* LOCK CARD */
     .card-box { background: #ffffff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 12px; border: 1px solid #e2e8f0; }
     .text-center { text-align: center; }
     .title { font-size: 18px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
@@ -19,7 +19,6 @@
     .inp-text { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: #f8fafc; outline: none; }
     .inp-text:focus { border-color: #16a34a; background: #fff; }
     .btn-green { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; }
-    .btn-green:active { background: #15803d; }
     .err-msg { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; }
 
     /* DASHBOARD */
@@ -52,12 +51,12 @@
 
     <div class="inp-group">
       <label>१० अंकी मोबाईल नंबर:</label>
-      <input type="number" id="phoneInput" class="inp-text" placeholder="उदा. 9876543210">
+      <input type="tel" id="phoneInput" class="inp-text" placeholder="उदा. 9876543210" maxlength="10">
     </div>
 
     <div class="inp-group">
       <label>पिन (PIN):</label>
-      <input type="password" id="pinInput" class="inp-text" placeholder="••••">
+      <input type="password" id="pinInput" class="inp-text" placeholder="••••" maxlength="6">
     </div>
 
     <button class="btn-green" onclick="handleUnlock()">ॲप उघडा</button>
@@ -68,7 +67,7 @@
   <div id="dashBlock" style="display: none;">
     
     <header>
-      <span>🐄 पशु गाभण व खुराक ट्रॅकर</span>
+      <span>🐄 पशु गाभण ट्रॅकर</span>
       <button class="btn-log" onclick="handleLock()">लॉगआऊट</button>
     </header>
 
@@ -100,19 +99,31 @@
 </div>
 
 <script>
+  // 1. FORCE KILL ALL OLD SERVICE WORKERS & CACHES (जुना अडकलेला कॅशे नष्ट करण्यासाठी)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (var reg of registrations) { reg.unregister(); }
+    });
+  }
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (var name of names) { caches.delete(name); }
+    });
+  }
+
   var currentAnimal = 'cow';
   var inMemoryRecords = [];
 
-  // 1. UNLOCK FUNCTION
+  // 2. UNLOCK FUNCTION
   function handleUnlock() {
     var pEl = document.getElementById("phoneInput");
     var pinEl = document.getElementById("pinInput");
     var err = document.getElementById("errorText");
 
-    var phone = pEl.value.toString().trim();
-    var pin = pinEl.value.toString().trim();
+    var phone = pEl.value.replace(/\D/g, "");
+    var pin = pinEl.value.replace(/\D/g, "");
 
-    if (phone.length < 10) {
+    if (phone.length !== 10) {
       err.innerText = "कृपया पूर्ण १० अंकी मोबाईल नंबर टाका!";
       err.style.display = "block";
       return;
@@ -121,12 +132,13 @@
     var last4 = phone.slice(-4);
     var targetPin = (parseInt(last4, 10) + 7).toString();
 
-    if (pin === targetPin || pin === "2026") {
+    // 2026 किंवा शेवटचे ४ अंक + 7 किंवा शेवटचे ४ अंक
+    if (pin === targetPin || pin === "2026" || pin === last4) {
       err.style.display = "none";
       document.getElementById("lockBlock").style.display = "none";
       document.getElementById("dashBlock").style.display = "block";
       
-      // आजची तारीख आपोआप सेट करा
+      // आजची तारीख सेट करा
       var now = new Date();
       var y = now.getFullYear();
       var m = String(now.getMonth() + 1).padStart(2, '0');
@@ -148,7 +160,7 @@
     document.getElementById("errorText").style.display = "none";
   }
 
-  // 2. ANIMAL SELECT
+  // 3. ANIMAL SELECT
   function chooseAnimal(type) {
     currentAnimal = type;
     document.getElementById("tab_cow").className = (type === 'cow') ? 'an-tab active' : 'an-tab';
@@ -156,7 +168,7 @@
     document.getElementById("tab_goat").className = (type === 'goat') ? 'an-tab active' : 'an-tab';
   }
 
-  // 3. RECORDS
+  // 4. RECORDS
   function addNewRecord() {
     var dVal = document.getElementById("dateInput").value;
     if (!dVal) {
@@ -200,7 +212,7 @@
     return diff >= 0 ? diff : 0;
   }
 
-  // 4. RENDER UI
+  // 5. RENDER UI
   function renderList() {
     var box = document.getElementById("recordsContainer");
     if (inMemoryRecords.length === 0) {
