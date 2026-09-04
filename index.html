@@ -17,7 +17,7 @@
     body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 40px; }
     .wrapper { width: 100%; max-width: 430px; padding: 12px; }
 
-    /* 1. LOCK SCREEN CARD */
+    /* 1. LOCK SCREEN */
     #lockSection { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
     .lock-card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
     .lock-icon { font-size: 40px; margin-bottom: 8px; }
@@ -42,7 +42,6 @@
     .install-sub { font-size: 12px; color: #15803d; margin-bottom: 12px; }
     .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
-    /* Success Message Box */
     .success-card { background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #e2e8f0; }
   </style>
 </head>
@@ -142,9 +141,9 @@
     }
   }
 
-  // 3. AUTHENTICATION LOGIC (सुरक्षित आणि अचूक)
-  if (localStorage.getItem("pashu_auth_step_done") === "1") {
-    openTracker();
+  // 3. AUTO-LOGIN CHECK (युझरने एकदा अनलॉक केले की कायमस्वरूपी थेट ॲप उघडेल)
+  if (localStorage.getItem("pashu_auth_verified_user") === "true") {
+    openAppDirectly();
   }
 
   function checkAuth() {
@@ -164,23 +163,25 @@
     var last4 = phone.slice(-4);
     var expectedFormulaPin = (parseInt(last4, 10) + 7).toString();
 
-    // पिन व्हॅलिडेशन: 2026 किंवा फॉर्म्युला (+7) किंवा शेवटचे ४ आकडे
-    if (pin === expectedFormulaPin || pin === last4 || pin === "2026") {
-      localStorage.setItem("pashu_auth_step_done", "1");
-      openTracker();
+    // पिन व्हॅलिडेशन: 2026 किंवा शेवटचे ४ आकडे + 7
+    if (pin === expectedFormulaPin || pin === "2026") {
+      // कायमस्वरूपी सेव्ह करा जेणेकरून डाऊनलोड केल्यावर पुन्हा पासवर्ड मागणार नाही
+      localStorage.setItem("pashu_auth_verified_user", "true");
+      openAppDirectly();
     } else {
       err.innerHTML = "चुकीचा पिन! योग्य पिन टाका.<br><span style='font-size:11px;font-weight:normal;'>Invalid PIN! Please enter correct PIN.</span>";
       err.style.display = "block";
     }
   }
 
-  function openTracker() {
+  function openAppDirectly() {
     document.getElementById("lockSection").style.display = "none";
     document.getElementById("trackerSection").style.display = "block";
   }
 
+  // फक्त टेस्टिंग किंवा बाहेर पडण्यासाठी
   function logout() {
-    localStorage.removeItem("pashu_auth_step_done");
+    localStorage.removeItem("pashu_auth_verified_user");
     document.getElementById("trackerSection").style.display = "none";
     document.getElementById("lockSection").style.display = "flex";
     document.getElementById("userPhone").value = "";
