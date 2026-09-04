@@ -5,17 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#16a34a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
-  <!-- PWA Manifest -->
+  <!-- Self-contained PWA Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
   
-  <!-- Party Confetti Animation -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 50px; }
@@ -46,12 +42,7 @@
     .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
     .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
     .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); animation: pulse 2s infinite; }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-    }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
     /* 4. FORM CARD */
     .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
@@ -116,7 +107,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: MAIN TRACKER & DASHBOARD -->
+  <!-- STEP 2: MAIN TRACKER -->
   <div id="trackerSection" style="display: none;">
     
     <header>
@@ -202,42 +193,43 @@
 </div>
 
 <script>
-  // 1. INLINE MANIFEST WITH HIGH-RES APP ICON
-  const manifestData = {
-    name: "पशु गाभण व खुराक ट्रॅकर",
-    short_name: "पशु ट्रॅकर",
-    start_url: window.location.href,
-    display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#16a34a",
-    icons: [{
-      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2316a34a'/><text y='70' x='12' font-size='70'>🐄</text></svg>",
-      sizes: "192x192 512x512",
-      type: "image/svg+xml"
-    }]
-  };
-  const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-  document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
+  // 1. INLINE ZERO-DEPENDENCY MANIFEST
+  try {
+    const manifestData = {
+      name: "पशु गाभण व खुराक ट्रॅकर",
+      short_name: "पशु ट्रॅकर",
+      start_url: window.location.href,
+      display: "standalone",
+      background_color: "#ffffff",
+      theme_color: "#16a34a",
+      icons: [{
+        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2316a34a'/><text y='70' x='12' font-size='70'>🐄</text></svg>",
+        sizes: "192x192 512x512",
+        type: "image/svg+xml"
+      }]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
+  } catch(e) {}
 
-  // 2. REGISTER INLINE SERVICE WORKER (1-Click PWA Trigger साठी अनिवार्य)
+  // 2. SERVICE WORKER
   if ('serviceWorker' in navigator) {
-    const swCode = "self.addEventListener('fetch', function(e) {});";
-    const swBlob = new Blob([swCode], { type: 'application/javascript' });
-    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    try {
+      const swCode = "self.addEventListener('fetch', function(e) {});";
+      const swBlob = new Blob([swCode], { type: 'application/javascript' });
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    } catch(e) {}
   }
 
-  // 3. 1-CLICK DIRECT POPUP EVENT CAPTURE
+  // 3. 1-CLICK DIRECT POPUP
   var deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     deferredPrompt = e;
-    var btn = document.getElementById('installBtn');
-    if (btn) btn.style.display = 'flex';
   });
 
   function triggerAppInstall() {
     if (deferredPrompt) {
-      // थेट स्क्रीनच्या खालून अधिकृत 'Install' चा डायलॉग येईल
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(choiceResult) {
         if (choiceResult.outcome === 'accepted') {
@@ -246,7 +238,7 @@
         deferredPrompt = null;
       });
     } else {
-      alert("तुमच्या फोनच्या ब्राउझर मेनूमध्ये जाऊन 'Add to Home screen' किंवा 'Install App' निवडा.");
+      alert("मोबाईल स्क्रीनवर ॲप सेव्ह करण्यासाठी:\n१. वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install App' किंवा 'Add to Home screen' निवडा.");
     }
   }
 
@@ -349,7 +341,7 @@
   var activeResetId = null;
 
   // 5. AUTHENTICATION LOGIC
-  if (localStorage.getItem("pashu_auth_verified_user") === "true") {
+  if (localStorage.getItem("pashu_final_app_unlocked") === "true") {
     openAppDirectly();
   }
 
@@ -372,7 +364,7 @@
 
     // 2026 किंवा शेवटचे ४ अंक + 7
     if (pin === expectedFormulaPin || pin === "2026") {
-      localStorage.setItem("pashu_auth_verified_user", "true");
+      localStorage.setItem("pashu_final_app_unlocked", "true");
       openAppDirectly();
     } else {
       err.innerHTML = "चुकीचा पिन! योग्य पिन टाका.<br><span style='font-size:11px;font-weight:normal;'>Invalid PIN! Please enter correct PIN.</span>";
@@ -388,7 +380,7 @@
   }
 
   function logout() {
-    localStorage.removeItem("pashu_auth_verified_user");
+    localStorage.removeItem("pashu_final_app_unlocked");
     document.getElementById("trackerSection").style.display = "none";
     document.getElementById("lockSection").style.display = "flex";
     document.getElementById("userPhone").value = "";
@@ -398,4 +390,13 @@
   // 6. FORM & AUDIO CONTROLS
   function selectAnimal(type) {
     curAnimal = type;
-    document.getElementById("tabCow").className = (type === 'cow') ? "animal-b
+    document.getElementById("tabCow").className = (type === 'cow') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabGoat").className = (type === 'goat') ? "animal-btn active" : "animal-btn";
+  }
+
+  function startMic() {
+    var Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Speech) { alert("माईक उपलब्ध नाही."); return; }
+    var rec = new Speech();
+    rec
