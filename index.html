@@ -12,57 +12,488 @@
 <title>Cattle Tracker</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:#f1f5f9;min-height:100vh;padding:16px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
-.wrap{width:100%;max-width:420px;}
-.box{background:white;padding:28px 22px;border-radius:24px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.12);margin-top:20px;}
-.app-icon{font-size:55px;margin-bottom:12px;background:#dcfce7;width:90px;height:90px;line-height:90px;border-radius:50%;margin-left:auto;margin-right:auto;}
-h1,h2,h3{color:#166534;}
-h2{font-size:22px;margin-bottom:10px;}
-p{font-size:14px;color:#475569;margin-bottom:18px;line-height:1.5;}
-input,select,textarea{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;outline:none;background:white;margin-bottom:14px;font-weight:600;font-family:inherit;}
-input:focus,select:focus,textarea:focus{border-color:#16a34a;}
-.btn{width:100%;background:#16a34a;color:white;border:none;padding:15px;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:6px;box-shadow:0 4px 12px rgba(22,163,74,0.25);}
-.btn-blue{background:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,0.25);}
-.info-badge{background:#f0fdf4;border:1.5px solid #bbf7d0;color:#166534;padding:10px;border-radius:10px;font-size:12px;font-weight:bold;margin-bottom:16px;}
-.guide-box{background:#eff6ff;border:1.5px solid #bfdbfe;color:#1e40af;padding:12px;border-radius:10px;font-size:12px;margin-top:14px;text-align:left;line-height:1.5;}
-#appScreen{display:none;width:100%;}
-.app-header{background:white;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 8px 20px rgba(0,0,0,.08);text-align:center;}
-.header-title{font-size:21px;font-weight:bold;color:#166534;}
-.card{background:white;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.07);}
-.card h3{font-size:17px;margin-bottom:12px;color:#166534;}
-.animal-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
-.animal-btn{border:2px solid #dcfce7;background:#f0fdf4;padding:12px 5px;border-radius:12px;cursor:pointer;font-weight:bold;color:#166534;}
-.animal-btn.active{border-color:#16a34a;background:#dcfce7;}
-.photo-preview{width:80px;height:80px;border-radius:12px;object-fit:cover;display:none;margin:5px auto 10px;border:1px solid #cbd5e1;}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
-.stat{background:white;padding:12px 6px;border-radius:14px;text-align:center;box-shadow:0 5px 15px rgba(0,0,0,.06);}
-.stat-number{font-size:20px;font-weight:bold;color:#16a34a;}
-.stat-label{font-size:11px;color:#64748b;}
-.item{background:white;border-radius:14px;padding:14px;border:1px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;}
-.cow-img{width:65px;height:65px;border-radius:10px;background:#f1f5f9;display:flex;justify-content:center;align-items:center;font-size:30px;flex-shrink:0;overflow:hidden;border:1px solid #cbd5e1;}
-.cow-img img{width:100%;height:100%;object-fit:cover;}
-.item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;gap:8px;font-weight:bold;font-size:14px;border-bottom:1px solid #f1f5f9;padding-bottom:5px;margin-bottom:6px;}
-.row{display:flex;justify-content:space-between;gap:8px;font-size:11px;padding:4px 0;color:#475569;}
-.due{background:#ecfdf5;padding:7px;border-radius:6px;color:#166534;font-weight:bold;margin-top:6px;font-size:12px;}
-.note-box{background:#fffbeb;border:1px solid #fef3c7;border-radius:6px;padding:7px;font-size:11px;color:#92400e;margin-top:6px;}
-.btn-del{width:100%;background:#fee2e2;color:#b91c1c;border:none;padding:7px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;margin-top:8px;}
-.empty{text-align:center;color:#94a3b8;font-size:13px;padding:20px;}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:system-ui,-apple-system,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:#f1f5f9;
+min-height:100vh;
+padding:16px;
+color:#0f172a;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+}
+
+.wrap{
+width:100%;
+max-width:420px;
+}
+
+.box{
+background:white;
+padding:28px 22px;
+border-radius:24px;
+width:100%;
+text-align:center;
+box-shadow:0 20px 40px rgba(0,0,0,.12);
+margin-top:20px;
+}
+
+.app-icon{
+font-size:55px;
+margin-bottom:12px;
+background:#dcfce7;
+width:90px;
+height:90px;
+line-height:90px;
+border-radius:50%;
+margin-left:auto;
+margin-right:auto;
+}
+
+h1,h2,h3{
+color:#166534;
+}
+
+h2{
+font-size:22px;
+margin-bottom:10px;
+}
+
+p{
+font-size:14px;
+color:#475569;
+margin-bottom:18px;
+line-height:1.5;
+}
+
+input,select,textarea{
+width:100%;
+padding:14px;
+border:2px solid #cbd5e1;
+border-radius:12px;
+font-size:16px;
+outline:none;
+background:white;
+margin-bottom:14px;
+font-weight:600;
+font-family:inherit;
+}
+
+input:focus,select:focus,textarea:focus{
+border-color:#16a34a;
+}
+
+.btn{
+width:100%;
+background:#16a34a;
+color:white;
+border:none;
+padding:15px;
+border-radius:12px;
+font-weight:bold;
+font-size:16px;
+cursor:pointer;
+margin-top:6px;
+box-shadow:0 4px 12px rgba(22,163,74,0.25);
+}
+
+.btn-blue{
+background:#2563eb;
+box-shadow:0 4px 12px rgba(37,99,235,0.25);
+}
+
+.info-badge{
+background:#f0fdf4;
+border:1.5px solid #bbf7d0;
+color:#166534;
+padding:10px;
+border-radius:10px;
+font-size:12px;
+font-weight:bold;
+margin-bottom:16px;
+}
+
+/* INSTALL MANUAL GUIDE */
+
+.install-warning{
+background:#fff7ed;
+border:2px solid #fdba74;
+color:#9a3412;
+padding:14px;
+border-radius:12px;
+margin-top:16px;
+font-size:14px;
+font-weight:bold;
+line-height:1.5;
+text-align:center;
+}
+
+.manual-guide{
+background:#eff6ff;
+border:2px solid #93c5fd;
+color:#1e3a8a;
+padding:14px;
+border-radius:12px;
+margin-top:14px;
+text-align:left;
+line-height:1.6;
+}
+
+.manual-guide-title{
+font-size:16px;
+font-weight:900;
+margin-bottom:8px;
+text-align:center;
+}
+
+.manual-step{
+background:white;
+border-radius:9px;
+padding:8px 10px;
+margin-top:7px;
+font-size:13px;
+font-weight:700;
+border:1px solid #dbeafe;
+}
+
+.manual-step span{
+display:inline-block;
+background:#2563eb;
+color:white;
+width:24px;
+height:24px;
+line-height:24px;
+text-align:center;
+border-radius:50%;
+margin-right:7px;
+}
+
+.video-box{
+margin-top:16px;
+background:#0f172a;
+border-radius:16px;
+padding:12px;
+color:white;
+overflow:hidden;
+}
+
+.video-title{
+font-size:14px;
+font-weight:bold;
+margin-bottom:9px;
+}
+
+.tutorial-screen{
+height:180px;
+background:#f8fafc;
+border-radius:10px;
+color:#0f172a;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:15px;
+position:relative;
+overflow:hidden;
+}
+
+.tutorial-step{
+display:none;
+width:100%;
+animation:fadeStep .5s ease;
+}
+
+.tutorial-step.active{
+display:block;
+}
+
+.tutorial-icon{
+font-size:42px;
+margin-bottom:7px;
+}
+
+.tutorial-text{
+font-size:15px;
+font-weight:900;
+color:#166534;
+}
+
+.tutorial-small{
+font-size:11px;
+color:#475569;
+margin-top:5px;
+}
+
+@keyframes fadeStep{
+from{
+opacity:0;
+transform:translateX(20px);
+}
+to{
+opacity:1;
+transform:translateX(0);
+}
+}
+
+.video-controls{
+display:flex;
+gap:8px;
+margin-top:9px;
+}
+
+.video-control{
+flex:1;
+border:none;
+border-radius:8px;
+padding:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.video-progress{
+height:5px;
+background:#334155;
+border-radius:10px;
+margin-top:9px;
+overflow:hidden;
+}
+
+.video-progress-bar{
+height:100%;
+width:0%;
+background:#22c55e;
+transition:width .3s linear;
+}
+
+.guide-box{
+background:#eff6ff;
+border:1.5px solid #bfdbfe;
+color:#1e40af;
+padding:12px;
+border-radius:10px;
+font-size:12px;
+margin-top:14px;
+text-align:left;
+line-height:1.5;
+}
+
+#appScreen{
+display:none;
+width:100%;
+}
+
+.app-header{
+background:white;
+border-radius:18px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.header-title{
+font-size:21px;
+font-weight:bold;
+color:#166534;
+}
+
+.card{
+background:white;
+border-radius:18px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 6px 18px rgba(0,0,0,.07);
+}
+
+.card h3{
+font-size:17px;
+margin-bottom:12px;
+color:#166534;
+}
+
+.animal-buttons{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-bottom:14px;
+}
+
+.animal-btn{
+border:2px solid #dcfce7;
+background:#f0fdf4;
+padding:12px 5px;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+color:#166534;
+}
+
+.animal-btn.active{
+border-color:#16a34a;
+background:#dcfce7;
+}
+
+.photo-preview{
+width:80px;
+height:80px;
+border-radius:12px;
+object-fit:cover;
+display:none;
+margin:5px auto 10px;
+border:1px solid #cbd5e1;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:8px;
+margin-bottom:14px;
+}
+
+.stat{
+background:white;
+padding:12px 6px;
+border-radius:14px;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,.06);
+}
+
+.stat-number{
+font-size:20px;
+font-weight:bold;
+color:#16a34a;
+}
+
+.stat-label{
+font-size:11px;
+color:#64748b;
+}
+
+.item{
+background:white;
+border-radius:14px;
+padding:14px;
+border:1px solid #e2e8f0;
+margin-bottom:12px;
+display:flex;
+gap:12px;
+align-items:flex-start;
+}
+
+.cow-img{
+width:65px;
+height:65px;
+border-radius:10px;
+background:#f1f5f9;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+flex-shrink:0;
+overflow:hidden;
+border:1px solid #cbd5e1;
+}
+
+.cow-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.item-info{
+flex-grow:1;
+min-width:0;
+}
+
+.item-top{
+display:flex;
+justify-content:space-between;
+gap:8px;
+font-weight:bold;
+font-size:14px;
+border-bottom:1px solid #f1f5f9;
+padding-bottom:5px;
+margin-bottom:6px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+gap:8px;
+font-size:11px;
+padding:4px 0;
+color:#475569;
+}
+
+.due{
+background:#ecfdf5;
+padding:7px;
+border-radius:6px;
+color:#166534;
+font-weight:bold;
+margin-top:6px;
+font-size:12px;
+}
+
+.note-box{
+background:#fffbeb;
+border:1px solid #fef3c7;
+border-radius:6px;
+padding:7px;
+font-size:11px;
+color:#92400e;
+margin-top:6px;
+}
+
+.btn-del{
+width:100%;
+background:#fee2e2;
+color:#b91c1c;
+border:none;
+padding:7px;
+border-radius:6px;
+font-weight:bold;
+font-size:11px;
+cursor:pointer;
+margin-top:8px;
+}
+
+.empty{
+text-align:center;
+color:#94a3b8;
+font-size:13px;
+padding:20px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
+<!-- LOGIN -->
+
 <div id="lockScreen" class="box">
+
 <div class="app-icon">🐄</div>
+
 <h2 id="lTitle">Cattle Tracker</h2>
 
-<div class="info-badge">🔒 Farmer App</div>
+<div class="info-badge">
+🔒 Farmer App
+</div>
 
 <div style="text-align:left;">
-<label id="langLbl" style="font-size:12px;font-weight:bold;color:#334155;display:block;margin-bottom:4px;">
+
+<label id="langLbl"
+style="font-size:12px;font-weight:bold;color:#334155;display:block;margin-bottom:4px;">
 भाषा निवडा:
 </label>
 
@@ -71,119 +502,386 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
 <option value="hi">हिंदी</option>
 <option value="en">English</option>
 </select>
+
 </div>
 
-<p id="lSub">ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:</p>
+<p id="lSub">
+ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:
+</p>
 
-<input type="tel" id="uPhone" maxlength="10" inputmode="numeric"
-placeholder="मोबाईल नंबर (10 अंकी)">
+<input
+type="tel"
+id="uPhone"
+maxlength="10"
+inputmode="numeric"
+placeholder="मोबाईल नंबर (10 अंकी)"
+>
 
-<input type="password" id="uPin" inputmode="numeric"
-placeholder="पासवर्ड (PIN) टाका">
+<input
+type="password"
+id="uPin"
+inputmode="numeric"
+placeholder="पासवर्ड (PIN) टाका"
+>
 
-<button id="loginBtn" class="btn" onclick="checkLogin()">
+<button
+id="loginBtn"
+class="btn"
+onclick="checkLogin()">
 ॲप उघडा 🔓
 </button>
+
 </div>
 
 
+<!-- INSTALL SCREEN -->
+
 <div id="downloadScreen" class="box" style="display:none;">
+
 <div class="app-icon">📥</div>
 
-<h2 id="dTitle">होम स्क्रीनवर सेव्ह करा</h2>
+<h2 id="dTitle">
+होम स्क्रीनवर सेव्ह करा
+</h2>
 
-<div class="info-badge">📱 Cattle Tracker</div>
+<div class="info-badge">
+📱 Cattle Tracker
+</div>
 
 <p id="dSub">
 लॉगिन यशस्वी झाले! ॲप होम स्क्रीनवर इन्स्टॉल करण्यासाठी खालील बटण दाबा:
 </p>
 
-<button onclick="installApp()" id="installBtn" class="btn btn-blue">
+<button
+onclick="installApp()"
+id="installBtn"
+class="btn btn-blue">
 ⬇️ ॲप इन्स्टॉल करा
 </button>
 
-<div class="guide-box" id="dGuide">
-<b>📌 टीप:</b>
-खालील बटन दाबा. स्क्रीनवर Install / OK किंवा Add असा पर्याय दिसल्यावर तो दाबा.
-त्यानंतर Cattle Tracker तुमच्या Home Screen वर दिसेल.
+
+<!-- FALLBACK MESSAGE -->
+
+<div
+id="installWarning"
+class="install-warning">
+
+⚠️ जर वरचे Install बटन दाबल्यानंतर
+Install / Add पॉप-अप दिसला नाही,
+तर खालील पद्धत वापरा.
+
+</div>
+
+
+<!-- MANUAL GUIDE -->
+
+<div
+id="manualGuide"
+class="manual-guide">
+
+<div
+id="manualGuideTitle"
+class="manual-guide-title">
+
+📌 Install करण्याची सोपी पद्धत
+
+</div>
+
+<div class="manual-step">
+<span>1</span>
+वरच्या बाजूला <b>⋮ तीन डॉट्स</b> दाबा.
+</div>
+
+<div class="manual-step">
+<span>2</span>
+खाली स्क्रोल करा.
+</div>
+
+<div class="manual-step">
+<span>3</span>
+<b>Install app / Install Cattle Tracker</b> शोधा.
+</div>
+
+<div class="manual-step">
+<span>4</span>
+<b>Install</b> वर दाबा.
+</div>
+
+<div class="manual-step">
+<span>5</span>
+<b>Add</b> दिसल्यास <b>Add</b> वर दाबा.
+</div>
+
+<div class="manual-step">
+<span>6</span>
+🎉 Cattle Tracker तुमच्या <b>Home Screen</b> वर दिसेल.
+</div>
+
+</div>
+
+
+<!-- SMALL ANIMATED VIDEO / TUTORIAL -->
+
+<div class="video-box">
+
+<div
+id="videoTitle"
+class="video-title">
+
+🎬 छोटा Install Tutorial
+
+</div>
+
+<div class="tutorial-screen">
+
+<div class="tutorial-step active">
+<div class="tutorial-icon">⋮</div>
+<div class="tutorial-text">तीन डॉट्स दाबा</div>
+<div class="tutorial-small">
+Browser च्या वरच्या बाजूला ⋮ शोधा
 </div>
 </div>
 
+<div class="tutorial-step">
+<div class="tutorial-icon">⬇️</div>
+<div class="tutorial-text">खाली Scroll करा</div>
+<div class="tutorial-small">
+Menu मध्ये खाली जा
+</div>
+</div>
+
+<div class="tutorial-step">
+<div class="tutorial-icon">📲</div>
+<div class="tutorial-text">Install App शोधा</div>
+<div class="tutorial-small">
+Install app / Install Cattle Tracker
+</div>
+</div>
+
+<div class="tutorial-step">
+<div class="tutorial-icon">📥</div>
+<div class="tutorial-text">Install दाबा</div>
+<div class="tutorial-small">
+Browser विचारेल तेव्हा Install निवडा
+</div>
+</div>
+
+<div class="tutorial-step">
+<div class="tutorial-icon">➕</div>
+<div class="tutorial-text">Add दाबा</div>
+<div class="tutorial-small">
+Add पर्याय दिसल्यास तो दाबा
+</div>
+</div>
+
+<div class="tutorial-step">
+<div class="tutorial-icon">🐄</div>
+<div class="tutorial-text">Cattle Tracker तयार! 🎉</div>
+<div class="tutorial-small">
+आता Home Screen वरून ॲप उघडा
+</div>
+</div>
+
+</div>
+
+<div class="video-progress">
+<div
+id="videoProgress"
+class="video-progress-bar">
+</div>
+</div>
+
+<div class="video-controls">
+
+<button
+class="video-control"
+onclick="previousTutorial()">
+◀ मागे
+</button>
+
+<button
+id="videoPlayBtn"
+class="video-control"
+onclick="toggleTutorial()">
+⏸️ Pause
+</button>
+
+<button
+class="video-control"
+onclick="nextTutorial()">
+पुढे ▶
+</button>
+
+</div>
+
+</div>
+
+
+<div
+id="dGuide"
+class="guide-box">
+
+<b>📌 टीप:</b>
+जर Install popup आपोआप आला तर त्यामध्ये
+<b>Install / OK / Add</b> दाबा.
+जर popup आला नाही तर वरची manual पद्धत वापरा.
+
+</div>
+
+</div>
+
+
+<!-- MAIN APP -->
 
 <div id="appScreen">
 
 <div class="app-header">
-<div class="header-title" id="mainHeaderTitle">🐄 Cattle Tracker</div>
-<div style="font-size:12px;color:#64748b;margin-top:4px;" id="mainHeaderSub">
+
+<div
+class="header-title"
+id="mainHeaderTitle">
+🐄 Cattle Tracker
+</div>
+
+<div
+style="font-size:12px;color:#64748b;margin-top:4px;"
+id="mainHeaderSub">
 गाभण व खुराक व्यवस्थापन
 </div>
+
 </div>
+
 
 <div class="stats">
+
 <div class="stat">
-<div class="stat-number" id="totalCount">0</div>
-<div class="stat-label" id="lblTotal">एकूण नोंदी</div>
+<div
+class="stat-number"
+id="totalCount">
+0
+</div>
+<div
+class="stat-label"
+id="lblTotal">
+एकूण नोंदी
+</div>
 </div>
 
 <div class="stat">
-<div class="stat-number" id="cowCount">0</div>
-<div class="stat-label" id="lblCow">गाय</div>
+<div
+class="stat-number"
+id="cowCount">
+0
+</div>
+<div
+class="stat-label"
+id="lblCow">
+गाय
+</div>
 </div>
 
 <div class="stat">
-<div class="stat-number" id="buffaloCount">0</div>
-<div class="stat-label" id="lblBuf">म्हैस</div>
+<div
+class="stat-number"
+id="buffaloCount">
+0
+</div>
+<div
+class="stat-label"
+id="lblBuf">
+म्हैस
+</div>
 </div>
 
 <div class="stat">
-<div class="stat-number" id="goatCount">0</div>
-<div class="stat-label" id="lblGoat">शेळी</div>
+<div
+class="stat-number"
+id="goatCount">
+0
 </div>
+<div
+class="stat-label"
+id="lblGoat">
+शेळी
+</div>
+</div>
+
 </div>
 
 
 <div class="card">
 
-<h3 id="formTitle">➕ नवीन पशु नोंद</h3>
+<h3 id="formTitle">
+➕ नवीन पशु नोंद
+</h3>
 
 <div class="animal-buttons">
 
-<button class="animal-btn active" id="cowBtn"
+<button
+class="animal-btn active"
+id="cowBtn"
 onclick="selectAnimal('cow')">
-🐄<br><span id="btnCowTxt">गाय</span>
+🐄<br>
+<span id="btnCowTxt">गाय</span>
 </button>
 
-<button class="animal-btn" id="buffaloBtn"
+<button
+class="animal-btn"
+id="buffaloBtn"
 onclick="selectAnimal('buffalo')">
-🐃<br><span id="btnBufTxt">म्हैस</span>
+🐃<br>
+<span id="btnBufTxt">म्हैस</span>
 </button>
 
-<button class="animal-btn" id="goatBtn"
+<button
+class="animal-btn"
+id="goatBtn"
 onclick="selectAnimal('goat')">
-🐐<br><span id="btnGoatTxt">शेळी</span>
+🐐<br>
+<span id="btnGoatTxt">शेळी</span>
 </button>
 
 </div>
 
-<input type="text" id="cName"
-placeholder="पशुचे नाव / ओळख (उदा. कावेरी)">
+<input
+type="text"
+id="cName"
+placeholder="पशुचे नाव / ओळख (उदा. कावेरी)"
+>
 
-<label id="lblDate"
+<label
+id="lblDate"
 style="display:block;text-align:left;font-size:12px;font-weight:bold;color:#334155;margin-bottom:5px;">
 गाभण झाल्याची तारीख
 </label>
 
-<input type="date" id="cDate">
+<input
+type="date"
+id="cDate"
+>
 
-<textarea id="cNote"
-placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)"></textarea>
+<textarea
+id="cNote"
+placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)">
+</textarea>
 
-<input type="file" id="cPhoto" accept="image/*"
-onchange="previewPhoto()">
+<input
+type="file"
+id="cPhoto"
+accept="image/*"
+onchange="previewPhoto()"
+>
 
-<img id="photoPreview" class="photo-preview" alt="Preview">
+<img
+id="photoPreview"
+class="photo-preview"
+alt="Preview"
+>
 
-<button class="btn" id="btnSave" onclick="saveData()">
+<button
+class="btn"
+id="btnSave"
+onclick="saveData()">
 💾 नोंद जतन करा
 </button>
 
@@ -192,13 +890,16 @@ onchange="previewPhoto()">
 
 <div class="card">
 
-<h3 id="listTitle">📋 माझ्या पशुंच्या नोंदी</h3>
+<h3 id="listTitle">
+📋 माझ्या पशुंच्या नोंदी
+</h3>
 
 <div id="list"></div>
 
 </div>
 
 </div>
+
 </div>
 
 
@@ -206,6 +907,10 @@ onchange="previewPhoto()">
 
 let cur = "cow";
 let deferredPrompt = null;
+
+let tutorialIndex = 0;
+let tutorialTimer = null;
+let tutorialPlaying = true;
 
 
 const langData = {
@@ -222,7 +927,13 @@ dTitle:"होम स्क्रीनवर सेव्ह करा",
 dSub:"लॉगिन यशस्वी झाले! ॲप होम स्क्रीनवर इन्स्टॉल करण्यासाठी खालील बटण दाबा:",
 install:"⬇️ ॲप इन्स्टॉल करा",
 
-guide:"<b>📌 टीप:</b> खालील बटन दाबा. स्क्रीनवर Install / OK किंवा Add असा पर्याय दिसल्यावर तो दाबा. त्यानंतर Cattle Tracker तुमच्या Home Screen वर दिसेल.",
+warning:"⚠️ जर वरचे Install बटन दाबल्यानंतर Install / Add पॉप-अप दिसला नाही, तर खालील पद्धत वापरा.",
+
+manualTitle:"📌 Install करण्याची सोपी पद्धत",
+
+videoTitle:"🎬 छोटा Install Tutorial",
+
+guide:"<b>📌 टीप:</b> जर Install popup आपोआप आला तर त्यामध्ये <b>Install / OK / Add</b> दाबा. जर popup आला नाही तर वरची manual पद्धत वापरा.",
 
 headerTitle:"🐄 Cattle Tracker",
 headerSub:"गाभण व खुराक व्यवस्थापन",
@@ -254,12 +965,16 @@ delivery:"🍼 अंदाजे विण्याची तारीख:",
 noteLbl:"📝 <b>टीप:</b> ",
 
 invalidPhone:"कृपया १० अंकी वैध भारतीय मोबाईल नंबर टाका (६ ते ९ ने सुरू होणारा)!",
+
 incorrectPin:"चुकीचा PIN! कृपया योग्य PIN टाका.",
+
 dateRequired:"कृपया तारीख निवडा!",
+
 futureDateError:"भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
 
-installCancelled:"इन्स्टॉलेशन रद्द केले गेले.",
-noPromptMsg:"सध्या इन्स्टॉल पर्याय उपलब्ध नाही. कृपया थोड्या वेळाने पुन्हा प्रयत्न करा.",
+installCancelled:"इन्स्टॉलेशन रद्द केले गेले. खालील Install पद्धत वापरा.",
+
+noPromptMsg:"सध्या Install popup उपलब्ध नाही. खाली दिलेली Install करण्याची पद्धत वापरा.",
 
 storageError:"स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!"
 },
@@ -276,7 +991,13 @@ dTitle:"होम स्क्रीन पर सेव करें",
 dSub:"लॉगिन सफल! ऐप होम स्क्रीन पर इंस्टॉल करने के लिए नीचे दिए गए बटन पर क्लिक करें:",
 install:"⬇️ ऐप इंस्टॉल करें",
 
-guide:"<b>📌 महत्वपूर्ण:</b> नीचे दिए गए बटन को दबाएं। स्क्रीन पर Install / OK या Add विकल्प दिखाई देने पर उसे दबाएं। इसके बाद Cattle Tracker आपके Home Screen पर दिखाई देगा।",
+warning:"⚠️ अगर ऊपर Install बटन दबाने के बाद Install / Add पॉप-अप दिखाई नहीं देता, तो नीचे दी गई विधि का उपयोग करें।",
+
+manualTitle:"📌 Install करने की आसान विधि",
+
+videoTitle:"🎬 छोटा Install Tutorial",
+
+guide:"<b>📌 नोट:</b> अगर Install popup अपने आप आए तो <b>Install / OK / Add</b> दबाएं। अगर popup नहीं आया तो ऊपर दी गई manual विधि का उपयोग करें।",
 
 headerTitle:"🐄 Cattle Tracker",
 headerSub:"गर्भधारण और चारा प्रबंधन",
@@ -308,12 +1029,16 @@ delivery:"🍼 अनुमानित ब्याने की तारी�
 noteLbl:"📝 <b>नोट:</b> ",
 
 invalidPhone:"कृपया 10 अंकों का वैध भारतीय मोबाइल नंबर दर्ज करें (6 से 9 से शुरू होने वाला)!",
+
 incorrectPin:"गलत PIN! कृपया सही PIN दर्ज करें।",
+
 dateRequired:"कृपया तारीख चुनें!",
+
 futureDateError:"भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
 
-installCancelled:"इंस्टॉलेशन रद्द कर दिया गया।",
-noPromptMsg:"अभी इंस्टॉल विकल्प उपलब्ध नहीं है। कृपया थोड़ी देर बाद पुनः प्रयास करें.",
+installCancelled:"इंस्टॉलेशन रद्द कर दिया गया। नीचे दी गई Install विधि का उपयोग करें।",
+
+noPromptMsg:"अभी Install popup उपलब्ध नहीं है। नीचे दी गई Install विधि का उपयोग करें।",
 
 storageError:"स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!"
 },
@@ -330,7 +1055,13 @@ dTitle:"Save to Home Screen",
 dSub:"Login successful! Tap the button below to install the app on your home screen:",
 install:"⬇️ Install App",
 
-guide:"<b>📌 Note:</b> Tap the button below. When Install / OK or Add appears on the screen, tap it. Cattle Tracker will then appear on your Home Screen.",
+warning:"⚠️ If the Install / Add popup does not appear after pressing the Install button, use the method below.",
+
+manualTitle:"📌 Easy Install Method",
+
+videoTitle:"🎬 Short Install Tutorial",
+
+guide:"<b>📌 Note:</b> If the Install popup appears automatically, tap <b>Install / OK / Add</b>. If it does not appear, use the manual method above.",
 
 headerTitle:"🐄 Cattle Tracker",
 headerSub:"Pregnancy & Feed Management",
@@ -362,12 +1093,16 @@ delivery:"🍼 Expected Delivery Date:",
 noteLbl:"📝 <b>Note:</b> ",
 
 invalidPhone:"Please enter a valid 10-digit Indian mobile number (starting with 6-9)!",
+
 incorrectPin:"Incorrect PIN! Please enter the correct PIN.",
+
 dateRequired:"Please select a date!",
+
 futureDateError:"Future dates cannot be recorded! Please select today or a past date.",
 
-installCancelled:"Installation was cancelled.",
-noPromptMsg:"Install option is not available right now. Please try again later.",
+installCancelled:"Installation was cancelled. Please use the Install method below.",
+
+noPromptMsg:"The Install popup is not available right now. Please use the Install method below.",
 
 storageError:"Storage is full! Could not save data."
 }
@@ -375,379 +1110,86 @@ storageError:"Storage is full! Could not save data."
 };
 
 
+/* =========================
+   PWA INSTALL
+========================= */
+
 function isInstalledPWA(){
+
 return window.matchMedia("(display-mode: standalone)").matches ||
 window.navigator.standalone === true;
+
 }
 
 
 window.addEventListener("beforeinstallprompt",function(e){
+
 e.preventDefault();
+
 deferredPrompt=e;
+
 });
 
 
 window.addEventListener("appinstalled",function(){
+
 deferredPrompt=null;
+
+stopTutorial();
+
 startMainApp();
+
 });
 
+
+/* =========================
+   LANGUAGE
+========================= */
 
 function changeLanguage(){
 
 const lang=document.getElementById("langSelect").value;
+
 const t=langData[lang]||langData.mr;
 
 try{
+
 localStorage.setItem("cattle_lang",lang);
+
 }catch(e){}
 
 document.getElementById("langLbl").innerText=t.lbl;
+
 document.getElementById("lTitle").innerText=t.title;
+
 document.getElementById("lSub").innerText=t.sub;
 
 document.getElementById("uPhone").placeholder=t.phone;
+
 document.getElementById("uPin").placeholder=t.pin;
+
 document.getElementById("loginBtn").innerText=t.login;
 
 document.getElementById("dTitle").innerText=t.dTitle;
+
 document.getElementById("dSub").innerText=t.dSub;
+
 document.getElementById("installBtn").innerText=t.install;
+
+document.getElementById("installWarning").innerText=t.warning;
+
+document.getElementById("manualGuideTitle").innerText=t.manualTitle;
+
+document.getElementById("videoTitle").innerText=t.videoTitle;
+
 document.getElementById("dGuide").innerHTML=t.guide;
 
 document.getElementById("mainHeaderTitle").innerText=t.headerTitle;
+
 document.getElementById("mainHeaderSub").innerText=t.headerSub;
 
 document.getElementById("lblTotal").innerText=t.tot;
+
 document.getElementById("lblCow").innerText=t.cow;
-document.getElementById("lblBuf").innerText=t.buf;
-document.getElementById("lblGoat").innerText=t.goat;
 
-document.getElementById("formTitle").innerText=t.formT;
-
-document.getElementById("btnCowTxt").innerText=t.bCow;
-document.getElementById("btnBufTxt").innerText=t.bBuf;
-document.getElementById("btnGoatTxt").innerText=t.bGoat;
-
-document.getElementById("cName").placeholder=t.namePh;
-document.getElementById("lblDate").innerText=t.dtLbl;
-document.getElementById("cNote").placeholder=t.notePh;
-
-document.getElementById("btnSave").innerText=t.saveBtn;
-document.getElementById("listTitle").innerText=t.listT;
-
-draw();
-}
-
-
-function checkLogin(){
-
-const phone=document.getElementById("uPhone").value.trim();
-const pin=document.getElementById("uPin").value.trim();
-
-const lang=document.getElementById("langSelect").value;
-const t=langData[lang]||langData.mr;
-
-if(!/^[6-9]\d{9}$/.test(phone)){
-alert(t.invalidPhone);
-return;
-}
-
-/* Master PIN */
-if(pin==="2026"){
-showDownloadScreen();
-return;
-}
-
-/* User PIN = last 4 digits + 7 */
-const last4=phone.slice(-4);
-const expectedPin=(parseInt(last4,10)+7).toString();
-const paddedExpectedPin=expectedPin.padStart(4,"0");
-
-if(pin===expectedPin || pin===paddedExpectedPin){
-showDownloadScreen();
-}else{
-alert(t.incorrectPin);
-}
-
-}
-
-
-function showDownloadScreen(){
-
-document.getElementById("lockScreen").style.display="none";
-document.getElementById("downloadScreen").style.display="block";
-document.getElementById("appScreen").style.display="none";
-
-}
-
-
-async function installApp(){
-
-const lang=document.getElementById("langSelect").value;
-const t=langData[lang]||langData.mr;
-
-if(isInstalledPWA()){
-startMainApp();
-return;
-}
-
-if(!deferredPrompt){
-alert(t.noPromptMsg);
-return;
-}
-
-try{
-
-const promptEvent=deferredPrompt;
-deferredPrompt=null;
-
-await promptEvent.prompt();
-
-const result=await promptEvent.userChoice;
-
-if(result.outcome==="dismissed"){
-alert(t.installCancelled);
-}
-
-}catch(error){
-
-console.log("Install error:",error);
-alert(t.noPromptMsg);
-
-}
-
-}
-
-
-function startMainApp(){
-
-document.getElementById("lockScreen").style.display="none";
-document.getElementById("downloadScreen").style.display="none";
-document.getElementById("appScreen").style.display="block";
-
-draw();
-
-}
-
-
-function selectAnimal(type){
-
-cur=type;
-
-document.getElementById("cowBtn").classList.remove("active");
-document.getElementById("buffaloBtn").classList.remove("active");
-document.getElementById("goatBtn").classList.remove("active");
-
-if(type==="cow"){
-document.getElementById("cowBtn").classList.add("active");
-}
-
-if(type==="buffalo"){
-document.getElementById("buffaloBtn").classList.add("active");
-}
-
-if(type==="goat"){
-document.getElementById("goatBtn").classList.add("active");
-}
-
-}
-
-
-function getData(){
-
-try{
-return JSON.parse(localStorage.getItem("cattle_records")||"[]");
-}catch(e){
-return [];
-}
-
-}
-
-
-function saveData(){
-
-const name=document.getElementById("cName").value.trim();
-const date=document.getElementById("cDate").value;
-const note=document.getElementById("cNote").value.trim();
-const photoInput=document.getElementById("cPhoto");
-
-const lang=document.getElementById("langSelect").value;
-const t=langData[lang]||langData.mr;
-
-if(!date){
-alert(t.dateRequired);
-return;
-}
-
-const today=new Date();
-today.setHours(0,0,0,0);
-
-const selected=new Date(date+"T00:00:00");
-
-if(selected>today){
-alert(t.futureDateError);
-return;
-}
-
-let photo="";
-
-if(photoInput.files && photoInput.files[0]){
-
-const file=photoInput.files[0];
-
-if(file.size>2*1024*1024){
-alert("Photo size must be less than 2 MB.");
-return;
-}
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-photo=e.target.result;
-
-saveRecord(name,date,note,photo,t);
-
-};
-
-reader.readAsDataURL(file);
-
-}else{
-
-saveRecord(name,date,note,"",t);
-
-}
-
-}
-
-
-function saveRecord(name,date,note,photo,t){
-
-if(!name){
-alert("Please enter animal name / tag.");
-return;
-}
-
-const records=getData();
-
-records.push({
-id:Date.now(),
-type:cur,
-name:name,
-date:date,
-note:note,
-photo:photo
-});
-
-try{
-
-localStorage.setItem("cattle_records",JSON.stringify(records));
-
-document.getElementById("cName").value="";
-document.getElementById("cDate").value="";
-document.getElementById("cNote").value="";
-document.getElementById("cPhoto").value="";
-
-const preview=document.getElementById("photoPreview");
-preview.src="";
-preview.style.display="none";
-
-draw();
-
-}catch(error){
-
-console.log(error);
-alert(t.storageError);
-
-}
-
-}
-
-
-function previewPhoto(){
-
-const input=document.getElementById("cPhoto");
-const preview=document.getElementById("photoPreview");
-
-if(!input.files || !input.files[0]){
-preview.src="";
-preview.style.display="none";
-return;
-}
-
-const file=input.files[0];
-
-if(file.size>2*1024*1024){
-alert("Photo size must be less than 2 MB.");
-input.value="";
-preview.src="";
-preview.style.display="none";
-return;
-}
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-preview.src=e.target.result;
-preview.style.display="block";
-};
-
-reader.readAsDataURL(file);
-
-}
-
-
-function addDays(dateString,days){
-
-const d=new Date(dateString+"T00:00:00");
-d.setDate(d.getDate()+days);
-
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
-
-}
-
-
-function formatDate(dateString){
-
-const d=new Date(dateString+"T00:00:00");
-
-return d.toLocaleDateString("en-IN",{
-day:"2-digit",
-month:"2-digit",
-year:"numeric"
-});
-
-}
-
-
-function escapeHTML(value){
-
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-
-}
-
-
-function draw(){
-
-const records=getData();
-
-const lang=document.getElementById("langSelect").value;
-const t=langData[lang]||langData.mr;
-
-document.getElementById("totalCount").innerText=records.length;
-document.getElementById("cowCount").innerText=records.filter(x=>x.type==="cow").length;
-document.getElementById("buffaloCount").innerText=records.filter(x=>x.type==="buffalo").length;
-document.getElementById("goatCount").innerText=records.filter(x=>x.type==="goat").length;
-
-const list=document.getElementById("list");
-
-if(records.length===0){
-list.innerHTML='<div class="empty">'+t.empty+"</div>";
+document.getElementById("lblBuf").in
