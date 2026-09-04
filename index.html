@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
   
-  <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
+  <title>पशु ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic Zero-File Web Manifest -->
+  <!-- Dynamic PWA Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
   
   <style>
@@ -34,25 +34,16 @@
     /* 2. MAIN APP HEADER */
     header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(22,163,74,0.25); margin-bottom: 12px; }
     .hdr-title { font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-    .header-actions { display: flex; align-items: center; gap: 6px; }
-    .lang-select { background: white; color: #15803d; border: none; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 20px; outline: none; }
-    .btn-logout { background: #dc2626; color: white; border: none; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px; cursor: pointer; }
+    .btn-logout { background: #dc2626; color: white; border: none; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 20px; cursor: pointer; }
 
     /* 3. DOWNLOAD / INSTALL APP BANNER */
-    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
-    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
-    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 14px; }
+    .install-title { font-size: 14px; font-weight: bold; color: #166534; margin-bottom: 4px; }
+    .install-sub { font-size: 12px; color: #15803d; margin-bottom: 12px; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
-    /* 4. FORM CARD */
-    .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
-    .animal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-    .animal-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 4px; text-align: center; cursor: pointer; }
-    .animal-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
-    .animal-btn .emoji { font-size: 22px; display: block; }
-    .animal-btn .lbl { font-size: 11px; font-weight: bold; }
-
-    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
+    /* Success Message Box */
+    .success-card { background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #e2e8f0; }
   </style>
 </head>
 <body>
@@ -81,62 +72,31 @@
     </div>
   </div>
 
-  <!-- STEP 2: MAIN DASHBOARD & DIRECT DOWNLOAD SECTION -->
+  <!-- STEP 2: DOWNLOAD & DASHBOARD SECTION -->
   <div id="trackerSection" style="display: none;">
     
     <header>
       <div class="hdr-title">
         <span>🛡️</span>
-        <span id="uiHeader">पशु ट्रॅकर</span>
+        <span>पशु ट्रॅकर / Cattle Tracker</span>
       </div>
-      <div class="header-actions">
-        <select id="langSelect" class="lang-select" onchange="changeLanguage()">
-          <option value="mr">मराठी</option>
-          <option value="hi">हिंदी</option>
-          <option value="en">English</option>
-        </select>
-        <!-- रिसेट/लॉगआऊट बटण -->
-        <button class="btn-logout" onclick="logout()" title="बाहेर पडा">लॉगआऊट</button>
-      </div>
+      <button class="btn-logout" onclick="logout()" title="बाहेर पडा">लॉगआऊट / Logout</button>
     </header>
 
     <!-- DIRECT 1-CLICK INSTALL BANNER -->
     <div class="install-banner" id="pwaBanner">
-      <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा</div>
-      <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:</div>
+      <div class="install-title">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा</div>
+      <div class="install-sub">वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:</div>
       <button class="btn-install" id="installBtn" onclick="triggerAppInstall()">
         <span>⬇️ ॲप डाऊनलोड करा / Install App</span>
       </button>
     </div>
 
-    <!-- MAIN FORM -->
-    <div class="card">
-      <div class="animal-grid">
-        <div id="tabCow" class="animal-btn active" onclick="selectAnimal('cow')">
-          <span class="emoji">🐄</span>
-          <span class="lbl" id="uiCow">गाय (२८२ दिवस)</span>
-        </div>
-        <div id="tabBuf" class="animal-btn" onclick="selectAnimal('buffalo')">
-          <span class="emoji">🐃</span>
-          <span class="lbl" id="uiBuf">म्हैस (३१० दिवस)</span>
-        </div>
-        <div id="tabGoat" class="animal-btn" onclick="selectAnimal('goat')">
-          <span class="emoji">🐐</span>
-          <span class="lbl" id="uiGoat">शेळी (१५० दिवस)</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
-        <input type="text" id="cattleName" placeholder="उदा. कावेरी / Cow 01">
-      </div>
-
-      <div class="field">
-        <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
-        <input type="date" id="breedDate">
-      </div>
-
-      <button class="btn-save" onclick="alert('नोंदणी प्रक्रिया पुढील टप्प्यात जोडू!')" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
+    <!-- SUCCESS INFO -->
+    <div class="success-card">
+      <div style="font-size: 32px; margin-bottom: 6px;">✅</div>
+      <h3 style="color: #16a34a; font-size: 16px; margin-bottom: 4px;">ॲप यशस्वीरीत्या अनलॉक झाले आहे!</h3>
+      <p style="color: #64748b; font-size: 12px;">App Unlocked Successfully.</p>
     </div>
 
   </div>
@@ -182,7 +142,7 @@
     }
   }
 
-  // 3. AUTHENTICATION LOGIC
+  // 3. AUTHENTICATION LOGIC (सुरक्षित आणि अचूक)
   if (localStorage.getItem("pashu_auth_step_done") === "1") {
     openTracker();
   }
@@ -204,6 +164,7 @@
     var last4 = phone.slice(-4);
     var expectedFormulaPin = (parseInt(last4, 10) + 7).toString();
 
+    // पिन व्हॅलिडेशन: 2026 किंवा फॉर्म्युला (+7) किंवा शेवटचे ४ आकडे
     if (pin === expectedFormulaPin || pin === last4 || pin === "2026") {
       localStorage.setItem("pashu_auth_step_done", "1");
       openTracker();
@@ -216,51 +177,14 @@
   function openTracker() {
     document.getElementById("lockSection").style.display = "none";
     document.getElementById("trackerSection").style.display = "block";
-    document.getElementById("breedDate").valueAsDate = new Date();
   }
 
-  // लॉगआऊट करण्याचे फंक्शन (पुन्हा पिन स्क्रीन आणण्यासाठी)
   function logout() {
     localStorage.removeItem("pashu_auth_step_done");
     document.getElementById("trackerSection").style.display = "none";
     document.getElementById("lockSection").style.display = "flex";
     document.getElementById("userPhone").value = "";
     document.getElementById("userPin").value = "";
-  }
-
-  function selectAnimal(type) {
-    document.getElementById("tabCow").className = (type === 'cow') ? "animal-btn active" : "animal-btn";
-    document.getElementById("tabBuf").className = (type === 'buffalo') ? "animal-btn active" : "animal-btn";
-    document.getElementById("tabGoat").className = (type === 'goat') ? "animal-btn active" : "animal-btn";
-  }
-
-  function changeLanguage() {
-    var l = document.getElementById("langSelect").value;
-    if (l === 'hi') {
-      document.getElementById("uiHeader").innerText = "पशु ट्रैकर";
-      document.getElementById("uiInstTitle").innerText = "📲 ऐप को मोबाइल स्क्रीन पर सेव / डाउनलोड करें";
-      document.getElementById("uiInstSub").innerText = "एक क्लिक पर ऐप खोलने के लिए होम स्क्रीन पर जोड़ें:";
-      document.getElementById("uiCow").innerText = "गाय (२८२ दिन)";
-      document.getElementById("uiBuf").innerText = "भैंस (३१० दिन)";
-      document.getElementById("uiGoat").innerText = "बकरी (१५० दिन)";
-      document.getElementById("uiBtnSave").innerText = "रिकॉर्ड जोड़ें और ट्रैक करें";
-    } else if (l === 'en') {
-      document.getElementById("uiHeader").innerText = "Cattle Tracker";
-      document.getElementById("uiInstTitle").innerText = "📲 Download / Install App to Home Screen";
-      document.getElementById("uiInstSub").innerText = "Access the app in 1-click directly from home screen:";
-      document.getElementById("uiCow").innerText = "Cow (282 Days)";
-      document.getElementById("uiBuf").innerText = "Buffalo (310 Days)";
-      document.getElementById("uiGoat").innerText = "Goat (150 Days)";
-      document.getElementById("uiBtnSave").innerText = "Add Record & Track";
-    } else {
-      document.getElementById("uiHeader").innerText = "पशु ट्रॅकर";
-      document.getElementById("uiInstTitle").innerText = "📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा";
-      document.getElementById("uiInstSub").innerText = "वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:";
-      document.getElementById("uiCow").innerText = "गाय (२८२ दिवस)";
-      document.getElementById("uiBuf").innerText = "म्हैस (३१० दिवस)";
-      document.getElementById("uiGoat").innerText = "शेळी (१५० दिवस)";
-      document.getElementById("uiBtnSave").innerText = "नोंद जोडा आणि ट्रॅक करा";
-    }
   }
 </script>
 
