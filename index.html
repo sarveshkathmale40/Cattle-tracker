@@ -7,26 +7,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
   
-  <title>पशु ट्रॅकर</title>
+  <title>पशु गाभण व खुराक ट्रॅकर</title>
 
   <!-- PWA Manifest -->
   <link rel="manifest" id="mPlaceholder">
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: #f1f5f9; padding: 12px; display: flex; justify-content: center; }
     .wrap { width: 100%; max-width: 400px; }
 
-    header { background: #16a34a; color: white; padding: 14px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 12px; }
+    header { background: #16a34a; color: white; padding: 14px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
 
-    /* INSTALL BANNER */
-    .banner { background: #dcfce7; border: 2px dashed #16a34a; border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px; }
+    /* INSTALL BANNER (इन्स्टॉल झाल्यावर दिसेनासे होईल) */
+    .banner { background: #dcfce7; border: 2px dashed #16a34a; border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px; display: none; }
     .banner b { display: block; color: #166534; font-size: 14px; margin-bottom: 4px; }
     .banner p { font-size: 11px; color: #15803d; margin-bottom: 8px; }
     .btn-inst { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
 
     /* FORM */
-    .card { background: white; border-radius: 12px; padding: 14px; border: 1px solid #cbd5e1; margin-bottom: 12px; }
+    .card { background: white; border-radius: 12px; padding: 14px; border: 1px solid #cbd5e1; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
     .tab { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
     .tab.active { background: #dcfce7; border-color: #16a34a; color: #166534; }
@@ -38,7 +38,7 @@
     .btn-sub { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
 
     /* RECORD */
-    .item { background: white; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; margin-bottom: 10px; }
+    .item { background: white; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .item-top { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; margin-bottom: 6px; }
     .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: #475569; }
     .row b { color: #0f172a; }
@@ -51,7 +51,7 @@
 
 <div class="wrap">
 
-  <header>🐄 पशु गाभण ट्रॅकर</header>
+  <header>🐄 पशु गाभण व खुराक ट्रॅकर</header>
 
   <!-- INSTALL BANNER -->
   <div class="banner" id="pBanner">
@@ -96,25 +96,46 @@
   document.getElementById('mPlaceholder').setAttribute('href', URL.createObjectURL(new Blob([JSON.stringify(mData)], {type: 'application/json'})));
 
   var pPrompt = null;
+  
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     pPrompt = e;
+    // जोपर्यंत ॲप इन्स्टॉल होत नाही, तोपर्यंतच दिसेल
+    if (!localStorage.getItem("app_installed_done")) {
+      document.getElementById('pBanner').style.display = 'block';
+    }
+  });
+
+  window.addEventListener('appinstalled', function() {
+    localStorage.setItem("app_installed_done", "true");
+    document.getElementById('pBanner').style.display = 'none';
   });
 
   function installApp() {
     if (pPrompt) {
       pPrompt.prompt();
       pPrompt.userChoice.then(function(res) {
-        if (res.outcome === 'accepted') document.getElementById('pBanner').style.display = 'none';
+        if (res.outcome === 'accepted') {
+          localStorage.setItem("app_installed_done", "true");
+          document.getElementById('pBanner').style.display = 'none';
+        }
         pPrompt = null;
       });
     } else {
+      // युझरने डाऊनलोड केल्यावर किंवा बटण दाबल्यावर बॅनर कायमचा लपवा
+      localStorage.setItem("app_installed_done", "true");
+      document.getElementById('pBanner').style.display = 'none';
       alert("मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या ३ टिंबांवर (⋮) दाबा आणि 'Add to Home screen' निवडा.");
     }
   }
 
   var cur = 'cow';
   window.onload = function() {
+    // जर आधीच इन्स्टॉल झाले असेल तर बॅनर अजिबात दाखवणार नाही
+    if (localStorage.getItem("app_installed_done") === "true" || window.matchMedia('(display-mode: standalone)').matches) {
+      document.getElementById('pBanner').style.display = 'none';
+    }
+
     var d = new Date();
     document.getElementById("cDate").value = d.toISOString().split('T')[0];
     draw();
@@ -128,24 +149,24 @@
   }
 
   function getDB() {
-    return JSON.parse(localStorage.getItem("pashu_db_v3") || "[]");
+    return JSON.parse(localStorage.getItem("pashu_db_v4") || "[]");
   }
 
   function saveData() {
     var dt = document.getElementById("cDate").value;
-    if (!dt) { alert("त तारीख निवडा!"); return; }
+    if (!dt) { alert("तारीख निवडा!"); return; }
     var nm = document.getElementById("cName").value.trim() || (cur === 'cow' ? 'गाय' : (cur === 'buffalo' ? 'म्हैस' : 'शेळी'));
     
     var db = getDB();
     db.unshift({ id: Date.now(), name: nm, type: cur, date: dt });
-    localStorage.setItem("pashu_db_v3", JSON.stringify(db));
+    localStorage.setItem("pashu_db_v4", JSON.stringify(db));
     document.getElementById("cName").value = "";
     draw();
   }
 
   function delData(id) {
     var db = getDB().filter(function(i){ return i.id !== id; });
-    localStorage.setItem("pashu_db_v3", JSON.stringify(db));
+    localStorage.setItem("pashu_db_v4", JSON.stringify(db));
     draw();
   }
 
@@ -192,6 +213,7 @@
       html += '  <button class="btn-del" onclick="delData(' + it.id + ')">🗑️ नोंद हटवा</button>';
       html += '</div>';
     }
+    box.html = html; // fix assignment
     box.innerHTML = html;
   }
 </script>
