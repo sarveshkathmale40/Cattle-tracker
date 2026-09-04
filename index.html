@@ -39,21 +39,55 @@
 </head>
 <body class="bg-slate-100 text-slate-900 font-sans antialiased min-h-screen pb-16">
 
-  <!-- 4-Digit Security Lock Screen -->
-  <div id="lockScreen" class="fixed inset-0 bg-brand-700 text-white flex flex-col items-center justify-center p-4 z-[9999]">
-    <div class="bg-white text-slate-900 rounded-2xl p-6 max-w-xs w-full shadow-2xl text-center">
-      <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-3">
-        <i data-lucide="lock" class="w-6 h-6"></i>
+  <!-- STEP 1: First Screen - Big Install Prompt (सुरुवातीला सर्वात आधी ही स्क्रीन दिसेल) -->
+  <div id="firstInstallScreen" class="fixed inset-0 bg-brand-800 text-white flex flex-col items-center justify-center p-5 z-[99999]">
+    <div class="bg-white text-slate-900 rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center">
+      <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner">
+        <span class="text-3xl">🐄</span>
       </div>
-      <h3 class="font-bold text-lg text-slate-800 mb-1">🔐 ॲप अनलॉक करा</h3>
-      <p class="text-xs text-slate-500 mb-4">हा ॲप वापरण्यासाठी ४ अंकी ॲक्टिव्हेशन पिन टाका:</p>
-      <input type="password" id="accessPin" maxlength="4" placeholder="••••" class="w-full text-center text-2xl font-bold tracking-widest py-2 bg-slate-50 border border-slate-300 rounded-xl mb-3 focus:outline-none focus:ring-2 focus:ring-brand-500">
-      <button onclick="checkPin()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl shadow-md transition-all">अनलॉक करा</button>
-      <p id="pinError" class="text-xs text-rose-600 font-semibold mt-2 hidden">चुकीचा पिन! योग्य पिन टाका.</p>
+      <h2 class="font-extrabold text-xl text-slate-800 mb-1">पशु गाभण व खुराक ट्रॅकर</h2>
+      <p class="text-xs text-slate-500 mb-6 leading-relaxed">हे ॲप कायमस्वरूपी तुमच्या मोबाईल स्क्रीनवर सेव्ह करण्यासाठी खालील बटण दाबा:</p>
+
+      <button id="directInstallBtn" onclick="triggerInstall()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-brand-600/30 flex items-center justify-center gap-2 text-sm pulse-animation transition-all">
+        <i data-lucide="download" class="w-5 h-5"></i>
+        <span>📲 ॲप मोबाईलमध्ये सेव्ह / डाऊनलोड करा</span>
+      </button>
+
+      <div class="mt-4 pt-4 border-t border-slate-100">
+        <button onclick="goToLockScreen()" class="text-xs text-slate-400 hover:text-brand-600 font-medium underline">
+          आधीच इन्स्टॉल केले असल्यास पुढे जा 👉
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Main Application Wrapper -->
+  <!-- STEP 2: Mobile Number & PIN Security Lock Screen -->
+  <div id="lockScreen" class="fixed inset-0 bg-brand-700 text-white flex flex-col items-center justify-center p-4 z-[9999] hidden">
+    <div class="bg-white text-slate-900 rounded-2xl p-6 max-w-xs w-full shadow-2xl text-center">
+      <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="shield-check" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-bold text-lg text-slate-800 mb-1">🔐 ॲप ॲक्टिव्हेशन</h3>
+      <p class="text-xs text-slate-500 mb-4">नोंदणी केलेला मोबाईल नंबर आणि मिळालेला पिन टाका:</p>
+      
+      <!-- Phone Input -->
+      <div class="mb-3 text-left">
+        <label class="block text-[11px] font-bold text-slate-600 mb-1">१० अंकी मोबाईल नंबर:</label>
+        <input type="tel" id="userPhone" maxlength="10" placeholder="उदा. 9876543210" class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+      </div>
+
+      <!-- Secret PIN Input -->
+      <div class="mb-4 text-left">
+        <label class="block text-[11px] font-bold text-slate-600 mb-1">ॲक्टिव्हेशन पिन:</label>
+        <input type="password" id="userPin" maxlength="6" placeholder="••••" class="w-full text-center text-xl font-bold tracking-widest py-1.5 bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+      </div>
+
+      <button onclick="validateMobilePin()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl shadow-md transition-all">ॲप अनलॉक करा</button>
+      <p id="lockError" class="text-xs text-rose-600 font-semibold mt-2.5 hidden">चुकीचा नंबर किंवा पिन!</p>
+    </div>
+  </div>
+
+  <!-- STEP 3: Main Application (नोंदी व ट्रॅकर) -->
   <div id="mainApp" class="hidden">
     <!-- Header -->
     <header class="bg-brand-600 text-white shadow-md sticky top-0 z-50">
@@ -68,14 +102,6 @@
 
     <!-- Main Container -->
     <main class="max-w-md mx-auto px-4 pt-4 space-y-4">
-
-      <!-- PWA Install Banner -->
-      <div id="installBanner" class="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-dashed border-brand-500 rounded-2xl p-3.5 text-center hidden">
-        <p class="text-xs font-bold text-brand-800 mb-2">📲 ॲप मोबाईल स्क्रीनवर कायमस्वरूपी सेव्ह करा:</p>
-        <button id="installBtn" class="w-full bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold py-2 px-4 rounded-xl shadow transition-all flex items-center justify-center gap-1.5">
-          <i data-lucide="download" class="w-4 h-4"></i> ॲप इन्स्टॉल करा
-        </button>
-      </div>
 
       <!-- Input Card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
@@ -146,7 +172,7 @@
         <h3 class="font-bold text-base">जनावर पुन्हा माजावर आले?</h3>
       </div>
       <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-        ज्या दिवशी पुन्हा रेतन केले किंवा वळू दाखवला ती अचूक तारीख निवडा. सर्व तारखा आणि खुराक नियोजन नवीन तारखेनुसार आपोआप सेट होईल.
+        ज्या दिवशी पुन्हा रेतन केले किंवा वळू दाखवला ती अचूक तारीख निवडा. सर्व गणित या तारखेनुसार आपोआप सेट होईल.
       </p>
 
       <div class="mb-4">
@@ -162,51 +188,74 @@
   </div>
 
   <script>
-    // 4-Digit Activation PIN
-    const CORRECT_PIN = "2026";
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
 
     window.onload = function() {
-      if (localStorage.getItem("cattle_app_unlocked_v3") === "true") {
+      // Check if already authenticated
+      if (localStorage.getItem("cattle_user_authenticated") === "true") {
         unlockApp();
       }
       lucide.createIcons();
     };
 
-    function checkPin() {
-      const enteredPin = document.getElementById("accessPin").value;
-      if (enteredPin === CORRECT_PIN) {
-        localStorage.setItem("cattle_app_unlocked_v3", "true");
+    function triggerInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+          goToLockScreen();
+        });
+      } else {
+        // जर आधीच डाऊनलोड झाले असेल किंवा ब्राउझर प्रॉम्ट नसेल तर थेट लॉक स्क्रीन दाखवा
+        alert("ॲप डाऊनलोड प्रोसेस सुरू झाली आहे! आता तुमचा मोबाईल नंबर व पिन टाकून ॲप सुरू करा.");
+        goToLockScreen();
+      }
+    }
+
+    function goToLockScreen() {
+      document.getElementById('firstInstallScreen').classList.add('hidden');
+      document.getElementById('lockScreen').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // Secret Formula Validation (Last 4 Digits + 7)
+    function validateMobilePin() {
+      const phone = document.getElementById("userPhone").value.trim();
+      const pin = document.getElementById("userPin").value.trim();
+      const err = document.getElementById("lockError");
+
+      if (phone.length !== 10 || isNaN(phone)) {
+        err.innerText = "कृपया वैध १० अंकी मोबाईल नंबर टाका!";
+        err.classList.remove("hidden");
+        return;
+      }
+
+      const last4 = phone.slice(-4);
+      const expectedPin = (parseInt(last4, 10) + 7).toString();
+
+      // Master PIN: 2026 किंवा फॉर्म्युला
+      if (pin === expectedPin || pin === "2026") {
+        localStorage.setItem("cattle_user_authenticated", "true");
+        localStorage.setItem("cattle_registered_phone", phone);
         unlockApp();
       } else {
-        document.getElementById("pinError").classList.remove("hidden");
+        err.innerText = "चुकीचा ॲक्टिव्हेशन पिन! पुन्हा तपासा.";
+        err.classList.remove("hidden");
       }
     }
 
     function unlockApp() {
+      document.getElementById("firstInstallScreen").classList.add("hidden");
       document.getElementById("lockScreen").classList.add("hidden");
       document.getElementById("mainApp").classList.remove("hidden");
       renderRecords();
       lucide.createIcons();
     }
-
-    // Install Prompt Handling
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('installBanner').classList.remove('hidden');
-    });
-
-    document.getElementById('installBtn').addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          document.getElementById('installBanner').classList.add('hidden');
-        }
-        deferredPrompt = null;
-      }
-    });
 
     let currentAnimal = 'cow';
     let activeResetId = null;
@@ -378,40 +427,4 @@
                 <span class="flex items-center gap-1.5"><i data-lucide="stethoscope" class="w-3.5 h-3.5 text-blue-500"></i> डॉक्टर गर्भतपासणी (९० वा दिवस):</span>
                 <span class="font-semibold text-slate-800">${addDays(r.date, 90)}</span>
               </div>
-              <div class="flex justify-between items-center text-slate-600">
-                <span class="flex items-center gap-1.5"><i data-lucide="droplet-off" class="w-3.5 h-3.5 text-amber-500"></i> दूध आटवणे (७ महिने पूर्ण):</span>
-                <span class="font-bold text-amber-700">${addDays(r.date, dryDays)}</span>
-              </div>
-              <div class="flex justify-between items-center text-slate-700 bg-emerald-50/70 p-2 rounded-xl border border-emerald-100">
-                <span class="flex items-center gap-1.5 font-bold text-emerald-800"><i data-lucide="baby" class="w-3.5 h-3.5 text-emerald-600"></i> अंदाजे विण्याची तारीख:</span>
-                <span class="font-extrabold text-emerald-700 text-sm">${addDays(r.date, totalDays)}</span>
-              </div>
-            </div>
-
-            <div class="mt-3 bg-amberBrand-50 border border-amberBrand-100 rounded-xl p-2.5 text-xs text-amberBrand-800">
-              <div class="font-bold mb-1 flex items-center gap-1">
-                <i data-lucide="wheat" class="w-3.5 h-3.5"></i>
-                <span>${feedBadge}</span>
-              </div>
-              <p class="text-[11px] leading-relaxed text-slate-700">${feedTip}</p>
-            </div>
-
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex justify-between items-center gap-2">
-              <button onclick="openRepeatHeatModal(${r.id})" class="flex-1 py-1.5 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-[11px] font-bold rounded-lg transition-all flex items-center justify-center gap-1">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                <span>पशु उलटले? (तारीख बदला)</span>
-              </button>
-              <button onclick="deleteRecord(${r.id})" title="डिलीट करा" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      lucide.createIcons();
-    }
-  </script>
-</body>
-</html>
-
+              <div class="flex justify-between items-center text-sla
