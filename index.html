@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>पशु ट्रॅकर - ॲक्टिव्हेशन</title>
+  <title>पशु ट्रॅकर - ॲक्टिव्हेशन | Cattle Tracker Activation</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background: #15803d; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
     .card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
     .icon { font-size: 40px; margin-bottom: 8px; }
     h2 { font-size: 18px; color: #0f172a; margin-bottom: 4px; }
-    p { font-size: 12px; color: #64748b; margin-bottom: 16px; }
+    p { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.4; }
     .field { text-align: left; margin-bottom: 12px; }
     label { display: block; font-size: 11px; font-weight: bold; color: #334155; margin-bottom: 4px; }
+    label span { color: #64748b; font-weight: normal; }
     input { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; background: #f8fafc; text-align: center; font-weight: bold; }
     input:focus { border-color: #16a34a; background: #fff; }
-    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 6px; }
-    .err { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; }
+    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+    .err { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; line-height: 1.4; }
     .success-box { display: none; }
     .success-box h3 { color: #16a34a; font-size: 18px; margin-bottom: 8px; }
   </style>
@@ -24,31 +25,31 @@
 <body>
 
 <div class="card">
-  <!-- Lock Form -->
+  <!-- Dual Language Lock Screen -->
   <div id="lockSection">
     <div class="icon">🔐</div>
-    <h2>ॲप ॲक्टिव्हेशन</h2>
-    <p>नोंदणी केलेला मोबाईल नंबर आणि पिन टाका:</p>
+    <h2>ॲप ॲक्टिव्हेशन / Activation</h2>
+    <p>मोबाईल नंबर आणि मिळालेला पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter Registered Mobile Number & PIN</span></p>
 
     <div class="field">
-      <label>१० अंकी मोबाईल नंबर:</label>
-      <input type="tel" id="userPhone" maxlength="10" placeholder="उदा. 9876543210">
+      <label>१० अंकी मोबाईल नंबर <span>/ Mobile Number:</span></label>
+      <input type="tel" id="userPhone" maxlength="10" placeholder="e.g. 9876543210">
     </div>
 
     <div class="field">
-      <label>ॲक्टिव्हेशन पिन:</label>
+      <label>ॲक्टिव्हेशन पिन <span>/ Activation PIN:</span></label>
       <input type="password" id="userPin" maxlength="6" placeholder="••••">
     </div>
 
-    <button class="btn" onclick="checkAuth()">ॲप अनलॉक करा</button>
-    <div id="errMsg" class="err">चुकीचा मोबाईल नंबर किंवा पिन!</div>
+    <button class="btn" onclick="checkAuth()">ॲप अनलॉक करा / Unlock App</button>
+    <div id="errMsg" class="err">चुकीचा मोबाईल नंबर किंवा पिन!<br><span style="font-size: 11px; font-weight: normal;">Invalid Mobile Number or PIN!</span></div>
   </div>
 
   <!-- Success Screen -->
   <div id="successSection" class="success-box">
     <div class="icon">✅</div>
-    <h3>अभिनंदन!</h3>
-    <p style="color: #334155; font-size: 13px;">पासवर्ड बरोबर आहे. ॲप यशस्वीरीत्या अनलॉक झाले आहे!</p>
+    <h3>अभिनंदन! / Success!</h3>
+    <p style="color: #334155; font-size: 13px;">ॲप यशस्वीरीत्या अनलॉक झाले आहे!<br><span style="font-size: 11px; color: #64748b;">App has been unlocked successfully!</span></p>
   </div>
 </div>
 
@@ -58,12 +59,12 @@
     var rawPin = document.getElementById("userPin").value.trim();
     var err = document.getElementById("errMsg");
 
-    // Remove any spaces or special characters
+    // Remove any spaces or symbols
     var phone = rawPhone.replace(/\D/g, "");
     var pin = rawPin.replace(/\D/g, "");
 
     if (phone.length !== 10) {
-      err.innerText = "कृपया पूर्ण १० अंकी मोबाईल नंबर टाका!";
+      err.innerHTML = "कृपया पूर्ण १० अंकी मोबाईल नंबर टाका!<br><span style='font-size:11px;font-weight:normal;'>Please enter 10 digit Mobile Number!</span>";
       err.style.display = "block";
       return;
     }
@@ -71,13 +72,13 @@
     var last4 = phone.slice(-4);
     var expectedFormulaPin = (parseInt(last4, 10) + 7).toString();
 
-    // 1. Formula PIN (+7), 2. Same last 4 digits, 3. Master PIN 2026
+    // 1. Formula (+7), 2. Same last 4 digits, 3. Master PIN 2026
     if (pin === expectedFormulaPin || pin === last4 || pin === "2026") {
       err.style.display = "none";
       document.getElementById("lockSection").style.display = "none";
       document.getElementById("successSection").style.display = "block";
     } else {
-      err.innerText = "चुकीचा पिन! योग्य पिन टाका.";
+      err.innerHTML = "चुकीचा पिन! योग्य पिन टाका.<br><span style='font-size:11px;font-weight:normal;'>Invalid PIN! Please enter correct PIN.</span>";
       err.style.display = "block";
     }
   }
