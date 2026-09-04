@@ -10,7 +10,7 @@
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic Manifest -->
+  <!-- Dynamic Zero-File Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
 
   <style>
@@ -23,15 +23,17 @@
     .card-lock { background: white; border-radius: 20px; padding: 26px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
     .lock-icon { font-size: 42px; margin-bottom: 8px; }
     .lock-title { font-size: 19px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
-    .lock-sub { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+    .lock-sub { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
     .pass-input { width: 100%; padding: 14px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 18px; text-align: center; font-weight: bold; letter-spacing: 4px; outline: none; background: #f8fafc; }
     .pass-input:focus { border-color: #16a34a; background: #fff; }
     .btn-unlock { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
-    .err-msg { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 12px; display: none; }
+    .err-msg { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 12px; display: none; line-height: 1.4; }
 
     /* 2. MAIN APP HEADER */
-    header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); font-weight: bold; font-size: 15px; }
-    
+    header { background: #16a34a; color: white; padding: 12px 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); }
+    .hdr-title { font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+    .lang-select { background: white; color: #15803d; border: none; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 20px; outline: none; }
+
     /* 1-CLICK DIRECT INSTALL BANNER */
     .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 14px; }
     .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
@@ -48,8 +50,10 @@
 
     .field { margin-bottom: 12px; text-align: left; }
     label { display: block; font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; }
+    .input-row { display: flex; gap: 6px; }
     input[type="text"], input[type="date"] { width: 100%; padding: 11px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #f8fafc; }
     input:focus { border-color: #16a34a; background: #fff; }
+    .btn-mic { background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 16px; cursor: pointer; }
     .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
 
     /* RECORDS CARD */
@@ -84,13 +88,13 @@
   <div id="lockScreen">
     <div class="card-lock">
       <div class="lock-icon">🔐</div>
-      <div class="lock-title">पशु ट्रॅकर ॲप</div>
-      <div class="lock-sub">ॲप उघडण्यासाठी पासवर्ड टाका:</div>
+      <div class="lock-title">पशु ट्रॅकर ॲक्टिव्हेशन</div>
+      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter Your Activation PIN</span></div>
 
-      <input type="password" id="passCode" class="pass-input" placeholder="••••" maxlength="6">
+      <input type="password" id="userPinInput" class="pass-input" placeholder="••••" maxlength="6">
 
-      <button class="btn-unlock" onclick="checkMasterPassword()">ॲप अनलॉक करा</button>
-      <div id="passErr" class="err-msg">चुकीचा पासवर्ड! योग्य पासवर्ड (2026) टाका.</div>
+      <button class="btn-unlock" onclick="validateUserPin()">ॲप अनलॉक करा / Unlock</button>
+      <div id="pinErrMsg" class="err-msg">चुकीचा पिन! योग्य पिन टाका.<br><span style="font-size: 11px; font-weight: normal;">Invalid PIN! Please enter correct PIN.</span></div>
     </div>
   </div>
 
@@ -98,16 +102,23 @@
   <div id="mainApp" style="display: none;">
     
     <header>
-      <span>🐄 पशु गाभण व खुराक ट्रॅकर</span>
-      <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 12px;">पशुपालक ॲप</span>
+      <div class="hdr-title">
+        <span>🛡️</span>
+        <span id="uiHeader">पशु ट्रॅकर</span>
+      </div>
+      <select id="langSelect" class="lang-select" onchange="changeLanguage()">
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+      </select>
     </header>
 
     <!-- 1-CLICK DIRECT INSTALL BANNER -->
     <div class="install-banner" id="installBanner">
-      <div class="install-title">📲 हे ॲप मोबाईल स्क्रीनवर जोडा (Add to Home Screen)</div>
-      <div class="install-sub">वारंवार लिंक न शोधता १-क्लिकवर ॲप उघडण्यासाठी खाली दाबा:</div>
+      <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर डाऊनलोड करा</div>
+      <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी:</div>
       <button class="btn-install" id="installBtn" onclick="installToHomeScreen()">
-        <span>⬇️ ॲप डाऊनलोड / Add करा</span>
+        <span>⬇️ ॲप डाऊनलोड / Install App</span>
       </button>
     </div>
 
@@ -116,34 +127,37 @@
       <div class="animal-btns">
         <div id="tabCow" class="an-btn active" onclick="setAnimal('cow')">
           <span class="emoji">🐄</span>
-          <span class="lbl">गाय (२८२ दिवस)</span>
+          <span class="lbl" id="uiCow">गाय (२८२ दिवस)</span>
         </div>
         <div id="tabBuf" class="an-btn" onclick="setAnimal('buffalo')">
           <span class="emoji">🐃</span>
-          <span class="lbl">म्हैस (३१० दिवस)</span>
+          <span class="lbl" id="uiBuf">म्हैस (३१० दिवस)</span>
         </div>
         <div id="tabGoat" class="an-btn" onclick="setAnimal('goat')">
           <span class="emoji">🐐</span>
-          <span class="lbl">शेळी (१५० दिवस)</span>
+          <span class="lbl" id="uiGoat">शेळी (१५० दिवस)</span>
         </div>
       </div>
 
       <div class="field">
-        <label>नाव किंवा टॅग नंबर:</label>
-        <input type="text" id="cName" placeholder="उदा. कावेरी / Cow 01">
+        <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
+        <div class="input-row">
+          <input type="text" id="cName" placeholder="उदा. कावेरी / Cow 01">
+          <button class="btn-mic" onclick="startMic()" title="माईकवर बोला">🎙️</button>
+        </div>
       </div>
 
       <div class="field">
-        <label>भरवल्याची तारीख (A.I. Date):</label>
+        <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
         <input type="date" id="cDate">
       </div>
 
-      <button class="btn-save" onclick="saveNewEntry()">नोंद जोडा आणि ट्रॅक करा</button>
+      <button class="btn-save" onclick="saveNewEntry()" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
     </div>
 
     <!-- SAVED RECORDS -->
     <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
-      <span style="font-size:13px; font-weight:bold; color:#334155;">📋 जतन केलेले रेकॉर्ड्स</span>
+      <span style="font-size:13px; font-weight:bold; color:#334155;" id="uiSavedTitle">📋 जतन केलेले रेकॉर्ड्स</span>
       <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
     </div>
 
@@ -156,18 +170,27 @@
 <!-- Reset Modal for Heat -->
 <div id="heatModal">
   <div class="modal-box">
-    <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;">🔴 पशु पुन्हा माजावर आले?</h3>
-    <p style="font-size:12px; color:#64748b; margin-bottom:12px;">ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:</p>
+    <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;" id="uiModalTitle">🔴 पशु पुन्हा माजावर आले?</h3>
+    <p style="font-size:12px; color:#64748b; margin-bottom:12px;" id="uiModalDesc">ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:</p>
     <input type="date" id="newInsemDate" style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:8px; margin-bottom:14px;">
     <div style="display:flex; gap:8px;">
-      <button onclick="closeModal()" style="flex:1; padding:10px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; font-weight:bold; font-size:12px;">रद्द करा</button>
-      <button onclick="confirmReset()" style="flex:1; padding:10px; background:#e11d48; color:white; border:none; border-radius:8px; font-weight:bold; font-size:12px;">तारीख बदला</button>
+      <button onclick="closeModal()" style="flex:1; padding:10px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalCancel">रद्द करा</button>
+      <button onclick="confirmReset()" style="flex:1; padding:10px; background:#e11d48; color:white; border:none; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalSave">तारीख बदला</button>
     </div>
   </div>
 </div>
 
 <script>
-  // 1. MANIFEST
+  // ==========================================
+  // 🔑 ऑथोराईज्ड पिन लिस्ट (AUTHORIZED PINS)
+  // ==========================================
+  var VALID_PINS = [
+    "2026", // मास्टर पिन
+    "1001", "1002", "1003", "1004", "1005",
+    "5883", "7788", "9900", "4455", "1122"
+  ];
+
+  // 1. INLINE MANIFEST
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
     short_name: "पशु ट्रॅकर",
@@ -184,16 +207,16 @@
   const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
   document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-  // 2. SERVICE WORKER
+  // 2. INLINE SERVICE WORKER
   if ('serviceWorker' in navigator) {
     const swCode = "self.addEventListener('fetch', function(e) {});";
     const swBlob = new Blob([swCode], { type: 'application/javascript' });
     navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
   }
 
+  // 3. तपासा की ॲप होम स्क्रीनवरून उघडले आहे का?
   function isRunningStandalone() {
-    return (window.matchMedia('(display-mode: standalone)').matches) || 
-           (window.navigator.standalone === true);
+    return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone === true);
   }
 
   var pwaPrompt = null;
@@ -212,36 +235,131 @@
         pwaPrompt = null;
       });
     } else {
-      alert("ॲप होम स्क्रीनवर जोडण्यासाठी:\n१. क्रोमच्या वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install app' किंवा 'Add to Home screen' वर क्लिक करा.");
+      alert("ॲप होम स्क्रीनवर सेव्ह करण्यासाठी:\n१. क्रोमच्या वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install app' किंवा 'Add to Home screen' निवडा.");
     }
   }
 
-  // 3. AUTO-LOGIN CHECK
-  if (localStorage.getItem("pashu_final_unlocked_state") === "true") {
+  // 4. भाषा शब्दकोश (DICTIONARY)
+  var DICT = {
+    mr: {
+      header: "पशु ट्रॅकर",
+      instTitle: "📲 हे ॲप मोबाईल स्क्रीनवर डाऊनलोड करा",
+      instSub: "वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी:",
+      cow: "गाय (२८२ दिवस)",
+      buf: "म्हैस (३१० दिवस)",
+      goat: "शेळी (१५० दिवस)",
+      lblName: "नाव किंवा टॅग नंबर / Tag No:",
+      lblDate: "भरवल्याची तारीख / A.I. Date:",
+      btnSave: "नोंद जोडा आणि ट्रॅक करा",
+      savedTitle: "📋 जतन केलेले रेकॉर्ड्स",
+      heat: "उलट तपासणी (२१ वा दिवस):",
+      pd: "डॉक्टर गर्भतपासणी (९० वा दिवस):",
+      dry: "दूध आटवणे (कोरडा काळ):",
+      due: "अंदाजे विण्याची तारीख:",
+      daysIn: "दिवस पूर्ण",
+      empty: "अद्याप कोणतीही नोंद जोडलेली नाही.",
+      repeatBtn: "🔴 पशु उलटले? (तारीख बदला)",
+      delBtn: "हटवा",
+      modalTitle: "🔴 पशु पुन्हा माजावर आले?",
+      modalDesc: "ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:",
+      modalCancel: "रद्द करा",
+      modalSave: "तारीख बदला",
+      feedCowDry: "<b>७ वा महिना पूर्ण:</b> दूध हळूहळू पूर्ण बंद करा. कासेला विश्रांती द्या व कासदाह प्रतिबंधक मलम वापरा.",
+      feedCowTrans: "<b>शेवटचे ४५ दिवस:</b> ट्रान्झिशन फीड, २५० ग्रॅम मेथी भरडा सुरू करा. विण्यापूर्वी कॅल्शियम संतुलित ठेवा.",
+      feedBufDry: "<b>८ वा महिना:</b> म्हशीचे दूध आटवून कासेला विश्रांती द्या.",
+      feedBufTrans: "<b>शेवटचे ६० दिवस:</b> बायपास फॅट, खनिज मिश्रण आणि उच्च प्रथिनयुक्त खुराक वाढवा.",
+      feedGoatTrans: "<b>शेवटचा १ महिना:</b> शेळीला उच्च प्रथिनयुक्त खुराक आणि हिरवा चारा वाढवा.",
+      feedNormal: "नियमित संतुलित चारा आणि दररोज ५० ग्रॅम खनिज मिश्रण (Mineral Mixture) द्यावे."
+    },
+    hi: {
+      header: "पशु ट्रैकर",
+      instTitle: "📲 ऐप को मोबाइल स्क्रीन पर डाउनलोड करें",
+      instSub: "एक क्लिक पर ऐप खोलने के लिए होम स्क्रीन पर जोड़ें:",
+      cow: "गाय (२८२ दिन)",
+      buf: "भैंस (३१० दिन)",
+      goat: "बकरी (१५० दिन)",
+      lblName: "नाम या टैग नंबर / Tag No:",
+      lblDate: "गर्भाधान तारीख / A.I. Date:",
+      btnSave: "रिकॉर्ड जोड़ें और ट्रैक करें",
+      savedTitle: "📋 सहेजे गए रिकॉर्ड्स",
+      heat: "उलट जांच (२१ वां दिन):",
+      pd: "डॉक्टर गर्भ जांच (९० वां दिन):",
+      dry: "दूध छुड़ाना (सूखा काल):",
+      due: "संभावित ब्याने की तारीख:",
+      daysIn: "दिन पूरे",
+      empty: "अभी तक कोई रिकॉर्ड नहीं जोड़ा गया है।",
+      repeatBtn: "🔴 पशु फिर गर्म हुआ? (तारीख बदलें)",
+      delBtn: "हटाएं",
+      modalTitle: "🔴 पशु फिर से गर्म हुआ?",
+      modalDesc: "जिस दिन दोबारा गर्भाधान किया वह तारीख चुनें:",
+      modalCancel: "रद्द करें",
+      modalSave: "तारीख बदलें",
+      feedCowDry: "<b>७ वां महीना:</b> दूध पूरी तरह बंद करें और अयन (कास) को आराम दें।",
+      feedCowTrans: "<b>अंतिम ४५ दिन:</b> मेथी भरड़ा, मिनरल मिक्सचर और विशेष ट्रांजिशन दाना शुरू करें।",
+      feedBufDry: "<b>८ वां महीना:</b> भैंस का दूध छुड़ाएं और विश्राम दें।",
+      feedBufTrans: "<b>अंतिम ६० दिन:</b> बायपास फैट, मिनरल मिक्सचर और प्रोटीन युक्त दाना बढ़ाएं।",
+      feedGoatTrans: "<b>अंतिम १ महीना:</b> बकरी को पौष्टिक दाना और हरा चारा अधिक दें।",
+      feedNormal: "संतुलित हरा-सूखा चारा और ५० ग्राम मिनरल मिक्सचर रोजाना दें।"
+    },
+    en: {
+      header: "Cattle Tracker",
+      instTitle: "📲 Download App to Mobile Screen",
+      instSub: "Access the app in 1-click directly from home screen:",
+      cow: "Cow (282 Days)",
+      buf: "Buffalo (310 Days)",
+      goat: "Goat (150 Days)",
+      lblName: "Name / Tag No:",
+      lblDate: "Breeding / A.I. Date:",
+      btnSave: "Add Record & Track",
+      savedTitle: "📋 Saved Records",
+      heat: "Repeat Heat Check (Day 21):",
+      pd: "Vet Pregnancy Check (Day 90):",
+      dry: "Dry Off Period:",
+      due: "Expected Calving Date:",
+      daysIn: "Days In",
+      empty: "No records saved yet.",
+      repeatBtn: "🔴 Repeat Heat? (Update Date)",
+      delBtn: "Delete",
+      modalTitle: "🔴 Animal in Heat Again?",
+      modalDesc: "Select the new breeding date:",
+      modalCancel: "Cancel",
+      modalSave: "Update Date",
+      feedCowDry: "<b>7th Month:</b> Stop milking to allow udder rest before calving.",
+      feedCowTrans: "<b>Last 45 Days:</b> Start Transition Feed, Fenugreek (Methi) & Calcium.",
+      feedBufDry: "<b>8th Month:</b> Stop milking to prepare for next lactation.",
+      feedBufTrans: "<b>Last 60 Days:</b> Increase Bypass Fat and high-protein feed.",
+      feedGoatTrans: "<b>Last 30 Days:</b> Increase concentrate feed and green fodder.",
+      feedNormal: "Provide balanced green/dry fodder and 50g daily Mineral Mixture."
+    }
+  };
+
+  var curLang = "mr";
+  var curAnimal = "cow";
+  var activeResetId = null;
+
+  // 5. पिन पडताळणी व ऑटो-लॉगिन
+  if (localStorage.getItem("pashu_paid_active_user") === "true") {
     showDashboard();
   }
 
-  function checkMasterPassword() {
-    var val = document.getElementById("passCode").value.trim();
-    var err = document.getElementById("passErr");
+  function validateUserPin() {
+    var enteredPin = document.getElementById("userPinInput").value.trim();
+    var errMsg = document.getElementById("pinErrMsg");
 
-    if (val === "2026") {
-      localStorage.setItem("pashu_final_unlocked_state", "true");
+    if (VALID_PINS.indexOf(enteredPin) !== -1) {
+      localStorage.setItem("pashu_paid_active_user", "true");
       showDashboard();
     } else {
-      err.style.display = "block";
+      errMsg.style.display = "block";
     }
   }
 
   function showDashboard() {
     document.getElementById("lockScreen").style.display = "none";
     document.getElementById("mainApp").style.display = "block";
-    
-    // जर ॲप होम स्क्रीनवरून उघडले असेल तर डाऊनलोड बॅनर लपवा
+
     if (isRunningStandalone()) {
       document.getElementById('installBanner').style.display = 'none';
-    } else {
-      document.getElementById('installBanner').style.display = 'block';
     }
 
     var today = new Date();
@@ -253,143 +371,31 @@
     renderList();
   }
 
-  // 4. ANIMAL TYPE SELECT
-  var curAnimal = 'cow';
-  var activeResetId = null;
-
-  function setAnimal(type) {
-    curAnimal = type;
-    document.getElementById("tabCow").className = (type === 'cow') ? 'an-btn active' : 'an-btn';
-    document.getElementById("tabBuf").className = (type === 'buffalo') ? 'an-btn active' : 'an-btn';
-    document.getElementById("tabGoat").className = (type === 'goat') ? 'an-btn active' : 'an-btn';
-  }
-
-  // 5. LOCAL STORAGE & DATA HANDLING
-  function getDB() {
-    return JSON.parse(localStorage.getItem("pashu_perfect_db_v1") || "[]");
-  }
-
-  function saveNewEntry() {
-    var dateVal = document.getElementById("cDate").value;
-    if (!dateVal) { alert("कृपया भरवल्याची तारीख निवडा!"); return; }
-
-    var nameVal = document.getElementById("cName").value.trim();
-    if (!nameVal) {
-      nameVal = (curAnimal === 'cow') ? 'गाय' : ((curAnimal === 'buffalo') ? 'म्हैस' : 'शेळी');
-    }
-
-    var db = getDB();
-    db.unshift({ id: Date.now(), name: nameVal, type: curAnimal, date: dateVal });
-    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
-
-    document.getElementById("cName").value = "";
+  // 6. भाषा व व्हॉईस माईक
+  function changeLanguage() {
+    curLang = document.getElementById("langSelect").value;
+    var t = DICT[curLang];
+    document.getElementById("uiHeader").innerText = t.header;
+    document.getElementById("uiInstTitle").innerText = t.instTitle;
+    document.getElementById("uiInstSub").innerText = t.instSub;
+    document.getElementById("uiCow").innerText = t.cow;
+    document.getElementById("uiBuf").innerText = t.buf;
+    document.getElementById("uiGoat").innerText = t.goat;
+    document.getElementById("uiLblName").innerText = t.lblName;
+    document.getElementById("uiLblDate").innerText = t.lblDate;
+    document.getElementById("uiBtnSave").innerText = t.btnSave;
+    document.getElementById("uiSavedTitle").innerText = t.savedTitle;
+    document.getElementById("uiModalTitle").innerText = t.modalTitle;
+    document.getElementById("uiModalDesc").innerText = t.modalDesc;
+    document.getElementById("uiModalCancel").innerText = t.modalCancel;
+    document.getElementById("uiModalSave").innerText = t.modalSave;
     renderList();
   }
 
-  function deleteEntry(id) {
-    var db = getDB().filter(function(item){ return item.id !== id; });
-    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
-    renderList();
-  }
-
-  function openResetModal(id) {
-    activeResetId = id;
-    var today = new Date();
-    var y = today.getFullYear();
-    var m = String(today.getMonth() + 1).padStart(2, '0');
-    var d = String(today.getDate()).padStart(2, '0');
-    document.getElementById("newInsemDate").value = y + '-' + m + '-' + d;
-    document.getElementById("heatModal").style.display = "flex";
-  }
-
-  function closeModal() {
-    activeResetId = null;
-    document.getElementById("heatModal").style.display = "none";
-  }
-
-  function confirmReset() {
-    var nDate = document.getElementById("newInsemDate").value;
-    if (!nDate) return;
-    var db = getDB().map(function(r){
-      return (r.id === activeResetId) ? { id: r.id, name: r.name, type: r.type, date: nDate } : r;
-    });
-    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
-    closeModal();
-    renderList();
-  }
-
-  function addDays(dateStr, days) {
-    var parts = dateStr.split('-');
-    var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-    d.setDate(d.getDate() + days);
-    return d.toLocaleDateString('mr-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-  }
-
-  function getDaysPassed(dateStr) {
-    var parts = dateStr.split('-');
-    var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-    var today = new Date();
-    var diff = Math.floor((today - d) / (1000 * 60 * 60 * 24));
-    return diff >= 0 ? diff : 0;
-  }
-
-  // 6. RENDER LIST
-  function renderList() {
-    var container = document.getElementById("recordsList");
-    var db = getDB();
-    document.getElementById("recCounter").innerText = db.length;
-
-    if (db.length === 0) {
-      container.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px; background:white; border-radius:14px; border:1px solid #e2e8f0;">अद्याप कोणतीही नोंद जोडलेली नाही.</div>';
-      return;
-    }
-
-    var html = "";
-    for (var i = 0; i < db.length; i++) {
-      var item = db[i];
-      var total = 282, dry = 210, icon = "🐄";
-      if (item.type === 'buffalo') { total = 310; dry = 235; icon = "🐃"; }
-      if (item.type === 'goat') { total = 150; dry = 100; icon = "🐐"; }
-
-      var daysIn = getDaysPassed(item.date);
-      var percent = Math.min(100, Math.round((daysIn / total) * 100));
-
-      var tip = "नियमित संतुलित चारा आणि दररोज ५० ग्रॅम खनिज मिश्रण (Mineral Mixture) द्यावे.";
-      if (item.type === 'cow') {
-        if (daysIn >= 240) tip = "<b>शेवटचे ४५ दिवस:</b> ट्रान्झिशन फीड, २५० ग्रॅम मेथी भरडा सुरू करा. विण्यापूर्वी कॅल्शियम संतुलित ठेवा.";
-        else if (daysIn >= 210) tip = "<b>७ वा महिना पूर्ण:</b> दूध हळूहळू पूर्ण बंद करा. कासेला विश्रांती द्या व कासदाह प्रतिबंधक मलम वापरा.";
-      } else if (item.type === 'buffalo') {
-        if (daysIn >= 250) tip = "<b>शेवटचे ६० दिवस:</b> बायपास फॅट, खनिज मिश्रण आणि उच्च प्रथिनयुक्त खुराक वाढवा.";
-        else if (daysIn >= 235) tip = "<b>८ वा महिना:</b> म्हशीचे दूध आटवून कासेला विश्रांती द्या.";
-      } else if (item.type === 'goat') {
-        if (daysIn >= 120) tip = "<b>शेवटचा १ महिना:</b> शेळीला उच्च प्रथिनयुक्त खुराक आणि हिरवा चारा वाढवा.";
-      }
-
-      html += '<div class="rec-item">';
-      html += '  <div class="rec-top">';
-      html += '    <span>' + icon + ' ' + item.name + '</span>';
-      html += '    <span class="rec-badge">' + daysIn + ' दिवस पूर्ण</span>';
-      html += '  </div>';
-      html += '  <div class="prog-bg"><div class="prog-fill" style="width:' + percent + '%;"></div></div>';
-      html += '  <div class="timeline">';
-      html += '    <div class="row"><span>🔴 उलट तपासणी (२१ वा दिवस):</span><b>' + addDays(item.date, 21) + '</b></div>';
-      if (item.type !== 'goat') {
-        html += '  <div class="row"><span>🩺 डॉक्टर गर्भतपासणी (९० वा दिवस):</span><b>' + addDays(item.date, 90) + '</b></div>';
-        html += '  <div class="row"><span>🥛 दूध आटवणे (कोरडा काळ):</span><b>' + addDays(item.date, dry) + '</b></div>';
-      }
-      html += '    <div class="row due-box"><span>🍼 अंदाजे विण्याची तारीख:</span><span>' + addDays(item.date, total) + '</span></div>';
-      html += '  </div>';
-      html += '  <div class="diet">' + tip + '</div>';
-      html += '  <div class="rec-actions">';
-      html += '    <button class="btn-repeat" onclick="openResetModal(' + item.id + ')">🔴 पशु उलटले? (तारीख बदला)</button>';
-      html += '    <button class="btn-del" onclick="deleteEntry(' + item.id + ')">🗑️ हटवा</button>';
-      html += '  </div>';
-      html += '</div>';
-    }
-
-    container.innerHTML = html;
-  }
-</script>
-
-</body>
-</html>
+  function startMic() {
+    var Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Speech) { alert("माईक उपलब्ध नाही."); return; }
+    var rec = new Speech();
+    rec.lang = curLang === 'mr' ? 'mr-IN' : (curLang === 'hi' ? 'hi-IN' : 'en-US');
+    rec.start();
+ 
