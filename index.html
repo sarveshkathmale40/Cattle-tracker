@@ -9,18 +9,15 @@
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic PWA Manifest -->
+  <!-- Dynamic Zero-File Web Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
   
-  <!-- Party / Celebration Confetti Animation -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 50px; }
+    body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 40px; }
     .wrapper { width: 100%; max-width: 430px; padding: 12px; }
 
-    /* 1. LOCK SCREEN */
+    /* 1. LOCK SCREEN CARD */
     #lockSection { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
     .lock-card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
     .lock-icon { font-size: 40px; margin-bottom: 8px; }
@@ -34,17 +31,18 @@
     .btn-unlock { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 6px; }
     .err-text { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; line-height: 1.4; }
 
-    /* 2. APP HEADER */
+    /* 2. MAIN APP HEADER */
     header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(22,163,74,0.25); margin-bottom: 12px; }
     .hdr-title { font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
     .header-actions { display: flex; align-items: center; gap: 6px; }
     .lang-select { background: white; color: #15803d; border: none; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 20px; outline: none; }
     .btn-logout { background: #dc2626; color: white; border: none; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px; cursor: pointer; }
 
-    /* 3. INSTALL BANNER */
-    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 12px; text-align: center; margin-bottom: 12px; }
-    .install-title { font-size: 12px; font-weight: bold; color: #166534; margin-bottom: 2px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 10px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+    /* 3. DOWNLOAD / INSTALL APP BANNER */
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
+    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
+    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
     /* 4. FORM CARD */
     .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
@@ -54,33 +52,7 @@
     .animal-btn .emoji { font-size: 22px; display: block; }
     .animal-btn .lbl { font-size: 11px; font-weight: bold; }
 
-    .input-row { display: flex; gap: 6px; }
-    .btn-mic { background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 0 12px; font-size: 16px; cursor: pointer; }
-    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
-
-    /* 5. SAVED RECORDS */
-    .rec-card { background: white; border-radius: 16px; padding: 14px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
-    .rec-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
-    .rec-name { font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-    .rec-badge { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 12px; border: 1px solid #bbf7d0; }
-
-    .prog-bar-bg { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-    .prog-bar-fill { height: 100%; background: #16a34a; border-radius: 10px; }
-
-    .timeline-rows { font-size: 12px; margin: 8px 0; }
-    .t-row { display: flex; justify-content: space-between; padding: 4px 0; color: #475569; }
-    .t-val { font-weight: bold; color: #0f172a; }
-    .t-due { background: #ecfdf5; padding: 6px 8px; border-radius: 8px; color: #166534; font-weight: bold; margin-top: 4px; }
-
-    .diet-info { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 10px; padding: 10px; font-size: 11px; color: #92400e; margin-top: 8px; line-height: 1.45; }
-
-    .rec-actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f5f9; }
-    .btn-repeat { flex: 1; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 6px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
-    .btn-del { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 6px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; }
-
-    /* Modal */
-    #heatModal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 16px; }
-    .modal-box { background: white; border-radius: 18px; padding: 20px; width: 100%; max-width: 320px; }
+    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
   </style>
 </head>
 <body>
@@ -109,7 +81,7 @@
     </div>
   </div>
 
-  <!-- STEP 2: MAIN DASHBOARD & TRACKER -->
+  <!-- STEP 2: MAIN DASHBOARD & DIRECT DOWNLOAD SECTION -->
   <div id="trackerSection" style="display: none;">
     
     <header>
@@ -123,19 +95,21 @@
           <option value="hi">हिंदी</option>
           <option value="en">English</option>
         </select>
+        <!-- रिसेट/लॉगआऊट बटण -->
         <button class="btn-logout" onclick="logout()" title="बाहेर पडा">लॉगआऊट</button>
       </div>
     </header>
 
-    <!-- 1-Click Install Banner -->
+    <!-- DIRECT 1-CLICK INSTALL BANNER -->
     <div class="install-banner" id="pwaBanner">
       <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा</div>
+      <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:</div>
       <button class="btn-install" id="installBtn" onclick="triggerAppInstall()">
         <span>⬇️ ॲप डाऊनलोड करा / Install App</span>
       </button>
     </div>
 
-    <!-- Main Input Form -->
+    <!-- MAIN FORM -->
     <div class="card">
       <div class="animal-grid">
         <div id="tabCow" class="animal-btn active" onclick="selectAnimal('cow')">
@@ -153,44 +127,20 @@
       </div>
 
       <div class="field">
-        <label id="uiLblName">नाव किंवा टॅग नंबर</label>
-        <div class="input-row">
-          <input type="text" id="cattleName" placeholder="उदा. कावेरी / Cow 01">
-          <button class="btn-mic" onclick="startMic()" title="माईकवर बोला">🎙️</button>
-        </div>
+        <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
+        <input type="text" id="cattleName" placeholder="उदा. कावेरी / Cow 01">
       </div>
 
       <div class="field">
-        <label id="uiLblDate">भरवल्याची तारीख (A.I. Date)</label>
+        <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
         <input type="date" id="breedDate">
       </div>
 
-      <button class="btn-save" onclick="saveCattleRecord()" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
+      <button class="btn-save" onclick="alert('नोंदणी प्रक्रिया पुढील टप्प्यात जोडू!')" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
     </div>
-
-    <!-- Active Records Section -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
-      <span style="font-size:13px; font-weight:bold; color:#334155;" id="uiSavedTitle">📋 जतन केलेले रेकॉर्ड्स</span>
-      <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
-    </div>
-
-    <div id="recordsRoot"></div>
 
   </div>
 
-</div>
-
-<!-- Reset Modal -->
-<div id="heatModal">
-  <div class="modal-box">
-    <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;" id="uiModalTitle">🔴 पशु पुन्हा माजावर आले?</h3>
-    <p style="font-size:12px; color:#64748b; margin-bottom:12px;" id="uiModalDesc">ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:</p>
-    <input type="date" id="newInsemDate" style="margin-bottom:14px;">
-    <div style="display:flex; gap:8px;">
-      <button onclick="closeModal()" style="flex:1; padding:10px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalCancel">रद्द करा</button>
-      <button onclick="confirmReset()" style="flex:1; padding:10px; background:#e11d48; color:white; border:none; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalSave">तारीख बदला</button>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -232,105 +182,7 @@
     }
   }
 
-  // 3. DICTIONARY & MULTI-LANGUAGE
-  var DICT = {
-    mr: {
-      header: "पशु गाभण व खुराक ट्रॅकर",
-      instTitle: "📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा",
-      instBtn: "⬇️ ॲप डाऊनलोड करा",
-      cow: "गाय (२८२ दिवस)",
-      buf: "म्हैस (३१० दिवस)",
-      goat: "शेळी (१५० दिवस)",
-      lblName: "नाव किंवा टॅग नंबर",
-      lblDate: "भरवल्याची तारीख (A.I. Date)",
-      btnSave: "नोंद जोडा आणि ट्रॅक करा",
-      savedTitle: "📋 जतन केलेले रेकॉर्ड्स",
-      heat: "उलट तपासणी (२१ वा दिवस):",
-      pd: "डॉक्टर गर्भतपासणी (९० वा दिवस):",
-      dry: "दूध आटवणे (७ महिने पूर्ण):",
-      due: "अंदाजे विण्याची तारीख:",
-      daysIn: "दिवस पूर्ण",
-      empty: "अद्याप कोणतीही नोंद जोडलेली नाही.",
-      repeatBtn: "🔴 पशु उलटले? (तारीख बदला)",
-      delBtn: "हटवा",
-      modalTitle: "🔴 पशु पुन्हा माजावर आले?",
-      modalDesc: "ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:",
-      modalCancel: "रद्द करा",
-      modalSave: "तारीख बदला",
-      feedCowDry: "<b>७ वा महिना पूर्ण:</b> दूध हळूहळू पूर्ण बंद करा. कासेला विश्रांती द्या व कासदाह प्रतिबंधक मलम वापरा.",
-      feedCowTrans: "<b>शेवटचे ४५ दिवस:</b> ट्रान्झिशन फीड, २५० ग्रॅम मेथी भरडा सुरू करा. विण्यापूर्वी कॅल्शियम संतुलित ठेवा.",
-      feedBufDry: "<b>८ वा महिना:</b> म्हशीचे दूध आटवून कासेला विश्रांती द्या.",
-      feedBufTrans: "<b>शेवटचे ६० दिवस:</b> बायपास फॅट, खनिज मिश्रण आणि उच्च प्रथिनयुक्त खुराक वाढवा.",
-      feedGoatTrans: "<b>शेवटचा १ महिना:</b> शेळीला उच्च प्रथिनयुक्त खुराक आणि हिरवा चारा वाढवा.",
-      feedNormal: "नियमित संतुलित चारा आणि दररोज ५० ग्रॅम खनिज मिश्रण (Mineral Mixture) द्यावे."
-    },
-    hi: {
-      header: "पशु गर्भधारण व खुराक ट्रैकर",
-      instTitle: "📲 ऐप को मोबाइल स्क्रीन पर सेव / डाउनलोड करें",
-      instBtn: "⬇️ ऐप डाउनलोड करें",
-      cow: "गाय (२८२ दिन)",
-      buf: "भैंस (३१० दिन)",
-      goat: "बकरी (१५० दिन)",
-      lblName: "नाम या टैग नंबर",
-      lblDate: "गर्भाधान तारीख (A.I. Date)",
-      btnSave: "रिकॉर्ड जोड़ें और ट्रैक करें",
-      savedTitle: "📋 सहेजे गए रिकॉर्ड्स",
-      heat: "उलट जांच (२१ वां दिन):",
-      pd: "डॉक्टर गर्भ जांच (९० वां दिन):",
-      dry: "दूध छुड़ाना (७ वां महीना):",
-      due: "संभावित ब्याने की तारीख:",
-      daysIn: "दिन पूरे",
-      empty: "अभी तक कोई रिकॉर्ड नहीं जोड़ा गया है।",
-      repeatBtn: "🔴 पशु फिर गर्म हुआ? (तारीख बदलें)",
-      delBtn: "हटाएं",
-      modalTitle: "🔴 पशु फिर से गर्म हुआ?",
-      modalDesc: "जिस दिन दोबारा गर्भाधान किया वह तारीख चुनें:",
-      modalCancel: "रद्द करें",
-      modalSave: "तारीख अपडेट करें",
-      feedCowDry: "<b>७ वां महीना:</b> दूध पूरी तरह बंद करें और अयन (कास) को आराम दें।",
-      feedCowTrans: "<b>अंतिम ४५ दिन:</b> मेथी भरड़ा, मिनरल मिक्सचर और विशेष ट्रांजिशन दाना शुरू करें।",
-      feedBufDry: "<b>८ वां महीना:</b> भैंस का दूध छुड़ाएं और विश्राम दें।",
-      feedBufTrans: "<b>अंतिम ६० दिन:</b> बायपास फैट, मिनरल मिक्सचर और प्रोटीन युक्त दाना बढ़ाएं।",
-      feedGoatTrans: "<b>अंतिम १ महीना:</b> बकरी को पौष्टिक दाना और हरा चारा अधिक दें।",
-      feedNormal: "संतुलित हरा-सूखा चारा और ५० ग्राम मिनरल मिक्सचर रोजाना दें।"
-    },
-    en: {
-      header: "Cattle Gestation & Feed Tracker",
-      instTitle: "📲 Download / Install App to Home Screen",
-      instBtn: "⬇️ Install App",
-      cow: "Cow (282 Days)",
-      buf: "Buffalo (310 Days)",
-      goat: "Goat (150 Days)",
-      lblName: "Name / Tag ID",
-      lblDate: "Breeding / A.I. Date",
-      btnSave: "Add Record & Track",
-      savedTitle: "📋 Saved Records",
-      heat: "Repeat Heat Check (Day 21):",
-      pd: "Vet Pregnancy Check (Day 90):",
-      dry: "Dry Off Period (7th Month):",
-      due: "Expected Calving Date:",
-      daysIn: "Days In",
-      empty: "No records saved yet.",
-      repeatBtn: "🔴 Repeat Heat? (Update Date)",
-      delBtn: "Delete",
-      modalTitle: "🔴 Animal in Heat Again?",
-      modalDesc: "Select the new breeding date:",
-      modalCancel: "Cancel",
-      modalSave: "Update Date",
-      feedCowDry: "<b>7th Month:</b> Stop milking to allow udder rest before calving.",
-      feedCowTrans: "<b>Last 45 Days:</b> Start Transition Feed, Fenugreek (Methi) & Calcium.",
-      feedBufDry: "<b>8th Month:</b> Stop milking to prepare for next lactation.",
-      feedBufTrans: "<b>Last 60 Days:</b> Increase Bypass Fat and high-protein feed.",
-      feedGoatTrans: "<b>Last 30 Days:</b> Increase concentrate feed and green fodder.",
-      feedNormal: "Provide balanced green/dry fodder and 50g daily Mineral Mixture."
-    }
-  };
-
-  var curLang = "mr";
-  var curAnimal = "cow";
-  var activeResetId = null;
-
-  // 4. AUTHENTICATION LOGIC
+  // 3. AUTHENTICATION LOGIC
   if (localStorage.getItem("pashu_auth_step_done") === "1") {
     openTracker();
   }
@@ -365,9 +217,9 @@
     document.getElementById("lockSection").style.display = "none";
     document.getElementById("trackerSection").style.display = "block";
     document.getElementById("breedDate").valueAsDate = new Date();
-    renderRecords();
   }
 
+  // लॉगआऊट करण्याचे फंक्शन (पुन्हा पिन स्क्रीन आणण्यासाठी)
   function logout() {
     localStorage.removeItem("pashu_auth_step_done");
     document.getElementById("trackerSection").style.display = "none";
@@ -376,27 +228,41 @@
     document.getElementById("userPin").value = "";
   }
 
-  // 5. APP CONTROLS
-  function changeLanguage() {
-    curLang = document.getElementById("langSelect").value;
-    var t = DICT[curLang];
-    document.getElementById("uiHeader").innerText = t.header;
-    document.getElementById("uiInstTitle").innerText = t.instTitle;
-    document.getElementById("installBtn").innerHTML = "<span>" + t.instBtn + "</span>";
-    document.getElementById("uiCow").innerText = t.cow;
-    document.getElementById("uiBuf").innerText = t.buf;
-    document.getElementById("uiGoat").innerText = t.goat;
-    document.getElementById("uiLblName").innerText = t.lblName;
-    document.getElementById("uiLblDate").innerText = t.lblDate;
-    document.getElementById("uiBtnSave").innerText = t.btnSave;
-    document.getElementById("uiSavedTitle").innerText = t.savedTitle;
-    document.getElementById("uiModalTitle").innerText = t.modalTitle;
-    document.getElementById("uiModalDesc").innerText = t.modalDesc;
-    document.getElementById("uiModalCancel").innerText = t.modalCancel;
-    document.getElementById("uiModalSave").innerText = t.modalSave;
-    renderRecords();
+  function selectAnimal(type) {
+    document.getElementById("tabCow").className = (type === 'cow') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabGoat").className = (type === 'goat') ? "animal-btn active" : "animal-btn";
   }
 
-  function selectAnimal(type) {
-    curAnimal = type;
-    document.getElementById("tabCow").className = (type === 'cow') ?
+  function changeLanguage() {
+    var l = document.getElementById("langSelect").value;
+    if (l === 'hi') {
+      document.getElementById("uiHeader").innerText = "पशु ट्रैकर";
+      document.getElementById("uiInstTitle").innerText = "📲 ऐप को मोबाइल स्क्रीन पर सेव / डाउनलोड करें";
+      document.getElementById("uiInstSub").innerText = "एक क्लिक पर ऐप खोलने के लिए होम स्क्रीन पर जोड़ें:";
+      document.getElementById("uiCow").innerText = "गाय (२८२ दिन)";
+      document.getElementById("uiBuf").innerText = "भैंस (३१० दिन)";
+      document.getElementById("uiGoat").innerText = "बकरी (१५० दिन)";
+      document.getElementById("uiBtnSave").innerText = "रिकॉर्ड जोड़ें और ट्रैक करें";
+    } else if (l === 'en') {
+      document.getElementById("uiHeader").innerText = "Cattle Tracker";
+      document.getElementById("uiInstTitle").innerText = "📲 Download / Install App to Home Screen";
+      document.getElementById("uiInstSub").innerText = "Access the app in 1-click directly from home screen:";
+      document.getElementById("uiCow").innerText = "Cow (282 Days)";
+      document.getElementById("uiBuf").innerText = "Buffalo (310 Days)";
+      document.getElementById("uiGoat").innerText = "Goat (150 Days)";
+      document.getElementById("uiBtnSave").innerText = "Add Record & Track";
+    } else {
+      document.getElementById("uiHeader").innerText = "पशु ट्रॅकर";
+      document.getElementById("uiInstTitle").innerText = "📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा";
+      document.getElementById("uiInstSub").innerText = "वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:";
+      document.getElementById("uiCow").innerText = "गाय (२८२ दिवस)";
+      document.getElementById("uiBuf").innerText = "म्हैस (३१० दिवस)";
+      document.getElementById("uiGoat").innerText = "शेळी (१५० दिवस)";
+      document.getElementById("uiBtnSave").innerText = "नोंद जोडा आणि ट्रॅक करा";
+    }
+  }
+</script>
+
+</body>
+</html>
