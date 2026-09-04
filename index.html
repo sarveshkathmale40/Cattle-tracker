@@ -3,63 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>पशु ट्रॅकर - ॲक्टिव्हेशन | Cattle Tracker Activation</title>
+  <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
+  
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #15803d; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
-    .card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-    .icon { font-size: 40px; margin-bottom: 8px; }
-    h2 { font-size: 18px; color: #0f172a; margin-bottom: 4px; }
-    p { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.4; }
+    body { background: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; padding-bottom: 40px; }
+    .wrapper { width: 100%; max-width: 430px; padding: 12px; }
+
+    /* 1. LOCK SCREEN CARD */
+    #lockSection { width: 100%; display: flex; justify-content: center; margin-top: 30px; }
+    .lock-card { background: #ffffff; width: 100%; max-width: 340px; border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .lock-icon { font-size: 40px; margin-bottom: 8px; }
+    .lock-card h2 { font-size: 18px; color: #0f172a; margin-bottom: 4px; }
+    .lock-card p { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.4; }
     .field { text-align: left; margin-bottom: 12px; }
     label { display: block; font-size: 11px; font-weight: bold; color: #334155; margin-bottom: 4px; }
     label span { color: #64748b; font-weight: normal; }
-    input { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; background: #f8fafc; text-align: center; font-weight: bold; }
+    input { width: 100%; padding: 11px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; background: #f8fafc; }
     input:focus { border-color: #16a34a; background: #fff; }
-    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 6px; }
-    .err { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; line-height: 1.4; }
-    .success-box { display: none; }
-    .success-box h3 { color: #16a34a; font-size: 18px; margin-bottom: 8px; }
+    .btn-unlock { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+    .err-text { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; line-height: 1.4; }
+
+    /* 2. MAIN APP HEADER */
+    header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(22,163,74,0.25); margin-bottom: 12px; }
+    .hdr-title { font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+    .lang-select { background: white; color: #15803d; border: none; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 20px; outline: none; }
+
+    /* 3. DOWNLOAD / INSTALL APP BANNER */
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 14px; text-align: center; margin-bottom: 14px; }
+    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
+    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 11px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+
+    /* 4. FORM CARD */
+    .card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; }
+    .animal-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .animal-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 4px; text-align: center; cursor: pointer; }
+    .animal-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
+    .animal-btn .emoji { font-size: 22px; display: block; }
+    .animal-btn .lbl { font-size: 11px; font-weight: bold; }
+
+    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
   </style>
 </head>
 <body>
 
-<div class="card">
-  <!-- Dual Language Lock Screen -->
+<div class="wrapper">
+
+  <!-- STEP 1: DUAL LANGUAGE LOCK SCREEN -->
   <div id="lockSection">
-    <div class="icon">🔐</div>
-    <h2>ॲप ॲक्टिव्हेशन / Activation</h2>
-    <p>मोबाईल नंबर आणि मिळालेला पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter Registered Mobile Number & PIN</span></p>
+    <div class="lock-card">
+      <div class="lock-icon">🔐</div>
+      <h2>ॲप ॲक्टिव्हेशन / Activation</h2>
+      <p>मोबाईल नंबर आणि मिळालेला पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter Registered Mobile Number & PIN</span></p>
 
-    <div class="field">
-      <label>१० अंकी मोबाईल नंबर <span>/ Mobile Number:</span></label>
-      <input type="tel" id="userPhone" maxlength="10" placeholder="e.g. 9876543210">
+      <div class="field">
+        <label>१० अंकी मोबाईल नंबर <span>/ Mobile Number:</span></label>
+        <input type="tel" id="userPhone" maxlength="10" placeholder="e.g. 9876543210" style="text-align:center; font-weight:bold;">
+      </div>
+
+      <div class="field">
+        <label>ॲक्टिव्हेशन पिन <span>/ Activation PIN:</span></label>
+        <input type="password" id="userPin" maxlength="6" placeholder="••••" style="text-align:center; font-weight:bold;">
+      </div>
+
+      <button class="btn-unlock" onclick="checkAuth()">ॲप अनलॉक करा / Unlock App</button>
+      <div id="errMsg" class="err-text">चुकीचा मोबाईल नंबर किंवा पिन!<br><span style="font-size: 11px; font-weight: normal;">Invalid Mobile Number or PIN!</span></div>
     </div>
-
-    <div class="field">
-      <label>ॲक्टिव्हेशन पिन <span>/ Activation PIN:</span></label>
-      <input type="password" id="userPin" maxlength="6" placeholder="••••">
-    </div>
-
-    <button class="btn" onclick="checkAuth()">ॲप अनलॉक करा / Unlock App</button>
-    <div id="errMsg" class="err">चुकीचा मोबाईल नंबर किंवा पिन!<br><span style="font-size: 11px; font-weight: normal;">Invalid Mobile Number or PIN!</span></div>
   </div>
 
-  <!-- Success Screen -->
-  <div id="successSection" class="success-box">
-    <div class="icon">✅</div>
-    <h3>अभिनंदन! / Success!</h3>
-    <p style="color: #334155; font-size: 13px;">ॲप यशस्वीरीत्या अनलॉक झाले आहे!<br><span style="font-size: 11px; color: #64748b;">App has been unlocked successfully!</span></p>
+  <!-- STEP 2: MAIN DASHBOARD & DOWNLOAD SECTION -->
+  <div id="trackerSection" style="display: none;">
+    
+    <header>
+      <div class="hdr-title">
+        <span>🛡️</span>
+        <span id="uiHeader">पशु गाभण व खुराक ट्रॅकर</span>
+      </div>
+      <select id="langSelect" class="lang-select" onchange="changeLanguage()">
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+      </select>
+    </header>
+
+    <!-- DOWNLOAD / SAVE TO HOME SCREEN PROMPT -->
+    <div class="install-banner">
+      <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा</div>
+      <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:</div>
+      <button class="btn-install" id="installBtn" onclick="triggerAppInstall()">
+        <span>⬇️ ॲप डाऊनलोड करा / Install App</span>
+      </button>
+    </div>
+
+    <!-- MAIN FORM -->
+    <div class="card">
+      <div class="animal-grid">
+        <div id="tabCow" class="animal-btn active" onclick="selectAnimal('cow')">
+          <span class="emoji">🐄</span>
+          <span class="lbl" id="uiCow">गाय (२८२ दिवस)</span>
+        </div>
+        <div id="tabBuf" class="animal-btn" onclick="selectAnimal('buffalo')">
+          <span class="emoji">🐃</span>
+          <span class="lbl" id="uiBuf">म्हैस (३१० दिवस)</span>
+        </div>
+        <div id="tabGoat" class="animal-btn" onclick="selectAnimal('goat')">
+          <span class="emoji">🐐</span>
+          <span class="lbl" id="uiGoat">शेळी (१५० दिवस)</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
+        <input type="text" id="cattleName" placeholder="उदा. कावेरी / Cow 01">
+      </div>
+
+      <div class="field">
+        <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
+        <input type="date" id="breedDate">
+      </div>
+
+      <button class="btn-save" onclick="alert('नोंदणी प्रक्रिया पुढील टप्प्यात जोडू!')" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
+    </div>
+
   </div>
+
 </div>
 
 <script>
+  var deferredPrompt = null;
+
+  // Listen for browser install prompt
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  function triggerAppInstall() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(choiceResult) {
+        deferredPrompt = null;
+      });
+    } else {
+      alert("मोबाईल स्क्रीनवर ॲप सेव्ह करण्यासाठी:\n१. वरच्या उजव्या बाजूला असलेल्या ३ टिंबांवर (⋮) दाबा.\n२. 'Add to Home screen' किंवा 'Install App' निवडा.");
+    }
+  }
+
+  // 1. AUTHENTICATION LOGIC (सुरक्षित आणि अचूक)
+  if (localStorage.getItem("pashu_auth_step_done") === "1") {
+    openTracker();
+  }
+
   function checkAuth() {
     var rawPhone = document.getElementById("userPhone").value.trim();
     var rawPin = document.getElementById("userPin").value.trim();
     var err = document.getElementById("errMsg");
 
-    // Remove any spaces or symbols
     var phone = rawPhone.replace(/\D/g, "");
     var pin = rawPin.replace(/\D/g, "");
 
@@ -72,14 +172,54 @@
     var last4 = phone.slice(-4);
     var expectedFormulaPin = (parseInt(last4, 10) + 7).toString();
 
-    // 1. Formula (+7), 2. Same last 4 digits, 3. Master PIN 2026
+    // मास्टर पिन: 2026 किंवा फॉर्म्युला (+7) किंवा शेवटचे ४ आकडे
     if (pin === expectedFormulaPin || pin === last4 || pin === "2026") {
-      err.style.display = "none";
-      document.getElementById("lockSection").style.display = "none";
-      document.getElementById("successSection").style.display = "block";
+      localStorage.setItem("pashu_auth_step_done", "1");
+      openTracker();
     } else {
       err.innerHTML = "चुकीचा पिन! योग्य पिन टाका.<br><span style='font-size:11px;font-weight:normal;'>Invalid PIN! Please enter correct PIN.</span>";
       err.style.display = "block";
+    }
+  }
+
+  function openTracker() {
+    document.getElementById("lockSection").style.display = "none";
+    document.getElementById("trackerSection").style.display = "block";
+    document.getElementById("breedDate").valueAsDate = new Date();
+  }
+
+  function selectAnimal(type) {
+    document.getElementById("tabCow").className = (type === 'cow') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? "animal-btn active" : "animal-btn";
+    document.getElementById("tabGoat").className = (type === 'goat') ? "animal-btn active" : "animal-btn";
+  }
+
+  function changeLanguage() {
+    var l = document.getElementById("langSelect").value;
+    if (l === 'hi') {
+      document.getElementById("uiHeader").innerText = "पशु गर्भधारण व खुराक ट्रैकर";
+      document.getElementById("uiInstTitle").innerText = "📲 ऐप को मोबाइल स्क्रीन पर सेव / डाउनलोड करें";
+      document.getElementById("uiInstSub").innerText = "एक क्लिक पर ऐप खोलने के लिए होम स्क्रीन पर जोड़ें:";
+      document.getElementById("uiCow").innerText = "गाय (२८२ दिन)";
+      document.getElementById("uiBuf").innerText = "भैंस (३१० दिन)";
+      document.getElementById("uiGoat").innerText = "बकरी (१५० दिन)";
+      document.getElementById("uiBtnSave").innerText = "रिकॉर्ड जोड़ें और ट्रैक करें";
+    } else if (l === 'en') {
+      document.getElementById("uiHeader").innerText = "Cattle Gestation & Feed Tracker";
+      document.getElementById("uiInstTitle").innerText = "📲 Download / Install App to Home Screen";
+      document.getElementById("uiInstSub").innerText = "Access the app in 1-click directly from home screen:";
+      document.getElementById("uiCow").innerText = "Cow (282 Days)";
+      document.getElementById("uiBuf").innerText = "Buffalo (310 Days)";
+      document.getElementById("uiGoat").innerText = "Goat (150 Days)";
+      document.getElementById("uiBtnSave").innerText = "Add Record & Track";
+    } else {
+      document.getElementById("uiHeader").innerText = "पशु गाभण व खुराक ट्रॅकर";
+      document.getElementById("uiInstTitle").innerText = "📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह / डाऊनलोड करा";
+      document.getElementById("uiInstSub").innerText = "वारंवार लिंक न शोधता एका क्लिकवर ॲप उघडण्यासाठी:";
+      document.getElementById("uiCow").innerText = "गाय (२८२ दिवस)";
+      document.getElementById("uiBuf").innerText = "म्हैस (३१० दिवस)";
+      document.getElementById("uiGoat").innerText = "शेळी (१५० दिवस)";
+      document.getElementById("uiBtnSave").innerText = "नोंद जोडा आणि ट्रॅक करा";
     }
   }
 </script>
