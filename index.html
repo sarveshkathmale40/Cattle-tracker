@@ -198,7 +198,105 @@
       document.getElementById("downloadScreen").style.display = "block";
     }
   });
+
+    box.innerHTML = html;
+  }
+
+  // फोटो अपलोड आणि डॅशबोर्ड लॉजिक 
+  function saveData() {
+    var dt = document.getElementById("cDate").value;
+    if (!dt) { alert("तारीख निवडा!"); return; }
+    var nm = document.getElementById("cName").value.trim() || (cur === 'cow' ? 'गाय' : (cur === 'buffalo' ? 'म्हैस' : 'शेळी'));
+    var nt = document.getElementById("cNote").value.trim();
+    var fileInput = document.getElementById("cPhoto");
+
+    if (fileInput.files && fileInput.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        pushToDB(nm, cur, dt, nt, e.target.result);
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      pushToDB(nm, cur, dt, nt, "");
+    }
+  }
+
+  function pushToDB(nm, type, dt, nt, photo) {
+    var db = getDB();
+    db.unshift({ id: Date.now(), name: nm, type: type, date: dt, note: nt, photo: photo });
+    localStorage.setItem("pashu_clean_db", JSON.stringify(db));
+    document.getElementById("cName").value = "";
+    document.getElementById("cNote").value = "";
+    document.getElementById("cPhoto").value = "";
+    draw();
+  }
+
+  function delData(id) {
+    var db = getDB().filter(function(i){ return i.id !== id; });
+    localStorage.setItem("pashu_clean_db", JSON.stringify(db));
+    draw();
+  }
+
+  function addD(str, days) {
+    var d = new Date(str);
+    d.setDate(d.getDate() + days);
+    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+  }
+
+  function getDays(str) {
+    var diff = Math.floor((new Date() - new Date(str)) / (1000 * 60 * 60 * 24));
+    return diff >= 0 ? diff : 0;
+  }
+
+  function draw() {
+    var box = document.getElementById("list");
+    var db = getDB();
+    if (db.length === 0) {
+      box.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:16px;">अद्याप कोणतीही नोंद नाही.</div>';
+      return;
+    }
+
+    var html = "";
+    for (var i = 0; i < db.length; i++) {
+      var it = db[i];
+      var tot = 282, dry = 210, ico = "🐄";
+      if (it.type === 'buffalo') { tot = 310; dry = 235; ico = "🐃"; }
+      if (it.type === 'goat') { tot = 150; dry = 100; ico = "🐐"; }
+
+      var daysIn = getDays(it.date);
+      var imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
+
+      var check21 = addD(it.date, 21); 
+      var dryDate = addD(it.date, dry); 
+      var transDate = addD(it.date, tot - 21); 
+      var deliveryDate = addD(it.date, tot); 
+
+      html += '<div class="item" style="background:white; border-radius:14px; padding:14px; border:1px solid #e2e8f0; margin-bottom:12px; display:flex; gap:12px; align-items:flex-start;">';
+      html += '  <div class="cow-img" style="width:65px; height:65px; border-radius:10px; background:#f1f5f9; display:flex; justify-content:center; align-items:center; font-size:24px; flex-shrink:0; overflow:hidden; border:1px solid #cbd5e1;">' + imgHtml + '</div>';
+      html += '  <div class="item-info" style="flex-grow:1;">';
+      html += '    <div class="item-top" style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px; border-bottom:1px solid #f1f5f9; padding-bottom:4px; margin-bottom:6px; color:#0f172a;"><span>' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' दिवस पूर्ण</span></div>';
+      html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🔴 उलट तपासणी (२१ वा दिवस):</span><b>' + check21 + '</b></div>';
+      
+      if (it.type !== 'goat') {
+        html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🥛 दूध आटवणे (७ वा महिना):</span><b>' + dryDate + '</b></div>';
+        html += '    <div class="row" style="display:flex; justify-content:space-between; font-size:11px; padding:3px 0; color:#475569;"><span>🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):</span><b>' + transDate + '</b></div>';
+      }
+      
+      html += '    <div class="row due" style="background:#ecfdf5; padding:6px; border-radius:6px; color:#166534; font-weight:bold; margin-top:6px; font-size:12px; display:flex; justify-content:space-between;"><span>🍼 अंदाजे विण्याची तारीख:</span><span>' + deliveryDate + '</span></div>';
+      
+      if(it.note) {
+        html += '    <div class="note-box" style="background:#fffbeb; border:1px solid #fef3c7; border-radius:6px; padding:6px; font-size:11px; color:#92400e; margin-top:6px;">📝 <b>टीप:</b> ' + it.note + '</div>';
+      }
+
+      html += '    <button class="btn-del" onclick="delData(' + it.id + ')" style="width:100%; background:#fee2e2; color:#b91c1c; border:none; padding:6px; border-radius:6px; font-weight:bold; font-size:11px; cursor:pointer; margin-top:8px;">🗑️ नोंद हटवा</button>';
+      html += '  </div>';
+      html += '</div>';
+    }
+    box.innerHTML = html;
+  }
 </script>
 
 </body>
 </html>
+
+  
