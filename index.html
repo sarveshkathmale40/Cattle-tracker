@@ -69,7 +69,7 @@
     
     <div class="guide-box" id="dGuide">
       <b>📌 महत्त्वाची सूचना:</b><br>
-      बटण दाबल्यानंतर स्क्रीनवर <b>'Add'</b> किंवा <b>'Install'</b> बटण येईल, त्यावर क्लिक करा म्हणजे ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर येईल!
+      बटण दाबल्यानंतर स्क्रीनवर थेट <b>'Add'</b> किंवा <b>'Install'</b> पर्याय येईल, त्यावर क्लिक करा म्हणजे ॲप तुमच्या होम स्क्रीनवर दिसेल!
     </div>
 
     <p style="font-size: 11px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
@@ -105,7 +105,7 @@
       document.getElementById('dTitle').innerText = "Save to Home Screen";
       document.getElementById('dSub').innerText = "Click below to install the app directly on your phone:";
       document.getElementById('installBtn').innerText = "⬇️ Install / Download App";
-      document.getElementById('dGuide').innerHTML = "<b>📌 Important Note:</b><br>After clicking, select <b>'Add'</b> or <b>'Install'</b> on the pop-up to place the app on your home screen!";
+      document.getElementById('dGuide').innerHTML = "<b>📌 Important Note:</b><br>After clicking, an <b>'Add'</b> or <b>'Install'</b> prompt will appear on your screen. Just click it to add the app to your home screen!";
     } else if(lang === 'hi') {
       document.getElementById('langLbl').innerText = "भाषा चुनें:";
       document.getElementById('lTitle').innerText = "पशु ट्रैकर लॉगिन";
@@ -117,7 +117,7 @@
       document.getElementById('dTitle').innerText = "होम स्क्रीन पर सेव करें";
       document.getElementById('dSub').innerText = "सीधे मोबाइल में ऐप चलाने के लिए नीचे दिए गए बटन पर क्लिक करें:";
       document.getElementById('installBtn').innerText = "⬇️ ऐप डाउनलोड / इंस्टॉल करें";
-      document.getElementById('dGuide').innerHTML = "<b>📌 महत्वपूर्ण सूचना:</b><br>बटन दबाने के बाद स्क्रीन पर <b>'Add'</b> या <b>'Install'</b> का विकल्प आएगा, उस पर क्लिक करें!";
+      document.getElementById('dGuide').innerHTML = "<b>📌 महत्वपूर्ण सूचना:</b><br>बटन दबाने के बाद स्क्रीन पर सीधा <b>'Add'</b> या <b>'Install'</b> का विकल्प आएगा, उस पर क्लिक करें!";
     } else {
       document.getElementById('langLbl').innerText = "भाषा निवडा:";
       document.getElementById('lTitle').innerText = "पशु ट्रॅकर लॉगिन";
@@ -129,7 +129,7 @@
       document.getElementById('dTitle').innerText = "होम स्क्रीनवर सेव्ह करा";
       document.getElementById('dSub').innerText = "गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:";
       document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड / इन्स्टॉल करा";
-      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर स्क्रीनवर <b>'Add'</b> किंवा <b>'Install'</b> बटण येईल, त्यावर क्लिक करा म्हणजे ॲप थेट तुमच्या मोबाईलच्या होम स्क्रीनवर येईल!";
+      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर स्क्रीनवर थेट <b>'Add'</b> किंवा <b>'Install'</b> पर्याय येईल, त्यावर क्लिक करा म्हणजे ॲप तुमच्या होम स्क्रीनवर दिसेल!";
     }
   }
 
@@ -164,6 +164,7 @@
     localStorage.setItem("pashu_unlocked", "true");
   }
 
+  // इथे तो जळजळीत alert काढून टाकला आहे, आता थेट ब्राऊझरचा इन्स्टॉल पॉप-अप येईल
   function installApp() {
     var lang = document.getElementById('langSelect').value;
     if (pPrompt) {
@@ -172,7 +173,8 @@
         pPrompt = null;
       });
     } else {
-      alert(lang === 'en' ? "To save on home screen, tap the 3 dots (⋮) in your browser and select 'Add to Home screen' or 'Install app'." : (lang === 'hi' ? "होम स्क्रीन पर सेव करने के लिए ब्राउज़र के 3 बिंदुओं (⋮) पर क्लिक करें और 'Add to Home screen' चुनें।" : "मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या ३ टिंबांवर (⋮) क्लिक करा आणि 'Add to Home screen' किंवा 'Install app' निवडा."));
+      // जर फोनमध्ये सिग्नल किंवा सेटिंगमुळे पॉप-अप आला नाही, तर युजरला गोंधळात न टाकता फक्त शांतपणे इन्स्टॉल करायला सांगणारा साधा मेसेज राहील (३ टिंबांचा विषय पूर्ण बंद)
+      alert(lang === 'en' ? "Please tap 'Add to Home Screen' from your browser menu if prompt doesn't appear." : (lang === 'hi' ? "यदि प्रॉम्प्ट नहीं दिखता है, तो कृपया अपने ब्राउज़र मेनू से 'Add to Home Screen' चुनें।" : "जर पॉप-अप आला नाही, तर कृपया ब्राऊझरमधून ॲप इन्स्टॉल करा."));
     }
   }
 
