@@ -3,197 +3,309 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>पशु ट्रॅकर</title>
+  <meta name="theme-color" content="#16a34a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
+  
+  <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
+
+  <!-- Dynamic Zero-File Manifest -->
+  <link rel="manifest" id="manifestPlaceholder">
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: #f1f5f9; min-height: 100vh; padding: 12px; display: flex; justify-content: center; }
-    .main-wrap { width: 100%; max-width: 390px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: #f8fafc; min-height: 100vh; padding: 12px; display: flex; justify-content: center; padding-bottom: 50px; }
+    .wrap { width: 100%; max-width: 410px; }
 
-    /* LOCK CARD */
-    .card-box { background: #ffffff; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); margin-bottom: 12px; border: 1px solid #e2e8f0; }
-    .text-center { text-align: center; }
-    .title { font-size: 18px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
-    .sub { font-size: 12px; color: #64748b; margin-bottom: 16px; }
-    .inp-group { margin-bottom: 12px; text-align: left; }
-    .inp-group label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px; }
-    .inp-text { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 15px; background: #f8fafc; outline: none; }
-    .inp-text:focus { border-color: #16a34a; background: #fff; }
-    .btn-green { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; }
-    .err-msg { color: #dc2626; font-size: 12px; font-weight: bold; margin-top: 10px; display: none; }
+    /* 1. PASSWORD SCREEN */
+    #lockScreen { width: 100%; margin-top: 40px; }
+    .card-lock { background: white; border-radius: 20px; padding: 26px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+    .lock-icon { font-size: 42px; margin-bottom: 8px; }
+    .lock-title { font-size: 19px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
+    .lock-sub { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+    .pass-input { width: 100%; padding: 14px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 18px; text-align: center; font-weight: bold; letter-spacing: 4px; outline: none; background: #f8fafc; }
+    .pass-input:focus { border-color: #16a34a; background: #fff; }
+    .btn-unlock { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
+    .err-msg { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 12px; display: none; }
 
-    /* DASHBOARD */
-    header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: bold; font-size: 14px; }
-    .btn-log { background: #dc2626; color: white; border: none; font-size: 11px; padding: 4px 8px; border-radius: 6px; cursor: pointer; }
+    /* 2. MAIN APP HEADER */
+    header { background: #16a34a; color: white; padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); font-weight: bold; font-size: 15px; }
+    
+    /* 1-CLICK DIRECT INSTALL BANNER */
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 14px; }
+    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
+    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
 
-    .animal-sel { display: flex; gap: 6px; margin-bottom: 12px; }
-    .an-tab { flex: 1; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 8px 4px; text-align: center; cursor: pointer; font-size: 12px; font-weight: bold; }
-    .an-tab.active { background: #dcfce7; border-color: #16a34a; color: #166534; }
+    /* FORM CARD */
+    .card-form { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .animal-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .an-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer; }
+    .an-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
+    .an-btn .emoji { font-size: 22px; display: block; }
+    .an-btn .lbl { font-size: 11px; font-weight: bold; }
 
-    /* CARDS */
-    .item-card { background: white; border-radius: 12px; padding: 12px; border: 1px solid #e2e8f0; margin-bottom: 10px; }
-    .item-top { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; }
-    .info-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: #475569; }
-    .info-row b { color: #0f172a; }
-    .highlight-box { background: #ecfdf5; border-radius: 6px; padding: 6px 8px; color: #166534; font-weight: bold; margin-top: 6px; }
-    .diet-tip { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 6px; padding: 8px; font-size: 11px; color: #92400e; margin-top: 6px; line-height: 1.4; }
-    .btn-remove { width: 100%; background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    .field { margin-bottom: 12px; text-align: left; }
+    label { display: block; font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; }
+    input[type="text"], input[type="date"] { width: 100%; padding: 11px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #f8fafc; }
+    input:focus { border-color: #16a34a; background: #fff; }
+    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
+
+    /* RECORDS CARD */
+    .rec-item { background: white; border-radius: 16px; padding: 14px; border: 1px solid #e2e8f0; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .rec-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; font-weight: bold; font-size: 14px; }
+    .rec-badge { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 12px; border: 1px solid #bbf7d0; }
+
+    .prog-bg { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+    .prog-fill { height: 100%; background: #16a34a; border-radius: 10px; }
+
+    .timeline { font-size: 12px; margin: 8px 0; }
+    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #475569; }
+    .row b { color: #0f172a; }
+    .due-box { background: #ecfdf5; border-radius: 8px; padding: 6px 8px; color: #166534; font-weight: bold; margin-top: 6px; }
+    
+    .diet { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 8px; font-size: 11px; color: #92400e; margin-top: 8px; line-height: 1.45; }
+
+    .rec-actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f5f9; }
+    .btn-repeat { flex: 1; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 7px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
+    .btn-del { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 7px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; }
+
+    /* Modal for Repeat Heat */
+    #heatModal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 16px; }
+    .modal-box { background: white; border-radius: 18px; padding: 20px; width: 100%; max-width: 320px; }
   </style>
 </head>
 <body>
 
-<div class="main-wrap">
+<div class="wrap">
 
-  <!-- LOCK FORM -->
-  <div id="lockBlock" class="card-box text-center">
-    <div style="font-size: 36px; margin-bottom: 6px;">🔐</div>
-    <div class="title">पशु ट्रॅकर ॲक्टिव्हेशन</div>
-    <div class="sub">मोबाईल नंबर आणि मिळालेला पिन टाका:</div>
+  <!-- 1. PASSWORD SCREEN -->
+  <div id="lockScreen">
+    <div class="card-lock">
+      <div class="lock-icon">🔐</div>
+      <div class="lock-title">पशु ट्रॅकर ॲप</div>
+      <div class="lock-sub">ॲप उघडण्यासाठी पासवर्ड टाका:</div>
 
-    <div class="inp-group">
-      <label>१० अंकी मोबाईल नंबर:</label>
-      <input type="tel" id="phoneInput" class="inp-text" placeholder="उदा. 9876543210" maxlength="10">
+      <input type="password" id="passCode" class="pass-input" placeholder="••••" maxlength="6">
+
+      <button class="btn-unlock" onclick="checkMasterPassword()">ॲप अनलॉक करा</button>
+      <div id="passErr" class="err-msg">चुकीचा पासवर्ड! कृपया योग्य पासवर्ड (2026) टाका.</div>
     </div>
-
-    <div class="inp-group">
-      <label>पिन (PIN):</label>
-      <input type="password" id="pinInput" class="inp-text" placeholder="••••" maxlength="6">
-    </div>
-
-    <button class="btn-green" onclick="handleUnlock()">ॲप उघडा</button>
-    <div id="errorText" class="err-msg">चुकीचा नंबर किंवा पिन! योग्य पिन टाका.</div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="dashBlock" style="display: none;">
+  <!-- 2. MAIN TRACKER -->
+  <div id="mainApp" style="display: none;">
     
     <header>
-      <span>🐄 पशु गाभण ट्रॅकर</span>
-      <button class="btn-log" onclick="handleLock()">लॉगआऊट</button>
+      <span>🐄 पशु गाभण व खुराक ट्रॅकर</span>
+      <span style="font-size: 11px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 12px;">पशुपालक ॲप</span>
     </header>
 
-    <div class="card-box">
-      <div class="animal-sel">
-        <div id="tab_cow" class="an-tab active" onclick="chooseAnimal('cow')">गाय (२८२)</div>
-        <div id="tab_buffalo" class="an-tab" onclick="chooseAnimal('buffalo')">म्हैस (३१०)</div>
-        <div id="tab_goat" class="an-tab" onclick="chooseAnimal('goat')">शेळी (१५०)</div>
-      </div>
-
-      <div class="inp-group">
-        <label>नाव किंवा टॅग नंबर:</label>
-        <input type="text" id="nameInput" class="inp-text" placeholder="उदा. कावेरी / Cow 01">
-      </div>
-
-      <div class="inp-group">
-        <label>भरवल्याची तारीख (A.I. Date):</label>
-        <input type="date" id="dateInput" class="inp-text">
-      </div>
-
-      <button class="btn-green" onclick="addNewRecord()">नोंद जोडा आणि ट्रॅक करा</button>
+    <!-- 1-CLICK DIRECT INSTALL BANNER -->
+    <div class="install-banner" id="installBanner">
+      <div class="install-title">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह करा</div>
+      <div class="install-sub">वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी:</div>
+      <button class="btn-install" id="installBtn" onclick="installToHomeScreen()">
+        <span>⬇️ ॲप डाऊनलोड / Install करा</span>
+      </button>
     </div>
 
-    <!-- LIST -->
-    <div id="recordsContainer"></div>
+    <!-- ENTRY FORM -->
+    <div class="card-form">
+      <div class="animal-btns">
+        <div id="tabCow" class="an-btn active" onclick="setAnimal('cow')">
+          <span class="emoji">🐄</span>
+          <span class="lbl">गाय (२८२ दिवस)</span>
+        </div>
+        <div id="tabBuf" class="an-btn" onclick="setAnimal('buffalo')">
+          <span class="emoji">🐃</span>
+          <span class="lbl">म्हैस (३१० दिवस)</span>
+        </div>
+        <div id="tabGoat" class="an-btn" onclick="setAnimal('goat')">
+          <span class="emoji">🐐</span>
+          <span class="lbl">शेळी (१५० दिवस)</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>नाव किंवा टॅग नंबर:</label>
+        <input type="text" id="cName" placeholder="उदा. कावेरी / Cow 01">
+      </div>
+
+      <div class="field">
+        <label>भरवल्याची तारीख (A.I. Date):</label>
+        <input type="date" id="cDate">
+      </div>
+
+      <button class="btn-save" onclick="saveNewEntry()">नोंद जोडा आणि ट्रॅक करा</button>
+    </div>
+
+    <!-- SAVED RECORDS -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
+      <span style="font-size:13px; font-weight:bold; color:#334155;">📋 जतन केलेले रेकॉर्ड्स</span>
+      <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
+    </div>
+
+    <div id="recordsList"></div>
 
   </div>
 
 </div>
 
+<!-- Reset Modal for Heat -->
+<div id="heatModal">
+  <div class="modal-box">
+    <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;">🔴 पशु पुन्हा माजावर आले?</h3>
+    <p style="font-size:12px; color:#64748b; margin-bottom:12px;">ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:</p>
+    <input type="date" id="newInsemDate" style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:8px; margin-bottom:14px;">
+    <div style="display:flex; gap:8px;">
+      <button onclick="closeModal()" style="flex:1; padding:10px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; font-weight:bold; font-size:12px;">रद्द करा</button>
+      <button onclick="confirmReset()" style="flex:1; padding:10px; background:#e11d48; color:white; border:none; border-radius:8px; font-weight:bold; font-size:12px;">तारीख बदला</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // 1. FORCE KILL ALL OLD SERVICE WORKERS & CACHES (जुना अडकलेला कॅशे नष्ट करण्यासाठी)
+  // 1. DYNAMIC ZERO-FILE MANIFEST
+  const manifestData = {
+    name: "पशु गाभण व खुराक ट्रॅकर",
+    short_name: "पशु ट्रॅकर",
+    start_url: window.location.href,
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#16a34a",
+    icons: [{
+      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2316a34a'/><text y='70' x='12' font-size='70'>🐄</text></svg>",
+      sizes: "192x192 512x512",
+      type: "image/svg+xml"
+    }]
+  };
+  const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+  document.getElementById('manifestPlaceholder').setAttribute('href', URL.createObjectURL(manifestBlob));
+
+  // 2. INLINE SERVICE WORKER
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for (var reg of registrations) { reg.unregister(); }
-    });
-  }
-  if ('caches' in window) {
-    caches.keys().then(function(names) {
-      for (var name of names) { caches.delete(name); }
-    });
+    const swCode = "self.addEventListener('fetch', function(e) {});";
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
   }
 
-  var currentAnimal = 'cow';
-  var inMemoryRecords = [];
+  // 3. 1-CLICK DIRECT INSTALL EVENT CAPTURE
+  var pwaPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    pwaPrompt = e;
+  });
 
-  // 2. UNLOCK FUNCTION
-  function handleUnlock() {
-    var pEl = document.getElementById("phoneInput");
-    var pinEl = document.getElementById("pinInput");
-    var err = document.getElementById("errorText");
-
-    var phone = pEl.value.replace(/\D/g, "");
-    var pin = pinEl.value.replace(/\D/g, "");
-
-    if (phone.length !== 10) {
-      err.innerText = "कृपया पूर्ण १० अंकी मोबाईल नंबर टाका!";
-      err.style.display = "block";
-      return;
-    }
-
-    var last4 = phone.slice(-4);
-    var targetPin = (parseInt(last4, 10) + 7).toString();
-
-    // 2026 किंवा शेवटचे ४ अंक + 7 किंवा शेवटचे ४ अंक
-    if (pin === targetPin || pin === "2026" || pin === last4) {
-      err.style.display = "none";
-      document.getElementById("lockBlock").style.display = "none";
-      document.getElementById("dashBlock").style.display = "block";
-      
-      // आजची तारीख सेट करा
-      var now = new Date();
-      var y = now.getFullYear();
-      var m = String(now.getMonth() + 1).padStart(2, '0');
-      var d = String(now.getDate()).padStart(2, '0');
-      document.getElementById("dateInput").value = y + '-' + m + '-' + d;
-      
-      renderList();
+  function installToHomeScreen() {
+    if (pwaPrompt) {
+      // थेट क्रोमचा 'Install' डायलॉग उघडेल
+      pwaPrompt.prompt();
+      pwaPrompt.userChoice.then(function(choice) {
+        if (choice.outcome === 'accepted') {
+          document.getElementById('installBanner').style.display = 'none';
+        }
+        pwaPrompt = null;
+      });
     } else {
-      err.innerText = "चुकीचा पिन! योग्य पिन टाका.";
+      alert("मोबाईल स्क्रीनवर ॲप सेव्ह करण्यासाठी:\n१. ब्राऊझरच्या वरच्या उजव्या बाजूच्या ३ टिंबांवर (⋮) दाबा.\n२. 'Install App' किंवा 'Add to Home screen' निवडा.");
+    }
+  }
+
+  // 4. AUTO-LOGIN CHECK
+  if (localStorage.getItem("pashu_final_unlocked_state") === "true") {
+    showDashboard();
+  }
+
+  function checkMasterPassword() {
+    var val = document.getElementById("passCode").value.trim();
+    var err = document.getElementById("passErr");
+
+    if (val === "2026") {
+      localStorage.setItem("pashu_final_unlocked_state", "true");
+      showDashboard();
+    } else {
       err.style.display = "block";
     }
   }
 
-  function handleLock() {
-    document.getElementById("dashBlock").style.display = "none";
-    document.getElementById("lockBlock").style.display = "block";
-    document.getElementById("phoneInput").value = "";
-    document.getElementById("pinInput").value = "";
-    document.getElementById("errorText").style.display = "none";
-  }
+  function showDashboard() {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("mainApp").style.display = "block";
+    
+    // आजची तारीख सेट करा
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = String(today.getMonth() + 1).padStart(2, '0');
+    var d = String(today.getDate()).padStart(2, '0');
+    document.getElementById("cDate").value = y + '-' + m + '-' + d;
 
-  // 3. ANIMAL SELECT
-  function chooseAnimal(type) {
-    currentAnimal = type;
-    document.getElementById("tab_cow").className = (type === 'cow') ? 'an-tab active' : 'an-tab';
-    document.getElementById("tab_buffalo").className = (type === 'buffalo') ? 'an-tab active' : 'an-tab';
-    document.getElementById("tab_goat").className = (type === 'goat') ? 'an-tab active' : 'an-tab';
-  }
-
-  // 4. RECORDS
-  function addNewRecord() {
-    var dVal = document.getElementById("dateInput").value;
-    if (!dVal) {
-      alert("कृपया भरवल्याची तारीख निवडा!");
-      return;
-    }
-
-    var nVal = document.getElementById("nameInput").value.trim();
-    if (!nVal) {
-      nVal = (currentAnimal === 'cow') ? 'गाय' : ((currentAnimal === 'buffalo') ? 'म्हैस' : 'शेळी');
-    }
-
-    inMemoryRecords.unshift({
-      id: Date.now(),
-      name: nVal,
-      type: currentAnimal,
-      date: dVal
-    });
-
-    document.getElementById("nameInput").value = "";
     renderList();
   }
 
-  function removeRecord(id) {
-    inMemoryRecords = inMemoryRecords.filter(function(r) { return r.id !== id; });
+  // 5. ANIMAL TYPE SELECT
+  var curAnimal = 'cow';
+  var activeResetId = null;
+
+  function setAnimal(type) {
+    curAnimal = type;
+    document.getElementById("tabCow").className = (type === 'cow') ? 'an-btn active' : 'an-btn';
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? 'an-btn active' : 'an-btn';
+    document.getElementById("tabGoat").className = (type === 'goat') ? 'an-btn active' : 'an-btn';
+  }
+
+  // 6. LOCAL STORAGE & DATA HANDLING
+  function getDB() {
+    return JSON.parse(localStorage.getItem("pashu_perfect_db_v1") || "[]");
+  }
+
+  function saveNewEntry() {
+    var dateVal = document.getElementById("cDate").value;
+    if (!dateVal) { alert("कृपया भरवल्याची तारीख निवडा!"); return; }
+
+    var nameVal = document.getElementById("cName").value.trim();
+    if (!nameVal) {
+      nameVal = (curAnimal === 'cow') ? 'गाय' : ((curAnimal === 'buffalo') ? 'म्हैस' : 'शेळी');
+    }
+
+    var db = getDB();
+    db.unshift({ id: Date.now(), name: nameVal, type: curAnimal, date: dateVal });
+    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
+
+    document.getElementById("cName").value = "";
+    renderList();
+  }
+
+  function deleteEntry(id) {
+    var db = getDB().filter(function(item){ return item.id !== id; });
+    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
+    renderList();
+  }
+
+  function openResetModal(id) {
+    activeResetId = id;
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = String(today.getMonth() + 1).padStart(2, '0');
+    var d = String(today.getDate()).padStart(2, '0');
+    document.getElementById("newInsemDate").value = y + '-' + m + '-' + d;
+    document.getElementById("heatModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    activeResetId = null;
+    document.getElementById("heatModal").style.display = "none";
+  }
+
+  function confirmReset() {
+    var nDate = document.getElementById("newInsemDate").value;
+    if (!nDate) return;
+    var db = getDB().map(function(r){
+      return (r.id === activeResetId) ? { id: r.id, name: r.name, type: r.type, date: nDate } : r;
+    });
+    localStorage.setItem("pashu_perfect_db_v1", JSON.stringify(db));
+    closeModal();
     renderList();
   }
 
@@ -201,7 +313,7 @@
     var parts = dateStr.split('-');
     var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
     d.setDate(d.getDate() + days);
-    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+    return d.toLocaleDateString('mr-IN', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
   function getDaysPassed(dateStr) {
@@ -212,46 +324,61 @@
     return diff >= 0 ? diff : 0;
   }
 
-  // 5. RENDER UI
+  // 7. RENDER LIST
   function renderList() {
-    var box = document.getElementById("recordsContainer");
-    if (inMemoryRecords.length === 0) {
-      box.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:16px;">अद्याप कोणतीही नोंद जोडलेली नाही.</div>';
+    var container = document.getElementById("recordsList");
+    var db = getDB();
+    document.getElementById("recCounter").innerText = db.length;
+
+    if (db.length === 0) {
+      container.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:20px; background:white; border-radius:14px; border:1px solid #e2e8f0;">अद्याप कोणतीही नोंद जोडलेली नाही.</div>';
       return;
     }
 
     var html = "";
-    for (var i = 0; i < inMemoryRecords.length; i++) {
-      var r = inMemoryRecords[i];
+    for (var i = 0; i < db.length; i++) {
+      var item = db[i];
       var total = 282, dry = 210, icon = "🐄";
-      if (r.type === 'buffalo') { total = 310; dry = 235; icon = "🐃"; }
-      if (r.type === 'goat') { total = 150; dry = 100; icon = "🐐"; }
+      if (item.type === 'buffalo') { total = 310; dry = 235; icon = "🐃"; }
+      if (item.type === 'goat') { total = 150; dry = 100; icon = "🐐"; }
 
-      var daysIn = getDaysPassed(r.date);
+      var daysIn = getDaysPassed(item.date);
+      var percent = Math.min(100, Math.round((daysIn / total) * 100));
+
       var tip = "नियमित संतुलित चारा आणि दररोज ५० ग्रॅम खनिज मिश्रण (Mineral Mixture) द्यावे.";
-
-      if (r.type === 'cow') {
-        if (daysIn >= 240) tip = "<b>शेवटचे ४५ दिवस:</b> ट्रान्झिशन फीड, मेथी भरडा सुरू करा.";
-        else if (daysIn >= 210) tip = "<b>७ वा महिना पूर्ण:</b> दूध पूर्ण बंद करा व कासेला विश्रांती द्या.";
-      } else if (r.type === 'buffalo') {
-        if (daysIn >= 250) tip = "<b>शेवटचे ६० दिवस:</b> बायपास फॅट आणि उच्च प्रथिनयुक्त खुराक वाढवा.";
+      if (item.type === 'cow') {
+        if (daysIn >= 240) tip = "<b>शेवटचे ४५ दिवस:</b> ट्रान्झिशन फीड, २५० ग्रॅम मेथी भरडा सुरू करा. विण्यापूर्वी कॅल्शियम संतुलित ठेवा.";
+        else if (daysIn >= 210) tip = "<b>७ वा महिना पूर्ण:</b> दूध हळूहळू पूर्ण बंद करा. कासेला विश्रांती द्या व कासदाह प्रतिबंधक मलम वापरा.";
+      } else if (item.type === 'buffalo') {
+        if (daysIn >= 250) tip = "<b>शेवटचे ६० दिवस:</b> बायपास फॅट, खनिज मिश्रण आणि उच्च प्रथिनयुक्त खुराक वाढवा.";
         else if (daysIn >= 235) tip = "<b>८ वा महिना:</b> म्हशीचे दूध आटवून कासेला विश्रांती द्या.";
+      } else if (item.type === 'goat') {
+        if (daysIn >= 120) tip = "<b>शेवटचा १ महिना:</b> शेळीला उच्च प्रथिनयुक्त खुराक आणि हिरवा चारा वाढवा.";
       }
 
-      html += '<div class="item-card">';
-      html += '  <div class="item-top"><span>' + icon + ' ' + r.name + '</span><span style="color:#16a34a;">' + daysIn + ' दिवस पूर्ण</span></div>';
-      html += '  <div class="info-row"><span>🔴 उलट तपासणी (२१ वा दिवस):</span><b>' + addDays(r.date, 21) + '</b></div>';
-      if (r.type !== 'goat') {
-        html += '  <div class="info-row"><span>🩺 गर्भतपासणी (९० वा दिवस):</span><b>' + addDays(r.date, 90) + '</b></div>';
-        html += '  <div class="info-row"><span>🥛 दूध आटवणे तारीख:</span><b>' + addDays(r.date, dry) + '</b></div>';
+      html += '<div class="rec-item">';
+      html += '  <div class="rec-top">';
+      html += '    <span>' + icon + ' ' + item.name + '</span>';
+      html += '    <span class="rec-badge">' + daysIn + ' दिवस पूर्ण</span>';
+      html += '  </div>';
+      html += '  <div class="prog-bg"><div class="prog-fill" style="width:' + percent + '%;"></div></div>';
+      html += '  <div class="timeline">';
+      html += '    <div class="row"><span>🔴 उलट तपासणी (२१ वा दिवस):</span><b>' + addDays(item.date, 21) + '</b></div>';
+      if (item.type !== 'goat') {
+        html += '  <div class="row"><span>🩺 डॉक्टर गर्भतपासणी (९० वा दिवस):</span><b>' + addDays(item.date, 90) + '</b></div>';
+        html += '  <div class="row"><span>🥛 दूध आटवणे (कोरडा काळ):</span><b>' + addDays(item.date, dry) + '</b></div>';
       }
-      html += '  <div class="info-row highlight-box"><span>🍼 विण्याची तारीख:</span><span>' + addDays(r.date, total) + '</span></div>';
-      html += '  <div class="diet-tip">' + tip + '</div>';
-      html += '  <button class="btn-remove" onclick="removeRecord(' + r.id + ')">🗑️ नोंद हटवा</button>';
+      html += '    <div class="row due-box"><span>🍼 अंदाजे विण्याची तारीख:</span><span>' + addDays(item.date, total) + '</span></div>';
+      html += '  </div>';
+      html += '  <div class="diet">' + tip + '</div>';
+      html += '  <div class="rec-actions">';
+      html += '    <button class="btn-repeat" onclick="openResetModal(' + item.id + ')">🔴 पशु उलटले? (तारीख बदला)</button>';
+      html += '    <button class="btn-del" onclick="deleteEntry(' + item.id + ')">🗑️ हटवा</button>';
+      html += '  </div>';
       html += '</div>';
     }
 
-    box.innerHTML = html;
+    container.innerHTML = html;
   }
 </script>
 
