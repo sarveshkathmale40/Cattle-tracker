@@ -58,18 +58,17 @@
     <p style="font-size: 11px; color: #94a3b8; margin-top: 16px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
   </div>
 
-  <!-- 📲 डाऊनलोड / इन्स्टॉल स्क्रीन -->
+  <!-- 📲 डाऊनलोड स्क्रीन -->
   <div id="downloadScreen" class="box" style="display: none;">
     <div class="app-icon">📥</div>
-    <h2 id="dTitle">होम स्क्रीनवर सेव्ह करा</h2>
+    <h2 id="dTitle">ॲप डाऊनलोड करा</h2>
     <div class="trust-badge">✅ MH Farmer's Verified App</div>
-    <p id="dSub">गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:</p>
+    <p id="dSub">फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन तुमच्या मोबाईलमध्ये येईल:</p>
     
-    <button onclick="installApp()" id="installBtn" class="btn" style="background: #2563eb; box-shadow: 0 6px 15px rgba(37,99,235,0.3);">⬇️ ॲप डाऊनलोड / इन्स्टॉल करा</button>
+    <button onclick="installApp()" id="installBtn" class="btn" style="background: #2563eb; box-shadow: 0 6px 15px rgba(37,99,235,0.3);">⬇️ ॲप डाऊनलोड सुरू करा</button>
     
     <div class="guide-box" id="dGuide">
-      <b>📌 महत्त्वाची सूचना:</b><br>
-      बटण दाबल्यानंतर स्क्रीनवर थेट <b>'Add'</b> किंवा <b>'Install'</b> पर्याय येईल, त्यावर क्लिक करा म्हणजे ॲप तुमच्या होम स्क्रीनवर दिसेल!
+      <b>📌 टीप:</b> बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या <b>'Install'</b> किंवा <b>'Add'</b> पर्यायावर क्लिक करा, म्हणजे ॲप थेट इन्स्टॉल होईल!
     </div>
 
     <p style="font-size: 11px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
@@ -102,10 +101,10 @@
       document.getElementById('uPin').placeholder = "Enter PIN";
       document.getElementById('loginBtn').innerText = "Open App 🔓";
       
-      document.getElementById('dTitle').innerText = "Save to Home Screen";
-      document.getElementById('dSub').innerText = "Click below to install the app directly on your phone:";
-      document.getElementById('installBtn').innerText = "⬇️ Install / Download App";
-      document.getElementById('dGuide').innerHTML = "<b>📌 Important Note:</b><br>After clicking, an <b>'Add'</b> or <b>'Install'</b> prompt will appear on your screen. Just click it to add the app to your home screen!";
+      document.getElementById('dTitle').innerText = "Download App";
+      document.getElementById('dSub').innerText = "Click below to download and install the app directly on your phone:";
+      document.getElementById('installBtn').innerText = "⬇️ Start App Download";
+      document.getElementById('dGuide').innerHTML = "<b>📌 Note:</b> Just tap <b>'Install'</b> or <b>'Add'</b> when prompted on your screen!";
     } else if(lang === 'hi') {
       document.getElementById('langLbl').innerText = "भाषा चुनें:";
       document.getElementById('lTitle').innerText = "पशु ट्रैकर लॉगिन";
@@ -114,10 +113,10 @@
       document.getElementById('uPin').placeholder = "पासवर्ड (PIN) दर्ज करें";
       document.getElementById('loginBtn').innerText = "ऐप खोलें 🔓";
       
-      document.getElementById('dTitle').innerText = "होम स्क्रीन पर सेव करें";
-      document.getElementById('dSub').innerText = "सीधे मोबाइल में ऐप चलाने के लिए नीचे दिए गए बटन पर क्लिक करें:";
-      document.getElementById('installBtn').innerText = "⬇️ ऐप डाउनलोड / इंस्टॉल करें";
-      document.getElementById('dGuide').innerHTML = "<b>📌 महत्वपूर्ण सूचना:</b><br>बटन दबाने के बाद स्क्रीन पर सीधा <b>'Add'</b> या <b>'Install'</b> का विकल्प आएगा, उस पर क्लिक करें!";
+      document.getElementById('dTitle').innerText = "ऐप डाउनलोड करें";
+      document.getElementById('dSub').innerText = "सीधे अपने फोन में ऐप डाउनलोड करने के लिए नीचे दिए गए बटन पर क्लिक करें:";
+      document.getElementById('installBtn').innerText = "⬇️ ऐप डाउनलोड शुरू करें";
+      document.getElementById('dGuide').innerHTML = "<b>📌 ध्यान दें:</b> स्क्रीन पर आने वाले <b>'Install'</b> या <b>'Add'</b> विकल्प पर क्लिक करें!";
     } else {
       document.getElementById('langLbl').innerText = "भाषा निवडा:";
       document.getElementById('lTitle').innerText = "पशु ट्रॅकर लॉगिन";
@@ -126,10 +125,10 @@
       document.getElementById('uPin').placeholder = "पासवर्ड (PIN) टाका";
       document.getElementById('loginBtn').innerText = "ॲप उघडा 🔓";
       
-      document.getElementById('dTitle').innerText = "होम स्क्रीनवर सेव्ह करा";
-      document.getElementById('dSub').innerText = "गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:";
-      document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड / इन्स्टॉल करा";
-      document.getElementById('dGuide').innerHTML = "<b>📌 महत्त्वाची सूचना:</b><br>बटण दाबल्यानंतर स्क्रीनवर थेट <b>'Add'</b> किंवा <b>'Install'</b> पर्याय येईल, त्यावर क्लिक करा म्हणजे ॲप तुमच्या होम स्क्रीनवर दिसेल!";
+      document.getElementById('dTitle').innerText = "ॲप डाऊनलोड करा";
+      document.getElementById('dSub').innerText = "फक्त खालील बटण दाबा, ॲप थेट डाऊनलोड होऊन तुमच्या मोबाईलमध्ये येईल:";
+      document.getElementById('installBtn').innerText = "⬇️ ॲप डाऊनलोड सुरू करा";
+      document.getElementById('dGuide').innerHTML = "<b>📌 टीप:</b> बटण दाबल्यानंतर स्क्रीनवर येणाऱ्या <b>'Install'</b> किंवा <b>'Add'</b> पर्यायावर क्लिक करा, म्हणजे ॲप थेट इन्स्टॉल होईल!";
     }
   }
 
@@ -164,7 +163,7 @@
     localStorage.setItem("pashu_unlocked", "true");
   }
 
-  // इथे तो जळजळीत alert काढून टाकला आहे, आता थेट ब्राऊझरचा इन्स्टॉल पॉप-अप येईल
+  // थेट डाऊनलोड आणि इन्स्टॉल ट्रिगर करणे
   function installApp() {
     var lang = document.getElementById('langSelect').value;
     if (pPrompt) {
@@ -173,8 +172,17 @@
         pPrompt = null;
       });
     } else {
-      // जर फोनमध्ये सिग्नल किंवा सेटिंगमुळे पॉप-अप आला नाही, तर युजरला गोंधळात न टाकता फक्त शांतपणे इन्स्टॉल करायला सांगणारा साधा मेसेज राहील (३ टिंबांचा विषय पूर्ण बंद)
-      alert(lang === 'en' ? "Please tap 'Add to Home Screen' from your browser menu if prompt doesn't appear." : (lang === 'hi' ? "यदि प्रॉम्प्ट नहीं दिखता है, तो कृपया अपने ब्राउज़र मेनू से 'Add to Home Screen' चुनें।" : "जर पॉप-अप आला नाही, तर कृपया ब्राऊझरमधून ॲप इन्स्टॉल करा."));
+      // जर पीडब्लूए prompt तयार नसेल तर युजरसाठी फाईल डाऊनलोड किंवा थेट ॲप पेज रीलोड करून इन्स्टॉल मोड ट्रिगर करणे
+      var blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'Pashu_Tracker.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      alert(lang === 'en' ? "Download started! Open the downloaded file or check browser menu to add to home screen." : (lang === 'hi' ? "डाउनलोड शुरू हो गया! होम स्क्रीन पर जोड़ने के लिए डाउनलोड की गई फ़ाइल खोलें।" : "डाऊनलोड सुरू झाले आहे! फाईल डाऊनलोड झाली की ती ओपन करा किंवा इन्स्टॉल करा."));
     }
   }
 
