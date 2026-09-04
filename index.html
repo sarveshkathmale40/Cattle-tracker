@@ -5,88 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#16a34a">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="पशु ट्रॅकर">
   
   <title>पशु गाभण व खुराक ट्रॅकर</title>
-
-  <!-- PWA Manifest -->
   <link rel="manifest" id="mPlaceholder">
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #f1f5f9; padding: 12px; display: flex; justify-content: center; }
-    .wrap { width: 100%; max-width: 400px; }
+    body { background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+    
+    .box { background: white; padding: 26px 20px; border-radius: 20px; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+    .app-icon { font-size: 50px; margin-bottom: 10px; background: #dcfce7; width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto; box-shadow: 0 4px 12px rgba(22,163,74,0.2); }
 
-    header { background: #16a34a; color: white; padding: 14px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
+    h2 { color: #166534; font-size: 20px; margin-bottom: 6px; font-weight: bold; }
+    p { font-size: 12px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
 
-    /* INSTALL BANNER (इन्स्टॉल झाल्यावर दिसेनासे होईल) */
-    .banner { background: #dcfce7; border: 2px dashed #16a34a; border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px; display: none; }
-    .banner b { display: block; color: #166534; font-size: 14px; margin-bottom: 4px; }
-    .banner p { font-size: 11px; color: #15803d; margin-bottom: 8px; }
-    .btn-inst { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
-
-    /* FORM */
-    .card { background: white; border-radius: 12px; padding: 14px; border: 1px solid #cbd5e1; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
-    .tab { background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 8px; padding: 8px; text-align: center; font-size: 12px; font-weight: bold; cursor: pointer; }
-    .tab.active { background: #dcfce7; border-color: #16a34a; color: #166534; }
-
-    .fld { margin-bottom: 10px; text-align: left; }
-    label { display: block; font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 3px; }
-    input { width: 100%; padding: 11px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff; }
-    input:focus { border-color: #16a34a; }
-    .btn-sub { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
-
-    /* RECORD */
-    .item { background: white; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .item-top { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; margin-bottom: 6px; }
-    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; color: #475569; }
-    .row b { color: #0f172a; }
-    .due { background: #ecfdf5; padding: 6px; border-radius: 6px; color: #166534; font-weight: bold; margin-top: 6px; }
-    .diet { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 6px; padding: 8px; font-size: 11px; color: #92400e; margin-top: 6px; }
-    .btn-del { width: 100%; background: #fee2e2; color: #b91c1c; border: none; padding: 6px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; margin-top: 8px; }
+    input { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; background: #fff; margin-bottom: 12px; }
+    input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
+    
+    .btn { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.25); }
+    
+    .trust-badge { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 8px; border-radius: 8px; font-size: 11px; font-weight: bold; margin-bottom: 14px; }
+    .guide-box { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 10px; border-radius: 8px; font-size: 11px; margin-top: 12px; text-align: left; line-height: 1.4; }
   </style>
 </head>
 <body>
 
-<div class="wrap">
+  <!-- 🔒 टप्पा १: लॉगिन स्क्रीन -->
+  <div id="lockScreen" class="box">
+    <div class="app-icon">🐄</div>
+    <h2>पशु ट्रॅकर लॉगिन</h2>
+    <div class="trust-badge">🔒 MH Farmer's Official Secure App</div>
+    <p>ॲप सुरू करण्यासाठी मोबाईल नंबर आणि पिन टाका:</p>
+    
+    <div style="text-align: left;">
+      <input type="tel" id="uPhone" placeholder="मोबाईल नंबर टाका (10 अंकी)" maxlength="10">
+      <input type="password" id="uPin" placeholder="पासवर्ड (PIN) टाका">
+    </div>
 
-  <header>🐄 पशु गाभण व खुराक ट्रॅकर</header>
-
-  <!-- INSTALL BANNER -->
-  <div class="banner" id="pBanner">
-    <b>📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह करा</b>
-    <p>एका क्लिकवर ॲप उघडण्यासाठी खालील बटण दाबा:</p>
-    <button class="btn-inst" onclick="installApp()">⬇️ ॲप डाऊनलोड करा / Install</button>
+    <button onclick="checkLogin()" class="btn">ॲप उघडा 🔓</button>
+    <p style="font-size: 10px; color: #94a3b8; margin-top: 14px; margin-bottom: 0;">© मॉडर्न शेतकरी डिजिटल सेवा</p>
   </div>
 
-  <!-- FORM -->
-  <div class="card">
-    <div class="grid">
-      <div id="tCow" class="tab active" onclick="setAn('cow')">गाय (२८२)</div>
-      <div id="tBuf" class="tab" onclick="setAn('buffalo')">म्हैस (३१०)</div>
-      <div id="tGoat" class="tab" onclick="setAn('goat')">शेळी (१५०)</div>
+  <!-- 📲 टप्पा २: डाऊनलोड / इन्स्टॉल स्क्रीन -->
+  <div id="downloadScreen" class="box" style="display: none;">
+    <div class="app-icon">📥</div>
+    <h2>होम स्क्रीनवर सेव्ह करा</h2>
+    <div class="trust-badge">✅ MH Farmer's Verified App</div>
+    <p>गुगलची पट्टी काढून थेट मोबाईलमध्ये ॲप चालवण्यासाठी खालील बटण दाबा:</p>
+    
+    <button onclick="installApp()" class="btn" style="background: #2563eb; box-shadow: 0 4px 12px rgba(37,99,235,0.25);">⬇️ ॲप डाऊनलोड / इन्स्टॉल करा</button>
+    
+    <div class="guide-box">
+      <b>📌 महत्त्वाची सूचना:</b><br>
+      बटण दाबल्यानंतर २ सेकंद थांबा. मोबाईलच्या स्क्रीनवर पुढे जे पॉप-अप येईल, त्यावर <b>'Add'</b> किंवा <b>'Install'</b> वर क्लिक करा, म्हणजे ॲप तुमच्या होम स्क्रीनवर येईल!
     </div>
 
-    <div class="fld">
-      <label>नाव किंवा टॅग नंबर:</label>
-      <input type="text" id="cName" placeholder="उदा. कावेरी / 01">
-    </div>
-
-    <div class="fld">
-      <label>भरवल्याची तारीख (A.I. Date):</label>
-      <input type="date" id="cDate">
-    </div>
-
-    <button class="btn-sub" onclick="saveData()">नोंद जोडा आणि ट्रॅक करा</button>
+    <p style="font-size: 10px; color: #94a3b8; margin-top: 12px; margin-bottom: 0;">मॉडर्न शेतकरी ॲप</p>
   </div>
-
-  <div id="list"></div>
-
-</div>
 
 <script>
-  // PWA Manifest Generator
   const mData = {
     name: "पशु ट्रॅकर", short_name: "पशु ट्रॅकर",
     start_url: window.location.href, display: "standalone",
@@ -96,126 +75,61 @@
   document.getElementById('mPlaceholder').setAttribute('href', URL.createObjectURL(new Blob([JSON.stringify(mData)], {type: 'application/json'})));
 
   var pPrompt = null;
-  
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     pPrompt = e;
-    // जोपर्यंत ॲप इन्स्टॉल होत नाही, तोपर्यंतच दिसेल
-    if (!localStorage.getItem("app_installed_done")) {
-      document.getElementById('pBanner').style.display = 'block';
-    }
   });
 
-  window.addEventListener('appinstalled', function() {
-    localStorage.setItem("app_installed_done", "true");
-    document.getElementById('pBanner').style.display = 'none';
-  });
+  function checkLogin() {
+    var phone = document.getElementById("uPhone").value.trim();
+    var pin = document.getElementById("uPin").value.trim();
+
+    if(phone.length < 10) {
+      alert("कृपया १० अंकी वैध मोबाईल नंबर टाका!");
+      return;
+    }
+
+    if (pin === "2026") {
+      showDownloadScreen();
+      return;
+    }
+
+    var last4 = phone.slice(-4);
+    var expectedPin = (parseInt(last4) + 7).toString();
+
+    if (pin === expectedPin) {
+      showDownloadScreen();
+    } else {
+      alert("चुकीचा पासवर्ड! कृपया योग्य पिन टाका.");
+    }
+  }
+
+  function showDownloadScreen() {
+    document.getElementById("lockScreen").style.display = "none";
+    document.getElementById("downloadScreen").style.display = "block";
+    localStorage.setItem("pashu_unlocked", "true");
+  }
 
   function installApp() {
     if (pPrompt) {
       pPrompt.prompt();
       pPrompt.userChoice.then(function(res) {
         if (res.outcome === 'accepted') {
-          localStorage.setItem("app_installed_done", "true");
-          document.getElementById('pBanner').style.display = 'none';
+          alert("ॲप यशस्वीरित्या होम स्क्रीनवर सेव्ह झाले आहे!");
         }
         pPrompt = null;
       });
     } else {
-      // युझरने डाऊनलोड केल्यावर किंवा बटण दाबल्यावर बॅनर कायमचा लपवा
-      localStorage.setItem("app_installed_done", "true");
-      document.getElementById('pBanner').style.display = 'none';
-      alert("मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या ३ टिंबांवर (⋮) दाबा आणि 'Add to Home screen' निवडा.");
+      alert("मोबाईल स्क्रीनवर सेव्ह करण्यासाठी ब्राऊझरच्या वरच्या किंवा खालच्या ३ टिंबांवर (⋮) क्लिक करा आणि 'Add to Home screen' किंवा 'Install app' निवडा.");
     }
   }
 
-  var cur = 'cow';
-  window.onload = function() {
-    // जर आधीच इन्स्टॉल झाले असेल तर बॅनर अजिबात दाखवणार नाही
-    if (localStorage.getItem("app_installed_done") === "true" || window.matchMedia('(display-mode: standalone)').matches) {
-      document.getElementById('pBanner').style.display = 'none';
+  window.addEventListener('DOMContentLoaded', (event) => {
+    if (localStorage.getItem("pashu_unlocked") === "true") {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("downloadScreen").style.display = "block";
     }
-
-    var d = new Date();
-    document.getElementById("cDate").value = d.toISOString().split('T')[0];
-    draw();
-  };
-
-  function setAn(t) {
-    cur = t;
-    document.getElementById("tCow").className = (t === 'cow') ? 'tab active' : 'tab';
-    document.getElementById("tBuf").className = (t === 'buffalo') ? 'tab active' : 'tab';
-    document.getElementById("tGoat").className = (t === 'goat') ? 'tab active' : 'tab';
-  }
-
-  function getDB() {
-    return JSON.parse(localStorage.getItem("pashu_db_v4") || "[]");
-  }
-
-  function saveData() {
-    var dt = document.getElementById("cDate").value;
-    if (!dt) { alert("तारीख निवडा!"); return; }
-    var nm = document.getElementById("cName").value.trim() || (cur === 'cow' ? 'गाय' : (cur === 'buffalo' ? 'म्हैस' : 'शेळी'));
-    
-    var db = getDB();
-    db.unshift({ id: Date.now(), name: nm, type: cur, date: dt });
-    localStorage.setItem("pashu_db_v4", JSON.stringify(db));
-    document.getElementById("cName").value = "";
-    draw();
-  }
-
-  function delData(id) {
-    var db = getDB().filter(function(i){ return i.id !== id; });
-    localStorage.setItem("pashu_db_v4", JSON.stringify(db));
-    draw();
-  }
-
-  function addD(str, days) {
-    var d = new Date(str);
-    d.setDate(d.getDate() + days);
-    return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-  }
-
-  function getDays(str) {
-    var diff = Math.floor((new Date() - new Date(str)) / (1000 * 60 * 60 * 24));
-    return diff >= 0 ? diff : 0;
-  }
-
-  function draw() {
-    var box = document.getElementById("list");
-    var db = getDB();
-    if (db.length === 0) {
-      box.innerHTML = '<div style="text-align:center; color:#94a3b8; font-size:12px; padding:16px;">अद्याप नोंद नाही.</div>';
-      return;
-    }
-
-    var html = "";
-    for (var i = 0; i < db.length; i++) {
-      var it = db[i];
-      var tot = 282, dry = 210, ico = "🐄";
-      if (it.type === 'buffalo') { tot = 310; dry = 235; ico = "🐃"; }
-      if (it.type === 'goat') { tot = 150; dry = 100; ico = "🐐"; }
-
-      var daysIn = getDays(it.date);
-      var tip = "नियमित संतुलित चारा व ५० ग्रॅम खनिज मिश्रण द्या.";
-      if (it.type === 'cow' && daysIn >= 210) tip = "<b>७ वा महिना पूर्ण:</b> दूध आटवा व कासेची काळजी घ्या.";
-      if (it.type === 'buffalo' && daysIn >= 235) tip = "<b>८ वा महिना:</b> म्हशीचे दूध आटवा.";
-
-      html += '<div class="item">';
-      html += '  <div class="item-top"><span>' + ico + ' ' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' दिवस पूर्ण</span></div>';
-      html += '  <div class="row"><span>🔴 उलट तपासणी (२१ वा):</span><b>' + addD(it.date, 21) + '</b></div>';
-      if (it.type !== 'goat') {
-        html += '  <div class="row"><span>🩺 गर्भतपासणी (९० वा):</span><b>' + addD(it.date, 90) + '</b></div>';
-        html += '  <div class="row"><span>🥛 दूध आटवणे:</span><b>' + addD(it.date, dry) + '</b></div>';
-      }
-      html += '  <div class="row due"><span>🍼 विण्याची तारीख:</span><span>' + addD(it.date, tot) + '</span></div>';
-      html += '  <div class="diet">' + tip + '</div>';
-      html += '  <button class="btn-del" onclick="delData(' + it.id + ')">🗑️ नोंद हटवा</button>';
-      html += '</div>';
-    }
-    box.html = html; // fix assignment
-    box.innerHTML = html;
-  }
+  });
 </script>
 
 </body>
