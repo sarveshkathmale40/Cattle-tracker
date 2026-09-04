@@ -19,7 +19,7 @@
     .wrap { width: 100%; max-width: 410px; }
 
     /* 1. PASSWORD SCREEN */
-    #lockScreen { width: 100%; margin-top: 40px; }
+    #lockScreen { width: 100%; margin-top: 40px; display: block; }
     .card-lock { background: white; border-radius: 20px; padding: 26px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
     .lock-icon { font-size: 42px; margin-bottom: 8px; }
     .lock-title { font-size: 19px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
@@ -89,7 +89,7 @@
     <div class="card-lock">
       <div class="lock-icon">🔐</div>
       <div class="lock-title">पशु ट्रॅकर ॲक्टिव्हेशन</div>
-      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:</div>
+      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter PIN (e.g. 2026, 1000, 1001)</span></div>
 
       <input type="tel" id="userPinInput" class="pass-input" placeholder="••••" maxlength="6">
 
@@ -181,6 +181,9 @@
 </div>
 
 <script>
+  // वैध पिन्सची पक्की यादी
+  var VALID_PINS = ["2026", "1000", "1001", "1002", "1003", "1004", "1005", "5883", "7788", "9900", "4455", "1122"];
+
   // 1. DYNAMIC MANIFEST
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
@@ -327,31 +330,27 @@
   var curAnimal = "cow";
   var activeResetId = null;
 
-  // 4. ऑटो-लॉगिन (कायमस्वरूपी अनलॉक)
-  if (localStorage.getItem("pashu_forever_unlocked") === "true") {
+  // 4. ऑटो-लॉगिन तपासणी (पक्का नियम)
+  if (localStorage.getItem("pashu_final_app_unlocked_v2") === "true") {
     showDashboard();
   }
 
-  // 5. पिन व्हॅलिडेशन (सोपे व थेट)
+  // 5. पिन पडताळणी
   function validateUserPin() {
     var rawInput = document.getElementById("userPinInput").value;
-    var pin = rawInput.replace(/[^0-9]/g, ""); // फक्त आकडे मोजा
+    var pin = rawInput.replace(/[^0-9]/g, "").trim();
     var errMsg = document.getElementById("pinErrMsg");
 
-    // वैध पिन लिस्ट
-    var validPins = ["2026", "1000", "1001", "1002", "1003", "1004", "1005", "5883", "7788", "9900", "4455", "1122"];
-
-    var isValid = false;
-    for (var i = 0; i < validPins.length; i++) {
-      if (pin === validPins[i]) {
-        isValid = true;
+    var isMatch = false;
+    for (var i = 0; i < VALID_PINS.length; i++) {
+      if (pin === VALID_PINS[i]) {
+        isMatch = true;
         break;
       }
     }
 
-    if (isValid) {
-      // कायमस्वरूपी सेव्ह करा (भविष्यात कधीही कोड बदलला तरी अनलॉक राहील)
-      localStorage.setItem("pashu_forever_unlocked", "true");
+    if (isMatch) {
+      localStorage.setItem("pashu_final_app_unlocked_v2", "true");
       showDashboard();
     } else {
       errMsg.style.display = "block";
@@ -402,8 +401,4 @@
     rec.lang = curLang === 'mr' ? 'mr-IN' : (curLang === 'hi' ? 'hi-IN' : 'en-US');
     rec.start();
     rec.onresult = function(e) {
-      document.getElementById("cName").value = e.results[0][0].transcript;
-    };
-  }
-
-  function
+      document.getElementById("cName").value = e.results[0][0].transcript
