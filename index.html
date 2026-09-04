@@ -10,160 +10,131 @@
   
   <title>पशु गाभण व खुराक ट्रॅकर | Cattle Tracker</title>
 
-  <!-- Dynamic Manifest -->
+  <!-- Dynamic PWA Manifest -->
   <link rel="manifest" id="manifestPlaceholder">
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: #f8fafc; min-height: 100vh; padding: 12px; display: flex; justify-content: center; padding-bottom: 50px; }
+    body { background: #f1f5f9; min-height: 100vh; padding: 12px; display: flex; justify-content: center; padding-bottom: 50px; }
     .wrap { width: 100%; max-width: 410px; }
 
-    /* 1. PASSWORD SCREEN */
-    #lockScreen { width: 100%; margin-top: 40px; display: block; }
-    .card-lock { background: white; border-radius: 20px; padding: 26px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-    .lock-icon { font-size: 42px; margin-bottom: 8px; }
-    .lock-title { font-size: 19px; font-weight: bold; color: #0f172a; margin-bottom: 4px; }
-    .lock-sub { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
-    .pass-input { width: 100%; padding: 14px; border: 2px solid #cbd5e1; border-radius: 12px; font-size: 18px; text-align: center; font-weight: bold; letter-spacing: 4px; outline: none; background: #f8fafc; }
-    .pass-input:focus { border-color: #16a34a; background: #fff; }
-    .btn-unlock { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
-    .err-msg { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 12px; display: none; line-height: 1.4; }
-
-    /* 2. MAIN APP HEADER */
-    header { background: #16a34a; color: white; padding: 12px 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); }
-    .hdr-title { font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-    .lang-select { background: white; color: #15803d; border: none; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 20px; outline: none; }
+    /* PREMIUM HEADER */
+    header { background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 14px 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(22,163,74,0.3); }
+    .hdr-title { font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+    .lang-select { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 20px; outline: none; cursor: pointer; }
+    .lang-select option { background: #16a34a; color: white; }
 
     /* 1-CLICK DIRECT INSTALL BANNER */
-    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 14px; }
-    .install-title { font-size: 13px; font-weight: bold; color: #166534; margin-bottom: 2px; }
-    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 8px; }
-    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(22,163,74,0.25); }
+    .install-banner { background: linear-gradient(135deg, #ecfdf5, #dcfce7); border: 2px dashed #16a34a; border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .install-title { font-size: 14px; font-weight: bold; color: #166534; margin-bottom: 3px; }
+    .install-sub { font-size: 11px; color: #15803d; margin-bottom: 10px; line-height: 1.4; }
+    .btn-install { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
 
     /* FORM CARD */
-    .card-form { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-form { background: white; border-radius: 18px; padding: 18px; border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     .animal-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-    .an-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer; }
-    .an-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
-    .an-btn .emoji { font-size: 22px; display: block; }
+    .an-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 10px 4px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .an-btn.active { background: #f0fdf4; border-color: #16a34a; color: #15803d; box-shadow: 0 2px 8px rgba(22,163,74,0.15); }
+    .an-btn .emoji { font-size: 24px; display: block; margin-bottom: 2px; }
     .an-btn .lbl { font-size: 11px; font-weight: bold; }
 
-    .field { margin-bottom: 12px; text-align: left; }
-    label { display: block; font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 4px; }
+    .field { margin-bottom: 14px; text-align: left; }
+    label { display: block; font-size: 12px; font-weight: bold; color: #334155; margin-bottom: 5px; }
     .input-row { display: flex; gap: 6px; }
-    input[type="text"], input[type="date"] { width: 100%; padding: 11px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #f8fafc; }
-    input:focus { border-color: #16a34a; background: #fff; }
-    .btn-mic { background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font-size: 16px; cursor: pointer; }
-    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 10px rgba(22,163,74,0.2); }
+    input[type="text"], input[type="date"] { width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 15px; outline: none; background: #f8fafc; }
+    input:focus { border-color: #16a34a; background: #fff; box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
+    .btn-mic { background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 0 14px; font-size: 18px; cursor: pointer; }
+    .btn-save { width: 100%; background: #16a34a; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 4px; box-shadow: 0 4px 12px rgba(22,163,74,0.25); }
 
     /* RECORDS CARD */
-    .rec-item { background: white; border-radius: 16px; padding: 14px; border: 1px solid #e2e8f0; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .rec-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; font-weight: bold; font-size: 14px; }
-    .rec-badge { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 12px; border: 1px solid #bbf7d0; }
+    .rec-item { background: white; border-radius: 18px; padding: 16px; border: 1px solid #e2e8f0; margin-bottom: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .rec-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; font-weight: bold; font-size: 15px; }
+    .rec-badge { background: #f0fdf4; color: #16a34a; font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 12px; border: 1px solid #bbf7d0; }
 
-    .prog-bg { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin: 10px 0; overflow: hidden; }
-    .prog-fill { height: 100%; background: #16a34a; border-radius: 10px; }
+    .prog-bg { width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; margin: 12px 0; overflow: hidden; border: 1px solid #e2e8f0; }
+    .prog-fill { height: 100%; background: linear-gradient(90deg, #16a34a, #22c55e); border-radius: 10px; }
 
-    .timeline { font-size: 12px; margin: 8px 0; }
-    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #475569; }
+    .timeline { font-size: 12px; margin: 10px 0; }
+    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; color: #475569; border-bottom: 1px dashed #f1f5f9; }
     .row b { color: #0f172a; }
-    .due-box { background: #ecfdf5; border-radius: 8px; padding: 6px 8px; color: #166534; font-weight: bold; margin-top: 6px; }
+    .due-box { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 10px; padding: 8px 10px; color: #166534; font-weight: bold; margin-top: 8px; display: flex; justify-content: space-between; }
     
-    .diet { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 8px; font-size: 11px; color: #92400e; margin-top: 8px; line-height: 1.45; }
+    .diet { background: #fffbeb; border: 1px solid #fef3c7; border-radius: 10px; padding: 10px; font-size: 11px; color: #92400e; margin-top: 10px; line-height: 1.5; }
 
-    .rec-actions { display: flex; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f5f9; }
-    .btn-repeat { flex: 1; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 7px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
-    .btn-del { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 7px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; }
+    .rec-actions { display: flex; gap: 8px; margin-top: 12px; padding-top: 10px; border-top: 1px solid #f1f5f9; }
+    .btn-repeat { flex: 1; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 8px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
+    .btn-del { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 10px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
     /* Modal for Repeat Heat */
     #heatModal { position: fixed; inset: 0; background: rgba(15,23,42,0.6); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 16px; }
-    .modal-box { background: white; border-radius: 18px; padding: 20px; width: 100%; max-width: 320px; }
+    .modal-box { background: white; border-radius: 20px; padding: 22px; width: 100%; max-width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
   </style>
 </head>
 <body>
 
 <div class="wrap">
 
-  <!-- 1. PASSWORD SCREEN -->
-  <div id="lockScreen">
-    <div class="card-lock">
-      <div class="lock-icon">🔐</div>
-      <div class="lock-title">पशु ट्रॅकर ॲक्टिव्हेशन</div>
-      <div class="lock-sub">ॲप अनलॉक करण्यासाठी तुमचा पिन टाका:<br><span style="font-size: 11px; color: #94a3b8;">Enter PIN (e.g. 2026, 1000, 1001)</span></div>
-
-      <input type="tel" id="userPinInput" class="pass-input" placeholder="••••" maxlength="6">
-
-      <button class="btn-unlock" onclick="validateUserPin()">ॲप अनलॉक करा</button>
-      <div id="pinErrMsg" class="err-msg">चुकीचा पिन! कृपया बरोबर पिन टाका.</div>
+  <header>
+    <div class="hdr-title">
+      <span>🐄</span>
+      <span id="uiHeader">पशु ट्रॅकर</span>
     </div>
+    <select id="langSelect" class="lang-select" onchange="changeLanguage()">
+      <option value="mr">मराठी</option>
+      <option value="hi">हिंदी</option>
+      <option value="en">English</option>
+    </select>
+  </header>
+
+  <!-- 1-CLICK DIRECT INSTALL BANNER -->
+  <div class="install-banner" id="installBanner">
+    <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर सेव्ह करा</div>
+    <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी खालील बटण दाबा:</div>
+    <button class="btn-install" id="installBtn" onclick="installToHomeScreen()">
+      <span>⬇️ ॲप डाऊनलोड / Install App</span>
+    </button>
   </div>
 
-  <!-- 2. MAIN TRACKER -->
-  <div id="mainApp" style="display: none;">
-    
-    <header>
-      <div class="hdr-title">
-        <span>🛡️</span>
-        <span id="uiHeader">पशु ट्रॅकर</span>
+  <!-- ENTRY FORM -->
+  <div class="card-form">
+    <div class="animal-btns">
+      <div id="tabCow" class="an-btn active" onclick="setAnimal('cow')">
+        <span class="emoji">🐄</span>
+        <span class="lbl" id="uiCow">गाय (२८२ दिवस)</span>
       </div>
-      <select id="langSelect" class="lang-select" onchange="changeLanguage()">
-        <option value="mr">मराठी</option>
-        <option value="hi">हिंदी</option>
-        <option value="en">English</option>
-      </select>
-    </header>
-
-    <!-- 1-CLICK DIRECT INSTALL BANNER -->
-    <div class="install-banner" id="installBanner">
-      <div class="install-title" id="uiInstTitle">📲 हे ॲप मोबाईल स्क्रीनवर डाऊनलोड करा</div>
-      <div class="install-sub" id="uiInstSub">वारंवार लिंक न शोधता थेट १-क्लिकवर ॲप उघडण्यासाठी:</div>
-      <button class="btn-install" id="installBtn" onclick="installToHomeScreen()">
-        <span>⬇️ ॲप डाऊनलोड / Install App</span>
-      </button>
+      <div id="tabBuf" class="an-btn" onclick="setAnimal('buffalo')">
+        <span class="emoji">🐃</span>
+        <span class="lbl" id="uiBuf">म्हैस (३१० दिवस)</span>
+      </div>
+      <div id="tabGoat" class="an-btn" onclick="setAnimal('goat')">
+        <span class="emoji">🐐</span>
+        <span class="lbl" id="uiGoat">शेळी (१५० दिवस)</span>
+      </div>
     </div>
 
-    <!-- ENTRY FORM -->
-    <div class="card-form">
-      <div class="animal-btns">
-        <div id="tabCow" class="an-btn active" onclick="setAnimal('cow')">
-          <span class="emoji">🐄</span>
-          <span class="lbl" id="uiCow">गाय (२८२ दिवस)</span>
-        </div>
-        <div id="tabBuf" class="an-btn" onclick="setAnimal('buffalo')">
-          <span class="emoji">🐃</span>
-          <span class="lbl" id="uiBuf">म्हैस (३१० दिवस)</span>
-        </div>
-        <div id="tabGoat" class="an-btn" onclick="setAnimal('goat')">
-          <span class="emoji">🐐</span>
-          <span class="lbl" id="uiGoat">शेळी (१५० दिवस)</span>
-        </div>
+    <div class="field">
+      <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
+      <div class="input-row">
+        <input type="text" id="cName" placeholder="उदा. कावेरी / Cow 01">
+        <button class="btn-mic" onclick="startMic()" title="माईकवर बोला">🎙️</button>
       </div>
-
-      <div class="field">
-        <label id="uiLblName">नाव किंवा टॅग नंबर / Tag No:</label>
-        <div class="input-row">
-          <input type="text" id="cName" placeholder="उदा. कावेरी / Cow 01">
-          <button class="btn-mic" onclick="startMic()" title="माईकवर बोला">🎙️</button>
-        </div>
-      </div>
-
-      <div class="field">
-        <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
-        <input type="date" id="cDate">
-      </div>
-
-      <button class="btn-save" onclick="saveNewEntry()" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
     </div>
 
-    <!-- SAVED RECORDS -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
-      <span style="font-size:13px; font-weight:bold; color:#334155;" id="uiSavedTitle">📋 जतन केलेले रेकॉर्ड्स</span>
-      <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
+    <div class="field">
+      <label id="uiLblDate">भरवल्याची तारीख / A.I. Date:</label>
+      <input type="date" id="cDate">
     </div>
 
-    <div id="recordsList"></div>
-
+    <button class="btn-save" onclick="saveNewEntry()" id="uiBtnSave">नोंद जोडा आणि ट्रॅक करा</button>
   </div>
+
+  <!-- SAVED RECORDS -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin:14px 4px 8px;">
+    <span style="font-size:13px; font-weight:bold; color:#334155;" id="uiSavedTitle">📋 जतन केलेले रेकॉर्ड्स</span>
+    <span id="recCounter" style="background:white; border:1px solid #cbd5e1; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:12px;">0</span>
+  </div>
+
+  <div id="recordsList"></div>
 
 </div>
 
@@ -172,19 +143,16 @@
   <div class="modal-box">
     <h3 style="color:#e11d48; font-size:16px; margin-bottom:6px;" id="uiModalTitle">🔴 पशु पुन्हा माजावर आले?</h3>
     <p style="font-size:12px; color:#64748b; margin-bottom:12px;" id="uiModalDesc">ज्या दिवशी पुन्हा रेतन केले ती तारीख निवडा:</p>
-    <input type="date" id="newInsemDate" style="width:100%; padding:10px; border:1.5px solid #cbd5e1; border-radius:8px; margin-bottom:14px;">
+    <input type="date" id="newInsemDate" style="width:100%; padding:11px; border:1.5px solid #cbd5e1; border-radius:10px; margin-bottom:14px; font-size:14px;">
     <div style="display:flex; gap:8px;">
-      <button onclick="closeModal()" style="flex:1; padding:10px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalCancel">रद्द करा</button>
-      <button onclick="confirmReset()" style="flex:1; padding:10px; background:#e11d48; color:white; border:none; border-radius:8px; font-weight:bold; font-size:12px;" id="uiModalSave">तारीख बदला</button>
+      <button onclick="closeModal()" style="flex:1; padding:11px; border:1px solid #cbd5e1; background:#f8fafc; border-radius:10px; font-weight:bold; font-size:12px;" id="uiModalCancel">रद्द करा</button>
+      <button onclick="confirmReset()" style="flex:1; padding:11px; background:#e11d48; color:white; border:none; border-radius:10px; font-weight:bold; font-size:12px;" id="uiModalSave">तारीख बदला</button>
     </div>
   </div>
 </div>
 
 <script>
-  // वैध पिन्सची पक्की यादी
-  var VALID_PINS = ["2026", "1000", "1001", "1002", "1003", "1004", "1005", "5883", "7788", "9900", "4455", "1122"];
-
-  // 1. DYNAMIC MANIFEST
+  // 1. DYNAMIC MANIFEST FOR INSTANT INSTALL
   const manifestData = {
     name: "पशु गाभण व खुराक ट्रॅकर",
     short_name: "पशु ट्रॅकर",
@@ -232,7 +200,7 @@
     }
   }
 
-  // 3. भाषा शब्दकोश
+  // 3. LANGUAGE DICTIONARY
   var DICT = {
     mr: {
       header: "पशु ट्रॅकर",
@@ -311,9 +279,9 @@
       due: "Expected Calving Date:",
       daysIn: "Days In",
       empty: "No records saved yet.",
-      repeatBtn: "🔴 Repeat Heat? (Update Date)",
+      repeatBtn: "Repeat Heat? (Update Date)",
       delBtn: "Delete",
-      modalTitle: "🔴 Animal in Heat Again?",
+      modalTitle: "Animal in Heat Again?",
       modalDesc: "Select the new breeding date:",
       modalCancel: "Cancel",
       modalSave: "Update Date",
@@ -330,49 +298,18 @@
   var curAnimal = "cow";
   var activeResetId = null;
 
-  // 4. ऑटो-लॉगिन तपासणी (पक्का नियम)
-  if (localStorage.getItem("pashu_final_app_unlocked_v2") === "true") {
-    showDashboard();
-  }
-
-  // 5. पिन पडताळणी
-  function validateUserPin() {
-    var rawInput = document.getElementById("userPinInput").value;
-    var pin = rawInput.replace(/[^0-9]/g, "").trim();
-    var errMsg = document.getElementById("pinErrMsg");
-
-    var isMatch = false;
-    for (var i = 0; i < VALID_PINS.length; i++) {
-      if (pin === VALID_PINS[i]) {
-        isMatch = true;
-        break;
-      }
-    }
-
-    if (isMatch) {
-      localStorage.setItem("pashu_final_app_unlocked_v2", "true");
-      showDashboard();
-    } else {
-      errMsg.style.display = "block";
-    }
-  }
-
-  function showDashboard() {
-    document.getElementById("lockScreen").style.display = "none";
-    document.getElementById("mainApp").style.display = "block";
-
+  // 4. DIRECT LOAD
+  window.onload = function() {
     if (isRunningStandalone()) {
       document.getElementById('installBanner').style.display = 'none';
     }
-
     var today = new Date();
     var y = today.getFullYear();
     var m = String(today.getMonth() + 1).padStart(2, '0');
     var d = String(today.getDate()).padStart(2, '0');
     document.getElementById("cDate").value = y + '-' + m + '-' + d;
-
     renderList();
-  }
+  };
 
   function changeLanguage() {
     curLang = document.getElementById("langSelect").value;
@@ -401,4 +338,68 @@
     rec.lang = curLang === 'mr' ? 'mr-IN' : (curLang === 'hi' ? 'hi-IN' : 'en-US');
     rec.start();
     rec.onresult = function(e) {
-      document.getElementById("cName").value = e.results[0][0].transcript
+      document.getElementById("cName").value = e.results[0][0].transcript;
+    };
+  }
+
+  function setAnimal(type) {
+    curAnimal = type;
+    document.getElementById("tabCow").className = (type === 'cow') ? 'an-btn active' : 'an-btn';
+    document.getElementById("tabBuf").className = (type === 'buffalo') ? 'an-btn active' : 'an-btn';
+    document.getElementById("tabGoat").className = (type === 'goat') ? 'an-btn active' : 'an-btn';
+  }
+
+  function getDB() {
+    return JSON.parse(localStorage.getItem("pashu_final_direct_db") || "[]");
+  }
+
+  function saveNewEntry() {
+    var dateVal = document.getElementById("cDate").value;
+    if (!dateVal) { alert("कृपया भरवल्याची तारीख निवडा!"); return; }
+
+    var defaultName = curAnimal === 'cow' ? 'गाय' : (curAnimal === 'buffalo' ? 'म्हैस' : 'शेळी');
+    var nameVal = document.getElementById("cName").value.trim() || defaultName;
+
+    var db = getDB();
+    db.unshift({ id: Date.now(), name: nameVal, type: curAnimal, date: dateVal });
+    localStorage.setItem("pashu_final_direct_db", JSON.stringify(db));
+
+    document.getElementById("cName").value = "";
+    renderList();
+  }
+
+  function deleteEntry(id) {
+    var db = getDB().filter(function(item){ return item.id !== id; });
+    localStorage.setItem("pashu_final_direct_db", JSON.stringify(db));
+    renderList();
+  }
+
+  function openResetModal(id) {
+    activeResetId = id;
+    var today = new Date();
+    var y = today.getFullYear();
+    var m = String(today.getMonth() + 1).padStart(2, '0');
+    var d = String(today.getDate()).padStart(2, '0');
+    document.getElementById("newInsemDate").value = y + '-' + m + '-' + d;
+    document.getElementById("heatModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    activeResetId = null;
+    document.getElementById("heatModal").style.display = "none";
+  }
+
+  function confirmReset() {
+    var nDate = document.getElementById("newInsemDate").value;
+    if (!nDate) return;
+    var db = getDB().map(function(r){
+      return (r.id === activeResetId) ? { id: r.id, name: r.name, type: r.type, date: nDate } : r;
+    });
+    localStorage.setItem("pashu_final_direct_db", JSON.stringify(db));
+    closeModal();
+    renderList();
+  }
+
+  function addDays(dateStr, days) {
+    var parts = dateStr.split('-');
+    var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, p
