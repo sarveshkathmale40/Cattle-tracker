@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>पशु गाभण व खुराक ट्रॅकर</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' },
+            amberBrand: { 50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 600: '#d97706', 800: '#92400e' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .pulse-animation { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans antialiased min-h-screen pb-16">
+
+  <!-- Header -->
+  <header class="bg-brand-600 text-white shadow-md sticky top-0 z-50">
+    <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-6 h-6 text-emerald-200"></i>
+        <h1 class="font-bold text-base tracking-wide" id="txt-header">पशु गाभण व खुराक ट्रॅकर</h1>
+      </div>
+      <select id="langSelect" onchange="changeLang()" class="bg-white text-brand-700 text-xs font-semibold px-2.5 py-1.5 rounded-full border border-brand-100 shadow-sm focus:outline-none">
+        <option value="mr">मराठी</option>
+        <option value="hi">हिंदी</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-md mx-auto px-4 pt-4 space-y-4">
+
+    <!-- Input Card -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+      
+      <!-- Animals Selector -->
+      <div class="grid grid-cols-3 gap-2 mb-4">
+        <button id="btnCow" onclick="setAnimal('cow')" class="flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-brand-500 bg-brand-50 text-brand-700 font-bold transition-all text-center">
+          <span class="text-2xl mb-0.5">🐄</span>
+          <span class="text-[11px]" id="txt-cow">गाय (२८२ दिवस)</span>
+        </button>
+        <button id="btnBuffalo" onclick="setAnimal('buffalo')" class="flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 font-semibold transition-all text-center">
+          <span class="text-2xl mb-0.5">🐃</span>
+          <span class="text-[11px]" id="txt-buffalo">म्हैस (३१० दिवस)</span>
+        </button>
+        <button id="btnGoat" onclick="setAnimal('goat')" class="flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 font-semibold transition-all text-center">
+          <span class="text-2xl mb-0.5">🐐</span>
+          <span class="text-[11px]" id="txt-goat">शेळी (१५० दिवस)</span>
+        </button>
+      </div>
+
+      <!-- Cattle Name/Tag + Mic -->
+      <div class="mb-3">
+        <label class="block text-xs font-semibold text-slate-600 mb-1" id="txt-lbl-name">नाव किंवा टॅग नंबर</label>
+        <div class="flex gap-2">
+          <div class="relative flex-1">
+            <i data-lucide="tag" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+            <input type="text" id="cattleName" placeholder="उदा. शिंगावली / Cow 01" class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+          </div>
+          <button id="micBtn" onclick="startVoice()" title="माईकवर बोला" class="px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl flex items-center justify-center">
+            <i data-lucide="mic" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Insemination Date -->
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-slate-600 mb-1" id="txt-lbl-date">भरवल्याची तारीख (A.I. Date)</label>
+        <div class="relative">
+          <i data-lucide="calendar" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+          <input type="date" id="breedDate" class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500">
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button onclick="saveRecord()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-md shadow-brand-500/20 flex items-center justify-center gap-2">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+        <span id="txt-btn-save">नोंद जोडा आणि ट्रॅक करा</span>
+      </button>
+    </div>
+
+    <!-- Active Records Section -->
+    <div>
+      <div class="flex items-center justify-between mb-2.5 px-1">
+        <h2 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="list-checks" class="w-4 h-4 text-brand-600"></i>
+          <span id="txt-lbl-saved">जतन केलेले रेकॉर्ड्स</span>
+        </h2>
+        <span id="recordCount" class="text-xs font-bold text-slate-500 bg-white px-2 py-0.5 rounded-full border border-slate-200">0</span>
+      </div>
+
+      <div id="recordsList" class="space-y-3.5"></div>
+    </div>
+
+  </main>
+
+  <!-- Repeat Heat Custom Date Modal (पॉपअप डायलॉग) -->
+  <div id="heatModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl border border-slate-100">
+      <div class="flex items-center gap-2.5 mb-3 text-rose-600">
+        <i data-lucide="rotate-ccw" class="w-6 h-6"></i>
+        <h3 class="font-bold text-base" id="modalTitle">गाय पुन्हा माजावर आली?</h3>
+      </div>
+      <p class="text-xs text-slate-500 mb-4 leading-relaxed" id="modalDesc">
+        ज्या दिवशी गाय परत भरवली ती अचूक तारीख निवडा. सायकल पुन्हा पहिल्या दिवसापासून सुरू होईल.
+      </p>
+
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-slate-700 mb-1.5" id="modalDateLabel">पुन्हा भरवल्याची नवीन तारीख:</label>
+        <input type="date" id="newInseminationDate" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500">
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeModal()" class="flex-1 py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-all" id="btnCancel">रद्द करा</button>
+        <button onclick="confirmHeatReset()" class="flex-1 py-2.5 px-3 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md shadow-rose-500/20 transition-all" id="btnConfirmReset">तारीख अपडेट करा</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dict = {
+      mr: {
+        header: "पशु गाभण व खुराक ट्रॅकर",
+        cow: "गाय (२८२ दिवस)",
+        buffalo: "म्हैस (३१० दिवस)",
+        goat: "शेळी (१५० दिवस)",
+        lblName: "नाव किंवा टॅग नंबर",
+        lblDate: "भरवल्याची तारीख (A.I. Date)",
+        btnSave: "नोंद जोडा आणि ट्रॅक करा",
+        lblSaved: "जतन केलेले रेकॉर्ड्स",
+        heat: "उलट तपासणी (२१ वा दिवस):",
+        pd: "डॉक्टर गर्भतपासणी (९० वा दिवस):",
+        dry: "दूध आटवणे (७ वा महिना):",
+        due: "अंदाजे विण्याची तारीख:",
+        feedTipTitle: "🌾 खुराक व काळजी सल्ला:",
+        feedTipDry: "दूध हळूहळू पूर्ण बंद करा. कासेला विश्रांती द्या व कासदाह प्रतिबंधक मलम वापरा.",
+        feedTipTransition: "शेवटचे ४५ दिवस: दररोज मेथी, खनिज मिश्रण आणि ट्रान्झिशन फीड चालू करा.",
+        feedTipGoat: "शेवटचा १ महिना: शेळीला उच्च प्रथिनयुक्त खुराक आणि हिरवा चारा वाढवा.",
+        feedNormal: "नियमित संतुलित चारा आणि ५० ग्रॅम खनिज मिश्रण (Mineral Mixture) रोज द्यावे.",
+        repeatHeatBtn: "🔴 गाय उलटली? (पुन्हा भरवल्याची तारीख टाका)",
+        daysPassed: "दिवस पूर्ण",
+        empty: "अद्याप कोणतीही नोंद जोडलेली नाही.",
+        modalTitle: "पशु पुन्हा माजावर आले?",
+        modalDesc: "ज्या दिवशी पुन्हा रेतन केले किंवा वळू दाखवला ती तारीख निवडा. सर्व गणित या नवीन तारखेनुसार आपोआप सेट होईल.",
+        modalDateLabel: "पुन्हा भरवल्याची नवीन तारीख:",
+        btnCancel: "रद्द करा",
+        btnConfirmReset: "नवीन तारीख सेव्ह करा"
+      },
+      hi: {
+        header: "पशु गर्भधारण व खुराक ट्रैकर",
+        cow: "गाय (२८२ दिन)",
+        buffalo: "भैंस (३१० दिन)",
+        goat: "बकरी (१५० दिन)",
+        lblName: "नाम या टैग नंबर",
+        lblDate: "गर्भाधान तारीख (A.I. Date)",
+        btnSave: "रिकॉर्ड जोड़ें और ट्रैक करें",
+        lblSaved: "सहेजे गए रिकॉर्ड्स",
+        heat: "उलट जांच (२१ वां दिन):",
+        pd: "डॉक्टर गर्भ जांच (९० वां दिन):",
+        dry: "दूध छुड़ाना (७ वां महीना):",
+        due: "संभावित ब्याने की तारीख:",
+        feedTipTitle: "🌾 खुराक व देखभाल सलाह:",
+        feedTipDry: "दूध पूरी तरह बंद करें और अयन (कास) को आराम दें।",
+        feedTipTransition: "अंतिम ४५ दिन: मेथी, मिनरल मिक्सचर और विशेष ट्रांजिशन दाना शुरू करें।",
+        feedTipGoat: "अंतिम १ महीना: बकरी को पौष्टिक दाना और हरा चारा अधिक दें।",
+        feedNormal: "संतुलित हरा-सूखा चारा और ५० ग्राम मिनरल मिक्सचर रोजाना दें।",
+        repeatHeatBtn: "🔴 पशु फिर गर्म हुआ? (नई तारीख डालें)",
+        daysPassed: "दिन पूरे",
+        empty: "अभी तक कोई रिकॉर्ड नहीं जोड़ा गया है।",
+        modalTitle: "पशु फिर से गर्म हुआ?",
+        modalDesc: "जिस दिन दोबारा गर्भाधान किया वह तारीख चुनें। सभी हिसाब इस नई तारीख से शुरू होंगे।",
+        modalDateLabel: "दोबारा गर्भाधान की तारीख:",
+        btnCancel: "रद्द करें",
+        btnConfirmReset: "नई तारीख सुरक्षित करें"
+      },
+      en: {
+        header: "Cattle Gestation & Feed Tracker",
+        cow: "Cow (282 Days)",
+        buffalo: "Buffalo (310 Days)",
+        goat: "Goat (150 Days)",
+        lblName: "Name or Tag ID",
+        lblDate: "Insemination / Breeding Date",
+        btnSave: "Add Record & Track",
+        lblSaved: "Saved Cattle Records",
+        heat: "Repeat Heat Check (Day 21):",
+        pd: "Vet Pregnancy Check (Day 90):",
+        dry: "Dry Off Period (7th Month):",
+        due: "Expected Calving Date:",
+        feedTipTitle: "🌾 Feed & Management Tip:",
+        feedTipDry: "Gradually stop milking completely to allow udder rest.",
+        feedTipTransition: "Last 45 Days: Start Fenugreek (Methi), Chelated Mineral Mixture & Transition Feed.",
+        feedTipGoat: "Last 30 Days: Increase concentrate feed and high-protein green fodder for the goat.",
+        feedNormal: "Provide balanced green/dry fodder and 50g daily Mineral Mixture.",
+        repeatHeatBtn: "🔴 Repeat Heat? (Enter New Date)",
+        daysPassed: "Days In",
+        empty: "No records added yet.",
+        modalTitle: "Animal In Heat Again?",
+        modalDesc: "Select the new breeding/insemination date. Cycle will reset from this date.",
+        modalDateLabel: "New Insemination Date:",
+        btnCancel: "Cancel",
+        btnConfirmReset: "Save New Date"
+      }
+    };
+
+    let currentAnimal = 'cow';
+    let currentLang = 'mr';
+    let activeResetId = null;
+
+    document.getElementById('breedDate').valueAsDate = new Date();
+
+    function changeLang() {
+      currentLang = document.getElementById('langSelect').value;
+      const t = dict[currentLang];
+      document.getElementById('txt-header').innerText = t.header;
+      document.getElementById('txt-cow').innerText = t.cow;
+      document.getElementById('txt-buffalo').innerText = t.buffalo;
+      document.getElementById('txt-goat').innerText = t.goat;
+      document.getElementById('txt-lbl-name').innerText = t.lblName;
+      document.getElementById('txt-lbl-date').innerText = t.lblDate;
+      document.getElementById('txt-btn-save').innerText = t.btnSave;
+      document.getElementById('txt-lbl-saved').innerText = t.lblSaved;
+      
+      document.getElementById('modalTitle').innerText = t.modalTitle;
+      document.getElementById('modalDesc').innerText = t.modalDesc;
+      document.getElementById('modalDateLabel').innerText = t.modalDateLabel;
+      document.getElementById('btnCancel').innerText = t.btnCancel;
+      document.getElementById('btnConfirmReset').innerText = t.btnConfirmReset;
+
+      renderRecords();
+    }
+
+    function setAnimal(type) {
+      currentAnimal = type;
+      ['cow', 'buffalo', 'goat'].forEach(a => {
+        const btn = document.getElementById('btn' + a.charAt(0).toUpperCase() + a.slice(1));
+        if (a === type) {
+          btn.className = "flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-brand-500 bg-brand-50 text-brand-700 font-bold transition-all text-center";
+        } else {
+          btn.className = "flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 font-semibold transition-all text-center";
+        }
+      });
+    }
+
+    function startVoice() {
+      const micBtn = document.getElementById('micBtn');
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("ब्राऊझरमध्ये व्हॉईस सपोर्ट उपलब्ध नाही.");
+        return;
+      }
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const rec = new SpeechRec();
+      rec.lang = currentLang === 'mr' ? 'mr-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-US');
+
+      micBtn.classList.add('bg-red-100', 'border-red-400', 'text-red-600', 'pulse-animation');
+      rec.start();
+
+      rec.onresult = (e) => {
+        document.getElementById('cattleName').value = e.results[0][0].transcript;
+        resetMic();
+      };
+      rec.onerror = resetMic;
+      rec.onend = resetMic;
+
+      function resetMic() {
+        micBtn.classList.remove('bg-red-100', 'border-red-400', 'text-red-600', 'pulse-animation');
+      }
+    }
+
+    function getRecords() {
+      return JSON.parse(localStorage.getItem('cattle_gestation_v3') || '[]');
+    }
+
+    function saveRecord() {
+      const defaultName = currentAnimal === 'cow' ? 'गाय' : (currentAnimal === 'buffalo' ? 'म्हैस' : 'शेळी');
+      const name = document.getElementById('cattleName').value.trim() || defaultName;
+      const date = document.getElementById('breedDate').value;
+      if (!date) return;
+
+      const records = getRecords();
+      records.unshift({ id: Date.now(), name, type: currentAnimal, date });
+      localStorage.setItem('cattle_gestation_v3', JSON.stringify(records));
+      document.getElementById('cattleName').value = '';
+      
+      confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 } });
+      renderRecords();
+    }
+
+    function deleteRecord(id) {
+      const filtered = getRecords().filter(r => r.id !== id);
+      localStorage.setItem('cattle_gestation_v3', JSON.stringify(filtered));
+      renderRecords();
+    }
+
+    // Modal Workflow for Repeat Heat
+    function openRepeatHeatModal(id) {
+      activeResetId = id;
+      document.getElementById('newInseminationDate').valueAsDate = new Date();
+      document.getElementById('heatModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      activeResetId = null;
+      document.getElementById('heatModal').classList.add('hidden');
+    }
+
+    function confirmHeatReset() {
+      const newDate = document.getElementById('newInseminationDate').value;
+      if (!newDate) return;
+
+      const updated = getRecords().map(r => {
+        if (r.id === activeResetId) {
+          return { ...r, date: newDate };
+        }
+        return r;
+      });
+
+      localStorage.setItem('cattle_gestation_v3', JSON.stringify(updated));
+      closeModal();
+      renderRecords();
+    }
+
+    function addDays(dateStr, days) {
+      const d = new Date(dateStr);
+      d.setDate(d.getDate() + days);
+      return d.toLocaleDateString('mr-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function getDaysDiff(dateStr) {
+      const diff = Math.floor((new Date() - new Date(dateStr)) / (1000 * 60 * 60 * 24));
+      return diff >= 0 ? diff : 0;
+    }
+
+    function renderRecords() {
+      const container = document.getElementById('recordsList');
+      const records = getRecords();
+      const t = dict[currentLang];
+      document.getElementById('recordCount').innerText = records.length;
+
+      if (records.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 text-center border border-slate-200 text-slate-400 text-xs">
+            <i data-lucide="clipboard-x" class="w-8 h-8 mx-auto mb-1.5 text-slate-300"></i>
+            ${t.empty}
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = records.map(r => {
+        let totalDays = 282;
+        let dryDays = 210;
+        let icon = '🐄';
+
+        if (r.type === 'buffalo') {
+          totalDays = 310;
+          dryDays = 230;
+          icon = '🐃';
+        } else if (r.type === 'goat') {
+          totalDays = 150;
+          dryDays = 100;
+          icon = '🐐';
+        }
+
+        const daysIn = getDaysDiff(r.date);
+        const progressPercent = Math.min(100, Math.round((daysIn / totalDays) * 100));
+
+        let nutritionTip = t.feedNormal;
+        if (r.type === 'goat' && daysIn >= 120) {
+          nutritionTip = t.feedTipGoat;
+        } else if (daysIn >= 210) {
+          nutritionTip = t.feedTipTransition;
+        } else if (daysIn >= 180) {
+          nutritionTip = t.feedTipDry;
+        }
+
+        return `
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+            <!-- Top Name Row -->
+            <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">${icon}</span>
+                <div>
+                  <h3 class="font-bold text-slate-800 text-sm leading-none">${r.name}</h3>
+                  <span class="text-[10px] text-slate-400 font-medium">भरवली: ${addDays(r.date, 0)}</span>
+                </div>
+              </div>
+              <span class="bg-brand-50 text-brand-700 text-xs font-bold px-2.5 py-1 rounded-full border border-brand-100">
+                ${daysIn} ${t.daysPassed}
+              </span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-100 h-2 rounded-full my-3 overflow-hidden">
+              <div class="bg-brand-500 h-full rounded-full transition-all" style="width: ${progressPercent}%"></div>
+            </div>
+
+            <!-- Timeline Dates -->
+            <div class="space-y-1.5 py-1 text-xs">
+              <div class="flex justify-between items-center text-slate-600">
+                <span class="flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3.5 h-3.5 text-rose-500"></i> ${t.heat}</span>
+                <span class="font-semibold text-slate-800">${addDays(r.date, 21)}</span>
+              </div>
+              ${r.type !== 'goat' ? `
+              <div class="flex justify-between items-center text-slate-600">
+                <span class="flex items-center gap-1.5"><i data-lucide="stethoscope" class="w-3.5 h-3.5 text-blue-500"></i> ${t.pd}</span>
+                <span class="font-semibold text-slate-800">${addDays(r.date, 90)}</span>
+              </div>
+              <div class="flex justify-between items-center text-slate-600">
+                <span class="flex items-center gap-1.5"><i data-lucide="ban" class="w-3.5 h-3.5 text-amber-500"></i> ${t.dry}</span>
+                <span class="font-semibold text-slate-800">${addDays(r.date, dryDays)}</span>
+              </div>` : ''}
+              
+              <div class="flex justify-between items-center bg-amberBrand-50 p-2 rounded-xl text-amberBrand-800 border border-amberBrand-100">
+                <span class="font-bold flex items-center gap-1.5"><i data-lucide="sparkles" class="w-4 h-4 text-amberBrand-500"></i> ${t.due}</span>
+                <span class="font-extrabold text-sm text-amberBrand-600">${addDays(r.date, totalDays)}</span>
+              </div>
+            </div>
+
+            <!-- Feed Tip -->
+            <div class="mt-2.5 p-2.5 bg-emerald-50 rounded-xl border border-emerald-100 text-[11px] text-emerald-900 leading-relaxed">
+              <span class="font-bold block text-emerald-800 mb-0.5">${t.feedTipTitle}</span>
+              ${nutritionTip}
+            </div>
+
+            <!-- Repeat Heat Trigger Button -->
+            <div class="flex gap-2 pt-3 border-t border-slate-100 mt-3">
+              <button onclick="openRepeatHeatModal(${r.id})" class="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold py-2 px-3 rounded-xl border border-rose-200 flex items-center justify-center gap-1.5 transition-all">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                ${t.repeatHeatBtn}
+              </button>
+              <button onclick="deleteRecord(${r.id})" class="p-2 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-rose-600 rounded-xl border border-slate-200 transition-all" title="हटवा">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    renderRecords();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
