@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#16a34a">
+<meta name="theme-color" content="#15803d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cattle Tracker">
@@ -13,44 +13,69 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:#f8fafc;min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
+body{background:linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%);min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:420px;}
 
-.app-header{background:white;border-radius:18px;padding:14px 16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(0,0,0,.06);text-align:center;display:flex;justify-content:space-between;align-items:center;border:1px solid #e2e8f0;}
-.header-title{font-size:20px;font-weight:900;color:#166534;letter-spacing:0.5px;}
-.header-sub{font-size:11px;color:#64748b;margin-top:2px;font-weight:500;}
+/* Hero Header */
+.app-header{background:linear-gradient(135deg, #15803d 0%, #16a34a 100%);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 10px 25px -5px rgba(22, 163, 74, 0.3);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;}
+.header-title{font-size:20px;font-weight:900;letter-spacing:0.5px;text-shadow:0 2px 4px rgba(0,0,0,0.1);}
+.header-sub{font-size:11px;color:#dcfce7;margin-top:3px;font-weight:500;}
 
-.card{background:white;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,.05);border:1px solid #e2e8f0;}
-.card h3{font-size:16px;margin-bottom:12px;color:#166534;font-weight:bold;}
+/* Language Selector Styling */
+#langSelect{background:rgba(255, 255, 255, 0.2);color:white;border:1px solid rgba(255, 255, 255, 0.4);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:bold;outline:none;cursor:pointer;}
+#langSelect option{background:#15803d;color:white;}
 
-input,select,textarea{width:100%;padding:12px;border:2px solid #cbd5e1;border-radius:12px;font-size:15px;outline:none;background:white;margin-bottom:12px;font-weight:600;font-family:inherit;}
-input:focus,select:focus,textarea:focus{border-color:#16a34a;}
+/* Stats Section */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.stat{background:white;padding:12px 8px;border-radius:16px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.04);border:1px solid #e2e8f0;}
+.stat-number{font-size:20px;font-weight:900;color:#15803d;}
+.stat-label{font-size:11px;color:#64748b;font-weight:600;margin-top:2px;}
 
-.btn{width:100%;background:#16a34a;color:white;border:none;padding:14px;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:4px;box-shadow:0 4px 12px rgba(22,163,74,0.25);}
+/* Cards */
+.card{background:white;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 8px 25px rgba(0,0,0,0.04);border:1px solid #e2e8f0;}
+.card h3{font-size:16px;margin-bottom:14px;color:#15803d;font-weight:800;display:flex;align-items:center;gap:6px;}
 
-.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
-.animal-btn{border:2px solid #dcfce7;background:#f0fdf4;padding:10px 5px;border-radius:12px;cursor:pointer;font-weight:bold;color:#166534;text-align:center;font-size:14px;}
-.animal-btn.active{border-color:#16a34a;background:#dcfce7;}
+/* Inputs & Forms */
+label{display:block;text-align:left;font-size:11px;font-weight:700;color:#475569;margin-bottom:6px;margin-left:2px;}
+input,select,textarea{width:100%;padding:13px 14px;border:2px solid #e2e8f0;border-radius:14px;font-size:15px;outline:none;background:#f8fafc;margin-bottom:12px;font-weight:600;font-family:inherit;transition:all 0.3s;}
+input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;box-shadow:0 0 0 4px rgba(22, 163, 74, 0.1);}
 
-.photo-preview{width:70px;height:70px;border-radius:12px;object-fit:cover;display:none;margin:5px auto 10px;border:1px solid #cbd5e1;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.stat{background:white;padding:10px 6px;border-radius:14px;text-align:center;box-shadow:0 5px 15px rgba(0,0,0,.05);border:1px solid #e2e8f0;}
-.stat-number{font-size:18px;font-weight:bold;color:#166534;}
-.stat-label{font-size:11px;color:#64748b;font-weight:600;}
+/* Animal Selector Buttons */
+.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.animal-btn{border:2px solid #e2e8f0;background:#f8fafc;padding:12px 8px;border-radius:14px;cursor:pointer;font-weight:bold;color:#64748b;text-align:center;font-size:14px;transition:all 0.2s;}
+.animal-btn.active{border-color:#16a34a;background:#dcfce7;color:#15803d;box-shadow:0 4px 12px rgba(22,163,74,0.15);}
 
-.item{background:white;border-radius:14px;padding:12px;border:1px solid #e2e8f0;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;}
-.cow-img{width:60px;height:60px;border-radius:10px;background:#f1f5f9;display:flex;justify-content:center;align-items:center;font-size:28px;flex-shrink:0;overflow:hidden;border:1px solid #cbd5e1;}
+/* Action Button */
+.btn{width:100%;background:linear-gradient(135deg, #15803d 0%, #16a34a 100%);color:white;border:none;padding:15px;border-radius:14px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:6px;box-shadow:0 6px 20px rgba(22,163,74,0.3);transition:transform 0.2s;}
+.btn:active{transform:scale(0.98);}
+
+/* Photo Preview */
+.photo-preview{width:75px;height:75px;border-radius:14px;object-fit:cover;display:none;margin:8px auto 12px;border:2px solid #16a34a;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+
+/* Animal Record Items */
+.item{background:#f8fafc;border-radius:16px;padding:14px;border:1px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;}
+
+/* 📸 फोटो मोठा केला आहे (76px) */
+.cow-img{width:76px;height:76px;border-radius:14px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;border:2px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
-.item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;gap:8px;font-weight:bold;font-size:13px;border-bottom:1px solid #f1f5f9;padding-bottom:4px;margin-bottom:4px;}
-.row{display:flex;justify-content:space-between;gap:8px;font-size:11px;padding:3px 0;color:#475569;}
-.due{background:#ecfdf5;padding:6px;border-radius:6px;color:#166534;font-weight:bold;margin-top:4px;font-size:11px;}
-.note-box{background:#fffbeb;border:1px solid #fef3c7;border-radius:6px;padding:6px;font-size:11px;color:#92400e;margin-top:4px;}
 
-.action-btns{display:flex;gap:6px;margin-top:6px;}
-.btn-repeat{flex:1;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:6px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;}
-.btn-del{flex:1;background:#fee2e2;color:#b91c1c;border:none;padding:6px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;}
-.empty{text-align:center;color:#94a3b8;font-size:13px;padding:16px;}
+.item-info{flex-grow:1;min-width:0;}
+.item-top{display:flex;justify-content:space-between;gap:8px;font-weight:bold;font-size:14px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;margin-bottom:6px;color:#1e293b;}
+
+/* 📝 माहिती थोडी सुटसुटीत आणि लहान केली आहे */
+.row{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;padding:2px 0;color:#475569;}
+
+/* 🍼 विण्याची तारीख मोठी आणि ठळक केली आहे */
+.due{background:#dcfce7;padding:8px 10px;border-radius:10px;color:#15803d;font-weight:bold;margin-top:6px;font-size:12.5px;border:1px solid #bbf7d0;box-shadow:0 2px 6px rgba(22,163,74,0.08);}
+
+.note-box{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:6px 8px;font-size:11px;color:#92400e;margin-top:6px;font-weight:500;}
+
+/* Item Action Buttons */
+.action-btns{display:flex;gap:8px;margin-top:8px;}
+.btn-repeat{flex:1;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:8px;border-radius:10px;font-weight:bold;font-size:11px;cursor:pointer;}
+.btn-del{flex:1;background:#ffeeef;color:#b91c1c;border:1px solid #fecaca;padding:8px;border-radius:10px;font-weight:bold;font-size:11px;cursor:pointer;}
+
+.empty{text-align:center;color:#94a3b8;font-size:13px;padding:24px;font-weight:500;}
 </style>
 </head>
 
@@ -59,13 +84,14 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
 
   <div id="appScreen">
 
+    <!-- Hero Header -->
     <div class="app-header">
-      <div>
+      <div style="text-align:left;">
         <div class="header-title" id="mainHeaderTitle">The MH Farmer</div>
         <div class="header-sub" id="mainHeaderSub">गाभण व खुराक व्यवस्थापन</div>
       </div>
       <div>
-        <select id="langSelect" onchange="changeLanguage()" style="width:auto;margin:0;padding:6px 10px;font-size:12px;">
+        <select id="langSelect" onchange="changeLanguage()">
           <option value="mr">मराठी</option>
           <option value="hi">हिंदी</option>
           <option value="en">English</option>
@@ -73,28 +99,48 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       </div>
     </div>
 
+    <!-- Stats Dashboard -->
     <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंदी</div></div>
-      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
-      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
+      <div class="stat">
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label" id="lblTotal">एकूण नोंदी</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="cowCount">0</div>
+        <div class="stat-label" id="lblCow">गाय</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="buffaloCount">0</div>
+        <div class="stat-label" id="lblBuf">म्हैस</div>
+      </div>
     </div>
 
+    <!-- Form Card -->
     <div class="card">
       <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
+      
       <div class="animal-buttons">
-        <button class="animal-btn active" id="cowBtn" onclick="selectAnimal('cow')">🐄<br><span id="btnCowTxt">गाय</span></button>
-        <button class="animal-btn" id="buffaloBtn" onclick="selectAnimal('buffalo')">🐃<br><span id="btnBufTxt">म्हैस</span></button>
+        <button class="animal-btn active" id="cowBtn" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">गाय</span></button>
+        <button class="animal-btn" id="buffaloBtn" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
       </div>
 
-      <input type="text" id="cName" placeholder="पशुचे नाव / ओळख (उदा. कावेरी)">
-      <label style="display:block;text-align:left;font-size:11px;font-weight:bold;color:#334155;margin-bottom:4px;" id="lblDate">गाभण झाल्याची तारीख</label>
+      <label id="lblNameLbl">पशुचे नाव / ओळख</label>
+      <input type="text" id="cName" placeholder="उदा. कावेरी">
+      
+      <label id="lblDate">गाभण झाल्याची तारीख</label>
       <input type="date" id="cDate">
-      <textarea id="cNote" placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)"></textarea>
+      
+      <label id="lblNoteLbl">टीप / विशेष माहिती</label>
+      <textarea id="cNote" placeholder="उदा. डॉक्टर, सिमेन तपशील"></textarea>
+      
+      <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview">
+      
       <button class="btn" id="btnSave" onclick="saveData()">💾 नोंद जतन करा</button>
     </div>
 
+    <!-- Records List Card -->
     <div class="card">
       <h3 id="listTitle">📋 माझ्या पशुंच्या नोंदी</h3>
       <div id="list"></div>
@@ -116,12 +162,15 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
   const langData = {
     mr: {
       headerSub: "गाभण व खुराक व्यवस्थापन",
-      tot: "एकूण नोंदी", cow: "गाय", buf: "म्हैस",
+      tot: "एकूण", cow: "गाय", buf: "म्हैस",
       formT: "➕ नवीन पशु नोंद",
       bCow: "गाय", bBuf: "म्हैस",
-      namePh: "पशुचे नाव / ओळख (उदा. कावेरी)",
+      namePh: "उदा. कावेरी",
+      nameLbl: "पशुचे नाव / ओळख",
       dtLbl: "गाभण झाल्याची तारीख",
-      notePh: "टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)",
+      noteLbl: "टीप / विशेष माहिती",
+      photoLbl: "पशुचा फोटो (पर्यायी)",
+      notePh: "उदा. डॉक्टर, सिमेन तपशील",
       saveBtn: "💾 नोंद जतन करा",
       listT: "📋 माझ्या पशुंच्या नोंदी",
       empty: "अद्याप कोणतीही नोंद नाही.",
@@ -131,7 +180,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       milkDry: "🥛 दूध आटवणे (७ वा महिना):",
       trans: "🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):",
       delivery: "🍼 अंदाजे विण्याची तारीख:",
-      noteLbl: "📝 <b>टीप:</b> ",
+      notePrefix: "📝 <b>टीप:</b> ",
       dateRequired: "कृपया तारीख निवडा!",
       futureDateError: "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
       storageError: "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!",
@@ -140,12 +189,15 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     },
     hi: {
       headerSub: "गर्भधारण और चारा प्रबंधन",
-      tot: "कुल रिकॉर्ड", cow: "गाय", buf: "भैंस",
+      tot: "कुल", cow: "गाय", buf: "भैंस",
       formT: "➕ नया पशु रिकॉर्ड",
       bCow: "गाय", bBuf: "भैंस",
-      namePh: "पशु का नाम / टैग नंबर",
+      namePh: "उदा. कावेरी",
+      nameLbl: "पशु का नाम / टैग नंबर",
       dtLbl: "गर्भधारण की तारीख",
-      notePh: "नोट / विशेष जानकारी (डॉक्टर, सीमेन)",
+      noteLbl: "नोट / विशेष जानकारी",
+      photoLbl: "पशु की फोटो (वैकल्पिक)",
+      notePh: "उदा. डॉक्टर, सीमेन विवरण",
       saveBtn: "💾 रिकॉर्ड सहेजें",
       listT: "📋 आपके पशुओं के रिकॉर्ड",
       empty: "अभी तक कोई रिकॉर्ड नहीं है।",
@@ -155,7 +207,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       milkDry: "🥛 दूध बंद करना (7वां महीना):",
       trans: "🌾 ट्रांजिशन चारा (ब्याने से 21 दिन पहले):",
       delivery: "🍼 अनुमानित ब्याने की तारीख:",
-      noteLbl: "📝 <b>नोट:</b> ",
+      notePrefix: "📝 <b>नोट:</b> ",
       dateRequired: "कृपया तारीख चुनें!",
       futureDateError: "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
       storageError: "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!",
@@ -164,12 +216,15 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     },
     en: {
       headerSub: "Pregnancy & Feed Management",
-      tot: "Total Records", cow: "Cow", buf: "Buffalo",
+      tot: "Total", cow: "Cow", buf: "Buffalo",
       formT: "➕ Add New Animal",
       bCow: "Cow", bBuf: "Buffalo",
-      namePh: "Animal Name / Tag No.",
+      namePh: "e.g., Kaveri",
+      nameLbl: "Animal Name / Tag No.",
       dtLbl: "Pregnancy Date (A.I.)",
-      notePh: "Notes (Doctor, Semen details)",
+      noteLbl: "Notes / Special Info",
+      photoLbl: "Animal Photo (Optional)",
+      notePh: "e.g., Doctor, Semen details",
       saveBtn: "💾 Save Record",
       listT: "📋 Animal Records",
       empty: "No records found yet.",
@@ -179,7 +234,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       milkDry: "🥛 Dry Period (Month 7):",
       trans: "🌾 Transition Feed (21 days prior):",
       delivery: "🍼 Expected Delivery Date:",
-      noteLbl: "📝 <b>Note:</b> ",
+      notePrefix: "📝 <b>Note:</b> ",
       dateRequired: "Please select a date!",
       futureDateError: "Future dates cannot be recorded! Please select today or a past date.",
       storageError: "Storage is full! Could not save data.",
@@ -202,9 +257,14 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     document.getElementById("formTitle").innerText = t.formT;
     document.getElementById("btnCowTxt").innerText = t.bCow;
     document.getElementById("btnBufTxt").innerText = t.bBuf;
+    
+    document.getElementById("lblNameLbl").innerText = t.nameLbl;
     document.getElementById("cName").placeholder = t.namePh;
     document.getElementById("lblDate").innerText = t.dtLbl;
+    document.getElementById("lblNoteLbl").innerText = t.noteLbl;
     document.getElementById("cNote").placeholder = t.notePh;
+    document.getElementById("lblPhotoLbl").innerText = t.photoLbl;
+    
     document.getElementById("btnSave").innerText = t.saveBtn;
     document.getElementById("listTitle").innerText = t.listT;
     draw();
@@ -394,7 +454,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     for(let i=0; i<db.length; i++){
       let it = db[i];
       let tot = 282, dry = 210, ico = "🐄";
-      if(it.type === 'buffalo'){ tot = 310; dry = 235; }
+      if(it.type === 'buffalo'){ tot = 310; dry = 235; ico = "🐃"; }
 
       let daysIn = getDays(it.date);
       let imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
@@ -406,15 +466,15 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       html += '<div class="item">';
       html += '  <div class="cow-img">' + imgHtml + '</div>';
       html += '  <div class="item-info">';
-      html += '    <div class="item-top"><span>' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' ' + (lang==='en'?'days completed':'दिवस पूर्ण') + '</span></div>';
+      html += '    <div class="item-top"><span>' + it.name + '</span><span style="color:#15803d;font-weight:800;">' + daysIn + ' ' + (lang==='en'?'days':'दिवस') + '</span></div>';
       html += '    <div class="row"><span>' + t.chk21 + '</span><b>' + check21 + '</b></div>';
       html += '    <div class="row"><span>' + t.milkDry + '</span><b>' + dryDate + '</b></div>';
       html += '    <div class="row"><span>' + t.trans + '</span><b>' + transDate + '</b></div>';
-      html += '    <div class="row due"><span>' + t.delivery + '</span><span>' + deliveryDate + '</span></div>';
+      html += '    <div class="row due"><span>' + t.delivery + '</span><span><b>' + deliveryDate + '</b></span></div>';
       if(it.note){
-        html += '    <div class="note-box">' + t.noteLbl + it.note + '</div>';
+        html += '    <div class="note-box">' + t.notePrefix + it.note + '</div>';
       }
-      html += '    <div class="action-btns" style="display:flex;gap:6px;margin-top:6px;">';
+      html += '    <div class="action-btns">';
       html += '      <button class="btn-repeat" onclick="updateDate(' + it.id + ')">' + t.repeatBtn + '</button>';
       html += '      <button class="btn-del" onclick="delData(' + it.id + ')">' + t.delBtn + '</button>';
       html += '    </div>';
