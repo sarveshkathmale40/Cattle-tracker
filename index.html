@@ -1,729 +1,332 @@
-<!DOCTYPE html>
-<html lang="mr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#16a34a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="The MH Farmer">
+    const defaultName =
+      cur === "cow"
+        ? t.cow.replace("🐄 ", "")
+        : t.buffalo.replace("🐃 ", "");
 
-  <link rel="manifest" href="manifest.json">
-  <title>The MH Farmer - Cattle Tracker</title>
+    const finalName = name || defaultName;
 
-  <style>
-    * {
-      box-sizing: border-box;
+    if (photoInput.files && photoInput.files[0]) {
+      const file = photoInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        pushRecordToDB(finalName, date, note, e.target.result);
+      };
+
+      reader.onerror = function() {
+        pushRecordToDB(finalName, date, note, "");
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      pushRecordToDB(finalName, date, note, "");
     }
-
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #f1f5f9;
-      color: #0f172a;
-    }
-
-    .container {
-      max-width: 420px;
-      margin: auto;
-      padding: 10px;
-    }
-
-    header {
-      background: linear-gradient(135deg, #166534, #15803d);
-      color: white;
-      padding: 18px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(22,101,52,0.2);
-    }
-
-    .brand-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: #dcfce7;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 800;
-    }
-
-    .language-box {
-      margin-top: 10px;
-    }
-
-    select,
-    input,
-    textarea {
-      width: 100%;
-      padding: 12px 14px;
-      margin-top: 6px;
-      border: 2px solid #e2e8f0;
-      border-radius: 14px;
-      font-size: 15px;
-      background: #f8fafc;
-      font-weight: 600;
-      outline: none;
-    }
-
-    select:focus, input:focus, textarea:focus {
-      border-color: #16a34a;
-      background: white;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    .stats {
-      display: flex;
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .stat {
-      flex: 1;
-      background: white;
-      padding: 12px 4px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      border: 1px solid #e2e8f0;
-    }
-
-    .stat-number {
-      font-size: 22px;
-      font-weight: 800;
-      color: #166534;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: #64748b;
-      font-weight: 600;
-      margin-top: 2px;
-    }
-
-    .card {
-      background: white;
-      padding: 16px;
-      margin-top: 12px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-      border: 1px solid #e2e8f0;
-    }
-
-    .card h2 {
-      margin-top: 0;
-      color: #166534;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .animal-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 6px;
-    }
-
-    .animal-btn {
-      flex: 1;
-      border: 2px solid #e2e8f0;
-      background: #f8fafc;
-      padding: 12px 5px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #475569;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .animal-btn.active {
-      border-color: #16a34a;
-      background: #f0fdf4;
-      color: #166534;
-    }
-
-    button {
-      border: none;
-      padding: 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .save-btn {
-      width: 100%;
-      margin-top: 12px;
-      background: linear-gradient(135deg, #16a34a, #15803d);
-      color: white;
-      box-shadow: 0 6px 15px rgba(22,163,74,0.3);
-    }
-
-    .record {
-      background: #fafafa;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 14px;
-      margin-top: 12px;
-    }
-
-    .record img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-top: 10px;
-    }
-
-    .record-name {
-      font-size: 16px;
-      font-weight: 800;
-      color: #166534;
-      margin-bottom: 6px;
-    }
-
-    .record-line {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #475569;
-    }
-
-    .record-buttons {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .repeat-btn {
-      flex: 1;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      font-size: 11px;
-      padding: 8px;
-      border-radius: 10px;
-    }
-
-    .delete-btn {
-      flex: 1;
-      background: #fee2e2;
-      color: #b91c1c;
-      border: none;
-      font-size: 11px;
-      padding: 8px;
-      border-radius: 10px;
-    }
-
-    .photo-preview {
-      display: none;
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      margin: 8px auto 0;
-      border-radius: 12px;
-      border: 2px solid #16a34a;
-    }
-
-    /* REMINDERS */
-    .reminder-card {
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-      padding: 16px;
-      margin-top: 12px;
-      border-radius: 20px;
-    }
-
-    .reminder-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #92400e;
-      margin-bottom: 10px;
-    }
-
-    .reminder-item {
-      background: white;
-      border-radius: 14px;
-      padding: 12px;
-      margin-top: 8px;
-      border-left: 5px solid #f59e0b;
-      border-top: 1px solid #fef3c7;
-      border-right: 1px solid #fef3c7;
-      border-bottom: 1px solid #fef3c7;
-    }
-
-    .reminder-name {
-      font-weight: 800;
-      font-size: 15px;
-      color: #166534;
-    }
-
-    .reminder-text {
-      margin-top: 4px;
-      font-size: 13px;
-      color: #334155;
-    }
-
-    .reminder-date {
-      margin-top: 4px;
-      font-size: 11px;
-    }
-
-    .reminder-today {
-      font-weight: bold;
-      color: #b91c1c;
-    }
-
-    .reminder-upcoming {
-      color: #2563eb;
-    }
-
-    .reminder-empty {
-      color: #64748b;
-      font-size: 13px;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 20px 10px;
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 600;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <header>
-    <div class="brand-title">🌾 The MH Farmer</div>
-    <h1>Cattle Tracker</h1>
-
-    <div class="language-box">
-      <select id="langSelect" onchange="changeLanguage()" style="background:rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.4); padding:6px 10px; border-radius:10px; font-size:13px;">
-        <option value="mr" style="color:black;">मराठी</option>
-        <option value="hi" style="color:black;">हिंदी</option>
-        <option value="en" style="color:black;">English</option>
-      </select>
-    </div>
-  </header>
-
-  <!-- REMINDERS -->
-  <div class="reminder-card">
-    <div class="reminder-title" id="reminderTitle">
-      🔔 आजच्या सूचना
-    </div>
-    <div id="reminderList"></div>
-  </div>
-
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-number" id="cowCount">0</div>
-      <div class="stat-label" id="cowStat">🐄 गायी</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" id="buffaloCount">0</div>
-      <div class="stat-label" id="buffaloStat">🐃 म्हशी</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number" id="totalCount">0</div>
-      <div class="stat-label" id="totalStat">एकूण</div>
-    </div>
-  </div>
-
-  <!-- ADD ANIMAL -->
-  <div class="card">
-    <h2 id="addTitle">नवीन जनावराची नोंद</h2>
-
-    <label id="animalTypeLabel" style="font-size:12px; font-weight:700; color:#334155;">जनावराचा प्रकार</label>
-    <div class="animal-buttons">
-      <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 गाय</button>
-      <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 म्हैस</button>
-    </div>
-
-    <label id="nameLabel" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-top:10px;">जनावराचे नाव</label>
-    <input type="text" id="animalName" placeholder="उदा. शिंगावली">
-
-    <label id="dateLabel" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-top:10px;">गाभण / AI तारीख</label>
-    <input type="date" id="pregnancyDate">
-
-    <label id="noteLabel" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-top:10px;">नोंद</label>
-    <textarea id="animalNote" placeholder="अतिरिक्त माहिती"></textarea>
-
-    <label id="photoLabel" style="font-size:12px; font-weight:700; color:#334155; display:block; margin-top:10px;">फोटो</label>
-    <input type="file" id="animalPhoto" accept="image/*">
-    <img id="photoPreview" class="photo-preview" alt="Photo Preview">
-
-    <button class="save-btn" id="saveBtn" type="button" onclick="saveAnimalRecord()">
-      💾 नोंद सेव्ह करा
-    </button>
-  </div>
-
-  <!-- RECORDS -->
-  <div class="card">
-    <h2 id="recordsTitle">जनावरांच्या नोंदी</h2>
-    <div id="recordsList"></div>
-  </div>
-
-  <div class="footer">
-    The MH Farmer • Cattle Tracker
-  </div>
-
-</div>
-
-<script>
-  // Service Worker Registration for PWA / Offline support
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .catch(err => console.log('SW Failed!', err));
-    });
   }
 
   /* =========================
-     LANGUAGE
+     ADD RECORD TO DATABASE
   ========================= */
-  const langData = {
-    mr: {
-      addTitle: "नवीन जनावराची नोंद",
-      animalType: "जनावराचा प्रकार",
-      cow: "🐄 गाय",
-      buffalo: "🐃 म्हैस",
-      name: "जनावराचे नाव",
-      date: "गाभण / AI तारीख",
-      note: "नोंद",
-      photo: "फोटो",
-      save: "💾 नोंद सेव्ह करा",
-      records: "जनावरांच्या नोंदी",
-      cows: "गायी",
-      buffaloes: "म्हशी",
-      total: "एकूण",
-      reminderTitle: "🔔 आजच्या सूचना",
-      noReminder: "आज किंवा पुढील 7 दिवसांत कोणतीही सूचना नाही.",
-      today: "आज",
-      overdue: "प्रलंबित",
-      upcoming: "लवकरच",
-      heatReminder: "21 दिवस तपासा — गाय/म्हैस उलटली किंवा हीट परत आली का?",
-      dryReminder: "Dry-off / दूधावरून सोडण्याची तयारी करा.",
-      transitionReminder: "विण्यापूर्वी शेवटचे 21 दिवस — Transition Feed सुरू करा.",
-      deliveryReminder: "अपेक्षित विण्याची तारीख आज आहे.",
-      deliverySoon: "अपेक्षित विण्याची तारीख जवळ आली आहे.",
-      pregnancyDate: "गाभण / AI तारीख",
-      heatDate: "21 दिवसांची हीट तपासणी",
-      dryDate: "Dry-off तारीख",
-      transitionDate: "Transition Feed तारीख",
-      deliveryDate: "अपेक्षित विण्याची तारीख",
-      repeat: "🔄 पुन्हा नोंद (तारीख बदला)",
-      delete: "🗑️ हटवा",
-      noRecords: "अजून कोणतीही नोंद नाही.",
-      confirmDel: "तुम्हाला ही नोंद हटवायची आहे का?",
-      promptNewDate: "नवीन गाभण तारीख प्रविष्ट करा (YYYY-MM-DD):"
-    },
-    hi: {
-      addTitle: "नया पशु दर्ज करें",
-      animalType: "पशु का प्रकार",
-      cow: "🐄 गाय",
-      buffalo: "🐃 भैंस",
-      name: "पशु का नाम",
-      date: "गर्भाधान / AI तारीख",
-      note: "नोट",
-      photo: "फोटो",
-      save: "💾 रिकॉर्ड सेव करें",
-      records: "पशुओं के रिकॉर्ड",
-      cows: "गाय",
-      buffaloes: "भैंस",
-      total: "कुल",
-      reminderTitle: "🔔 आज की सूचनाएँ",
-      noReminder: "आज या अगले 7 दिनों में कोई सूचना नहीं.",
-      today: "आज",
-      overdue: "लंबित",
-      upcoming: "जल्द",
-      heatReminder: "21 दिन जाँचें — गाय/भैंस फिर से हीट में आई है क्या?",
-      dryReminder: "Dry-off / दूध बंद करने की तैयारी करें.",
-      transitionReminder: "ब्याने से अंतिम 21 दिन — Transition Feed शुरू करें.",
-      deliveryReminder: "ब्याने की संभावित तारीख आज है.",
-      deliverySoon: "ब्याने की संभावित तारीख नजदीक है.",
-      pregnancyDate: "गर्भाधान / AI तारीख",
-      heatDate: "21 दिन हीट जाँच",
-      dryDate: "Dry-off तारीख",
-      transitionDate: "Transition Feed तारीख",
-      deliveryDate: "संभावित ब्याने की तारीख",
-      repeat: "🔄 फिर से रिकॉर्ड (तारीख बदलें)",
-      delete: "🗑️ हटाएँ",
-      noRecords: "अभी कोई रिकॉर्ड नहीं है.",
-      confirmDel: "क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?",
-      promptNewDate: "नया गर्भधारण की तारीख दर्ज करें (YYYY-MM-DD):"
-    },
-    en: {
-      addTitle: "Add New Animal",
-      animalType: "Animal Type",
-      cow: "🐄 Cow",
-      buffalo: "🐃 Buffalo",
-      name: "Animal Name",
-      date: "Pregnancy / AI Date",
-      note: "Note",
-      photo: "Photo",
-      save: "💾 Save Record",
-      records: "Animal Records",
-      cows: "Cows",
-      buffaloes: "Buffaloes",
-      total: "Total",
-      reminderTitle: "🔔 Today's Reminders",
-      noReminder: "No reminder today or within the next 7 days.",
-      today: "Today",
-      overdue: "Overdue",
-      upcoming: "Upcoming",
-      heatReminder: "21-day check — Did the cow/buffalo return to heat?",
-      dryReminder: "Prepare for dry-off / stop milking.",
-      transitionReminder: "Last 21 days before calving — start transition feed.",
-      deliveryReminder: "Expected calving date is today.",
-      deliverySoon: "Expected calving date is approaching.",
-      pregnancyDate: "Pregnancy / AI Date",
-      heatDate: "21-day Heat Check",
-      dryDate: "Dry-off Date",
-      transitionDate: "Transition Feed Date",
-      deliveryDate: "Expected Calving Date",
-      repeat: "🔄 Repeat Record (Change Date)",
-      delete: "🗑️ Delete",
-      noRecords: "No records yet.",
-      confirmDel: "Are you sure you want to delete this record?",
-      promptNewDate: "Enter new pregnancy date (YYYY-MM-DD):"
-    }
-  };
-
-  /* =========================
-     DATABASE
-  ========================= */
-  const DB_KEY = "cattle_tracker_db";
-
-  function getDB() {
-    try {
-      return JSON.parse(localStorage.getItem(DB_KEY)) || [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveDB(data) {
-    localStorage.setItem(DB_KEY, JSON.stringify(data));
-  }
-
-  /* =========================
-     ANIMAL SELECTION
-  ========================= */
-  let cur = "cow";
-
-  function selectAnimal(type) {
-    cur = type;
-    document.getElementById("cowBtn").classList.toggle("active", type === "cow");
-    document.getElementById("buffaloBtn").classList.toggle("active", type === "buffalo");
-  }
-
-  /* =========================
-     DATE FUNCTIONS
-  ========================= */
-  function dateFromString(str) {
-    const parts = String(str).split("-");
-    if (parts.length !== 3) {
-      return new Date(str);
-    }
-    return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-  }
-
-  function dateOnly(date) {
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  }
-
-  function daysBetween(date1, date2) {
-    const d1 = dateOnly(date1);
-    const d2 = dateOnly(date2);
-    return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
-  }
-
-  function addDaysForReminder(baseDate, days) {
-    const d = new Date(baseDate);
-    d.setDate(d.getDate() + days);
-    return d;
-  }
-
-  function formatReminderDate(date) {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return day + "/" + month + "/" + year;
-  }
-
-  /* =========================
-     PREGNANCY REMINDER DATA
-  ========================= */
-  function getReminderData(item) {
-    let totalDays = 282;
-    let dryDays = 210;
-
-    if (item.type === "buffalo") {
-      totalDays = 310;
-      dryDays = 240;
-    }
-
-    const pregnancyDate = dateFromString(item.date);
-
-    return {
-      animal: item,
-      heatDate: addDaysForReminder(pregnancyDate, 21),
-      dryDate: addDaysForReminder(pregnancyDate, dryDays),
-      transitionDate: addDaysForReminder(pregnancyDate, totalDays - 21),
-      deliveryDate: addDaysForReminder(pregnancyDate, totalDays)
-    };
-  }
-
-  /* =========================
-     REMINDER CREATOR
-  ========================= */
-  function addReminder(container, item, date, text, kind, t) {
-    const today = dateOnly(new Date());
-    const reminderDate = dateOnly(date);
-    const diff = daysBetween(today, reminderDate);
-
-    let statusText = t.upcoming;
-    let statusClass = "reminder-upcoming";
-
-    if (diff === 0) {
-      statusText = t.today;
-      statusClass = "reminder-today";
-    } else if (diff < 0) {
-      statusText = t.overdue;
-      statusClass = "reminder-today";
-    }
-
-    const emoji = item.type === "buffalo" ? "🐃" : "🐄";
-    let finalText = text;
-
-    if (kind === "delivery" && diff > 0) {
-      finalText = t.deliverySoon;
-    }
-
-    const div = document.createElement("div");
-    div.className = "reminder-item";
-    div.innerHTML = `
-      <div class="reminder-name">
-        ${emoji} '${escapeHTML(item.name || "")}'
-      </div>
-      <div class="reminder-text">
-        ${finalText}
-      </div>
-      <div class="reminder-date ${statusClass}">
-        <b>${statusText}</b> • ${formatReminderDate(reminderDate)}
-      </div>
-    `;
-    container.appendChild(div);
-  }
-
-  function escapeHTML(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  /* =========================
-     DRAW REMINDERS
-  ========================= */
-  function drawReminders() {
-    const lang = localStorage.getItem("cattle_lang") || document.getElementById("langSelect").value;
-    const t = langData[lang];
-    const list = document.getElementById("reminderList");
-    if (!list) return;
-
-    list.innerHTML = "";
+  function pushRecordToDB(name, date, note, photo) {
     const db = getDB();
-    const today = dateOnly(new Date());
-    let reminderCount = 0;
 
-    db.forEach(function(item) {
-      if (!item.date) return;
-      const data = getReminderData(item);
-      const deliveryDate = dateOnly(data.deliveryDate);
-
-      if (deliveryDate < today) {
-        return;
-      }
-
-      const reminders = [
-        { date: data.heatDate, text: t.heatReminder, kind: "heat" },
-        { date: data.dryDate, text: t.dryReminder, kind: "dry" },
-        { date: data.transitionDate, text: t.transitionReminder, kind: "transition" },
-        { date: data.deliveryDate, text: t.deliveryReminder, kind: "delivery" }
-      ];
-
-      reminders.forEach(function(reminder) {
-        const diff = daysBetween(today, dateOnly(reminder.date));
-        if (diff >= -30 && diff <= 7) {
-          addReminder(list, item, reminder.date, reminder.text, reminder.kind, t);
-          reminderCount++;
-        }
-      });
+    db.push({
+      id: Date.now(),
+      type: cur,
+      name: name,
+      date: date,
+      note: note,
+      photo: photo
     });
 
-    if (reminderCount === 0) {
-      const empty = document.createElement("div");
-      empty.className = "reminder-empty";
-      empty.textContent = t.noReminder;
-      list.appendChild(empty);
-    }
+    saveDB(db);
+
+    document.getElementById("animalName").value = "";
+    document.getElementById("pregnancyDate").value = "";
+    document.getElementById("animalNote").value = "";
+    document.getElementById("animalPhoto").value = "";
+
+    const preview = document.getElementById("photoPreview");
+    preview.src = "";
+    preview.style.display = "none";
+
+    draw();
+    drawReminders();
+
+    alert("नोंद सेव्ह झाली!");
   }
 
   /* =========================
-     LANGUAGE
+     DELETE RECORD
   ========================= */
-  function changeLanguage() {
-    const lang = document.getElementById("langSelect").value;
+  function deleteRecord(id) {
+    const lang = localStorage.getItem("cattle_lang") || "mr";
     const t = langData[lang];
-    localStorage.setItem("cattle_lang", lang);
 
-    document.getElementById("addTitle").textContent = t.addTitle;
-    document.getElementById("animalTypeLabel").textContent = t.animalType;
-    document.getElementById("cowBtn").textContent = t.cow;
-    document.getElementById("buffaloBtn").textContent = t.buffalo;
-    document.getElementById("nameLabel").textContent = t.name;
-    document.getElementById("dateLabel").textContent = t.date;
-    document.getElementById("noteLabel").textContent = t.note;
-    document.getElementById("photoLabel").textContent = t.photo;
-    document.getElementById("saveBtn").textContent = t.save;
-    document.getElementById("recordsTitle").textContent = t.records;
-    document.getElementById("cowStat").textContent = "🐄 " + t.cows;
-    document.getElementById("buffaloStat").textContent = "🐃 " + t.buffaloes;
-    document.getElementById("totalStat").textContent = t.total;
-    document.getElementById("reminderTitle").textContent = t.reminderTitle;
+    if (!confirm(t.confirmDel)) {
+      return;
+    }
+
+    let db = getDB();
+    db = db.filter(function(item) {
+      return item.id !== id;
+    });
+
+    saveDB(db);
+    draw();
+    drawReminders();
+  }
+
+  /* =========================
+     REPEAT / CHANGE DATE
+  ========================= */
+  function repeatRecord(id) {
+    const lang = localStorage.getItem("cattle_lang") || "mr";
+    const t = langData[lang];
+
+    const newDt = prompt(
+      t.promptNewDate,
+      new Date().toISOString().split("T")[0]
+    );
+
+    if (!newDt) {
+      return;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDt)) {
+      alert("कृपया YYYY-MM-DD या format मध्ये तारीख द्या.");
+      return;
+    }
+
+    const testDate = dateFromString(newDt);
+
+    if (isNaN(testDate.getTime())) {
+      alert("तारीख चुकीची आहे.");
+      return;
+    }
+
+    let db = getDB();
+
+    db = db.map(function(item) {
+      if (item.id === id) {
+        item.date = newDt;
+      }
+      return item;
+    });
+
+    saveDB(db);
 
     draw();
     drawReminders();
   }
 
   /* =========================
-     SAVE RECORD
+     DRAW RECORDS
   ========================= */
-  function saveAnimalRecord() {
-    const name = document.getElementById("animalName").value.trim();
-    const date = document.getElementById("pregnancyDate").value;
-    const note = document.getElementById("animalNote").value.trim();
-    const photoInput = document.getElementById("animalPhoto");
+  function draw() {
+    const lang =
+      localStorage.getItem("cattle_lang") ||
+      document.getElementById("langSelect").value ||
+      "mr";
 
-    if (!date) {
-      alert("कृपया गाभण / AI तारीख निवडा!");
+    const t = langData[lang];
+    const db = getDB();
+
+    const list = document.getElementById("recordsList");
+
+    list.innerHTML = "";
+
+    let cowCount = 0;
+    let buffaloCount = 0;
+
+    db.forEach(function(item) {
+      if (item.type === "cow") {
+        cowCount++;
+      } else if (item.type === "buffalo") {
+        buffaloCount++;
+      }
+
+      const record = document.createElement("div");
+      record.className = "record";
+
+      const emoji = item.type === "buffalo" ? "🐃" : "🐄";
+
+      const name = escapeHTML(item.name || "");
+      const note = escapeHTML(item.note || "");
+      const date = escapeHTML(item.date || "");
+
+      let photoHTML = "";
+
+      if (item.photo) {
+        photoHTML = `
+          <img
+            src="${item.photo}"
+            alt="Animal Photo"
+          >
+        `;
+      }
+
+      record.innerHTML = `
+        <div class="record-name">
+          ${emoji} ${name}
+        </div>
+
+        <div class="record-line">
+          📅 ${t.pregnancyDate}: ${date}
+        </div>
+
+        ${
+          note
+            ? `
+              <div class="record-line">
+                📝 ${note}
+              </div>
+            `
+            : ""
+        }
+
+        ${photoHTML}
+
+        <div class="record-buttons">
+          <button
+            class="repeat-btn"
+            type="button"
+          >
+            ${t.repeat}
+          </button>
+
+          <button
+            class="delete-btn"
+            type="button"
+          >
+            ${t.delete}
+          </button>
+        </div>
+      `;
+
+      const buttons = record.querySelectorAll("button");
+
+      buttons[0].addEventListener("click", function() {
+        repeatRecord(item.id);
+      });
+
+      buttons[1].addEventListener("click", function() {
+        deleteRecord(item.id);
+      });
+
+      list.appendChild(record);
+    });
+
+    document.getElementById("cowCount").textContent = cowCount;
+    document.getElementById("buffaloCount").textContent = buffaloCount;
+    document.getElementById("totalCount").textContent = db.length;
+
+    if (db.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "reminder-empty";
+      empty.textContent = t.noRecords;
+      list.appendChild(empty);
+    }
+  }
+
+  /* =========================
+     PHOTO PREVIEW
+  ========================= */
+  function previewPhoto() {
+    const input = document.getElementById("animalPhoto");
+    const preview = document.getElementById("photoPreview");
+
+    if (!input.files || !input.files[0]) {
+      preview.src = "";
+      preview.style.display = "none";
       return;
     }
 
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang];
-    const defaultName = cur === "cow" ? t.cow.replace("🐄 ", "") : t.buffalo.replace("🐃 ", ""
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.style.display = "block";
+    };
+
+    reader.onerror = function() {
+      preview.src = "";
+      preview.style.display = "none";
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+
+  /* =========================
+     LANGUAGE SELECT
+  ========================= */
+  document.getElementById("langSelect").addEventListener(
+    "change",
+    changeLanguage
+  );
+
+  /* =========================
+     ANIMAL BUTTONS
+  ========================= */
+  document.getElementById("cowBtn").addEventListener(
+    "click",
+    function() {
+      selectAnimal("cow");
+    }
+  );
+
+  document.getElementById("buffaloBtn").addEventListener(
+    "click",
+    function() {
+      selectAnimal("buffalo");
+    }
+  );
+
+  /* =========================
+     SAVE BUTTON
+  ========================= */
+  document.getElementById("saveBtn").addEventListener(
+    "click",
+    saveAnimalRecord
+  );
+
+  /* =========================
+     PHOTO INPUT
+  ========================= */
+  document.getElementById("animalPhoto").addEventListener(
+    "change",
+    previewPhoto
+  );
+
+  /* =========================
+     PAGE LOAD
+  ========================= */
+  document.addEventListener("DOMContentLoaded", function() {
+    const savedLang =
+      localStorage.getItem("cattle_lang") || "mr";
+
+    const langSelect = document.getElementById("langSelect");
+
+    langSelect.value = savedLang;
+
+    if (!langData[savedLang]) {
+      langSelect.value = "mr";
+      localStorage.setItem("cattle_lang", "mr");
+    }
+
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    document.getElementById("pregnancyDate").value =
+      year + "-" + month + "-" + day;
+
+    changeLanguage();
+    draw();
+    drawReminders();
+  });
+</script>
+
+</body>
+</html>
