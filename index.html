@@ -302,15 +302,27 @@ input:focus,select:focus,textarea:focus{
   color:#1e293b;
 }
 
-/* 📝 एनिमल इन्फो माहितीचे अक्षरे थोडे मोठे आणि स्पष्ट केले आहेत */
+/* 📝 सुंदर आणि सुटसुटीत रो आणि तारीख टॅग डिझाईन */
 .row{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   gap:8px;
-  font-size:12px;
-  padding:3px 0;
-  color:#1e293b;
+  font-size:11.5px;
+  padding:4px 0;
+  color:#334155;
   font-weight:600;
+}
+
+.date-badge{
+  background:#f1f5f9;
+  color:#0f172a;
+  padding:2px 7px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:700;
+  border:1px solid #e2e8f0;
+  letter-spacing:0.3px;
 }
 
 .due{
@@ -322,6 +334,9 @@ input:focus,select:focus,textarea:focus{
   margin-top:6px;
   font-size:12px;
   border:1px solid #bbf7d0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .note-box{
@@ -1454,120 +1469,52 @@ function draw(){
 
     html+='<div class="item-info">';
 
-    /* 
-      UPDATED TOP HEADER: 
-      Order: [Type/Icon] [Name] ------ [Duration (Time)] 
-    */
+    /* Top Header */
     html+='<div class="item-top">';
     html+='<span>'+animalTypeLabel+' &nbsp; <b>'+safeName+'</b></span>';
     html+='<span style="color:#15803d; font-weight:900; font-size:11.5px;">⏱️ '+escapeHtml(durationStr)+'</span>';
     html+='</div>';
 
+    /* Row 1: Pregnancy Date */
     html+='<div class="row">';
-
-    html+=
-      '<span>📅 '+
-      escapeHtml(t.dtLbl)+
-      '</span>';
-
-    html+=
-      '<span>'+
-      escapeHtml(
-        start
-        ? formatDate(start)
-        : '---'
-      )+
-      '</span>';
-
+    html+='<span>📅 '+escapeHtml(t.dtLbl)+'</span>';
+    html+='<span class="date-badge">'+escapeHtml(start ? formatDate(start) : '---')+'</span>';
     html+='</div>';
 
+    /* Row 2: Heat Check */
     html+='<div class="row">';
-
-    html+=
-      '<span>'+
-      escapeHtml(t.chk21)+
-      '</span>';
-
-    html+=
-      '<span>'+
-      escapeHtml(check21)+
-      '</span>';
-
+    html+='<span>'+escapeHtml(t.chk21)+'</span>';
+    html+='<span class="date-badge">'+escapeHtml(check21)+'</span>';
     html+='</div>';
 
+    /* Row 3: Milk Dry */
     html+='<div class="row">';
-
-    html+=
-      '<span>'+
-      escapeHtml(t.milkDry)+
-      '</span>';
-
-    html+=
-      '<span>'+
-      escapeHtml(dryDate)+
-      '</span>';
-
+    html+='<span>'+escapeHtml(t.milkDry)+'</span>';
+    html+='<span class="date-badge">'+escapeHtml(dryDate)+'</span>';
     html+='</div>';
 
+    /* Row 4: Transition */
     html+='<div class="row">';
-
-    html+=
-      '<span>'+
-      escapeHtml(t.trans)+
-      '</span>';
-
-    html+=
-      '<span>'+
-      escapeHtml(transitionDate)+
-      '</span>';
-
+    html+='<span>'+escapeHtml(t.trans)+'</span>';
+    html+='<span class="date-badge">'+escapeHtml(transitionDate)+'</span>';
     html+='</div>';
 
+    /* Due Date Box */
     html+='<div class="due">';
-
-    html+=
-      escapeHtml(t.delivery)+
-      ' '+
-      escapeHtml(deliveryDate);
-
+    html+='<span>'+escapeHtml(t.delivery)+'</span>';
+    html+='<span class="date-badge" style="background:#bbf7d0; border-color:#86efac; color:#14532d;"><b>'+escapeHtml(deliveryDate)+'</b></span>';
     html+='</div>';
 
     if(safeNote){
-
-      html+=
-        '<div class="note-box">'+
-        t.notePrefix+
-        safeNote+
-        '</div>';
-
+      html+='<div class="note-box">'+t.notePrefix+safeNote+'</div>';
     }
 
     html+='<div class="action-btns">';
-
-    html+=
-      '<button '+
-      'class="btn-repeat" '+
-      'type="button" '+
-      'onclick="updateDate('+
-      safeId+
-      ')">'+
-      escapeHtml(t.repeatBtn)+
-      '</button>';
-
-    html+=
-      '<button '+
-      'class="btn-del" '+
-      'type="button" '+
-      'onclick="delData('+
-      safeId+
-      ')">'+
-      escapeHtml(t.delBtn)+
-      '</button>';
-
+    html+='<button class="btn-repeat" type="button" onclick="updateDate('+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
+    html+='<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
     html+='</div>';
 
     html+='</div>';
-
     html+='</div>';
 
   }
