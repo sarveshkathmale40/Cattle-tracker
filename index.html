@@ -291,6 +291,7 @@ input:focus,select:focus,textarea:focus{
 .item-top{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   gap:8px;
   font-weight:bold;
   font-size:13.5px;
@@ -658,7 +659,7 @@ const langData={
 
     notePrefix:'💉 <b>डॉक्टर/सीमेन:</b> ',
 
-    dateRequired:'कृपया तारीख चुनें!',
+    dateRequired: 'कृपया तारीख चुनें!',
 
     futureDateError:
       'भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।',
@@ -1186,6 +1187,7 @@ function getFormattedDuration(str,lang){
       days>0 ||
       res.length===0
     ){
+
       res.push(
         days+
         ' '+
@@ -1435,6 +1437,11 @@ function draw(){
       ? Number(it.id)
       : 0;
 
+    const animalTypeLabel=
+      isBuffalo
+      ? '🐃 '+escapeHtml(t.buf)
+      : '🐄 '+escapeHtml(t.cow);
+
     html+='<div class="item">';
 
     html+='<div class="cow-img">';
@@ -1445,22 +1452,13 @@ function draw(){
 
     html+='<div class="item-info">';
 
+    /* 
+      UPDATED TOP HEADER: 
+      Order: [Type/Icon] [Name] ------ [Duration (Time)] 
+    */
     html+='<div class="item-top">';
-
-    html+=
-      '<span>'+
-      safeName+
-      '</span>';
-
-    html+=
-      '<span>'+
-      (
-        isBuffalo
-        ? '🐃 '+escapeHtml(t.buf)
-        : '🐄 '+escapeHtml(t.cow)
-      )+
-      '</span>';
-
+    html+='<span>'+animalTypeLabel+' &nbsp; <b>'+safeName+'</b></span>';
+    html+='<span style="color:#15803d; font-weight:900; font-size:12px;">⏱️ '+escapeHtml(durationStr)+'</span>';
     html+='</div>';
 
     html+='<div class="row">';
@@ -1477,18 +1475,6 @@ function draw(){
         ? formatDate(start)
         : '--/--/----'
       )+
-      '</span>';
-
-    html+='</div>';
-
-    html+='<div class="row">';
-
-    html+=
-      '<span>⏱️</span>';
-
-    html+=
-      '<span>'+
-      escapeHtml(durationStr)+
       '</span>';
 
     html+='</div>';
@@ -1592,19 +1578,6 @@ function draw(){
 
 /*
   SMART NOTIFICATIONS
-
-  1. Heat:
-     ONLY pregnancy day 19, 20, 21
-
-  2. Dry-off:
-     3 days before through event day
-     = difference 3,2,1,0
-
-  3. Delivery:
-     3 days before through event day
-     = difference 3,2,1,0
-
-  No Transition Feed notification.
 */
 function checkSmartNotifications(){
 
@@ -1668,12 +1641,6 @@ function checkSmartNotifications(){
 
     }
 
-    /*
-      Current pregnancy day.
-      Example:
-      AI date = 1st
-      19th day = difference 19
-    */
     const pregnancyDay=
       getDayDifference(
         start,
@@ -2277,4 +2244,3 @@ if(
 
 </body>
 </html>
-  
