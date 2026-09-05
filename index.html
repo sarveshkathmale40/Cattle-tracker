@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#166534">
+<meta name="theme-color" content="#15803d">
 
 <title>Cattle Tracker</title>
 
@@ -17,74 +17,118 @@
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#f0fdf4;
+  background:linear-gradient(180deg,#f0fdf4 0%,#f8fafc 100%);
   color:#1f2937;
 }
 
 #appScreen{
   max-width:600px;
   margin:auto;
-  padding:15px;
+  padding:8px;
 }
 
-.app-header{
-  background:#166534;
-  color:white;
-  padding:18px;
-  border-radius:15px;
+/* BRAND */
+.brand-title{
   text-align:center;
-  margin-bottom:15px;
+  font-size:14px;
+  font-weight:bold;
+  color:#15803d;
+  margin-bottom:4px;
+}
+
+/* HEADER */
+.app-header{
+  background:linear-gradient(135deg,#15803d,#16a34a);
+  color:white;
+  padding:10px;
+  border-radius:11px;
+  text-align:center;
+  margin-bottom:7px;
+  box-shadow:0 3px 9px rgba(21,128,61,0.16);
 }
 
 .app-header h1{
   margin:0;
-  font-size:28px;
+  font-size:22px;
 }
 
 .app-header p{
-  margin:5px 0 0;
-  font-size:14px;
+  margin:2px 0 0;
+  font-size:11px;
+  opacity:0.95;
 }
 
+/* SMALL LANGUAGE */
+.language-box{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:7px;
+}
+
+#language{
+  width:auto;
+  min-width:105px;
+  padding:5px 7px;
+  margin:0;
+  font-size:12px;
+  border-radius:6px;
+  background:white;
+}
+
+/* CARD */
 .card{
   background:white;
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:15px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  padding:9px;
+  border-radius:10px;
+  margin-bottom:8px;
+  box-shadow:0 2px 7px rgba(0,0,0,0.05);
+  border:1px solid #ecfdf5;
 }
 
 label{
   display:block;
   font-weight:bold;
-  margin-bottom:6px;
+  margin-bottom:3px;
+  font-size:12px;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
-  padding:11px;
+  padding:8px;
   border:1px solid #d1d5db;
-  border-radius:8px;
-  margin-bottom:12px;
-  font-size:16px;
+  border-radius:7px;
+  margin-bottom:7px;
+  font-size:13px;
+  background:#fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:#22c55e;
+  box-shadow:0 0 0 2px rgba(34,197,94,0.10);
 }
 
 textarea{
   resize:vertical;
 }
 
+/* BUTTONS */
 button{
   border:none;
-  border-radius:9px;
-  padding:11px 15px;
-  font-size:15px;
+  border-radius:7px;
+  padding:8px 11px;
+  font-size:12px;
   cursor:pointer;
 }
 
 .animal-buttons{
   display:flex;
-  gap:10px;
-  margin-bottom:15px;
+  gap:6px;
+  margin-bottom:9px;
 }
 
 .animal-buttons button{
@@ -92,83 +136,95 @@ button{
   background:#dcfce7;
   color:#166534;
   font-weight:bold;
+  border:1px solid #bbf7d0;
 }
 
 .animal-buttons button.active{
-  background:#166534;
+  background:#15803d;
   color:white;
+  border-color:#15803d;
 }
 
 .save-btn{
   width:100%;
-  background:#166534;
+  background:linear-gradient(135deg,#15803d,#16a34a);
   color:white;
   font-weight:bold;
-  font-size:17px;
+  font-size:14px;
+  padding:9px;
 }
 
 .delete-btn{
   background:#fee2e2;
   color:#b91c1c;
-  margin-top:8px;
+  margin-top:5px;
 }
 
 .repeat-btn{
   background:#dcfce7;
   color:#166534;
-  margin-top:8px;
+  margin-top:5px;
 }
 
-.record{
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:12px;
-  margin-bottom:12px;
-}
-
-.record h3{
-  margin:0 0 8px;
-}
-
-.record p{
-  margin:5px 0;
-}
-
-.record img{
-  width:100%;
-  max-height:250px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-top:8px;
-}
-
+/* STATS */
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:15px;
+  gap:6px;
+  margin-bottom:8px;
 }
 
 .stat{
   background:white;
-  padding:12px;
-  border-radius:12px;
+  padding:6px 3px;
+  border-radius:8px;
   text-align:center;
-  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  border-top:3px solid #22c55e;
+}
+
+.stat:nth-child(2){
+  border-top-color:#f59e0b;
+}
+
+.stat:nth-child(3){
+  border-top-color:#3b82f6;
 }
 
 .stat strong{
   display:block;
-  font-size:22px;
-  color:#166534;
+  font-size:17px;
+  color:#15803d;
+  margin-bottom:1px;
+}
+
+.stat span{
+  font-size:11px;
+}
+
+/* REMINDERS */
+#reminderCard{
+  padding:6px 8px;
+}
+
+#reminderCard h2{
+  margin:0 0 5px;
+  font-size:13px;
 }
 
 .reminder{
+  display:flex;
+  align-items:center;
+  gap:6px;
   background:#fff7ed;
-  border-left:5px solid #f97316;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
+  border-left:3px solid #f97316;
+  padding:5px 6px;
+  border-radius:6px;
+  margin-bottom:3px;
+}
+
+.reminder:last-child{
+  margin-bottom:0;
 }
 
 .reminder.today{
@@ -176,29 +232,140 @@ button{
   border-left-color:#dc2626;
 }
 
+.reminder.tomorrow{
+  background:#eff6ff;
+  border-left-color:#3b82f6;
+}
+
+.reminder-icon{
+  font-size:16px;
+  flex:none;
+}
+
+.reminder-content{
+  min-width:0;
+  flex:1;
+}
+
 .reminder-title{
   font-weight:bold;
-  margin-bottom:5px;
+  font-size:11px;
+  line-height:1.25;
+}
+
+.reminder-animal{
+  font-size:11px;
+  font-weight:600;
+  margin-top:1px;
 }
 
 .reminder-date{
-  font-size:14px;
+  font-size:10px;
   color:#4b5563;
+  margin-top:1px;
+}
+
+/* RECORD */
+.record{
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  padding:8px;
+  margin-bottom:7px;
+  background:#ffffff;
+}
+
+.record h3{
+  margin:0 0 4px;
+  font-size:15px;
+  color:#166534;
+}
+
+.record p{
+  margin:3px 0;
+  font-size:12px;
+}
+
+.record img{
+  width:100%;
+  max-height:180px;
+  object-fit:cover;
+  border-radius:7px;
+  margin-top:5px;
 }
 
 .photo-preview{
   width:100%;
-  max-height:250px;
+  max-height:180px;
   object-fit:cover;
-  border-radius:10px;
+  border-radius:7px;
   display:none;
-  margin-bottom:12px;
+  margin-bottom:7px;
 }
 
 .empty{
   text-align:center;
   color:#6b7280;
-  padding:15px;
+  padding:10px;
+  font-size:12px;
+}
+
+.editing-note{
+  background:#eff6ff;
+  color:#1d4ed8;
+  border-radius:6px;
+  padding:5px 7px;
+  margin-bottom:7px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* RECORD BUTTONS */
+.record-actions{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.record-actions button{
+  flex:1;
+  min-width:120px;
+}
+
+/* MOBILE */
+@media(max-width:400px){
+
+  #appScreen{
+    padding:7px;
+  }
+
+  .app-header h1{
+    font-size:20px;
+  }
+
+  .card{
+    padding:8px;
+  }
+
+  .stat strong{
+    font-size:16px;
+  }
+
+  .stat span{
+    font-size:10px;
+  }
+
+  .reminder-title{
+    font-size:10px;
+  }
+
+  .reminder-animal{
+    font-size:10px;
+  }
+
+  .reminder-date{
+    font-size:9px;
+  }
+
 }
 </style>
 </head>
@@ -207,8 +374,7 @@ button{
 
 <div id="appScreen">
 
-  <!-- BRAND NAME ADDED HERE -->
-  <div style="text-align:center;font-size:18px;font-weight:bold;color:#166534;margin-bottom:8px;">
+  <div class="brand-title">
     🌾 The MH Farmer
   </div>
 
@@ -217,9 +383,8 @@ button{
     <p id="appSubtitle">गाभण व खुराक व्यवस्थापन</p>
   </div>
 
-  <div class="card">
-    <label for="language">Language / भाषा</label>
-
+  <!-- SMALL LANGUAGE SELECTOR -->
+  <div class="language-box">
     <select id="language" onchange="changeLanguage()">
       <option value="mr">मराठी</option>
       <option value="hi">हिंदी</option>
@@ -227,12 +392,20 @@ button{
     </select>
   </div>
 
+  <!-- REMINDERS -->
   <div id="reminderCard" class="card">
-    <h2 id="reminderTitle">🔔 आजच्या सूचना</h2>
+
+    <h2 id="reminderTitle">
+      🔔 सूचना
+    </h2>
+
     <div id="reminders"></div>
+
   </div>
 
+  <!-- STATS -->
   <div class="stats">
+
     <div class="stat">
       <strong id="totalAnimals">0</strong>
       <span id="totalText">एकूण</span>
@@ -247,23 +420,42 @@ button{
       <strong id="buffaloCount">0</strong>
       <span id="buffaloText">म्हैस</span>
     </div>
+
   </div>
 
+  <!-- INPUT -->
   <div class="card">
 
-    <label id="animalLabel">जनावर निवडा</label>
+    <div id="editingNote" class="editing-note" style="display:none;">
+      ✏️ नोंद बदलत आहात
+    </div>
+
+    <label id="animalLabel">
+      जनावर निवडा
+    </label>
 
     <div class="animal-buttons">
-      <button id="cowBtn" class="active" onclick="selectAnimal('cow')">
+
+      <button
+        id="cowBtn"
+        class="active"
+        onclick="selectAnimal('cow')"
+      >
         🐄 गाय
       </button>
 
-      <button id="buffaloBtn" onclick="selectAnimal('buffalo')">
+      <button
+        id="buffaloBtn"
+        onclick="selectAnimal('buffalo')"
+      >
         🐃 म्हैस
       </button>
+
     </div>
 
-    <label id="nameLabel">जनावराचे नाव</label>
+    <label id="nameLabel">
+      जनावराचे नाव
+    </label>
 
     <input
       type="text"
@@ -271,22 +463,28 @@ button{
       placeholder="जनावराचे नाव"
     >
 
-    <label id="dateLabel">गाभण / AI तारीख</label>
+    <label id="dateLabel">
+      गाभण / AI तारीख
+    </label>
 
     <input
       type="date"
       id="pregDate"
     >
 
-    <label id="noteLabel">टीप</label>
+    <label id="noteLabel">
+      टीप
+    </label>
 
     <textarea
       id="note"
-      rows="3"
+      rows="2"
       placeholder="काही माहिती लिहा..."
     ></textarea>
 
-    <label id="photoLabel">फोटो</label>
+    <label id="photoLabel">
+      फोटो
+    </label>
 
     <input
       type="file"
@@ -311,9 +509,15 @@ button{
 
   </div>
 
+  <!-- RECORDS -->
   <div class="card">
-    <h2 id="recordsTitle">📋 जनावरांची नोंद</h2>
+
+    <h2 id="recordsTitle">
+      📋 जनावरांची नोंद
+    </h2>
+
     <div id="records"></div>
+
   </div>
 
 </div>
@@ -322,230 +526,438 @@ button{
 
 let cur = "cow";
 
+/*
+  null = नवीन record
+  id = existing record update
+*/
+let editingId = null;
+
+
+/* LANGUAGE */
+
 const langData = {
 
   mr:{
     title:"Cattle Tracker",
     subtitle:"गाभण व खुराक व्यवस्थापन",
+
     animalLabel:"जनावर निवडा",
+
     cow:"🐄 गाय",
     buffalo:"🐃 म्हैस",
+
     nameLabel:"जनावराचे नाव",
     namePlaceholder:"जनावराचे नाव",
+
     dateLabel:"गाभण / AI तारीख",
+
     noteLabel:"टीप",
     notePlaceholder:"काही माहिती लिहा...",
+
     photoLabel:"फोटो",
+
     save:"💾 माहिती जतन करा",
+    update:"✅ माहिती अपडेट करा",
+
     records:"📋 जनावरांची नोंद",
+
     total:"एकूण",
     cowText:"गाय",
     buffaloText:"म्हैस",
-    reminderTitle:"🔔 आजच्या सूचना",
-    noReminder:"आज कोणतीही सूचना नाही.",
-    heat:"🔄 हीट / परत आली का ते तपासा",
-    dry:"🥛 ड्राय ऑफ करा / दूध काढणे बंद करण्याची वेळ",
-    transition:"🌾 ट्रान्झिशन फीड सुरू करा",
-    delivery:"🐄 अपेक्षित विण्याची तारीख",
+
+    reminderTitle:"🔔 सूचना",
+
+    noReminder:"सध्या कोणतीही सूचना नाही.",
+
+    heat:"हीट / रिपीट तपासा",
+    dry:"दूध काढणे बंद करण्याची वेळ जवळ",
+    transition:"ट्रान्झिशन फीड सुरू करण्याची वेळ जवळ",
+    delivery:"अपेक्षित विण्याची तारीख",
+
     pregnantDate:"गाभण तारीख",
     deliveryDate:"अपेक्षित विण्याची तारीख",
+
     delete:"🗑️ हटवा",
-    repeat:"🔁 पुन्हा नोंद",
-    daysAgo:"दिवसांपूर्वी",
+    repeat:"🔁 Repeat / आजची तारीख",
+
     daysLeft:"दिवस बाकी",
-    today:"आज"
+
+    today:"आज",
+    tomorrow:"उद्या",
+
+    editing:"✏️ नोंद बदलत आहात",
+
+    confirmDelete:"ही नोंद हटवायची आहे का?",
+
+    dateRequired:"कृपया गाभण / AI तारीख निवडा.",
+
+    noRecords:"अजून कोणतीही नोंद नाही."
   },
+
 
   hi:{
     title:"Cattle Tracker",
     subtitle:"गर्भावस्था व आहार प्रबंधन",
+
     animalLabel:"पशु चुनें",
+
     cow:"🐄 गाय",
     buffalo:"🐃 भैंस",
+
     nameLabel:"पशु का नाम",
     namePlaceholder:"पशु का नाम",
+
     dateLabel:"गर्भाधान / AI तारीख",
+
     noteLabel:"नोट",
     notePlaceholder:"कुछ जानकारी लिखें...",
+
     photoLabel:"फोटो",
+
     save:"💾 जानकारी सेव करें",
+    update:"✅ जानकारी अपडेट करें",
+
     records:"📋 पशुओं की जानकारी",
+
     total:"कुल",
     cowText:"गाय",
     buffaloText:"भैंस",
-    reminderTitle:"🔔 आज की सूचनाएं",
-    noReminder:"आज कोई सूचना नहीं है।",
-    heat:"🔄 हीट / वापस आई या नहीं जांचें",
-    dry:"🥛 ड्राय ऑफ करें / दूध निकालना बंद करने का समय",
-    transition:"🌾 ट्रांजिशन फीड शुरू करें",
-    delivery:"🐄 अनुमानित प्रसव तारीख",
+
+    reminderTitle:"🔔 सूचनाएं",
+
+    noReminder:"अभी कोई सूचना नहीं है।",
+
+    heat:"हीट / रिपीट जांचें",
+    dry:"दूध निकालना बंद करने का समय नजदीक",
+    transition:"ट्रांजिशन फीड शुरू करने का समय नजदीक",
+    delivery:"अनुमानित प्रसव तारीख",
+
     pregnantDate:"गर्भाधान तारीख",
     deliveryDate:"अनुमानित प्रसव तारीख",
+
     delete:"🗑️ हटाएं",
-    repeat:"🔁 फिर से नोंद",
-    daysAgo:"दिन पहले",
+    repeat:"🔁 Repeat / आज की तारीख",
+
     daysLeft:"दिन बाकी",
-    today:"आज"
+
+    today:"आज",
+    tomorrow:"कल",
+
+    editing:"✏️ जानकारी बदल रहे हैं",
+
+    confirmDelete:"यह जानकारी हटानी है क्या?",
+
+    dateRequired:"कृपया गर्भाधान / AI तारीख चुनें।",
+
+    noRecords:"अभी कोई रिकॉर्ड नहीं है।"
   },
+
 
   en:{
     title:"Cattle Tracker",
     subtitle:"Pregnancy & Feed Management",
+
     animalLabel:"Select Animal",
+
     cow:"🐄 Cow",
     buffalo:"🐃 Buffalo",
+
     nameLabel:"Animal Name",
     namePlaceholder:"Animal name",
+
     dateLabel:"Pregnancy / AI Date",
+
     noteLabel:"Note",
     notePlaceholder:"Write some information...",
+
     photoLabel:"Photo",
+
     save:"💾 Save Information",
+    update:"✅ Update Information",
+
     records:"📋 Animal Records",
+
     total:"Total",
     cowText:"Cow",
     buffaloText:"Buffalo",
-    reminderTitle:"🔔 Today's Reminders",
-    noReminder:"No reminders today.",
-    heat:"🔄 Check for heat / return",
-    dry:"🥛 Dry-off / stop milking time",
-    transition:"🌾 Start transition feed",
-    delivery:"🐄 Expected calving date",
+
+    reminderTitle:"🔔 Reminders",
+
+    noReminder:"No reminders right now.",
+
+    heat:"Check for heat / return",
+    dry:"Dry-off / stop milking time is near",
+    transition:"Time to start transition feed is near",
+    delivery:"Expected calving date",
+
     pregnantDate:"Pregnancy date",
     deliveryDate:"Expected calving date",
+
     delete:"🗑️ Delete",
-    repeat:"🔁 Repeat Entry",
-    daysAgo:"days ago",
+    repeat:"🔁 Repeat / Use Today",
+
     daysLeft:"days left",
-    today:"Today"
+
+    today:"Today",
+    tomorrow:"Tomorrow",
+
+    editing:"✏️ Editing this record",
+
+    confirmDelete:"Delete this record?",
+
+    dateRequired:"Please select Pregnancy / AI date.",
+
+    noRecords:"No records yet."
   }
 
 };
 
+
 function getLang(){
+
   return document.getElementById("language").value || "mr";
+
 }
+
+
+/* LANGUAGE CHANGE */
 
 function changeLanguage(){
 
   const lang = getLang();
   const t = langData[lang];
 
-  localStorage.setItem("cattle_tracker_lang",lang);
+  localStorage.setItem(
+    "cattle_tracker_lang",
+    lang
+  );
 
-  document.getElementById("appTitle").textContent = t.title;
-  document.getElementById("appSubtitle").textContent = t.subtitle;
+  document.getElementById("appTitle").textContent =
+    t.title;
 
-  document.getElementById("animalLabel").textContent = t.animalLabel;
+  document.getElementById("appSubtitle").textContent =
+    t.subtitle;
 
-  document.getElementById("cowBtn").textContent = t.cow;
-  document.getElementById("buffaloBtn").textContent = t.buffalo;
+  document.getElementById("animalLabel").textContent =
+    t.animalLabel;
 
-  document.getElementById("nameLabel").textContent = t.nameLabel;
-  document.getElementById("animalName").placeholder = t.namePlaceholder;
+  document.getElementById("cowBtn").textContent =
+    t.cow;
 
-  document.getElementById("dateLabel").textContent = t.dateLabel;
+  document.getElementById("buffaloBtn").textContent =
+    t.buffalo;
 
-  document.getElementById("noteLabel").textContent = t.noteLabel;
-  document.getElementById("note").placeholder = t.notePlaceholder;
+  document.getElementById("nameLabel").textContent =
+    t.nameLabel;
 
-  document.getElementById("photoLabel").textContent = t.photoLabel;
+  document.getElementById("animalName").placeholder =
+    t.namePlaceholder;
 
-  document.getElementById("saveBtn").textContent = t.save;
-  document.getElementById("recordsTitle").textContent = t.records;
+  document.getElementById("dateLabel").textContent =
+    t.dateLabel;
 
-  document.getElementById("totalText").textContent = t.total;
-  document.getElementById("cowText").textContent = t.cowText;
-  document.getElementById("buffaloText").textContent = t.buffaloText;
+  document.getElementById("noteLabel").textContent =
+    t.noteLabel;
 
-  document.getElementById("reminderTitle").textContent = t.reminderTitle;
+  document.getElementById("note").placeholder =
+    t.notePlaceholder;
+
+  document.getElementById("photoLabel").textContent =
+    t.photoLabel;
+
+  document.getElementById("saveBtn").textContent =
+    editingId !== null ? t.update : t.save;
+
+  document.getElementById("recordsTitle").textContent =
+    t.records;
+
+  document.getElementById("totalText").textContent =
+    t.total;
+
+  document.getElementById("cowText").textContent =
+    t.cowText;
+
+  document.getElementById("buffaloText").textContent =
+    t.buffaloText;
+
+  document.getElementById("reminderTitle").textContent =
+    t.reminderTitle;
+
+  document.getElementById("editingNote").textContent =
+    t.editing;
 
   draw();
   drawReminders();
+
 }
+
+
+/* ANIMAL */
 
 function selectAnimal(type){
 
   cur = type;
 
-  document.getElementById("cowBtn").classList.toggle("active",type === "cow");
-  document.getElementById("buffaloBtn").classList.toggle("active",type === "buffalo");
+  document
+    .getElementById("cowBtn")
+    .classList
+    .toggle(
+      "active",
+      type === "cow"
+    );
 
-  const t = langData[getLang()];
+  document
+    .getElementById("buffaloBtn")
+    .classList
+    .toggle(
+      "active",
+      type === "buffalo"
+    );
 
-  const defaultName = cur === "cow"
-    ? t.cow.replace("🐄 ","")
-    : t.buffalo.replace("🐃 ","");
-
-  document.getElementById("animalName").value = defaultName;
 }
+
+
+/* DATABASE */
 
 function getDB(){
 
   try{
-    return JSON.parse(localStorage.getItem("cattle_tracker_db")) || [];
+
+    return JSON.parse(
+      localStorage.getItem("cattle_tracker_db")
+    ) || [];
+
   }
   catch(e){
+
     return [];
+
   }
 
 }
 
+
 function setDB(data){
-  localStorage.setItem("cattle_tracker_db",JSON.stringify(data));
+
+  localStorage.setItem(
+    "cattle_tracker_db",
+    JSON.stringify(data)
+  );
+
 }
+
+
+/* TODAY */
+
+function todayISO(){
+
+  const d = new Date();
+
+  const y =
+    d.getFullYear();
+
+  const m =
+    String(
+      d.getMonth() + 1
+    ).padStart(2,"0");
+
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+
+}
+
+
+/* IMAGE COMPRESSION */
 
 function compressImage(file){
 
   return new Promise((resolve,reject)=>{
 
-    const reader = new FileReader();
+    const reader =
+      new FileReader();
 
-    reader.onload = function(e){
+    reader.onload =
+      function(e){
 
-      const img = new Image();
+        const img =
+          new Image();
 
-      img.onload = function(){
+        img.onload =
+          function(){
 
-        const canvas = document.createElement("canvas");
+            const canvas =
+              document.createElement(
+                "canvas"
+              );
 
-        let width = img.width;
-        let height = img.height;
+            let width =
+              img.width;
 
-        const max = 400;
+            let height =
+              img.height;
 
-        if(width > max || height > max){
+            const max = 400;
 
-          if(width > height){
+            if(
+              width > max ||
+              height > max
+            ){
 
-            height = Math.round(height * max / width);
-            width = max;
+              if(width > height){
 
-          }else{
+                height =
+                  Math.round(
+                    height * max / width
+                  );
 
-            width = Math.round(width * max / height);
-            height = max;
+                width = max;
 
-          }
+              }
+              else{
 
-        }
+                width =
+                  Math.round(
+                    width * max / height
+                  );
 
-        canvas.width = width;
-        canvas.height = height;
+                height = max;
 
-        const ctx = canvas.getContext("2d");
+              }
 
-        ctx.drawImage(img,0,0,width,height);
+            }
 
-        resolve(canvas.toDataURL("image/jpeg",0.7));
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx =
+              canvas.getContext("2d");
+
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              width,
+              height
+            );
+
+            resolve(
+              canvas.toDataURL(
+                "image/jpeg",
+                0.7
+              )
+            );
+
+          };
+
+        img.onerror = reject;
+
+        img.src = e.target.result;
 
       };
-
-      img.onerror = reject;
-
-      img.src = e.target.result;
-
-    };
 
     reader.onerror = reject;
 
@@ -555,480 +967,414 @@ function compressImage(file){
 
 }
 
+
+/* PHOTO PREVIEW */
+
 async function previewPhoto(){
 
-  const input = document.getElementById("photo");
-  const preview = document.getElementById("photoPreview");
+  const input =
+    document.getElementById("photo");
+
+  const preview =
+    document.getElementById(
+      "photoPreview"
+    );
 
   if(!input.files.length){
 
-    preview.style.display = "none";
-    preview.src = "";
-
     return;
+
   }
 
   try{
 
-    const compressed = await compressImage(input.files[0]);
+    const compressed =
+      await compressImage(
+        input.files[0]
+      );
 
     preview.src = compressed;
+
     preview.style.display = "block";
 
-  }catch(e){
+  }
+  catch(e){
 
-    console.log("Photo error",e);
+    console.log(
+      "Photo error",
+      e
+    );
 
   }
 
 }
+
+
+/* SAVE / UPDATE */
 
 async function saveData(){
 
-  const name = document.getElementById("animalName").value.trim();
-  const pregDate = document.getElementById("pregDate").value;
-  const note = document.getElementById("note").value.trim();
+  const name =
+    document
+      .getElementById("animalName")
+      .value
+      .trim();
+
+  const pregDate =
+    document
+      .getElementById("pregDate")
+      .value;
+
+  const note =
+    document
+      .getElementById("note")
+      .value
+      .trim();
+
+  const t =
+    langData[getLang()];
 
   if(!pregDate){
 
-    alert("कृपया गाभण / AI तारीख निवडा.");
+    alert(t.dateRequired);
+
     return;
-  }
-
-  const photoInput = document.getElementById("photo");
-  let photo = "";
-
-  if(photoInput.files.length){
-
-    try{
-      photo = await compressImage(photoInput.files[0]);
-    }
-    catch(e){
-      console.log("Photo compression failed",e);
-    }
 
   }
-  else{
-
-    const preview = document.getElementById("photoPreview");
-
-    if(preview.src && preview.style.display !== "none"){
-      photo = preview.src;
-    }
-
-  }
-
-  const data = {
-
-    id:Date.now(),
-
-    type:cur,
-
-    name:name || (
-      cur === "cow"
-      ? langData[getLang()].cow.replace("🐄 ","")
-      : langData[getLang()].buffalo.replace("🐃 ","")
-    ),
-
-    pregDate:pregDate,
-
-    note:note,
-
-    photo:photo
-
-  };
-
-  pushToDB(data);
-
-  document.getElementById("animalName").value = "";
-  document.getElementById("pregDate").value = "";
-  document.getElementById("note").value = "";
-
-  document.getElementById("photo").value = "";
-
-  document.getElementById("photoPreview").src = "";
-  document.getElementById("photoPreview").style.display = "none";
-
-  draw();
-  drawReminders();
-
-}
-
-function pushToDB(item){
 
   const db = getDB();
 
-  db.push(item);
+  /* NEW RECORD */
+
+  if(editingId === null){
+
+    let photo = "";
+
+    const photoInput =
+      document.getElementById("photo");
+
+    if(photoInput.files.length){
+
+      try{
+
+        photo =
+          await compressImage(
+            photoInput.files[0]
+          );
+
+      }
+      catch(e){
+
+        console.log(
+          "Photo compression failed",
+          e
+        );
+
+      }
+
+    }
+
+    db.push({
+
+      id:Date.now(),
+
+      type:cur,
+
+      name:name,
+
+      pregDate:pregDate,
+
+      note:note,
+
+      photo:photo
+
+    });
+
+  }
+
+  /* UPDATE EXISTING RECORD */
+
+  else{
+
+    const index =
+      db.findIndex(
+        x => x.id === editingId
+      );
+
+    if(index === -1){
+
+      editingId = null;
+
+      return;
+
+    }
+
+    const old =
+      db[index];
+
+    let photo =
+      old.photo || "";
+
+    const photoInput =
+      document.getElementById("photo");
+
+    if(photoInput.files.length){
+
+      try{
+
+        photo =
+          await compressImage(
+            photoInput.files[0]
+          );
+
+      }
+      catch(e){
+
+        console.log(
+          "Photo compression failed",
+          e
+        );
+
+      }
+
+    }
+
+    db[index] = {
+
+      ...old,
+
+      type:cur,
+
+      name:name,
+
+      pregDate:pregDate,
+
+      note:note,
+
+      photo:photo
+
+    };
+
+  }
 
   setDB(db);
 
-}
-
-function delData(id){
-
-  if(!confirm("ही नोंद हटवायची आहे का?")) return;
-
-  const db = getDB().filter(x => x.id !== id);
-
-  setDB(db);
+  clearForm();
 
   draw();
   drawReminders();
 
 }
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+  editingId = null;
+
+  document.getElementById(
+    "animalName"
+  ).value = "";
+
+  document.getElementById(
+    "pregDate"
+  ).value = "";
+
+  document.getElementById(
+    "note"
+  ).value = "";
+
+  document.getElementById(
+    "photo"
+  ).value = "";
+
+  const preview =
+    document.getElementById(
+      "photoPreview"
+    );
+
+  preview.src = "";
+
+  preview.style.display = "none";
+
+  document.getElementById(
+    "editingNote"
+  ).style.display = "none";
+
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    langData[getLang()].save;
+
+}
+
+
+/* DELETE */
+
+function delData(id){
+
+  const t =
+    langData[getLang()];
+
+  if(
+    !confirm(
+      t.confirmDelete
+    )
+  ){
+
+    return;
+
+  }
+
+  const db =
+    getDB().filter(
+      x => x.id !== id
+    );
+
+  setDB(db);
+
+  if(editingId === id){
+
+    clearForm();
+
+  }
+
+  draw();
+  drawReminders();
+
+}
+
+
+/*
+  REPEAT
+
+  IMPORTANT:
+  Repeat केल्यावर:
+  - जुना record delete होत नाही
+  - नवीन duplicate तयार होत नाही
+  - त्याच record ची AI date आजची होते
+  - जुने नाव/photo/note कायम राहतात
+  - Save केल्यावर त्याच record वर update होते
+*/
 
 function repeatData(id){
 
   const db = getDB();
-  const item = db.find(x => x.id === id);
 
-  if(!item) return;
+  const item =
+    db.find(
+      x => x.id === id
+    );
 
-  cur = item.type;
-
-  selectAnimal(cur);
-
-  document.getElementById("animalName").value = item.name;
-  document.getElementById("note").value = item.note || "";
-
-  window.scrollTo({
-    top:document.body.scrollHeight,
-    behavior:"smooth"
-  });
-
-}
-
-function updateDate(date,days){
-
-  const d = new Date(date + "T00:00:00");
-
-  d.setDate(d.getDate() + days);
-
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-
-  return `${y}-${m}-${day}`;
-
-}
-
-function formatDate(date){
-
-  if(!date) return "";
-
-  const d = new Date(date + "T00:00:00");
-
-  return d.toLocaleDateString("en-IN",{
-    day:"2-digit",
-    month:"2-digit",
-    year:"numeric"
-  });
-
-}
-
-function getDays(date){
-
-  const start = new Date(date + "T00:00:00");
-  const today = new Date();
-
-  today.setHours(0,0,0,0);
-
-  return Math.floor(
-    (today - start) / (1000 * 60 * 60 * 24)
-  );
-
-}
-
-function getPregnancyData(item){
-
-  const isCow = item.type === "cow";
-
-  const totalDays = isCow ? 282 : 310;
-  const dryDay = isCow ? 210 : 235;
-
-  const heatDay = 21;
-  const transitionDay = totalDays - 21;
-
-  return {
-
-    heat:updateDate(item.pregDate,heatDay),
-
-    dry:updateDate(item.pregDate,dryDay),
-
-    transition:updateDate(item.pregDate,transitionDay),
-
-    delivery:updateDate(item.pregDate,totalDays)
-
-  };
-
-}
-
-function reminderStatus(date){
-
-  const today = new Date();
-
-  today.setHours(0,0,0,0);
-
-  const d = new Date(date + "T00:00:00");
-
-  return Math.round(
-    (d - today) / (1000 * 60 * 60 * 24)
-  );
-
-}
-
-function reminderText(diff){
-
-  const t = langData[getLang()];
-
-  if(diff === 0) return t.today;
-
-  if(diff < 0){
-    return Math.abs(diff) + " " + t.daysAgo;
-  }
-
-  return diff + " " + t.daysLeft;
-
-}
-
-function drawReminders(){
-
-  const container = document.getElementById("reminders");
-
-  if(!container) return;
-
-  const t = langData[getLang()];
-
-  const db = getDB();
-
-  let html = "";
-
-  db.forEach(item => {
-
-    const p = getPregnancyData(item);
-
-    const reminders = [
-
-      {
-        date:p.heat,
-        text:t.heat
-      },
-
-      {
-        date:p.dry,
-        text:t.dry
-      },
-
-      {
-        date:p.transition,
-        text:t.transition
-      },
-
-      {
-        date:p.delivery,
-        text:t.delivery
-      }
-
-    ];
-
-    reminders.forEach(r => {
-
-      const diff = reminderStatus(r.date);
-
-      if(diff < -7 || diff > 7) return;
-
-      if(
-        r.date === p.delivery &&
-        diff > 7
-      ) return;
-
-      html += `
-        <div class="reminder ${diff === 0 ? "today" : ""}">
-          <div class="reminder-title">
-            ${r.text}
-          </div>
-
-          <div>
-            🐄 ${item.name}
-          </div>
-
-          <div class="reminder-date">
-            📅 ${formatDate(r.date)}
-            &nbsp; • &nbsp;
-            ${reminderText(diff)}
-          </div>
-        </div>
-      `;
-
-    });
-
-  });
-
-  if(!html){
-
-    html = `
-      <div class="empty">
-        ${t.noReminder}
-      </div>
-    `;
-
-  }
-
-  container.innerHTML = html;
-
-}
-
-function draw(){
-
-  const db = getDB();
-
-  const records = document.getElementById("records");
-
-  const t = langData[getLang()];
-
-  let cowCount = 0;
-  let buffaloCount = 0;
-
-  db.forEach(item => {
-
-    if(item.type === "cow"){
-      cowCount++;
-    }else{
-      buffaloCount++;
-    }
-
-  });
-
-  document.getElementById("totalAnimals").textContent = db.length;
-  document.getElementById("cowCount").textContent = cowCount;
-  document.getElementById("buffaloCount").textContent = buffaloCount;
-
-  if(!db.length){
-
-    records.innerHTML = `
-      <div class="empty">
-        ${t.noReminder}
-      </div>
-    `;
+  if(!item){
 
     return;
 
   }
 
-  records.innerHTML = db.map(item => {
+  editingId = item.id;
 
-    const p = getPregnancyData(item);
+  cur = item.type;
 
-    const days = getDays(item.pregDate);
+  selectAnimal(item.type);
 
-    return `
-      <div class="record">
+  document.getElementById(
+    "animalName"
+  ).value =
+    item.name || "";
 
-        <h3>
-          ${item.type === "cow" ? "🐄" : "🐃"}
-          ${item.name}
-        </h3>
+  /*
+    सर्वात महत्त्वाचा बदल:
+    Repeat = आजची तारीख
+  */
 
-        <p>
-          📅 ${t.pregnantDate}:
-          <strong>${formatDate(item.pregDate)}</strong>
-        </p>
+  document.getElementById(
+    "pregDate"
+  ).value =
+    todayISO();
 
-        <p>
-          🔄 ${t.heat}:
-          <strong>${formatDate(p.heat)}</strong>
-        </p>
+  document.getElementById(
+    "note"
+  ).value =
+    item.note || "";
 
-        <p>
-          🥛 ${t.dry}:
-          <strong>${formatDate(p.dry)}</strong>
-        </p>
+  /*
+    जुना photo preview मध्ये दाखवा
+  */
 
-        <p>
-          🌾 ${t.transition}:
-          <strong>${formatDate(p.transition)}</strong>
-        </p>
+  const preview =
+    document.getElementById(
+      "photoPreview"
+    );
 
-        <p>
-          🐄 ${t.deliveryDate}:
-          <strong>${formatDate(p.delivery)}</strong>
-        </p>
+  if(item.photo){
 
-        <p>
-          📊 ${days} days
-        </p>
+    preview.src = item.photo;
 
-        ${
-          item.note
-          ? `<p>📝 ${item.note}</p>`
-          : ""
-        }
+    preview.style.display =
+      "block";
 
-        ${
-          item.photo
-          ? `<img src="${item.photo}" alt="Animal Photo">`
-          : ""
-        }
+  }
+  else{
 
-        <button
-          class="repeat-btn"
-          onclick="repeatData(${item.id})"
-        >
-          ${t.repeat}
-        </button>
+    preview.src = "";
 
-        <button
-          class="delete-btn"
-          onclick="delData(${item.id})"
-        >
-          ${t.delete}
-        </button>
+    preview.style.display =
+      "none";
 
-      </div>
-    `;
+  }
 
-  }).join("");
+  /*
+    Editing message
+  */
 
-}
+  document.getElementById(
+    "editingNote"
+  ).style.display =
+    "block";
 
-document.addEventListener("DOMContentLoaded",function(){
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    langData[getLang()].update;
 
-  const savedLang =
-    localStorage.getItem("cattle_tracker_lang") || "mr";
+  /*
+    Form वर scroll
+  */
 
-  document.getElementById("language").value = savedLang;
-
-  const today = new Date();
-
-  const y = today.getFullYear();
-  const m = String(today.getMonth()+1).padStart(2,"0");
-  const d = String(today.getDate()).padStart(2,"0");
-
-  document.getElementById("pregDate").value =
-    `${y}-${m}-${d}`;
-
-  changeLanguage();
-
-  selectAnimal("cow");
-
-  draw();
-  drawReminders();
-
-});
-
-if("serviceWorker" in navigator){
-
-  window.addEventListener("load",function(){
-
-    navigator.serviceWorker
-      .register("sw.js")
-      .catch(err => console.log("SW Failed!",err));
-
-  });
+  document
+    .querySelector(".animal-buttons")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
 
 }
 
-</script>
 
-</body>
-</html>
+/* DATE CALCULATION */
+
+function updateDate(date,days){
+
+  const d =
+    new Date(
+      date + "T00:00:00"
+    );
+
+  d.setDate(
+    d.getDate() + days
+  );
+
+  const y =
+    d.getFullYear();
+
+  const m =
+    String(
+      d.getMonth()+1
+    ).padStart(2,"0");
+
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"
