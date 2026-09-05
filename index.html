@@ -2,1195 +2,407 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#16a34a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cattle Tracker">
 
-<link rel="manifest" href="./manifest.json">
-
+<link rel="manifest" href="manifest.json">
 <title>Cattle Tracker</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html{
-  background:#f1f5f9;
-}
-
-body{
-  background:
-    radial-gradient(circle at top,#dcfce7 0,#f8fafc 30%,#f1f5f9 100%);
-  min-height:100vh;
-  padding:12px;
-  color:#0f172a;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-}
-
-.wrap{
-  width:100%;
-  max-width:460px;
-}
-
-/* ================= INSTALL BANNER ================= */
-
-#installBanner{
-  background:linear-gradient(135deg,#eff6ff,#dbeafe);
-  border:1px solid #bfdbfe;
-  color:#1e3a8a;
-  padding:15px;
-  border-radius:18px;
-  font-size:13px;
-  margin-bottom:12px;
-  line-height:1.65;
-  box-shadow:0 8px 24px rgba(37,99,235,.10);
-  animation:slideDown .35s ease;
-}
-
-#installBanner b{
-  color:#1d4ed8;
-}
-
-@keyframes slideDown{
-  from{
-    opacity:0;
-    transform:translateY(-8px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* ================= HEADER ================= */
-
-.app-header{
-  background:rgba(255,255,255,.94);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:15px;
-  margin-bottom:12px;
-  box-shadow:0 10px 30px rgba(15,23,42,.08);
-  text-align:center;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  border:1px solid rgba(226,232,240,.9);
-}
-
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-}
-
-.header-logo{
-  width:46px;
-  height:46px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#dcfce7,#bbf7d0);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-  box-shadow:inset 0 0 0 1px #bbf7d0;
-  flex-shrink:0;
-}
-
-.header-text{
-  text-align:left;
-  min-width:0;
-}
-
-.header-title{
-  font-size:18px;
-  font-weight:800;
-  color:#166534;
-  white-space:nowrap;
-}
-
-.header-sub{
-  font-size:10px;
-  color:#64748b;
-  margin-top:2px;
-}
-
-.lang-select{
-  width:auto !important;
-  min-width:92px;
-  margin:0 !important;
-  padding:8px 9px !important;
-  font-size:12px !important;
-  font-weight:700 !important;
-  border:1px solid #cbd5e1 !important;
-  border-radius:10px !important;
-}
-
-/* ================= CARDS ================= */
-
-.card{
-  background:rgba(255,255,255,.96);
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:12px;
-  box-shadow:0 8px 24px rgba(15,23,42,.06);
-  border:1px solid #e2e8f0;
-}
-
-.card h3{
-  font-size:16px;
-  margin-bottom:14px;
-  color:#166534;
-  font-weight:800;
-}
-
-/* ================= STATS ================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
-  margin-bottom:12px;
-}
-
-.stat{
-  background:rgba(255,255,255,.96);
-  padding:11px 5px;
-  border-radius:15px;
-  text-align:center;
-  box-shadow:0 6px 18px rgba(15,23,42,.05);
-  border:1px solid #e2e8f0;
-}
-
-.stat-number{
-  font-size:19px;
-  font-weight:800;
-  color:#166534;
-}
-
-.stat-label{
-  font-size:9px;
-  color:#64748b;
-  margin-top:2px;
-  font-weight:700;
-}
-
-/* ================= FORM ================= */
-
-input,
-select,
-textarea{
-  width:100%;
-  padding:12px;
-  border:2px solid #cbd5e1;
-  border-radius:13px;
-  font-size:16px;
-  outline:none;
-  background:white;
-  margin-bottom:12px;
-  font-weight:600;
-  font-family:inherit;
-  transition:.2s;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:#16a34a;
-  box-shadow:0 0 0 3px rgba(22,163,74,.10);
-}
-
-textarea{
-  min-height:80px;
-  resize:vertical;
-}
-
-input[type="file"]{
-  padding:9px;
-  font-size:13px;
-  background:#f8fafc;
-}
-
-/* ================= ANIMAL BUTTONS ================= */
-
-.animal-buttons{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  margin-bottom:13px;
-}
-
-.animal-btn{
-  border:2px solid #dcfce7;
-  background:linear-gradient(180deg,#f0fdf4,#ecfdf5);
-  padding:12px 5px;
-  border-radius:15px;
-  cursor:pointer;
-  font-weight:800;
-  color:#166534;
-  text-align:center;
-  transition:.2s;
-  font-size:25px;
-}
-
-.animal-btn span{
-  font-size:12px;
-}
-
-.animal-btn:active{
-  transform:scale(.96);
-}
-
-.animal-btn.active{
-  border-color:#16a34a;
-  background:linear-gradient(180deg,#dcfce7,#bbf7d0);
-  box-shadow:0 5px 15px rgba(22,163,74,.16);
-}
-
-/* ================= BUTTONS ================= */
-
-.btn{
-  width:100%;
-  background:linear-gradient(135deg,#16a34a,#15803d);
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:13px;
-  font-weight:800;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:4px;
-  box-shadow:0 6px 16px rgba(22,163,74,.25);
-  transition:.2s;
-}
-
-.btn:active{
-  transform:scale(.98);
-}
-
-.btn-blue{
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  box-shadow:0 6px 16px rgba(37,99,235,.22);
-  margin-top:10px;
-}
-
-/* ================= PHOTO ================= */
-
-.photo-preview{
-  width:90px;
-  height:90px;
-  border-radius:15px;
-  object-fit:cover;
-  display:none;
-  margin:5px auto 12px;
-  border:2px solid #cbd5e1;
-  box-shadow:0 5px 15px rgba(15,23,42,.10);
-}
-
-/* ================= RECORD ================= */
-
-.item{
-  background:linear-gradient(180deg,#ffffff,#f8fafc);
-  border-radius:17px;
-  padding:12px;
-  border:1px solid #e2e8f0;
-  margin-bottom:10px;
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  box-shadow:0 5px 16px rgba(15,23,42,.04);
-}
-
-.cow-img{
-  width:62px;
-  height:62px;
-  border-radius:13px;
-  background:#f1f5f9;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:28px;
-  flex-shrink:0;
-  overflow:hidden;
-  border:1px solid #cbd5e1;
-}
-
-.cow-img img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.item-info{
-  flex-grow:1;
-  min-width:0;
-}
-
-.item-top{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  font-weight:800;
-  font-size:13px;
-  border-bottom:1px solid #f1f5f9;
-  padding-bottom:5px;
-  margin-bottom:4px;
-}
-
-.item-top span:first-child{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  font-size:11px;
-  padding:4px 0;
-  color:#475569;
-}
-
-.row b{
-  color:#0f172a;
-  white-space:nowrap;
-}
-
-.due{
-  background:#ecfdf5;
-  padding:7px;
-  border-radius:8px;
-  color:#166534;
-  font-weight:800;
-  margin-top:5px;
-  font-size:11px;
-}
-
-.due span:last-child{
-  color:#166534;
-}
-
-.note-box{
-  background:#fffbeb;
-  border:1px solid #fef3c7;
-  border-radius:8px;
-  padding:7px;
-  font-size:11px;
-  color:#92400e;
-  margin-top:5px;
-  word-break:break-word;
-}
-
-.btn-del{
-  width:100%;
-  background:#fff1f2;
-  color:#be123c;
-  border:1px solid #fecdd3;
-  padding:7px;
-  border-radius:8px;
-  font-weight:800;
-  font-size:11px;
-  cursor:pointer;
-  margin-top:7px;
-}
-
-.empty{
-  text-align:center;
-  color:#94a3b8;
-  font-size:13px;
-  padding:25px 10px;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:360px){
-  body{
-    padding:8px;
-  }
-
-  .card{
-    padding:13px;
-  }
-
-  .header-title{
-    font-size:16px;
-  }
-
-  .header-logo{
-    width:40px;
-    height:40px;
-    font-size:21px;
-  }
-
-  .stats{
-    gap:5px;
-  }
-
-  .stat-number{
-    font-size:17px;
-  }
-
-  .stat-label{
-    font-size:8px;
-  }
-}
-
-/* ================= PWA STANDALONE ================= */
-
-@media(display-mode:standalone){
-  body{
-    padding-top:calc(12px + env(safe-area-inset-top));
-    padding-bottom:calc(12px + env(safe-area-inset-bottom));
-  }
-
-  #installBanner{
-    display:none !important;
-  }
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
+body{background:#f8fafc;min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
+.wrap{width:100%;max-width:420px;}
+
+.app-header{background:white;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(0,0,0,.06);text-align:center;display:flex;justify-content:space-between;align-items:center;border:1px solid #e2e8f0;}
+.header-title{font-size:20px;font-weight:bold;color:#166534;}
+.card{background:white;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,.05);border:1px solid #e2e8f0;}
+.card h3{font-size:17px;margin-bottom:12px;color:#166534;}
+
+input,select,textarea{width:100%;padding:12px;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;outline:none;background:white;margin-bottom:12px;font-weight:600;font-family:inherit;}
+input:focus,select:focus,textarea:focus{border-color:#16a34a;}
+
+.btn{width:100%;background:#16a34a;color:white;border:none;padding:14px;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:4px;box-shadow:0 4px 12px rgba(22,163,74,0.25);}
+
+.animal-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.animal-btn{border:2px solid #dcfce7;background:#f0fdf4;padding:10px 5px;border-radius:12px;cursor:pointer;font-weight:bold;color:#166534;text-align:center;}
+.animal-btn.active{border-color:#16a34a;background:#dcfce7;}
+
+.photo-preview{width:70px;height:70px;border-radius:12px;object-fit:cover;display:none;margin:5px auto 10px;border:1px solid #cbd5e1;}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px;}
+.stat{background:white;padding:12px 6px;border-radius:14px;text-align:center;box-shadow:0 5px 15px rgba(0,0,0,.05);border:1px solid #e2e8f0;}
+.stat-number{font-size:20px;font-weight:bold;color:#166534;}
+.stat-label{font-size:11px;color:#64748b;}
+
+.item{background:white;border-radius:14px;padding:12px;border:1px solid #e2e8f0;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;}
+.cow-img{width:60px;height:60px;border-radius:10px;background:#f1f5f9;display:flex;justify-content:center;align-items:center;font-size:28px;flex-shrink:0;overflow:hidden;border:1px solid #cbd5e1;}
+.cow-img img{width:100%;height:100%;object-fit:cover;}
+.item-info{flex-grow:1;min-width:0;}
+.item-top{display:flex;justify-content:space-between;gap:8px;font-weight:bold;font-size:13px;border-bottom:1px solid #f1f5f9;padding-bottom:4px;margin-bottom:4px;}
+.row{display:flex;justify-content:space-between;gap:8px;font-size:11px;padding:3px 0;color:#475569;}
+.due{background:#ecfdf5;padding:6px;border-radius:6px;color:#166534;font-weight:bold;margin-top:4px;font-size:11px;}
+.note-box{background:#fffbeb;border:1px solid #fef3c7;border-radius:6px;padding:6px;font-size:11px;color:#92400e;margin-top:4px;}
+.btn-del{width:100%;background:#fee2e2;color:#b91c1c;border:none;padding:6px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;margin-top:6px;}
+.empty{text-align:center;color:#94a3b8;font-size:13px;padding:16px;}
 </style>
 </head>
 
 <body>
-
 <div class="wrap">
-
-  <!-- INSTALL GUIDE -->
-  <div id="installBanner">
-    <b>📱 ॲप मोबाईलच्या होम स्क्रीनवर घ्या:</b><br>
-    १. वरच्या <b>तीन डॉट (...)</b> वर क्लिक करा.<br>
-    २. <b>Install app</b> किंवा <b>Add to Home screen</b> निवडा.<br>
-    ३. <b>Install / Add</b> दाबा.
-
-    <button
-      onclick="triggerInstall()"
-      id="browserInstallBtn"
-      class="btn btn-blue">
-      ⬇️ थेट इन्स्टॉल करा
-    </button>
-  </div>
 
   <div id="appScreen">
 
-    <!-- HEADER -->
     <div class="app-header">
-
-      <div class="header-left">
-
-        <div class="header-logo">
-          🐄
-        </div>
-
-        <div class="header-text">
-          <div class="header-title" id="mainHeaderTitle">
-            Cattle Tracker
-          </div>
-
-          <div class="header-sub" id="mainHeaderSub">
-            गाभण व खुराक व्यवस्थापन
-          </div>
-        </div>
-
+      <div>
+        <div class="header-title" id="mainHeaderTitle">🐄 Cattle Tracker</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px;" id="mainHeaderSub">गाभण व खुराक व्यवस्थापन</div>
       </div>
-
-      <select
-        id="langSelect"
-        class="lang-select"
-        onchange="changeLanguage()">
-
-        <option value="mr">मराठी</option>
-        <option value="hi">हिंदी</option>
-        <option value="en">English</option>
-
-      </select>
-
+      <div>
+        <select id="langSelect" onchange="changeLanguage()" style="width:auto;margin:0;padding:6px 10px;font-size:13px;">
+          <option value="mr">मराठी</option>
+          <option value="hi">हिंदी</option>
+          <option value="en">English</option>
+        </select>
+      </div>
     </div>
 
-
-    <!-- STATS -->
     <div class="stats">
-
-      <div class="stat">
-        <div class="stat-number" id="totalCount">0</div>
-        <div class="stat-label" id="lblTotal">एकूण नोंदी</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-number" id="cowCount">0</div>
-        <div class="stat-label" id="lblCow">गाय</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-number" id="buffaloCount">0</div>
-        <div class="stat-label" id="lblBuf">म्हैस</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-number" id="goatCount">0</div>
-        <div class="stat-label" id="lblGoat">शेळी</div>
-      </div>
-
+      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंदी</div></div>
+      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
+      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
+      <div class="stat"><div class="stat-number" id="goatCount">0</div><div class="stat-label" id="lblGoat">शेळी</div></div>
     </div>
 
-
-    <!-- ADD ANIMAL -->
     <div class="card">
-
-      <h3 id="formTitle">
-        ➕ नवीन पशु नोंद
-      </h3>
-
+      <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
       <div class="animal-buttons">
-
-        <button
-          class="animal-btn active"
-          id="cowBtn"
-          onclick="selectAnimal('cow')">
-
-          🐄<br>
-          <span id="btnCowTxt">गाय</span>
-
-        </button>
-
-        <button
-          class="animal-btn"
-          id="buffaloBtn"
-          onclick="selectAnimal('buffalo')">
-
-          🐃<br>
-          <span id="btnBufTxt">म्हैस</span>
-
-        </button>
-
-        <button
-          class="animal-btn"
-          id="goatBtn"
-          onclick="selectAnimal('goat')">
-
-          🐐<br>
-          <span id="btnGoatTxt">शेळी</span>
-
-        </button>
-
+        <button class="animal-btn active" id="cowBtn" onclick="selectAnimal('cow')">🐄<br><span id="btnCowTxt">गाय</span></button>
+        <button class="animal-btn" id="buffaloBtn" onclick="selectAnimal('buffalo')">🐃<br><span id="btnBufTxt">म्हैस</span></button>
+        <button class="animal-btn" id="goatBtn" onclick="selectAnimal('goat')">🐐<br><span id="btnGoatTxt">शेळी</span></button>
       </div>
 
-
-      <input
-        type="text"
-        id="cName"
-        placeholder="पशुचे नाव / ओळख (उदा. कावेरी)"
-        autocomplete="off">
-
-
-      <label
-        style="display:block;text-align:left;font-size:12px;
-        font-weight:bold;color:#334155;margin-bottom:5px;"
-        id="lblDate">
-
-        गाभण झाल्याची तारीख
-
-      </label>
-
-      <input
-        type="date"
-        id="cDate">
-
-
-      <textarea
-        id="cNote"
-        placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)"></textarea>
-
-
-      <input
-        type="file"
-        id="cPhoto"
-        accept="image/*"
-        onchange="previewPhoto()">
-
-
-      <img
-        id="photoPreview"
-        class="photo-preview"
-        alt="Preview">
-
-
-      <button
-        class="btn"
-        id="btnSave"
-        onclick="saveData()">
-
-        💾 नोंद जतन करा
-
-      </button>
-
+      <input type="text" id="cName" placeholder="पशुचे नाव / ओळख (उदा. कावेरी)">
+      <label style="display:block;text-align:left;font-size:12px;font-weight:bold;color:#334155;margin-bottom:4px;" id="lblDate">गाभण झाल्याची तारीख</label>
+      <input type="date" id="cDate">
+      <textarea id="cNote" placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)"></textarea>
+      <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
+      <img id="photoPreview" class="photo-preview" alt="Preview">
+      <button class="btn" id="btnSave" onclick="saveData()">💾 नोंद जतन करा</button>
     </div>
 
-
-    <!-- RECORD LIST -->
     <div class="card">
-
-      <h3 id="listTitle">
-        📋 माझ्या पशुंच्या नोंदी
-      </h3>
-
+      <h3 id="listTitle">📋 माझ्या पशुंच्या नोंदी</h3>
       <div id="list"></div>
-
     </div>
 
   </div>
 
 </div>
 
-
 <script>
-
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if("serviceWorker" in navigator){
-
-  window.addEventListener("load",function(){
-
-    navigator.serviceWorker
-      .register("./sw.js")
-      .then(function(){
-
-        console.log("Service Worker registered.");
-
-      })
-      .catch(function(error){
-
-        console.log("Service Worker failed:",error);
-
-      });
-
-  });
-
-}
-
-
-/* =====================================================
-   PWA DETECTION
-===================================================== */
-
-function isInstalledPWA(){
-
-  return (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true
-  );
-
-}
-
-
-/* =====================================================
-   INSTALL PROMPT
-===================================================== */
-
-let deferredPrompt = null;
-
-window.addEventListener(
-  "beforeinstallprompt",
-  function(e){
-
-    e.preventDefault();
-
-    deferredPrompt = e;
-
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Failed!', err));
+    });
   }
-);
 
+  let cur = "cow";
 
-window.addEventListener(
-  "appinstalled",
-  function(){
+  const langData = {
+    mr: {
+      headerTitle: "🐄 Cattle Tracker",
+      headerSub: "गाभण व खुराक व्यवस्थापन",
+      tot: "एकूण नोंदी", cow: "गाय", buf: "म्हैस", goat: "शेळी",
+      formT: "➕ नवीन पशु नोंद",
+      bCow: "गाय", bBuf: "म्हैस", bGoat: "शेळी",
+      namePh: "पशुचे नाव / ओळख (उदा. कावेरी)",
+      dtLbl: "गाभण झाल्याची तारीख",
+      notePh: "टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)",
+      saveBtn: "💾 नोंद जतन करा",
+      listT: "📋 माझ्या पशुंच्या नोंदी",
+      empty: "अद्याप कोणतीही नोंद नाही.",
+      delBtn: "🗑️ नोंद हटवा",
+      chk21: "🔴 उलट तपासणी (२१ वा दिवस):",
+      milkDry: "🥛 दूध आटवणे (७ वा महिना):",
+      trans: "🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):",
+      delivery: "🍼 अंदाजे विण्याची तारीख:",
+      noteLbl: "📝 <b>टीप:</b> ",
+      dateRequired: "कृपया तारीख निवडा!",
+      futureDateError: "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
+      storageError: "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!"
+    },
+    hi: {
+      headerTitle: "🐄 Cattle Tracker",
+      headerSub: "गर्भधारण और चारा प्रबंधन",
+      tot: "कुल रिकॉर्ड", cow: "गाय", buf: "भैंस", goat: "बकरी",
+      formT: "➕ नया पशु रिकॉर्ड",
+      bCow: "गाय", bBuf: "भैंस", bGoat: "बकरी",
+      namePh: "पशु का नाम / टैग नंबर",
+      dtLbl: "गर्भधारण की तारीख",
+      notePh: "नोट / विशेष जानकारी (डॉक्टर, सीमेन)",
+      saveBtn: "💾 रिकॉर्ड सहेजें",
+      listT: "📋 आपके पशुओं के रिकॉर्ड",
+      empty: "अभी तक कोई रिकॉर्ड नहीं है।",
+      delBtn: "🗑️ रिकॉर्ड हटाएं",
+      chk21: "🔴 उलट जांच (21वां दिन):",
+      milkDry: "🥛 दूध बंद करना (7वां महीना):",
+      trans: "🌾 ट्रांजिशन चारा (ब्याने से 21 दिन पहले):",
+      delivery: "🍼 अनुमानित ब्याने की तारीख:",
+      noteLbl: "📝 <b>नोट:</b> ",
+      dateRequired: "कृपया तारीख चुनें!",
+      futureDateError: "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
+      storageError: "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!"
+    },
+    en: {
+      headerTitle: "🐄 Cattle Tracker",
+      headerSub: "Pregnancy & Feed Management",
+      tot: "Total Records", cow: "Cow", buf: "Buffalo", goat: "Goat",
+      formT: "➕ Add New Animal",
+      bCow: "Cow", bBuf: "Buffalo", bGoat: "Goat",
+      namePh: "Animal Name / Tag No.",
+      dtLbl: "Pregnancy Date (A.I.)",
+      notePh: "Notes (Doctor, Semen details)",
+      saveBtn: "💾 Save Record",
+      listT: "📋 Animal Records",
+      empty: "No records found yet.",
+      delBtn: "🗑️ Delete Record",
+      chk21: "🔴 Heat Check (Day 21):",
+      milkDry: "🥛 Dry Period (Month 7):",
+      trans: "🌾 Transition Feed (21 days prior):",
+      delivery: "🍼 Expected Delivery Date:",
+      noteLbl: "📝 <b>Note:</b> ",
+      dateRequired: "Please select a date!",
+      futureDateError: "Future dates cannot be recorded! Please select today or a past date.",
+      storageError: "Storage is full! Could not save data."
+    }
+  };
 
-    deferredPrompt = null;
+  function changeLanguage(){
+    const lang = document.getElementById("langSelect").value;
+    try {
+      localStorage.setItem("cattle_lang", lang);
+    } catch(error) {}
+    const t = langData[lang] || langData.mr;
 
-    const banner =
-      document.getElementById("installBanner");
+    document.getElementById("mainHeaderTitle").innerText = t.headerTitle;
+    document.getElementById("mainHeaderSub").innerText = t.headerSub;
+    document.getElementById("lblTotal").innerText = t.tot;
+    document.getElementById("lblCow").innerText = t.cow;
+    document.getElementById("lblBuf").innerText = t.buf;
+    document.getElementById("lblGoat").innerText = t.goat;
+    document.getElementById("formTitle").innerText = t.formT;
+    document.getElementById("btnCowTxt").innerText = t.bCow;
+    document.getElementById("btnBufTxt").innerText = t.bBuf;
+    document.getElementById("btnGoatTxt").innerText = t.bGoat;
+    document.getElementById("cName").placeholder = t.namePh;
+    document.getElementById("lblDate").innerText = t.dtLbl;
+    document.getElementById("cNote").placeholder = t.notePh;
+    document.getElementById("btnSave").innerText = t.saveBtn;
+    document.getElementById("listTitle").innerText = t.listT;
+    draw();
+  }
 
-    if(banner){
-      banner.style.display = "none";
+  function selectAnimal(type){
+    cur = type;
+    document.getElementById("cowBtn").classList.remove("active");
+    document.getElementById("buffaloBtn").classList.remove("active");
+    document.getElementById("goatBtn").classList.remove("active");
+    if(type === "cow") document.getElementById("cowBtn").classList.add("active");
+    if(type === "buffalo") document.getElementById("buffaloBtn").classList.add("active");
+    if(type === "goat") document.getElementById("goatBtn").classList.add("active");
+  }
+
+  function getDB(){
+    try{
+      const data = localStorage.getItem("cattle_tracker_db");
+      if(!data) return [];
+      const parsed = JSON.parse(data);
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(error){
+      return [];
+    }
+  }
+
+  function compressImage(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 400;
+        const MAX_HEIGHT = 400;
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+        } else {
+          if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        callback(canvas.toDataURL('image/jpeg', 0.7));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function previewPhoto(){
+    const input = document.getElementById("cPhoto");
+    const preview = document.getElementById("photoPreview");
+    if(input.files && input.files[0]){
+      compressImage(input.files[0], function(compressedData){
+        preview.src = compressedData;
+        preview.style.display = "block";
+      });
+    } else {
+      preview.src = "";
+      preview.style.display = "none";
+    }
+  }
+
+  function saveData(){
+    const dt = document.getElementById("cDate").value;
+    const lang = document.getElementById("langSelect").value;
+    const t = langData[lang] || langData.mr;
+
+    if(!dt){ alert(t.dateRequired); return; }
+
+    const inputDate = new Date(dt + "T00:00:00");
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    if(inputDate > today){
+      alert(t.futureDateError);
+      return;
     }
 
-  }
-);
-
-
-/* =====================================================
-   CURRENT ANIMAL
-===================================================== */
-
-let cur = "cow";
-
-
-/* =====================================================
-   LANGUAGE DATA
-===================================================== */
-
-const langData = {
-
-  mr:{
-
-    bannerText:
-      "<b>📱 ॲप मोबाईलच्या होम स्क्रीनवर घ्या:</b><br>१. वरच्या <b>तीन डॉट (...)</b> वर क्लिक करा.<br>२. <b>Install app</b> किंवा <b>Add to Home screen</b> निवडा.<br>३. <b>Install / Add</b> दाबा.",
-
-    installBtnText:
-      "⬇️ थेट इन्स्टॉल करा",
-
-    headerTitle:
-      "Cattle Tracker",
-
-    headerSub:
-      "गाभण व खुराक व्यवस्थापन",
-
-    tot:
-      "एकूण",
-
-    cow:
-      "गाय",
-
-    buf:
-      "म्हैस",
-
-    goat:
-      "शेळी",
-
-    formT:
-      "➕ नवीन पशु नोंद",
-
-    bCow:
-      "गाय",
-
-    bBuf:
-      "म्हैस",
-
-    bGoat:
-      "शेळी",
-
-    namePh:
-      "पशुचे नाव / ओळख (उदा. कावेरी)",
-
-    dtLbl:
-      "गाभण झाल्याची तारीख",
-
-    notePh:
-      "टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)",
-
-    saveBtn:
-      "💾 नोंद जतन करा",
-
-    listT:
-      "📋 माझ्या पशुंच्या नोंदी",
-
-    empty:
-      "अद्याप कोणतीही नोंद नाही.",
-
-    delBtn:
-      "🗑️ नोंद हटवा",
-
-    chk21:
-      "🔴 उलट तपासणी (२१ वा दिवस):",
-
-    milkDry:
-      "🥛 दूध आटवणे:",
-
-    trans:
-      "🌾 ट्रान्झिशन खुराक:",
-
-    delivery:
-      "🍼 अंदाजे विण्याची तारीख:",
-
-    noteLbl:
-      "📝 <b>टीप:</b> ",
-
-    daysCompleted:
-      "दिवस पूर्ण",
-
-    dateRequired:
-      "कृपया तारीख निवडा!",
-
-    futureDateError:
-      "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
-
-    installCancelled:
-      "इन्स्टॉल करणे रद्द केले.",
-
-    noPromptMsg:
-      "आत्ता थेट Install पर्याय उपलब्ध नाही. ब्राउझरच्या तीन डॉट मेनूमधून Install app निवडा.",
-
-    deleteConfirm:
-      "ही नोंद हटवायची आहे का?",
-
-    storageError:
-      "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!"
-
-  },
-
-
-  hi:{
-
-    bannerText:
-      "<b>📱 ऐप को होम स्क्रीन पर सेव करें:</b><br>१. ऊपर <b>तीन डॉट (...)</b> पर क्लिक करें।<br>२. <b>Install app</b> या <b>Add to Home screen</b> चुनें।<br>३. <b>Install / Add</b> दबाएं।",
-
-    installBtnText:
-      "⬇️ सीधे इंस्टॉल करें",
-
-    headerTitle:
-      "Cattle Tracker",
-
-    headerSub:
-      "गर्भधारण और चारा प्रबंधन",
-
-    tot:
-      "कुल",
-
-    cow:
-      "गाय",
-
-    buf:
-      "भैंस",
-
-    goat:
-      "बकरी",
-
-    formT:
-      "➕ नया पशु रिकॉर्ड",
-
-    bCow:
-      "गाय",
-
-    bBuf:
-      "भैंस",
-
-    bGoat:
-      "बकरी",
-
-    namePh:
-      "पशु का नाम / टैग नंबर",
-
-    dtLbl:
-      "गर्भधारण की तारीख",
-
-    notePh:
-      "नोट / विशेष जानकारी (डॉक्टर, सीमेन)",
-
-    saveBtn:
-      "💾 रिकॉर्ड सहेजें",
-
-    listT:
-      "📋 आपके पशुओं के रिकॉर्ड",
-
-    empty:
-      "अभी तक कोई रिकॉर्ड नहीं है।",
-
-    delBtn:
-      "🗑️ रिकॉर्ड हटाएं",
-
-    chk21:
-      "🔴 उलट जांच (21वां दिन):",
-
-    milkDry:
-      "🥛 दूध बंद करना:",
-
-    trans:
-      "🌾 ट्रांजिशन चारा:",
-
-    delivery:
-      "🍼 अनुमानित ब्याने की तारीख:",
-
-    noteLbl:
-      "📝 <b>नोट:</b> ",
-
-    daysCompleted:
-      "दिन पूरे",
-
-    dateRequired:
-      "कृपया तारीख चुनें!",
-
-    futureDateError:
-      "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
-
-    installCancelled:
-      "इंस्टॉलेशन रद्द किया गया।",
-
-    noPromptMsg:
-      "अभी Install विकल्प उपलब्ध नहीं है। ब्राउज़र के तीन डॉट मेनू से Install app चुनें।",
-
-    deleteConfirm:
-      "क्या आप यह रिकॉर्ड हटाना चाहते हैं?",
-
-    storageError:
-      "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!"
-
-  },
-
-
-  en:{
-
-    bannerText:
-      "<b>📱 Save App to Home Screen:</b><br>1. Tap the <b>three dots (...)</b>.<br>2. Select <b>Install app</b> or <b>Add to Home screen</b>.<br>3. Tap <b>Install / Add</b>.",
-
-    installBtnText:
-      "⬇️ Install App Directly",
-
-    headerTitle:
-      "Cattle Tracker",
-
-    headerSub:
-      "Pregnancy & Feed Management",
-
-    tot:
-      "Total",
-
-    cow:
-      "Cow",
-
-    buf:
-      "Buffalo",
-
-    goat:
-      "Goat",
-
-    formT:
-      "➕ Add New Animal",
-
-    bCow:
-      "Cow",
-
-    bBuf:
-      "Buffalo",
-
-    bGoat:
-      "Goat",
-
-    namePh:
-      "Animal Name / Tag No.",
-
-    dtLbl:
-      "Pregnancy Date (A.I.)",
-
-    notePh:
-      "Notes (Doctor, Semen details)",
-
-    saveBtn:
-      "💾 Save Record",
-
-    listT:
-      "📋 Animal Records",
-
-    empty:
-      "No records found yet.",
-
-    delBtn:
-      "🗑️ Delete Record",
-
-    chk21:
-      "🔴 Heat Check (Day 21):",
-
-    milkDry:
-      "🥛 Dry Period:",
-
-    trans:
-      "🌾 Transition Feed:",
-
-    delivery:
-      "🍼 Expected Delivery Date:",
-
-    noteLbl:
-      "📝 <b>Note:</b> ",
-
-    daysCompleted:
-      "days completed",
-
-    dateRequired:
-      "Please select a date!",
-
-    futureDateError:
-      "Future dates cannot be recorded! Please select today or a past date.",
-
-    installCancelled:
-      "Installation was cancelled.",
-
-    noPromptMsg:
-      "Install option is not available right now. Please use the browser menu and select Install app.",
-
-    deleteConfirm:
-      "Do you want to delete this record?",
-
-    storageError:
-      "Storage is full! Could not save data."
-
+    const nm = document.getElementById("cName").value.trim() || (cur === "cow" ? t.bCow : cur === "buffalo" ? t.bBuf : t.bGoat);
+    const nt = document.getElementById("cNote").value.trim();
+    const previewImg = document.getElementById("photoPreview");
+    const photoData = (previewImg.style.display === "block") ? previewImg.src : "";
+
+    pushToDB(nm, cur, dt, nt, photoData);
   }
 
-};
+  function pushToDB(nm, type, dt, nt, photo){
+    const lang = document.getElementById("langSelect").value;
+    const t = langData[lang] || langData.mr;
+    const db = getDB();
+    db.unshift({id: Date.now(), name: nm, type: type, date: dt, note: nt, photo: photo});
+    
+    try {
+      localStorage.setItem("cattle_tracker_db", JSON.stringify(db));
+    } catch (error) {
+      alert(t.storageError);
+      return;
+    }
 
+    document.getElementById("cName").value = "";
+    document.getElementById("cNote").value = "";
+    document.getElementById("cPhoto").value = "";
+    document.getElementById("photoPreview").style.display = "none";
+    document.getElementById("photoPreview").src = "";
+    draw();
+  }
 
-/* =====================================================
-   LANGUAGE CHANGE
-===================================================== */
+  function delData(id){
+    const lang = document.getElementById("langSelect").value;
+    const t = langData[lang] || langData.mr;
+    try {
+      const db = getDB().filter(function(item){ return item.id !== id; });
+      localStorage.setItem("cattle_tracker_db", JSON.stringify(db));
+      draw();
+    } catch (error) {
+      alert(t.storageError);
+    }
+  }
 
-function changeLanguage(){
+  function addD(str, days){
+    const d = new Date(str + "T00:00:00");
+    d.setDate(d.getDate() + days);
+    const day = String(d.getDate()).padStart(2,"0");
+    const month = String(d.getMonth() + 1).padStart(2,"0");
+    const year = d.getFullYear();
+    return day + "/" + month + "/" + year;
+  }
 
-  const lang =
-    document.getElementById("langSelect").value;
+  function getDays(str){
+    const diff = Math.floor((new Date() - new Date(str + "T00:00:00")) / (1000 * 60 * 60 * 24));
+    return diff >= 0 ? diff : 0;
+  }
 
-  try{
+  function draw(){
+    const box = document.getElementById("list");
+    const db = getDB();
+    const lang = document.getElementById("langSelect").value;
+    const t = langData[lang] || langData.mr;
+    
+    let total = db.length;
+    let cows = db.filter(i => i.type === 'cow').length;
+    let buffaloes = db.filter(i => i.type === 'buffalo').length;
+    let goats = db.filter(i => i.type === 'goat').length;
 
-    localStorage.setItem(
-      "cattle_lang",
-      lang
-    );
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("cowCount").innerText = cows;
+    document.getElementById("buffaloCount").innerText = buffaloes;
+    document.getElementById("goatCount").innerText = goats;
 
-  }catch(error){}
+    if(total === 0){
+      box.innerHTML = '<div class="empty">' + t.empty + '</div>';
+      return;
+    }
 
-  const t =
-    langData[lang] || langData.mr;
+    let html = "";
+    for(let i=0; i<db.length; i++){
+      let it = db[i];
+      let tot = 282, dry = 210, ico = "🐄";
+      if(it.type === 'buffalo'){ tot = 310; dry = 235; ico = "🐃"; }
+      if(it.type === 'goat'){ tot = 150; dry = 100; ico = "🐐"; }
 
+      let daysIn = getDays(it.date);
+      let imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
+      let check21 = addD(it.date, 21);
+      let dryDate = addD(it.date, dry);
+      let transDate = addD(it.date, tot - 21);
+      let deliveryDate = addD(it.date, tot);
 
-  document.getElementById(
-    "installBanner"
-  ).innerHTML =
-    t.bannerText +
-    '<button onclick="triggerInstall()" id="browserInstallBtn" class="btn btn-blue">' +
-    t.installBtnText +
-    '</button>';
+      html += '<div class="item">';
+      html += '  <div class="cow-img">' + imgHtml + '</div>';
+      html += '  <div class="item-info">';
+      html += '    <div class="item-top"><span>' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' ' + (lang==='en'?'days completed':'दिवस पूर्ण') + '</span></div>';
+      html += '    <div class="row"><span>' + t.chk21 + '</span><b>' + check21 + '</b></div>';
+      if(it.type !== 'goat'){
+        html += '    <div class="row"><span>' + t.milkDry + '</span><b>' + dryDate + '</b></div>';
+        html += '    <div class="row"><span>' + t.trans + '</span><b>' + transDate + '</b></div>';
+      }
+      html += '    <div class="row due"><span>' + t.delivery + '</span><span>' + deliveryDate + '</span></div>';
+      if(it.note){
+        html += '    <div class="note-box">' + t.noteLbl + it.note + '</div>';
+      }
+      html += '    <button class="btn-del" onclick="delData(' + it.id + ')">' + t.delBtn + '</button>';
+      html += '  </div>';
+      html += '</div>';
+    }
+    box.innerHTML = html;
+  }
 
+  window.addEventListener('DOMContentLoaded', () => {
+    var savedLang = localStorage.getItem("cattle_lang");
+    if (savedLang) {
+      document.getElementById('langSelect').value = savedLang;
+      changeLanguage();
+    } else {
+      changeLanguage();
+    }
 
-  document.getElementById(
-    "mainHeaderTitle"
-  ).innerText =
-    t.headerTitle;
+    var d = new Date();
+    document.getElementById("cDate").value = d.toISOString().split('T')[0];
+  });
+</script>
 
-
-  document.getElementById(
-    "mainHeaderSub"
-  ).innerText =
-    t.headerSub;
-
-
-  document.getElementById(
-    "lblTotal"
-  ).innerText =
-    t.tot;
-
-
-  document.getElementById(
-    "lblCow"
-  ).innerText =
-    t.cow;
-
-
-  document.getElementById(
-    "lblBuf"
-  ).innerText =
-    t.buf;
-
-
-  document.getElementById(
-    "lblGoat"
-  ).innerText =
-    t.goat;
-
-
-  document.getElementById(
-    "formTitle"
-  ).innerText =
-    t.formT;
-
-
-  document.getElementById(
-    "btnCowTxt"
-  ).innerText =
-    t.bCow;
-
-
-  document.getElementById(
-    "btnBufTxt"
-  ).innerText =
-    t.bBuf;
-
-
-  document.getElementById(
-    "btnGoatTxt"
-  ).innerText =
-    t.bGoat;
-
-
-  document.getElementById(
-    "cName"
-  ).placeholder =
-    t.namePh;
-
-
-  document.getElementById(
-    "lblDate"
-  ).innerText =
-    t.dtLbl;
-
-
-  document.getElementById(
-    "cNote"
-  ).placeholder =
-    t.notePh;
-
-
-  document.getElementById(
-    "btnSave"
-  ).innerText =
-    t.saveBtn;
-
-
-  document.getElementById(
-    "listTitle"
-  ).innerText =
-    t.listT;
-
-
-  draw();
-
-}
-
-
-/* =====================================================
-   INSTALL
-===================================================== */
-
-async function triggerInstall(){
-
-  const lang =
-    document.getElementById("langSelect").value;
-
-  const t =
-    langData[lang] || langData.mr;
-
-
-  if(deferredPrompt){
-
-    deferredPrompt.prompt();
-
-    const result =
-      await deferredPrompt.userChoice;
-
-
-    if(result.outcome === "accepted"){
-
-      document.getElementById(
-        "installBanner"
+</body>
+</html>
