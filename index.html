@@ -21,7 +21,7 @@ body{background:linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%);min-height:100
 .header-title{font-size:20px;font-weight:900;letter-spacing:0.5px;text-shadow:0 2px 4px rgba(0,0,0,0.1);}
 .header-sub{font-size:11px;color:#dcfce7;margin-top:3px;font-weight:500;}
 
-/* Language Selector Styling */
+/* Language Selector */
 #langSelect{background:rgba(255, 255, 255, 0.2);color:white;border:1px solid rgba(255, 255, 255, 0.4);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:bold;outline:none;cursor:pointer;}
 #langSelect option{background:#15803d;color:white;}
 
@@ -55,18 +55,18 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
 /* Animal Record Items */
 .item{background:#f8fafc;border-radius:16px;padding:14px;border:1px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;}
 
-/* 📸 फोटो मोठा केला आहे (76px) */
+/* फोटो मोठा केला आहे */
 .cow-img{width:76px;height:76px;border-radius:14px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;border:2px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,0.06);}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
 
 .item-info{flex-grow:1;min-width:0;}
 .item-top{display:flex;justify-content:space-between;gap:8px;font-weight:bold;font-size:14px;border-bottom:1px solid #e2e8f0;padding-bottom:6px;margin-bottom:6px;color:#1e293b;}
 
-/* 📝 माहिती थोडी सुटसुटीत आणि लहान केली आहे */
-.row{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;padding:2px 0;color:#475569;}
+/* हिट चेक आणि इतर माहिती स्पष्ट आणि ठळक केली आहे */
+.row{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;padding:3px 0;color:#334155;font-weight:600;}
 
-/* 🍼 विण्याची तारीख मोठी आणि ठळक केली आहे */
-.due{background:#dcfce7;padding:8px 10px;border-radius:10px;color:#15803d;font-weight:bold;margin-top:6px;font-size:12.5px;border:1px solid #bbf7d0;box-shadow:0 2px 6px rgba(22,163,74,0.08);}
+/* अंदाजे विण्याची तारीख थोडी सुटसुटीत आणि बारीक केली आहे */
+.due{background:#dcfce7;padding:6px 10px;border-radius:10px;color:#15803d;font-weight:bold;margin-top:6px;font-size:11.5px;border:1px solid #bbf7d0;}
 
 .note-box{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:6px 8px;font-size:11px;color:#92400e;margin-top:6px;font-weight:500;}
 
@@ -130,8 +130,8 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       <label id="lblDate">गाभण झाल्याची तारीख</label>
       <input type="date" id="cDate">
       
-      <label id="lblNoteLbl">टीप / विशेष माहिती</label>
-      <textarea id="cNote" placeholder="उदा. डॉक्टर, सिमेन तपशील"></textarea>
+      <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील</label>
+      <textarea id="cNote" placeholder="उदा. डॉक्टरचे नाव, सिमेन ब्रँड"></textarea>
       
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
@@ -168,9 +168,9 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       namePh: "उदा. कावेरी",
       nameLbl: "पशुचे नाव / ओळख",
       dtLbl: "गाभण झाल्याची तारीख",
-      noteLbl: "टीप / विशेष माहिती",
+      noteLbl: "डॉक्टर / सिमेन तपशील",
       photoLbl: "पशुचा फोटो (पर्यायी)",
-      notePh: "उदा. डॉक्टर, सिमेन तपशील",
+      notePh: "उदा. डॉक्टरचे नाव, सिमेन ब्रँड",
       saveBtn: "💾 नोंद जतन करा",
       listT: "📋 माझ्या पशुंच्या नोंदी",
       empty: "अद्याप कोणतीही नोंद नाही.",
@@ -180,7 +180,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       milkDry: "🥛 दूध आटवणे (७ वा महिना):",
       trans: "🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):",
       delivery: "🍼 अंदाजे विण्याची तारीख:",
-      notePrefix: "📝 <b>टीप:</b> ",
+      notePrefix: "💉 <b>डॉक्टर/सिमेन:</b> ",
       dateRequired: "कृपया तारीख निवडा!",
       futureDateError: "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
       storageError: "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!",
@@ -195,9 +195,9 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       namePh: "उदा. कावेरी",
       nameLbl: "पशु का नाम / टैग नंबर",
       dtLbl: "गर्भधारण की तारीख",
-      noteLbl: "नोट / विशेष जानकारी",
+      noteLbl: "डॉक्टर / सीमेन विवरण",
       photoLbl: "पशु की फोटो (वैकल्पिक)",
-      notePh: "उदा. डॉक्टर, सीमेन विवरण",
+      notePh: "उदा. डॉक्टर का नाम, सीमेन ब्रांड",
       saveBtn: "💾 रिकॉर्ड सहेजें",
       listT: "📋 आपके पशुओं के रिकॉर्ड",
       empty: "अभी तक कोई रिकॉर्ड नहीं है।",
@@ -207,7 +207,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       milkDry: "🥛 दूध बंद करना (7वां महीना):",
       trans: "🌾 ट्रांजिशन चारा (ब्याने से 21 दिन पहले):",
       delivery: "🍼 अनुमानित ब्याने की तारीख:",
-      notePrefix: "📝 <b>नोट:</b> ",
+      notePrefix: "💉 <b>डॉक्टर/सीमेन:</b> ",
       dateRequired: "कृपया तारीख चुनें!",
       futureDateError: "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
       storageError: "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!",
@@ -222,9 +222,9 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       namePh: "e.g., Kaveri",
       nameLbl: "Animal Name / Tag No.",
       dtLbl: "Pregnancy Date (A.I.)",
-      noteLbl: "Notes / Special Info",
+      noteLbl: "Doctor / Semen Details",
       photoLbl: "Animal Photo (Optional)",
-      notePh: "e.g., Doctor, Semen details",
+      notePh: "e.g., Doctor name, Semen brand",
       saveBtn: "💾 Save Record",
       listT: "📋 Animal Records",
       empty: "No records found yet.",
@@ -234,7 +234,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       milkDry: "🥛 Dry Period (Month 7):",
       trans: "🌾 Transition Feed (21 days prior):",
       delivery: "🍼 Expected Delivery Date:",
-      notePrefix: "📝 <b>Note:</b> ",
+      notePrefix: "💉 <b>Doctor/Semen:</b> ",
       dateRequired: "Please select a date!",
       futureDateError: "Future dates cannot be recorded! Please select today or a past date.",
       storageError: "Storage is full! Could not save data.",
@@ -477,26 +477,4 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       html += '    <div class="action-btns">';
       html += '      <button class="btn-repeat" onclick="updateDate(' + it.id + ')">' + t.repeatBtn + '</button>';
       html += '      <button class="btn-del" onclick="delData(' + it.id + ')">' + t.delBtn + '</button>';
-      html += '    </div>';
-      html += '  </div>';
-      html += '</div>';
-    }
-    box.innerHTML = html;
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    var savedLang = localStorage.getItem("cattle_lang");
-    if (savedLang) {
-      document.getElementById('langSelect').value = savedLang;
-      changeLanguage();
-    } else {
-      changeLanguage();
-    }
-
-    var d = new Date();
-    document.getElementById("cDate").value = d.toISOString().split('T')[0];
-  });
-</script>
-
-</body>
-</html>
+      ht
