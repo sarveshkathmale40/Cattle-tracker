@@ -46,12 +46,96 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
 .note-box{background:#fffbeb;border:1px solid #fef3c7;border-radius:6px;padding:6px;font-size:11px;color:#92400e;margin-top:4px;}
 .btn-del{width:100%;background:#fee2e2;color:#b91c1c;border:none;padding:6px;border-radius:6px;font-weight:bold;font-size:11px;cursor:pointer;margin-top:6px;}
 .empty{text-align:center;color:#94a3b8;font-size:13px;padding:16px;}
+
+/* LOGIN - फक्त नवीन भाग */
+#appScreen{display:none;}
+
+#loginScreen{
+  width:100%;
+  min-height:calc(100vh - 24px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  border:1px solid #e2e8f0;
+}
+
+.login-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  color:#166534;
+  margin-bottom:6px;
+}
+
+.login-sub{
+  text-align:center;
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:20px;
+}
+
+.login-error{
+  text-align:center;
+  color:#b91c1c;
+  font-size:13px;
+  font-weight:bold;
+  min-height:20px;
+  margin-top:8px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
+  <!-- LOGIN SCREEN - नवीन -->
+  <div id="loginScreen">
+
+    <div class="login-card">
+
+      <div class="login-title">🐄 Cattle Tracker</div>
+
+      <div class="login-sub">
+        Login करून पुढे जा
+      </div>
+
+      <input
+        type="tel"
+        id="loginPhone"
+        placeholder="फोन नंबर"
+        maxlength="10"
+        inputmode="numeric"
+      >
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password / Master PIN"
+        inputmode="numeric"
+      >
+
+      <button class="btn" onclick="loginUser()">
+        🔐 Login
+      </button>
+
+      <div id="loginError" class="login-error"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- तुमचा existing Cattle Tracker app -->
   <div id="appScreen">
 
     <div class="app-header">
@@ -403,6 +487,9 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     document.getElementById("cDate").value = d.toISOString().split('T')[0];
   });
 </script>
+
+<!-- Password/Login वेगळी file -->
+<script src="auth.js"></script>
 
 </body>
 </html>
