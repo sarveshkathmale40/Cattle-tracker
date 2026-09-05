@@ -10,417 +10,1252 @@
 
 <link rel="manifest" href="manifest.json">
 <title>The MH Farmer - Cattle Tracker</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:#f1f5f9;min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
-.wrap{width:100%;max-width:420px;}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:system-ui,-apple-system,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
 
-.app-header{background:linear-gradient(135deg, #166534, #15803d);color:white;border-radius:20px;padding:18px;margin-bottom:12px;box-shadow:0 10px 25px rgba(22,101,52,0.2);display:flex;justify-content:space-between;align-items:center;}
-.header-title{font-size:20px;font-weight:800;letter-spacing:0.5px;}
-.card{background:white;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(0,0,0,.04);border:1px solid #e2e8f0;}
-.card h3{font-size:16px;font-weight:700;margin-bottom:12px;color:#166534;display:flex;align-items:center;gap:6px;}
+body{
+  background:#f1f5f9;
+  min-height:100vh;
+  padding:10px;
+  color:#0f172a;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
 
-input,select,textarea{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:14px;font-size:15px;outline:none;background:#f8fafc;margin-bottom:12px;font-weight:600;font-family:inherit;transition:all 0.3s;}
-input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;box-shadow:0 0 0 4px rgba(22,163,74,0.1);}
+.wrap{
+  width:100%;
+  max-width:420px;
+}
 
-.btn{width:100%;background:linear-gradient(135deg, #16a34a, #15803d);color:white;border:none;padding:14px;border-radius:14px;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 6px 15px rgba(22,163,74,0.3);transition:transform 0.1s;}
-.btn:active{transform:scale(0.98);}
+.app-header{
+  background:linear-gradient(135deg,#166534,#15803d);
+  color:white;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:12px;
+  box-shadow:0 10px 25px rgba(22,101,52,0.2);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
-.animal-btn{border:2px solid #e2e8f0;background:#f8fafc;padding:12px 5px;border-radius:14px;cursor:pointer;font-weight:700;color:#475569;text-align:center;transition:all 0.2s;}
-.animal-btn.active{border-color:#16a34a;background:#f0fdf4;color:#166534;box-shadow:0 4px 12px rgba(22,163,74,0.15);}
+.header-title{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:0.5px;
+}
 
-.photo-preview{width:70px;height:70px;border-radius:14px;object-fit:cover;display:none;margin:0 auto 12px;border:2px solid #16a34a;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.stat{background:white;padding:12px 4px;border-radius:16px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.03);border:1px solid #e2e8f0;}
-.stat-number{font-size:22px;font-weight:800;color:#166534;}
-.stat-label{font-size:11px;color:#64748b;font-weight:600;}
+.card{
+  background:white;
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.04);
+  border:1px solid #e2e8f0;
+}
 
-.item{background:white;border-radius:16px;padding:14px;border:1px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 15px rgba(0,0,0,.02);}
-.cow-img{width:64px;height:64px;border-radius:14px;background:#f1f5f9;display:flex;justify-content:center;align-items:center;font-size:30px;flex-shrink:0;overflow:hidden;border:2px solid #e2e8f0;}
-.cow-img img{width:100%;height:100%;object-fit:cover;}
-.item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:14px;border-bottom:1px solid #f1f5f9;padding-bottom:6px;margin-bottom:6px;color:#1e293b;}
-.row{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:4px 0;color:#475569;}
-.due{background:#f0fdf4;padding:8px;border-radius:10px;color:#166534;font-weight:700;margin-top:6px;border:1px solid #dcfce7;}
-.alert-box{background:#fef2f2;border:1px solid #fee2e2;border-radius:10px;padding:8px;font-size:11px;color:#b91c1c;margin-top:6px;font-weight:700;}
-.note-box{background:#fffbeb;border:1px solid #fef3c7;border-radius:10px;padding:8px;font-size:11px;color:#92400e;margin-top:6px;}
+.card h3{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:12px;
+  color:#166534;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
 
-.action-btns{display:flex;gap:8px;margin-top:10px;}
-.btn-repeat{flex:1;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:8px;border-radius:10px;font-weight:700;font-size:11px;cursor:pointer;text-align:center;}
-.btn-del{flex:1;background:#fee2e2;color:#b91c1c;border:none;padding:8px;border-radius:10px;font-weight:700;font-size:11px;cursor:pointer;text-align:center;}
-.empty{text-align:center;color:#94a3b8;font-size:14px;padding:20px;font-weight:600;}
+input,select,textarea{
+  width:100%;
+  padding:12px 14px;
+  border:2px solid #e2e8f0;
+  border-radius:14px;
+  font-size:15px;
+  outline:none;
+  background:#f8fafc;
+  margin-bottom:12px;
+  font-weight:600;
+  font-family:inherit;
+  transition:all 0.3s;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#16a34a;
+  background:white;
+  box-shadow:0 0 0 4px rgba(22,163,74,0.1);
+}
+
+.btn{
+  width:100%;
+  background:linear-gradient(135deg,#16a34a,#15803d);
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 6px 15px rgba(22,163,74,0.3);
+  transition:transform 0.1s;
+}
+
+.btn:active{
+  transform:scale(0.98);
+}
+
+.animal-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.animal-btn{
+  border:2px solid #e2e8f0;
+  background:#f8fafc;
+  padding:12px 5px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:700;
+  color:#475569;
+  text-align:center;
+  transition:all 0.2s;
+}
+
+.animal-btn.active{
+  border-color:#16a34a;
+  background:#f0fdf4;
+  color:#166534;
+  box-shadow:0 4px 12px rgba(22,163,74,0.15);
+}
+
+.photo-preview{
+  width:70px;
+  height:70px;
+  border-radius:14px;
+  object-fit:cover;
+  display:none;
+  margin:0 auto 12px;
+  border:2px solid #16a34a;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.stat{
+  background:white;
+  padding:12px 4px;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.03);
+  border:1px solid #e2e8f0;
+}
+
+.stat-number{
+  font-size:22px;
+  font-weight:800;
+  color:#166534;
+}
+
+.stat-label{
+  font-size:11px;
+  color:#64748b;
+  font-weight:600;
+}
+
+.item{
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  border:1px solid #e2e8f0;
+  margin-bottom:12px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  box-shadow:0 4px 15px rgba(0,0,0,.02);
+}
+
+.cow-img{
+  width:64px;
+  height:64px;
+  border-radius:14px;
+  background:#f1f5f9;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  flex-shrink:0;
+  overflow:hidden;
+  border:2px solid #e2e8f0;
+}
+
+.cow-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.item-info{
+  flex-grow:1;
+  min-width:0;
+}
+
+.item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-weight:700;
+  font-size:14px;
+  border-bottom:1px solid #f1f5f9;
+  padding-bottom:6px;
+  margin-bottom:6px;
+  color:#1e293b;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-size:12px;
+  padding:4px 0;
+  color:#475569;
+}
+
+.due{
+  background:#f0fdf4;
+  padding:8px;
+  border-radius:10px;
+  color:#166534;
+  font-weight:700;
+  margin-top:6px;
+  border:1px solid #dcfce7;
+}
+
+.alert-box{
+  background:#fef2f2;
+  border:1px solid #fee2e2;
+  border-radius:10px;
+  padding:8px;
+  font-size:11px;
+  color:#b91c1c;
+  margin-top:6px;
+  font-weight:700;
+}
+
+.note-box{
+  background:#fffbeb;
+  border:1px solid #fef3c7;
+  border-radius:10px;
+  padding:8px;
+  font-size:11px;
+  color:#92400e;
+  margin-top:6px;
+}
+
+.action-btns{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.btn-repeat{
+  flex:1;
+  background:#eff6ff;
+  color:#1d4ed8;
+  border:1px solid #bfdbfe;
+  padding:8px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:11px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.btn-del{
+  flex:1;
+  background:#fee2e2;
+  color:#b91c1c;
+  border:none;
+  padding:8px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:11px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.empty{
+  text-align:center;
+  color:#94a3b8;
+  font-size:14px;
+  padding:20px;
+  font-weight:600;
+}
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
-  <div id="appScreen">
+<div id="appScreen">
 
-    <div class="app-header">
-      <div>
-        <div class="header-title" id="mainHeaderTitle">🐮 The MH Farmer</div>
-        <div style="font-size:12px;color:#dcfce7;margin-top:2px;" id="mainHeaderSub">गाभण व खुराक व्यवस्थापन</div>
-      </div>
-      <div>
-        <select id="langSelect" onchange="changeLanguage()" style="width:auto;margin:0;padding:6px 12px;font-size:12px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4);border-radius:10px;">
-          <option value="mr" style="color:black;">मराठी</option>
-          <option value="hi" style="color:black;">हिंदी</option>
-          <option value="en" style="color:black;">English</option>
-        </select>
-      </div>
+<div class="app-header">
+  <div>
+    <div class="header-title" id="mainHeaderTitle">🐮 The MH Farmer</div>
+    <div style="font-size:12px;color:#dcfce7;margin-top:2px;" id="mainHeaderSub">
+      गाभण व खुराक व्यवस्थापन
     </div>
-
-    <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंदी</div></div>
-      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
-      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
-    </div>
-
-    <div class="card">
-      <h3 id="formTitle"><span>➕</span> नवीन पशु नोंद</h3>
-      <div class="animal-buttons">
-        <button class="animal-btn active" id="cowBtn" onclick="selectAnimal('cow')">🐄<br><span id="btnCowTxt">गाय</span></button>
-        <button class="animal-btn" id="buffaloBtn" onclick="selectAnimal('buffalo')">🐃<br><span id="btnBufTxt">म्हैस (३१० दिवस)</span></button>
-      </div>
-
-      <input type="text" id="cName" placeholder="पशुचे नाव / ओळख (उदा. शिंगावाली गाय)">
-      <label style="display:block;text-align:left;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;" id="lblDate">गाभण झाल्याची तारीख</label>
-      <input type="date" id="cDate">
-      <textarea id="cNote" placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)" rows="2"></textarea>
-      <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
-      <img id="photoPreview" class="photo-preview" alt="Preview">
-      <button class="btn" id="btnSave" onclick="saveData()">💾 नोंद जतन करा</button>
-    </div>
-
-    <div class="card">
-      <h3 id="listTitle"><span>📋</span> माझ्या पशुंच्या नोंदी</h3>
-      <div id="list"></div>
-    </div>
-
   </div>
+
+  <div>
+    <select id="langSelect"
+      style="width:auto;margin:0;padding:6px 12px;font-size:12px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4);border-radius:10px;">
+      <option value="mr" style="color:black;">मराठी</option>
+      <option value="hi" style="color:black;">हिंदी</option>
+      <option value="en" style="color:black;">English</option>
+    </select>
+  </div>
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+  <div class="stat-number" id="totalCount">0</div>
+  <div class="stat-label" id="lblTotal">एकूण नोंदी</div>
+</div>
+
+<div class="stat">
+  <div class="stat-number" id="cowCount">0</div>
+  <div class="stat-label" id="lblCow">गाय</div>
+</div>
+
+<div class="stat">
+  <div class="stat-number" id="buffaloCount">0</div>
+  <div class="stat-label" id="lblBuf">म्हैस</div>
+</div>
 
 </div>
 
+
+<div class="card">
+
+<h3 id="formTitle">
+<span>➕</span> नवीन पशु नोंद
+</h3>
+
+<div class="animal-buttons">
+
+<button class="animal-btn active" id="cowBtn" type="button">
+🐄<br>
+<span id="btnCowTxt">गाय</span>
+</button>
+
+<button class="animal-btn" id="buffaloBtn" type="button">
+🐃<br>
+<span id="btnBufTxt">म्हैस (३१० दिवस)</span>
+</button>
+
+</div>
+
+
+<input
+type="text"
+id="cName"
+placeholder="पशुचे नाव / ओळख (उदा. शिंगावाली गाय)"
+>
+
+<label
+style="display:block;text-align:left;font-size:12px;font-weight:700;color:#334155;margin-bottom:6px;"
+id="lblDate">
+गाभण झाल्याची तारीख
+</label>
+
+<input type="date" id="cDate">
+
+<textarea
+id="cNote"
+placeholder="टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)"
+rows="2">
+</textarea>
+
+<input
+type="file"
+id="cPhoto"
+accept="image/*"
+>
+
+<img
+id="photoPreview"
+class="photo-preview"
+alt="Preview"
+>
+
+<button class="btn" id="btnSave" type="button">
+💾 नोंद जतन करा
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3 id="listTitle">
+<span>📋</span> माझ्या पशुंच्या नोंदी
+</h3>
+
+<div id="list"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Failed!', err));
-    });
-  }
 
-  let cur = "cow";
+"use strict";
 
-  const langData = {
-    mr: {
-      headerTitle: "🐮 The MH Farmer",
-      headerSub: "गाभण व खुराक व्यवस्थापन",
-      tot: "एकूण नोंदी", cow: "गाय", buf: "म्हैस",
-      formT: "➕ नवीन पशु नोंद",
-      bCow: "गाय", bBuf: "म्हैस (३१० दिवस)",
-      namePh: "पशुचे नाव / ओळख (उदा. शिंगावाली गाय)",
-      dtLbl: "गाभण झाल्याची तारीख",
-      notePh: "टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)",
-      saveBtn: "💾 नोंद जतन करा",
-      listT: "📋 माझ्या पशुंच्या नोंदी",
-      empty: "अद्याप कोणतीही नोंद नाही.",
-      delBtn: "🗑️ हटवा",
-      repeatBtn: "🔄 उलटली (तारीख बदला)",
-      chk21: "🔴 उलट तपासणी (२१ वा दिवस):",
-      milkDry: "🥛 दूध आटवणे:",
-      trans: "🌾 ट्रान्झिशन खुराक:",
-      delivery: "🍼 अंदाजे विण्याची तारीख:",
-      noteLbl: "📝 <b>टीप:</b> ",
-      dateRequired: "कृपया तारीख निवडा!",
-      futureDateError: "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
-      storageError: "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!",
-      confirmDel: "तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?",
-      promptNewDate: "पशू उलटल्यामुळे नवीन गाभण तारीख (YYYY-MM-DD) प्रविष्ट करा:"
-    },
-    hi: {
-      headerTitle: "🐮 The MH Farmer",
-      headerSub: "गर्भधारण और चारा प्रबंधन",
-      tot: "कुल रिकॉर्ड", cow: "गाय", buf: "भैंस",
-      formT: "➕ नया पशु रिकॉर्ड",
-      bCow: "गाय", bBuf: "भैंस (310 दिन)",
-      namePh: "पशु का नाम / टैग नंबर",
-      dtLbl: "गर्भधारण की तारीख",
-      notePh: "नोट / विशेष जानकारी (डॉक्टर, सीमेन)",
-      saveBtn: "💾 रिकॉर्ड सहेजें",
-      listT: "📋 आपके पशुओं के रिकॉर्ड",
-      empty: "अभी तक कोई रिकॉर्ड नहीं है।",
-      delBtn: "🗑️ हटाएं",
-      repeatBtn: "🔄 रिपीट हुई (तारीख बदलें)",
-      chk21: "🔴 उलट जांच (21वां दिन):",
-      milkDry: "🥛 दूध बंद करना:",
-      trans: "🌾 ट्रांजिशन चारा:",
-      delivery: "🍼 अनुमानित ब्याने की तारीख:",
-      noteLbl: "📝 <b>नोट:</b> ",
-      dateRequired: "कृपया तारीख चुनें!",
-      futureDateError: "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
-      storageError: "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!",
-      confirmDel: "क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?",
-      promptNewDate: "पशु रिपीट होने पर नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:"
-    },
-    en: {
-      headerTitle: "🐮 The MH Farmer",
-      headerSub: "Pregnancy & Feed Management",
-      tot: "Total Records", cow: "Cow", buf: "Buffalo",
-      formT: "➕ Add New Animal",
-      bCow: "Cow", bBuf: "Buffalo (310 Days)",
-      namePh: "Animal Name / Tag No.",
-      dtLbl: "Pregnancy Date (A.I.)",
-      notePh: "Notes (Doctor, Semen details)",
-      saveBtn: "💾 Save Record",
-      listT: "📋 Animal Records",
-      empty: "No records found yet.",
-      delBtn: "🗑️ Delete",
-      repeatBtn: "🔄 Repeat (Change Date)",
-      chk21: "🔴 Heat Check (Day 21):",
-      milkDry: "🥛 Dry Period:",
-      trans: "🌾 Transition Feed:",
-      delivery: "🍼 Expected Delivery Date:",
-      noteLbl: "📝 <b>Note:</b> ",
-      dateRequired: "Please select a date!",
-      futureDateError: "Future dates cannot be recorded! Please select today or a past date.",
-      storageError: "Storage is full! Could not save data.",
-      confirmDel: "Are you sure you want to delete this record?",
-      promptNewDate: "Enter new pregnancy date (YYYY-MM-DD) due to repeat:"
-    }
-  };
+let cur = "cow";
 
-  function changeLanguage(){
-    const lang = document.getElementById("langSelect").value;
-    try { localStorage.setItem("cattle_lang", lang); } catch(error) {}
-    const t = langData[lang] || langData.mr;
 
-    document.getElementById("mainHeaderTitle").innerText = t.headerTitle;
-    document.getElementById("mainHeaderSub").innerText = t.headerSub;
-    document.getElementById("lblTotal").innerText = t.tot;
-    document.getElementById("lblCow").innerText = t.cow;
-    document.getElementById("lblBuf").innerText = t.buf;
-    document.getElementById("formTitle").innerHTML = `<span>➕</span> ${t.formT.replace('➕ ','')}`;
-    document.getElementById("btnCowTxt").innerText = t.bCow;
-    document.getElementById("btnBufTxt").innerText = t.bBuf;
-    document.getElementById("cName").placeholder = t.namePh;
-    document.getElementById("lblDate").innerText = t.dtLbl;
-    document.getElementById("cNote").placeholder = t.notePh;
-    document.getElementById("btnSave").innerText = t.saveBtn;
-    document.getElementById("listTitle").innerHTML = `<span>📋</span> ${t.listT.replace('📋 ','')}`;
-    draw();
-  }
+const langData = {
 
-  function selectAnimal(type){
-    cur = type;
-    document.getElementById("cowBtn").classList.remove("active");
-    document.getElementById("buffaloBtn").classList.remove("active");
-    if(type === "cow") document.getElementById("cowBtn").classList.add("active");
-    if(type === "buffalo") document.getElementById("buffaloBtn").classList.add("active");
-  }
+mr:{
+headerTitle:"🐮 The MH Farmer",
+headerSub:"गाभण व खुराक व्यवस्थापन",
+tot:"एकूण नोंदी",
+cow:"गाय",
+buf:"म्हैस",
+formT:"नवीन पशु नोंद",
+bCow:"गाय",
+bBuf:"म्हैस (३१० दिवस)",
+namePh:"पशुचे नाव / ओळख (उदा. शिंगावाली गाय)",
+dtLbl:"गाभण झाल्याची तारीख",
+notePh:"टीप / विशेष माहिती (उदा. डॉक्टर, सिमेन)",
+saveBtn:"💾 नोंद जतन करा",
+listT:"माझ्या पशुंच्या नोंदी",
+empty:"अद्याप कोणतीही नोंद नाही.",
+delBtn:"🗑️ हटवा",
+repeatBtn:"🔄 उलटली (तारीख बदला)",
+chk21:"🔴 उलट तपासणी (२१ वा दिवस):",
+milkDry:"🥛 दूध आटवणे:",
+trans:"🌾 ट्रान्झिशन खुराक:",
+delivery:"🍼 अंदाजे विण्याची तारीख:",
+noteLbl:"📝 <b>टीप:</b> ",
+dateRequired:"कृपया तारीख निवडा!",
+futureDateError:"भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
+storageError:"स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!",
+confirmDel:"तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?",
+promptNewDate:"पशू उलटल्यामुळे नवीन गाभण तारीख (YYYY-MM-DD) प्रविष्ट करा:"
+},
 
-  function getDB(){
-    try{
-      const data = localStorage.getItem("cattle_tracker_db");
-      if(!data) return [];
-      const parsed = JSON.parse(data);
-      return Array.isArray(parsed) ? parsed : [];
-    }catch(error){ return []; }
-  }
+hi:{
+headerTitle:"🐮 The MH Farmer",
+headerSub:"गर्भधारण और चारा प्रबंधन",
+tot:"कुल रिकॉर्ड",
+cow:"गाय",
+buf:"भैंस",
+formT:"नया पशु रिकॉर्ड",
+bCow:"गाय",
+bBuf:"भैंस (310 दिन)",
+namePh:"पशु का नाम / टैग नंबर",
+dtLbl:"गर्भधारण की तारीख",
+notePh:"नोट / विशेष जानकारी (डॉक्टर, सीमेन)",
+saveBtn:"💾 रिकॉर्ड सहेजें",
+listT:"आपके पशुओं के रिकॉर्ड",
+empty:"अभी तक कोई रिकॉर्ड नहीं है।",
+delBtn:"🗑️ हटाएं",
+repeatBtn:"🔄 रिपीट हुई (तारीख बदलें)",
+chk21:"🔴 उलट जांच (21वां दिन):",
+milkDry:"🥛 दूध बंद करना:",
+trans:"🌾 ट्रांजिशन चारा:",
+delivery:"🍼 अनुमानित ब्याने की तारीख:",
+noteLbl:"📝 <b>नोट:</b> ",
+dateRequired:"कृपया तारीख चुनें!",
+futureDateError:"भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
+storageError:"स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!",
+confirmDel:"क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?",
+promptNewDate:"पशु रिपीट होने पर नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:"
+},
 
-  function compressImage(file, callback) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const img = new Image();
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const MAX_WIDTH = 400;
-        const MAX_HEIGHT = 400;
-        let width = img.width, height = img.height;
-        if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } }
-        else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
-        canvas.width = width; canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-        callback(canvas.toDataURL('image/jpeg', 0.7));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
+en:{
+headerTitle:"🐮 The MH Farmer",
+headerSub:"Pregnancy & Feed Management",
+tot:"Total Records",
+cow:"Cow",
+buf:"Buffalo",
+formT:"Add New Animal",
+bCow:"Cow",
+bBuf:"Buffalo (310 Days)",
+namePh:"Animal Name / Tag No.",
+dtLbl:"Pregnancy Date (A.I.)",
+notePh:"Notes (Doctor, Semen details)",
+saveBtn:"💾 Save Record",
+listT:"Animal Records",
+empty:"No records found yet.",
+delBtn:"🗑️ Delete",
+repeatBtn:"🔄 Repeat (Change Date)",
+chk21:"🔴 Heat Check (Day 21):",
+milkDry:"🥛 Dry Period:",
+trans:"🌾 Transition Feed:",
+delivery:"🍼 Expected Delivery Date:",
+noteLbl:"📝 <b>Note:</b> ",
+dateRequired:"Please select a date!",
+futureDateError:"Future dates cannot be recorded! Please select today or a past date.",
+storageError:"Storage is full! Could not save data.",
+confirmDel:"Are you sure you want to delete this record?",
+promptNewDate:"Enter new pregnancy date (YYYY-MM-DD) due to repeat:"
+}
 
-  function previewPhoto(){
-    const input = document.getElementById("cPhoto");
-    const preview = document.getElementById("photoPreview");
-    if(input.files && input.files[0]){
-      compressImage(input.files[0], function(compressedData){
-        preview.src = compressedData;
-        preview.style.display = "block";
-      });
-    } else {
-      preview.src = ""; preview.style.display = "none";
-    }
-  }
+};
 
-  function saveData(){
-    const dt = document.getElementById("cDate").value;
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang] || langData.mr;
 
-    if(!dt){ alert(t.dateRequired); return; }
+function getLang(){
 
-    const inputDate = new Date(dt + "T00:00:00");
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    if(inputDate > today){ alert(t.futureDateError); return; }
+let lang = "mr";
 
-    const nm = document.getElementById("cName").value.trim() || (cur === "cow" ? t.bCow : t.bBuf);
-    const nt = document.getElementById("cNote").value.trim();
-    const previewImg = document.getElementById("photoPreview");
-    const photoData = (previewImg.style.display === "block") ? previewImg.src : "";
+try{
 
-    pushToDB(nm, cur, dt, nt, photoData);
-  }
+const saved = localStorage.getItem("cattle_lang");
 
-  function pushToDB(nm, type, dt, nt, photo){
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang] || langData.mr;
-    const db = getDB();
-    db.unshift({id: Date.now(), name: nm, type: type, date: dt, note: nt, photo: photo});
-    
-    try {
-      localStorage.setItem("cattle_tracker_db", JSON.stringify(db));
-    } catch (error) { alert(t.storageError); return; }
+if(saved === "mr" || saved === "hi" || saved === "en"){
+lang = saved;
+}
 
-    document.getElementById("cName").value = "";
-    document.getElementById("cNote").value = "";
-    document.getElementById("cPhoto").value = "";
-    document.getElementById("photoPreview").style.display = "none";
-    document.getElementById("photoPreview").src = "";
-    draw();
-  }
+}catch(error){}
 
-  function delData(id){
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang] || langData.mr;
-    if(confirm(t.confirmDel)){
-      try {
-        const db = getDB().filter(item => item.id !== id);
-        localStorage.setItem("cattle_tracker_db", JSON.stringify(db));
-        draw();
-      } catch (error) { alert(t.storageError); }
-    }
-  }
+return lang;
 
-  function updateDate(id){
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang] || langData.mr;
-    let newDt = prompt(t.promptNewDate, new Date().toISOString().split('T')[0]);
-    if(!newDt) return;
+}
 
-    const inputDate = new Date(newDt + "T00:00:00");
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    if(inputDate > today){ alert(t.futureDateError); return; }
 
-    try {
-      let db = getDB();
-      db.forEach(item => { if(item.id === id) item.date = newDt; });
-      localStorage.setItem("cattle_tracker_db", JSON.stringify(db));
-      draw();
-    } catch (error) { alert(t.storageError); }
-  }
+function changeLanguage(){
 
-  function addD(str, days){
-    const d = new Date(str + "T00:00:00");
-    d.setDate(d.getDate() + days);
-    return String(d.getDate()).padStart(2,"0") + "/" + String(d.getMonth() + 1).padStart(2,"0") + "/" + d.getFullYear();
-  }
+const select = document.getElementById("langSelect");
 
-  function getFormattedDuration(startDateStr, lang) {
-    const start = new Date(startDateStr + "T00:00:00");
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+if(!select) return;
 
-    let diffTime = today - start;
-    let totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    if (totalDays < 0) totalDays = 0;
+const lang = select.value;
 
-    let months = 0;
-    let tempDate = new Date(start);
-    while (true) {
-      let nextMonthDate = new Date(tempDate);
-      nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-      if (nextMonthDate <= today) { months++; tempDate = nextMonthDate; }
-      else { break; }
-    }
+const t = langData[lang] || langData.mr;
 
-    let days = Math.floor((today - tempDate) / (1000 * 60 * 60 * 24));
-    if(days < 0) days = 0;
 
-    if (lang === 'en') {
-      if (months === 0) return totalDays + " days completed";
-      if (days === 0) return months + (months === 1 ? " month completed" : " months completed");
-      return months + (months === 1 ? " month " : " months ") + days + (days === 1 ? " day" : " days");
-    } else if (lang === 'hi') {
-      if (months === 0) return totalDays + " दिन पूर्ण";
-      if (days === 0) return months + " महीने पूर्ण";
-      return months + " महीने " + days + " दिन पूर्ण";
-    } else {
-      if (months === 0) return totalDays + " दिवस पूर्ण";
-      if (days === 0) return months + " महिना पूर्ण";
-      return months + " महिना " + days + " दिवस पूर्ण";
-    }
-  }
+try{
+localStorage.setItem("cattle_lang",lang);
+}catch(error){}
 
-  function draw(){
-    const box = document.getElementById("list");
-    const db = getDB();
-    const lang = document.getElementById("langSelect").value;
-    const t = langData[lang] || langData.mr;
-    
-    document.getElementById("totalCount").innerText = db.length;
-    document.getElementById("cowCount").innerText = db.filter(i => i.type === 'cow').length;
-    document.getElementById("buffaloCount").innerText = db.filter(i => i.type === 'buffalo').length;
 
-    if(db.length === 0){
-      box.innerHTML = '<div class="empty">' + t.empty + '</div>';
-      return;
-    }
+document.getElementById("mainHeaderTitle").innerText = t.headerTitle;
+document.getElementById("mainHeaderSub").innerText = t.headerSub;
 
-    let html = "";
-    db.forEach(it => {
-      let tot = 282, dry = 210, ico = "🐄";
-      if(it.type === 'buffalo'){ tot = 310; dry = 240; ico = "🐃"; }
+document.getElementById("lblTotal").innerText = t.tot;
+document.getElementById("lblCow").innerText = t.cow;
+document.getElementById("lblBuf").innerText = t.buf;
 
-      let daysIn = Math.floor((new Date() - new Date(it.date + "T00:00:00")) / (1000 * 60 * 60 * 24));
-      if(daysIn < 0) daysIn = 0;
+document.getElementById("formTitle").innerHTML =
+"<span>➕</span> " + t.formT;
 
-      let durationText = getFormattedDuration(it.date, lang);
-      let imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
-      let check21 = addD(it.date, 21);
-      let dryDate = addD(it.date, dry);
-      let transDate = addD(it.date, tot - 21);
-      let deliveryDate = addD(it.date, tot);
+document.getElementById("btnCowTxt").innerText = t.bCow;
+document.getElementById("btnBufTxt").innerText = t.bBuf;
 
-      let alertHtml = "";
-      if (daysIn === 21) {
-        if(lang === 'en') alertHtml += `<div class="alert-box">⚠️ Alert: '${it.name}' completed 21 days! Please check for heat repeat.</div>`;
-        else if(lang === 'hi') alertHtml += `<div class="alert-box">⚠️ चेतावनी: '${it.name}' के 21 दिन पूरे हो गए हैं! उलट जांच करें।</div>`;
-        else alertHtml += `<div class="alert-box">⚠️ सतर्कता: '${it.name}' चे २१ दिवस पूर्ण झाले आहेत! उलट तपासणी करा.</div>`;
-      }
-      if (daysIn >= dry && daysIn <= dry + 3) {
-        if(lang === 'en') alertHtml += `<div class="alert-box">⚠️ Notice: Dry period started for '${it.name}'!</div>`;
-        else if(lang === 'hi') alertHtml += `<div class="alert-box">⚠️ सूचना: '${it.name}' का दूध बंद करने का समय आ गया है!</div>`;
-        else alertHtml += `<div class="alert-box">⚠️ सूचना: '${it.name}' चे दूध आटवण्याची वेळ झाली आहे!</div>`;
-      }
+document.getElementById("cName").placeholder = t.namePh;
+document.getElementById("lblDate").innerText = t.dtLbl;
+document.getElementById("cNote").placeholder = t.notePh;
 
-      html += `<div class="item">
-        <div class="cow-img">${imgHtml}</div>
-        <div class="item-info">
-          <div class="item-top"><span>${it.name}</span><span style="color:#16a34a;">${durationText}</span></div>
-          ${alertHtml}
-          <div class="row"><span>${t.chk21}</span><b>${check21}</b></div>
-          <div class="row"><span>${t.milkDry}</span><b>${dryDate
+document.getElementById("btnSave").innerText = t.saveBtn;
+
+document.getElementById("listTitle").innerHTML =
+"<span>📋</span> " + t.listT;
+
+draw();
+
+}
+
+
+function selectAnimal(type){
+
+cur = type;
+
+document.getElementById("cowBtn").classList.remove("active");
+document.getElementById("buffaloBtn").classList.remove("active");
+
+if(type === "cow"){
+document.getElementById("cowBtn").classList.add("active");
+}
+
+if(type === "buffalo"){
+document.getElementById("buffaloBtn").classList.add("active");
+}
+
+}
+
+
+function getDB(){
+
+try{
+
+const data = localStorage.getItem("cattle_tracker_db");
+
+if(!data) return [];
+
+const parsed = JSON.parse(data);
+
+return Array.isArray(parsed) ? parsed : [];
+
+}catch(error){
+
+return [];
+
+}
+
+}
+
+
+function compressImage(file,callback){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const img = new Image();
+
+img.onload = function(){
+
+const canvas = document.createElement("canvas");
+
+const MAX_WIDTH = 400;
+const MAX_HEIGHT = 400;
+
+let width = img.width;
+let height = img.height;
+
+if(width > height){
+
+if(width > MAX_WIDTH){
+
+height = height * MAX_WIDTH / width;
+width = MAX_WIDTH;
+
+}
+
+}else{
+
+if(height > MAX_HEIGHT){
+
+width = width * MAX_HEIGHT / height;
+height = MAX_HEIGHT;
+
+}
+
+}
+
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext("2d");
+
+ctx.drawImage(img,0,0,width,height);
+
+callback(canvas.toDataURL("image/jpeg",0.7));
+
+};
+
+img.onerror = function(){
+alert("फोटो लोड होऊ शकला नाही.");
+};
+
+img.src = e.target.result;
+
+};
+
+reader.onerror = function(){
+alert("फोटो वाचता आला नाही.");
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+function previewPhoto(){
+
+const input = document.getElementById("cPhoto");
+const preview = document.getElementById("photoPreview");
+
+if(input.files && input.files[0]){
+
+compressImage(input.files[0],function(data){
+
+preview.src = data;
+preview.style.display = "block";
+
+});
+
+}else{
+
+preview.src = "";
+preview.style.display = "none";
+
+}
+
+}
+
+
+function saveData(){
+
+const dt = document.getElementById("cDate").value;
+
+const lang = getLang();
+const t = langData[lang] || langData.mr;
+
+if(!dt){
+
+alert(t.dateRequired);
+return;
+
+}
+
+
+const inputDate = new Date(dt + "T00:00:00");
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+if(inputDate > today){
+
+alert(t.futureDateError);
+return;
+
+}
+
+
+const nm =
+document.getElementById("cName").value.trim() ||
+(cur === "cow" ? t.bCow : t.bBuf);
+
+const nt =
+document.getElementById("cNote").value.trim();
+
+const previewImg =
+document.getElementById("photoPreview");
+
+const photoData =
+previewImg.style.display === "block"
+? previewImg.src
+: "";
+
+
+pushToDB(nm,cur,dt,nt,photoData);
+
+}
+
+
+function pushToDB(nm,type,dt,nt,photo){
+
+const lang = getLang();
+const t = langData[lang] || langData.mr;
+
+const db = getDB();
+
+db.unshift({
+id:Date.now(),
+name:nm,
+type:type,
+date:dt,
+note:nt,
+photo:photo
+});
+
+
+try{
+
+localStorage.setItem(
+"cattle_tracker_db",
+JSON.stringify(db)
+);
+
+}catch(error){
+
+alert(t.storageError);
+return;
+
+}
+
+
+document.getElementById("cName").value = "";
+document.getElementById("cNote").value = "";
+document.getElementById("cPhoto").value = "";
+
+document.getElementById("photoPreview").style.display = "none";
+document.getElementById("photoPreview").src = "";
+
+draw();
+
+}
+
+
+function delData(id){
+
+const lang = getLang();
+const t = langData[lang] || langData.mr;
+
+if(!confirm(t.confirmDel)) return;
+
+
+try{
+
+const db = getDB().filter(item => item.id !== id);
+
+localStorage.setItem(
+"cattle_tracker_db",
+JSON.stringify(db)
+);
+
+draw();
+
+}catch(error){
+
+alert(t.storageError);
+
+}
+
+}
+
+
+function updateDate(id){
+
+const lang = getLang();
+const t = langData[lang] || langData.mr;
+
+const todayStr = getTodayDate();
+
+let newDt = prompt(
+t.promptNewDate,
+todayStr
+);
+
+if(!newDt) return;
+
+
+const inputDate = new Date(newDt + "T00:00:00");
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+if(inputDate > today){
+
+alert(t.futureDateError);
+return;
+
+}
+
+
+try{
+
+let db = getDB();
+
+db.forEach(item => {
+
+if(item.id === id){
+item.date = newDt;
+}
+
+});
+
+localStorage.setItem(
+"cattle_tracker_db",
+JSON.stringify(db)
+);
+
+draw();
+
+}catch(error){
+
+alert(t.storageError);
+
+}
+
+}
+
+
+function getTodayDate(){
+
+const d = new Date();
+
+const year = d.getFullYear();
+const month = String(d.getMonth()+1).padStart(2,"0");
+const day = String(d.getDate()).padStart(2,"0");
+
+return year + "-" + month + "-" + day;
+
+}
+
+
+function addD(str,days){
+
+const d = new Date(str + "T00:00:00");
+
+d.setDate(d.getDate()+days);
+
+return String(d.getDate()).padStart(2,"0")
++
+"/"
++
+String(d.getMonth()+1).padStart(2,"0")
++
+"/"
++
+d.getFullYear();
+
+}
+
+
+function getFormattedDuration(startDateStr,lang){
+
+const start =
+new Date(startDateStr + "T00:00:00");
+
+const today = new Date();
+
+today.setHours(0,0,0,0);
+
+let diffTime = today - start;
+
+let totalDays =
+Math.floor(
+diffTime /
+(1000*60*60*24)
+);
+
+if(totalDays < 0) totalDays = 0;
+
+
+let months = 0;
+
+let tempDate = new Date(start);
+
+while(true){
+
+let nextMonthDate = new Date(tempDate);
+
+nextMonthDate.setMonth(
+nextMonthDate.getMonth()+1
+);
+
+if(nextMonthDate <= today){
+
+months++;
+tempDate = nextMonthDate;
+
+}else{
+
+break;
+
+}
+
+}
+
+
+let days =
+Math.floor(
+(today-tempDate) /
+(1000*60*60*24)
+);
+
+if(days < 0) days = 0;
+
+
+if(lang === "en"){
+
+if(months === 0)
+return totalDays + " days completed";
+
+if(days === 0)
+return months +
+(months === 1
+? " month completed"
+: " months completed");
+
+return months +
+(months === 1
+? " month "
+: " months ")
++
+days +
+(days === 1
+? " day"
+: " days");
+
+}
+
+
+if(lang === "hi"){
+
+if(months === 0)
+return totalDays + " दिन पूर्ण";
+
+if(days === 0)
+return months + " महीने पूर्ण";
+
+return months +
+" महीने " +
+days +
+" दिन पूर्ण";
+
+}
+
+
+if(months === 0)
+return totalDays + " दिवस पूर्ण";
+
+if(days === 0)
+return months + " महिना पूर्ण";
+
+return months +
+" महिना " +
+days +
+" दिवस पूर्ण";
+
+}
+
+
+function draw(){
+
+const box = document.getElementById("list");
+
+if(!box) return;
+
+const db = getDB();
+
+const lang = getLang();
+const t = langData[lang] || langData.mr;
+
+
+document.getElementById("totalCount").innerText =
+db.length;
+
+document.getElementById("cowCount").innerText =
+db.filter(i => i.type === "cow").length;
+
+document.getElementById("buffaloCount").innerText =
+db.filter(i => i.type === "buffalo").length;
+
+
+if(db.length === 0){
+
+box.innerHTML =
+'<div class="empty">' +
+t.empty +
+'</div>';
+
+return;
+
+}
+
+
+let html = "";
+
+
+db.forEach(it => {
+
+let tot = 282;
+let dry = 210;
+let ico = "🐄";
+
+if(it.type === "buffalo"){
+
+tot = 310;
+dry = 240;
+ico = "🐃";
+
+}
+
+
+let daysIn =
+Math.floor(
+(
+new Date() -
+new Date(it.date + "T00:00:00")
+) /
+(1000*60*60*24)
+);
+
+if(daysIn < 0) daysIn = 0;
+
+
+let durationText =
+getFormattedDuration(it.date,lang);
+
+let imgHtml =
+it.photo
+? '<img src="' + it.photo + '">'
+: ico;
+
+
+let check21 = addD(it.date,21);
+let dryDate = addD(it.date,dry);
+let transDate = addD(it.date,tot-21);
+let deliveryDate = addD(it.date,tot);
+
+
+let alertHtml = "";
+
+
+if(daysIn === 21){
+
+if(lang === "en"){
+
+alertHtml +=
+'<div class="alert-box">⚠️ Alert: "' +
+it.name +
+'" completed 21 days! Please check for heat repeat.</div>';
+
+}else if(lang === "hi"){
+
+alertHtml +=
+'<div class="alert-box">⚠️ चेतावनी: "' +
+it.name +
+'" के 21 दिन पूरे हो गए हैं! उलट जांच करें।</div>';
+
+}else{
+
+alertHtml +=
+'<div class="alert-box">⚠️ सतर्कता: "' +
+it.name +
+'" चे २१ दिवस पूर्ण झाले आहेत! उलट तपासणी करा.</div>';
+
+}
+
+}
+
+
+if(daysIn >= dry && daysIn <= dry+3){
+
+if(lang === "en"){
+
+alertHtml +=
+'<div class="alert-box">⚠️ Notice: Dry period started for "' +
+it.name +
+'"!</div>';
+
+}else if(lang === "hi"){
+
+alertHtml +=
+'<div class="alert-box">⚠️ सूचना: "' +
+it.name +
+'" का दूध बंद करने का समय आ गया है!</div>';
+
+}else{
+
+alertHtml +=
+'<div class="alert-box">⚠️ सूचना: "' +
+it.name +
+'" चे दूध आटवण्याची वेळ झाली आहे!</div>';
+
+}
+
+}
+
+
+html += `
+
+<div class="item">
+
+<div class="cow-img">
+${imgHtml}
+</div>
+
+<div class="item-info">
+
+<div class="item-top">
+<span>${it.name}</span>
+<span style="color:#16a34a;">
+${durationText}
+</span>
+</div>
+
+${alertHtml}
+
+<div class="row">
+<span>${t.chk21}</span>
+<b>${check21}</b>
+</div>
+
+<div class="row">
+<span>${t.milkDry}</span>
+<b>${dryDate}</b>
+</div>
+
+<div class="row">
+<span>${t.trans}</span>
+<b>${transDate}</b>
+</div>
+
+<div class="row due">
+<span>${t.delivery}</span>
+<span>${deliveryDate}</span>
+</div>
+
+${it.note
+? `<div class="note-box">
+${t.noteLbl}${it.note}
+</div>`
+: ""}
+
+<div class="action-btns">
+
+<button
+class="btn-repeat"
+type="button"
+data-repeat-id="${it.id}">
+${t.repeatBtn}
+</button>
+
+<button
+class="btn-del"
+type="button"
+data-delete-id="${it.id}">
+${t.delBtn}
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+box.innerHTML = html;
+
+
+document.querySelectorAll("[data-repeat-id]")
+.forEach(button => {
+
+button.addEventListener("click",function(){
+
+updateDate(Number(this.dataset.repeatId));
+
+});
+
+});
+
+
+document.querySelectorAll("[data-de
