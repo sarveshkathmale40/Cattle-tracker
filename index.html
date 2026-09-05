@@ -81,7 +81,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
 
     <!-- SMART NOTIFICATION BANNER -->
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
-      <div class="notif-title">🔔 गाई-म्हशींचे महत्त्वाचे अलर्ट्स:</div>
+      <div class="notif-title" id="notifTitleText">🔔 गाई-म्हशींचे महत्त्वाचे अलर्ट्स:</div>
       <div id="notifListContainer" class="notif-list"></div>
     </div>
 
@@ -148,7 +148,8 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       futureDateError: "भविष्यातील तारीख नोंदवता येत नाही! कृपया आजची किंवा मागील तारीख निवडा.",
       storageError: "स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!",
       confirmDel: "तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?",
-      promptNewDate: "गाय/म्हैसे उलटल्यामुळे नवीन गभान तारीख (YYYY-MM-DD) प्रविष्ट करा:"
+      promptNewDate: "गाय/म्हैसे उलटल्यामुळे नवीन गभान तारीख (YYYY-MM-DD) प्रविष्ट करा:",
+      notifHeader: "🔔 गाई-म्हशींचे महत्त्वाचे अलर्ट्स:"
     },
     hi: {
       headerTitle: "🐄 Cattle Tracker",
@@ -172,7 +173,8 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       futureDateError: "भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।",
       storageError: "स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!",
       confirmDel: "क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?",
-      promptNewDate: "पशु रिपीट होने पर नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:"
+      promptNewDate: "पशु रिपीट होने पर नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:",
+      notifHeader: "🔔 पशुओं के लिए महत्वपूर्ण अलर्ट:"
     },
     en: {
       headerTitle: "🐄 Cattle Tracker",
@@ -196,7 +198,8 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       futureDateError: "Future dates cannot be recorded! Please select today or a past date.",
       storageError: "Storage is full! Could not save data.",
       confirmDel: "Are you sure you want to delete this record?",
-      promptNewDate: "Enter new pregnancy date (YYYY-MM-DD) due to heat repeat:"
+      promptNewDate: "Enter new pregnancy date (YYYY-MM-DD) due to heat repeat:",
+      notifHeader: "🔔 Important Cattle Alerts:"
     }
   };
 
@@ -219,6 +222,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     document.getElementById("cNote").placeholder = t.notePh;
     document.getElementById("btnSave").innerText = t.saveBtn;
     document.getElementById("listTitle").innerText = t.listT;
+    document.getElementById("notifTitleText").innerText = t.notifHeader;
     draw();
   }
 
@@ -392,6 +396,7 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
     const container = document.getElementById("notifListContainer");
     
     let alerts = [];
+    const lang = document.getElementById("langSelect").value;
 
     db.forEach(it => {
       let days = getDays(it.date);
@@ -399,19 +404,27 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       if(it.type === 'buffalo'){ tot = 310; dry = 235; }
 
       if(days >= 19 && days <= 21){
-        alerts.push(`🔴 <b>${it.name}</b>: २१ दिवस पूर्ण होत आहेत, गाय हिटवर येतेय का तपासून बघा!`);
+        if(lang === 'en') alerts.push(`🔴 <b>${it.name}</b>: Day 21 approaching, check if in heat!`);
+        else if(lang === 'hi') alerts.push(`🔴 <b>${it.name}</b>: 21वां दिन पूरा हो रहा है, जांच करें कि हीट में है या नहीं!`);
+        else alerts.push(`🔴 <b>${it.name}</b>: २१ दिवस पूर्ण होत आहेत, गाय हिटवर येतेय का तपासून बघा!`);
       }
       
       if(days >= (dry - 2) && days <= dry){
-        alerts.push(`🥛 <b>${it.name}</b>: ७ महिने (दूध आटवण्याची वेळ) जवळ आली आहे, दूध आटवून द्या.`);
+        if(lang === 'en') alerts.push(`🥛 <b>${it.name}</b>: Month 7 approaching, time for dry period.`);
+        else if(lang === 'hi') alerts.push(`🥛 <b>${it.name}</b>: 7वां महीना पास आ गया है, दूध बंद कर दें।`);
+        else alerts.push(`🥛 <b>${it.name}</b>: ७ महिने (दूध आटवण्याची वेळ) जवळ आली आहे, दूध आटवून द्या.`);
       }
 
       if(days >= (tot - 23) && days <= (tot - 20)){
-        alerts.push(`🌾 <b>${it.name}</b>: विण्याआधी २१ दिवस बाकी आहेत, ट्रान्झिशन खुराक सुरू करा.`);
+        if(lang === 'en') alerts.push(`🌾 <b>${it.name}</b>: 21 days prior to delivery, start transition feed.`);
+        else if(lang === 'hi') alerts.push(`🌾 <b>${it.name}</b>: ब्याने से 21 दिन पहले, ट्रांजिशन चारा शुरू करें।`);
+        else alerts.push(`🌾 <b>${it.name}</b>: विण्याआधी २१ दिवस बाकी आहेत, ट्रान्झिशन खुराक सुरू करा.`);
       }
 
       if(days >= (tot - 2) && days <= tot){
-        alerts.push(`🍼 <b>${it.name}</b>: तुमची गाय/म्हैसे दोन दिवसांत व्यायला येणार आहे, काळजी घ्या!`);
+        if(lang === 'en') alerts.push(`🍼 <b>${it.name}</b>: Expected delivery in 2 days, take care!`);
+        else if(lang === 'hi') alerts.push(`🍼 <b>${it.name}</b>: 2 दिनों में ब्याने की संभावना है, ध्यान रखें!`);
+        else alerts.push(`🍼 <b>${it.name}</b>: तुमची गाय/म्हैस दोन दिवसांत व्यायला येणार आहे, काळजी घ्या!`);
       }
     });
 
@@ -453,22 +466,4 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;}
       if(it.type === 'buffalo'){ tot = 310; dry = 235; }
 
       let daysIn = getDays(it.date);
-      let imgHtml = it.photo ? '<img src="' + it.photo + '">' : ico;
-      let check21 = addD(it.date, 21);
-      let dryDate = addD(it.date, dry);
-      let transDate = addD(it.date, tot - 21);
-      let deliveryDate = addD(it.date, tot);
-
-      html += '<div class="item">';
-      html += '  <div class="cow-img">' + imgHtml + '</div>';
-      html += '  <div class="item-info">';
-      html += '    <div class="item-top"><span>' + it.name + '</span><span style="color:#16a34a;">' + daysIn + ' ' + (lang==='en'?'days completed':'दिवस पूर्ण') + '</span></div>';
-      html += '    <div class="row"><span>' + t.chk21 + '</span><b>' + check21 + '</b></div>';
-      html += '    <div class="row"><span>' + t.milkDry + '</span><b>' + dryDate + '</b></div>';
-      html += '    <div class="row"><span>' + t.trans + '</span><b>' + transDate + '</b></div>';
-      html += '    <div class="row due"><span>' + t.delivery + '</span><span>' + deliveryDate + '</span></div>';
-      if(it.note){
-        html += '    <div class="note-box">' + t.noteLbl + it.note + '</div>';
-      }
-      html += '    <action-btns class="action-btns" style="display:flex;gap:6px;margin-top:6px;">';
-      html += '      <button class="btn-repeat" onclick="updateDate
+  
