@@ -76,7 +76,7 @@ body{
   color:white;
 }
 
-/* 🔔 अतिशय ठळक आणि आकर्षक नोटिफिकेशन बॅनर्स */
+/* 🔔 अतिशय ठळक आणि आकर्षक नोटिफिकेशन बॅनर्स (गायचे नाव आधी आणि मोठे) */
 .notification-banner{
   background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);
   border:2px solid #fdba74;
@@ -108,17 +108,11 @@ body{
   padding:10px 12px;
   font-size:12px;
   color:#7c2d12;
-  font-weight:700;
+  font-weight:600;
   border:1.5px solid #fed7aa;
-  line-height:1.5;
+  line-height:1.4;
   box-shadow:0 2px 6px rgba(0,0,0,.04);
   border-left:5px solid #ea580c;
-}
-
-.notif-item strong{
-  color:#991b1b;
-  font-size:13px;
-  font-weight:900;
 }
 
 /* Stats */
@@ -313,7 +307,7 @@ input:focus,select:focus,textarea:focus{
   color:#1e293b;
 }
 
-/* ⏱️ वेळेची तारीख / दिवस ठळक आणि उठून दिसण्यासाठी */
+/* Duration Badge */
 .duration-badge{
   background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
   color:#1d4ed8;
@@ -326,35 +320,41 @@ input:focus,select:focus,textarea:focus{
   white-space:nowrap;
 }
 
-/* 📅 तारखा एका खाली एक सरळ रेषेत आणि ठळक दिसण्यासाठी */
+/* Clean Row Layout */
 .row{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:6px;
   font-size:11.5px;
-  padding:5px 0;
+  padding:6px 0;
   color:#334155;
   font-weight:600;
   border-bottom: 1px dashed #e2e8f0;
 }
 
+.row span:first-child{
+  flex: 1;
+  line-height: 1.3;
+}
+
+/* Compact Aligned Date Badges */
 .date-badge{
   background:#fef08a;
   color:#78350f;
   padding:3px 8px;
   border-radius:6px;
-  font-size:11.5px;
+  font-size:11px;
   font-weight:900;
   border:1.5px solid #fde047;
-  text-align:center;
-  width:105px;
+  text-align:right;
+  width:95px;
   flex-shrink:0;
   box-shadow:0 1px 3px rgba(0,0,0,.08);
   letter-spacing:0.3px;
 }
 
-/* 🍼 अंदाजे विण्याची तारीख - अतिशय ठळक आणि वेगळ्या रंगात झळकणारी */
+/* Prominent Delivery Due Box */
 .due{
   background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);
   padding:8px 10px;
@@ -370,15 +370,19 @@ input:focus,select:focus,textarea:focus{
   box-shadow:0 2px 6px rgba(22,163,74,.15);
 }
 
+.due span:first-child{
+  flex: 1;
+}
+
 .due-badge{
   background:#15803d;
   color:white;
   padding:3px 8px;
   border-radius:6px;
-  font-size:12px;
+  font-size:11.5px;
   font-weight:900;
-  text-align:center;
-  width:105px;
+  text-align:right;
+  width:95px;
   flex-shrink:0;
   border:1.5px solid #166534;
   box-shadow:0 1px 3px rgba(0,0,0,.1);
@@ -530,7 +534,7 @@ input:focus,select:focus,textarea:focus{
         id="cName"
         placeholder="उदा. कावेरी">
 
-      <label id="lblDate">गाभण झाल्याची तारीख</label>
+      <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
 
       <input
         type="date"
@@ -624,7 +628,7 @@ const langData={
     namePh:'उदा. कावेरी',
     nameLbl:'पशुचे नाव / ओळख',
 
-    dtLbl:'गाभण झाल्याची तारीख',
+    dtLbl:'गाय गाभण राहिल्याची तारीख',
 
     noteLbl:'डॉक्टर / सिमेन तपशील',
 
@@ -642,13 +646,13 @@ const langData={
 
     repeatBtn:'🔄 गाय उलटली (तारीख बदला)',
 
-    chk21:'🔴 उलट तपासणी (२१ वा दिवस):',
+    chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
 
-    milkDry:'🥛 दूध आटवणे (७ वा महिना):',
+    milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
 
-    trans:'🌾 ट्रान्झिशन खुराक (विण्याआधी २१ दिवस):',
+    trans:'🌾 ट्रान्झिशन खुराक <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
 
-    delivery:'🍼 अंदाजे विण्याची तारीख:',
+    delivery:'🍼 अंदाजे गाय विण्याची तारीख',
 
     notePrefix:'💉 <b>डॉक्टर/सिमेन:</b> ',
 
@@ -694,7 +698,7 @@ const langData={
     namePh:'उदा. कावेरी',
     nameLbl:'पशु का नाम / टैग नंबर',
 
-    dtLbl:'गर्भधारण की तारीख',
+    dtLbl:'गाय गर्भधारण की तारीख',
 
     noteLbl:'डॉक्टर / सीमेन विवरण',
 
@@ -712,13 +716,13 @@ const langData={
 
     repeatBtn:'🔄 पशु रिपीट हुआ (तारीख बदलें)',
 
-    chk21:'🔴 उलट जांच (21वां दिन):',
+    chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
 
-    milkDry:'🥛 दूध बंद करना (7वां महीना):',
+    milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
 
-    trans:'🌾 ट्रांजिशन चारा (ब्याने से 21 दिन पहले):',
+    trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
 
-    delivery:'🍼 अनुमानित ब्याने की तारीख:',
+    delivery:'🍼 अनुमानित गाय ब्याने की तारीख',
 
     notePrefix:'💉 <b>डॉक्टर/सीमेन:</b> ',
 
@@ -764,7 +768,7 @@ const langData={
     namePh:'e.g., Kaveri',
     nameLbl:'Animal Name / Tag No.',
 
-    dtLbl:'Pregnancy Date (A.I.)',
+    dtLbl:'Cow Pregnancy Date',
 
     noteLbl:'Doctor / Semen Details',
 
@@ -782,13 +786,13 @@ const langData={
 
     repeatBtn:'🔄 Heat Repeat (Change Date)',
 
-    chk21:'🔴 Heat Check (Day 21):',
+    chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
 
-    milkDry:'🥛 Dry Period (Month 7):',
+    milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
 
-    trans:'🌾 Transition Feed (21 days prior):',
+    trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
 
-    delivery:'🍼 Expected Delivery Date:',
+    delivery:'🍼 Est. Cow Delivery Date',
 
     notePrefix:'💉 <b>Doctor/Semen:</b> ',
 
@@ -1529,19 +1533,19 @@ function draw(){
 
     /* Row 2: Heat Check */
     html+='<div class="row">';
-    html+='<span>'+escapeHtml(t.chk21)+'</span>';
+    html+='<span>'+t.chk21+'</span>';
     html+='<span class="date-badge">'+escapeHtml(check21)+'</span>';
     html+='</div>';
 
     /* Row 3: Milk Dry */
     html+='<div class="row">';
-    html+='<span>'+escapeHtml(t.milkDry)+'</span>';
+    html+='<span>'+t.milkDry+'</span>';
     html+='<span class="date-badge">'+escapeHtml(dryDate)+'</span>';
     html+='</div>';
 
     /* Row 4: Transition */
     html+='<div class="row">';
-    html+='<span>'+escapeHtml(t.trans)+'</span>';
+    html+='<span>'+t.trans+'</span>';
     html+='<span class="date-badge">'+escapeHtml(transitionDate)+'</span>';
     html+='</div>';
 
@@ -1572,7 +1576,7 @@ function draw(){
 
 
 /*
-  SMART NOTIFICATIONS
+  SMART NOTIFICATIONS (Cow Name First, Large & Bold, Clean Layout)
 */
 function checkSmartNotifications(){
 
@@ -1682,6 +1686,11 @@ function checkSmartNotifications(){
         )
       );
 
+    const animalIcon=
+      it.type==='buffalo'
+      ? '🐃'
+      : '🐄';
+
 
     /* 1. HEAT — ONLY DAY 19,20,21 */
     if(
@@ -1700,7 +1709,7 @@ function checkSmartNotifications(){
             String(pregnancyDay)
           ),
 
-        name:animalName,
+        name: animalIcon + ' ' + animalName,
 
         date:today.getTime()
 
@@ -1731,7 +1740,7 @@ function checkSmartNotifications(){
             String(dryDiff)
           ),
 
-        name:animalName,
+        name: animalIcon + ' ' + animalName,
 
         date:dryDate.getTime()
 
@@ -1762,7 +1771,7 @@ function checkSmartNotifications(){
             String(deliveryDiff)
           ),
 
-        name:animalName,
+        name: animalIcon + ' ' + animalName,
 
         date:deliveryDate.getTime()
 
@@ -1808,11 +1817,8 @@ function checkSmartNotifications(){
 
     html+=
       '<div class="notif-item">'+
-      alerts[i].text+
-      '<br>'+
-      '<strong>🐄 '+
-      alerts[i].name+
-      '</strong>'+
+      '<div style="font-size:13.5px; font-weight:900; color:#991b1b; margin-bottom:3px;">' + alerts[i].name + '</div>'+
+      '<div style="color:#c2410c; font-weight:700;">' + alerts[i].text + '</div>'+
       '</div>';
 
   }
