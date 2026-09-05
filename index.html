@@ -477,4 +477,26 @@ input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;bo
       html += '    <div class="action-btns">';
       html += '      <button class="btn-repeat" onclick="updateDate(' + it.id + ')">' + t.repeatBtn + '</button>';
       html += '      <button class="btn-del" onclick="delData(' + it.id + ')">' + t.delBtn + '</button>';
-      ht
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+    }
+    box.innerHTML = html;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    var savedLang = localStorage.getItem("cattle_lang");
+    if (savedLang) {
+      document.getElementById('langSelect').value = savedLang;
+      changeLanguage();
+    } else {
+      changeLanguage();
+    }
+
+    var d = new Date();
+    document.getElementById("cDate").value = d.toISOString().split('T')[0];
+  });
+</script>
+
+</body>
+</html>
