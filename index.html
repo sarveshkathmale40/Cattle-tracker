@@ -76,38 +76,49 @@ body{
   color:white;
 }
 
-/* Notification */
+/* 🔔 अतिशय ठळक आणि आकर्षक नोटिफिकेशन बॅनर्स */
 .notification-banner{
-  background:#fff7ed;
-  border:1.5px solid #fed7aa;
-  border-radius:16px;
-  padding:12px;
+  background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);
+  border:2px solid #fdba74;
+  border-radius:18px;
+  padding:14px;
   margin-bottom:14px;
-  box-shadow:0 4px 15px rgba(0,0,0,.04);
+  box-shadow:0 6px 20px rgba(194,65,12,.15);
 }
 
 .notif-title{
-  font-size:13px;
-  font-weight:800;
+  font-size:14px;
+  font-weight:900;
   color:#c2410c;
-  margin-bottom:7px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
 
 .notif-list{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:8px;
 }
 
 .notif-item{
   background:white;
-  border-radius:10px;
-  padding:8px 10px;
-  font-size:11.5px;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
   color:#7c2d12;
-  font-weight:600;
-  border:1px solid #fed7aa;
-  line-height:1.4;
+  font-weight:700;
+  border:1.5px solid #fed7aa;
+  line-height:1.5;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+  border-left:5px solid #ea580c;
+}
+
+.notif-item strong{
+  color:#991b1b;
+  font-size:13px;
+  font-weight:900;
 }
 
 /* Stats */
@@ -293,50 +304,85 @@ input:focus,select:focus,textarea:focus{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:8px;
+  gap:6px;
   font-weight:bold;
-  font-size:13.5px;
+  font-size:13px;
   border-bottom:1px solid #e2e8f0;
   padding-bottom:6px;
   margin-bottom:6px;
   color:#1e293b;
 }
 
-/* 📝 सुंदर आणि सुटसुटीत रो आणि तारीख टॅग डिझाईन */
+/* ⏱️ वेळेची तारीख / दिवस ठळक आणि उठून दिसण्यासाठी */
+.duration-badge{
+  background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
+  color:#1d4ed8;
+  font-weight:900;
+  font-size:12px;
+  padding:4px 9px;
+  border-radius:8px;
+  border:1.5px solid #93c5fd;
+  box-shadow:0 2px 6px rgba(29,78,216,.15);
+  white-space:nowrap;
+}
+
+/* 📅 तारखा एका खाली एक सरळ रेषेत आणि ठळक दिसण्यासाठी */
 .row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:8px;
+  gap:6px;
   font-size:11.5px;
-  padding:4px 0;
+  padding:5px 0;
   color:#334155;
   font-weight:600;
+  border-bottom: 1px dashed #e2e8f0;
 }
 
 .date-badge{
-  background:#f1f5f9;
-  color:#0f172a;
-  padding:2px 7px;
+  background:#fef08a;
+  color:#78350f;
+  padding:3px 8px;
   border-radius:6px;
-  font-size:11px;
-  font-weight:700;
-  border:1px solid #e2e8f0;
+  font-size:11.5px;
+  font-weight:900;
+  border:1.5px solid #fde047;
+  text-align:center;
+  width:105px;
+  flex-shrink:0;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
   letter-spacing:0.3px;
 }
 
+/* 🍼 अंदाजे विण्याची तारीख - अतिशय ठळक आणि वेगळ्या रंगात झळकणारी */
 .due{
-  background:#dcfce7;
-  padding:6px 10px;
-  border-radius:8px;
-  color:#15803d;
-  font-weight:bold;
-  margin-top:6px;
+  background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);
+  padding:8px 10px;
+  border-radius:10px;
+  color:#14532d;
+  font-weight:900;
+  margin-top:8px;
   font-size:12px;
-  border:1px solid #bbf7d0;
+  border:1.5px solid #86efac;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  box-shadow:0 2px 6px rgba(22,163,74,.15);
+}
+
+.due-badge{
+  background:#15803d;
+  color:white;
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  width:105px;
+  flex-shrink:0;
+  border:1.5px solid #166534;
+  box-shadow:0 1px 3px rgba(0,0,0,.1);
+  letter-spacing:0.3px;
 }
 
 .note-box{
@@ -1469,10 +1515,10 @@ function draw(){
 
     html+='<div class="item-info">';
 
-    /* Top Header */
+    /* Top Header with prominent duration badge */
     html+='<div class="item-top">';
     html+='<span>'+animalTypeLabel+' &nbsp; <b>'+safeName+'</b></span>';
-    html+='<span style="color:#15803d; font-weight:900; font-size:11.5px;">⏱️ '+escapeHtml(durationStr)+'</span>';
+    html+='<span class="duration-badge">⏱️ '+escapeHtml(durationStr)+'</span>';
     html+='</div>';
 
     /* Row 1: Pregnancy Date */
@@ -1499,10 +1545,10 @@ function draw(){
     html+='<span class="date-badge">'+escapeHtml(transitionDate)+'</span>';
     html+='</div>';
 
-    /* Due Date Box */
+    /* Due Date Box - Prominent delivery highlight */
     html+='<div class="due">';
     html+='<span>'+escapeHtml(t.delivery)+'</span>';
-    html+='<span class="date-badge" style="background:#bbf7d0; border-color:#86efac; color:#14532d;"><b>'+escapeHtml(deliveryDate)+'</b></span>';
+    html+='<span class="due-badge">'+escapeHtml(deliveryDate)+'</span>';
     html+='</div>';
 
     if(safeNote){
