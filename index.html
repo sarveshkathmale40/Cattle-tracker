@@ -54,6 +54,7 @@ header h1{
   font-size:11px;
   background:white;
   color:#222;
+  cursor:pointer;
 }
 
 .container{
@@ -321,11 +322,9 @@ textarea{
 
 </header>
 
-
 <div class="container">
 
   <!-- REMINDERS -->
-
   <div class="card reminders">
 
     <h2 id="reminderTitle">
@@ -338,7 +337,6 @@ textarea{
 
 
   <!-- STATS -->
-
   <div class="card">
 
     <div class="stats">
@@ -364,7 +362,6 @@ textarea{
 
 
   <!-- FORM -->
-
   <div class="card">
 
     <h2 id="formTitle">
@@ -457,7 +454,6 @@ textarea{
 
 
   <!-- RECORDS -->
-
   <div class="card">
 
     <h2 id="recordsTitle">
@@ -472,6 +468,8 @@ textarea{
 
 
 <script>
+"use strict";
+
 
 /* ==================================================
    LANGUAGE DATA
@@ -508,10 +506,10 @@ const langData = {
     delete:"🗑️ Delete",
 
     confirmDelete:
-      "हा जनावराचा डेटा कायमचा डिलीट करायचा आहे का?",
+      "हा जनावराचा डेटा कायमचा डिलीट करायचा आहे?",
 
     editing:
-      "या जनावराची माहिती बदलत आहात. Repeat केल्यामुळे AI तारीख आजची केली आहे.",
+      "Repeat केल्यामुळे AI तारीख आजची केली आहे. बदल सेव्ह करण्यासाठी Update दाबा.",
 
     heat:"🔄 हीट / रिपीट तपासा",
 
@@ -562,7 +560,7 @@ const langData = {
       "क्या इस पशु का डेटा हमेशा के लिए डिलीट करना है?",
 
     editing:
-      "इस पशु की जानकारी बदल रहे हैं। Repeat करने पर AI तारीख आज की कर दी गई है।",
+      "Repeat करने पर AI तारीख आज की कर दी गई है। बदलाव सेव करने के लिए Update दबाएँ।",
 
     heat:"🔄 हीट / रिपीट चेक करें",
 
@@ -613,7 +611,7 @@ const langData = {
       "Delete this animal's data permanently?",
 
     editing:
-      "You are editing this animal. Repeat has set the AI date to today.",
+      "Repeat has set the AI date to today. Press Update to save the change.",
 
     heat:"🔄 Check for heat / repeat",
 
@@ -635,42 +633,47 @@ const langData = {
 
 
 /* ==================================================
-   GLOBAL VARIABLES
+   GLOBAL
 ================================================== */
 
 let cur = "cow";
-
 let editingId = null;
-
 let currentPhoto = "";
 
 const DB_KEY = "cattle_tracker_db";
 
 
 /* ==================================================
-   GET LANGUAGE
+   LANGUAGE
 ================================================== */
 
 function getLang(){
 
-  return localStorage.getItem(
-    "cattle_tracker_lang"
-  ) || "mr";
+  const saved =
+    localStorage.getItem("cattle_tracker_lang");
 
+  if(
+    saved === "mr" ||
+    saved === "hi" ||
+    saved === "en"
+  ){
+    return saved;
+  }
+
+  return "mr";
 }
 
-
-/* ==================================================
-   CHANGE LANGUAGE
-================================================== */
 
 function changeLanguage(){
 
   const select =
     document.getElementById("language");
 
-  const lang =
-    select.value;
+  if(!select){
+    return;
+  }
+
+  const lang = select.value;
 
   localStorage.setItem(
     "cattle_tracker_lang",
@@ -678,106 +681,67 @@ function changeLanguage(){
   );
 
   updateLanguageUI();
-
   draw();
-
   drawReminders();
-
 }
 
-
-/* ==================================================
-   UPDATE LANGUAGE UI
-================================================== */
 
 function updateLanguageUI(){
 
   const lang = getLang();
-
   const t = langData[lang];
 
-  document.documentElement.lang =
-    lang;
+  document.documentElement.lang = lang;
+
+  const language =
+    document.getElementById("language");
+
+  if(language){
+    language.value = lang;
+  }
 
 
-  document.getElementById(
-    "language"
-  ).value = lang;
+  document.getElementById("reminderTitle")
+    .textContent = t.reminderTitle;
 
+  document.getElementById("cowStat")
+    .textContent = t.cowStat;
 
-  document.getElementById(
-    "reminderTitle"
-  ).textContent =
-    t.reminderTitle;
+  document.getElementById("buffaloStat")
+    .textContent = t.buffaloStat;
 
+  document.getElementById("totalStat")
+    .textContent = t.totalStat;
 
-  document.getElementById(
-    "cowStat"
-  ).textContent =
-    t.cowStat;
-
-
-  document.getElementById(
-    "buffaloStat"
-  ).textContent =
-    t.buffaloStat;
-
-
-  document.getElementById(
-    "totalStat"
-  ).textContent =
-    t.totalStat;
-
-
-  document.getElementById(
-    "formTitle"
-  ).textContent =
-    editingId === null
+  document.getElementById("formTitle")
+    .textContent =
+      editingId === null
       ? t.formTitle
       : t.editTitle;
 
+  document.getElementById("nameLabel")
+    .textContent = t.nameLabel;
 
-  document.getElementById(
-    "nameLabel"
-  ).textContent =
-    t.nameLabel;
+  document.getElementById("dateLabel")
+    .textContent = t.dateLabel;
 
+  document.getElementById("noteLabel")
+    .textContent = t.noteLabel;
 
-  document.getElementById(
-    "dateLabel"
-  ).textContent =
-    t.dateLabel;
+  document.getElementById("photoLabel")
+    .textContent = t.photoLabel;
 
-
-  document.getElementById(
-    "noteLabel"
-  ).textContent =
-    t.noteLabel;
-
-
-  document.getElementById(
-    "photoLabel"
-  ).textContent =
-    t.photoLabel;
-
-
-  document.getElementById(
-    "recordsTitle"
-  ).textContent =
-    t.recordsTitle;
+  document.getElementById("recordsTitle")
+    .textContent = t.recordsTitle;
 
 
   const saveBtn =
-    document.getElementById(
-      "saveBtn"
-    );
-
+    document.getElementById("saveBtn");
 
   saveBtn.textContent =
     editingId === null
-      ? t.save
-      : t.update;
-
+    ? t.save
+    : t.update;
 
   saveBtn.classList.toggle(
     "update",
@@ -786,58 +750,50 @@ function updateLanguageUI(){
 
 
   updateAnimalButtons();
-
 }
 
 
 /* ==================================================
-   ANIMAL BUTTONS
+   ANIMAL
 ================================================== */
 
 function selectAnimal(type){
 
+  if(
+    type !== "cow" &&
+    type !== "buffalo"
+  ){
+    return;
+  }
+
   cur = type;
 
   updateAnimalButtons();
-
 }
 
 
 function updateAnimalButtons(){
 
-  const t =
-    langData[getLang()];
-
+  const t = langData[getLang()];
 
   const cowBtn =
-    document.getElementById(
-      "cowBtn"
-    );
+    document.getElementById("cowBtn");
 
   const buffaloBtn =
-    document.getElementById(
-      "buffaloBtn"
-    );
-
+    document.getElementById("buffaloBtn");
 
   cowBtn.classList.toggle(
     "active",
     cur === "cow"
   );
 
-
   buffaloBtn.classList.toggle(
     "active",
     cur === "buffalo"
   );
 
-
-  cowBtn.textContent =
-    t.cow;
-
-  buffaloBtn.textContent =
-    t.buffalo;
-
+  cowBtn.textContent = t.cow;
+  buffaloBtn.textContent = t.buffalo;
 }
 
 
@@ -850,26 +806,18 @@ function getDB(){
   try{
 
     const raw =
-      localStorage.getItem(
-        DB_KEY
-      );
-
+      localStorage.getItem(DB_KEY);
 
     if(!raw){
       return [];
     }
 
-
     const data =
       JSON.parse(raw);
 
-
-    if(!Array.isArray(data)){
-      return [];
-    }
-
-
-    return data;
+    return Array.isArray(data)
+      ? data
+      : [];
 
   }catch(error){
 
@@ -879,9 +827,7 @@ function getDB(){
     );
 
     return [];
-
   }
-
 }
 
 
@@ -908,9 +854,7 @@ function setDB(data){
     );
 
     return false;
-
   }
-
 }
 
 
@@ -920,79 +864,58 @@ function setDB(data){
 
 function todayISO(){
 
-  const d =
-    new Date();
+  const d = new Date();
 
-
-  const year =
+  const y =
     d.getFullYear();
 
-
-  const month =
+  const m =
     String(
       d.getMonth() + 1
     ).padStart(2,"0");
-
 
   const day =
     String(
       d.getDate()
     ).padStart(2,"0");
 
-
-  return (
-    year +
-    "-" +
-    month +
-    "-" +
-    day
-  );
-
+  return y + "-" + m + "-" + day;
 }
 
 
-function updateDate(date,days){
+function updateDate(date, days){
 
   if(!date){
     return "";
   }
-
 
   const d =
     new Date(
       date + "T00:00:00"
     );
 
+  if(Number.isNaN(d.getTime())){
+    return "";
+  }
 
   d.setDate(
     d.getDate() + days
   );
 
-
-  const year =
+  const y =
     d.getFullYear();
 
-
-  const month =
+  const m =
     String(
       d.getMonth() + 1
     ).padStart(2,"0");
-
 
   const day =
     String(
       d.getDate()
     ).padStart(2,"0");
 
-
-  return (
-    year +
-    "-" +
-    month +
-    "-" +
-    day
-  );
-
+  return y + "-" + m + "-" + day;
 }
 
 
@@ -1002,29 +925,19 @@ function formatDate(date){
     return "";
   }
 
-
   const p =
     date.split("-");
-
 
   if(p.length !== 3){
     return date;
   }
 
-
-  return (
-    p[2] +
-    "/" +
-    p[1] +
-    "/" +
-    p[0]
-  );
-
+  return p[2] + "/" + p[1] + "/" + p[0];
 }
 
 
 /* ==================================================
-   PREGNANCY SETTINGS
+   PREGNANCY
 ================================================== */
 
 function getPregnancyData(type){
@@ -1037,9 +950,7 @@ function getPregnancyData(type){
       heat:21,
       transition:289
     };
-
   }
-
 
   return {
     total:282,
@@ -1047,12 +958,11 @@ function getPregnancyData(type){
     heat:21,
     transition:261
   };
-
 }
 
 
 /* ==================================================
-   IMAGE COMPRESSION
+   PHOTO
 ================================================== */
 
 function compressImage(file){
@@ -1063,13 +973,11 @@ function compressImage(file){
       const reader =
         new FileReader();
 
-
       reader.onload =
-        function(e){
+        function(event){
 
           const img =
             new Image();
-
 
           img.onload =
             function(){
@@ -1080,9 +988,7 @@ function compressImage(file){
               let height =
                 img.height;
 
-
-              const maxSize =
-                400;
+              const maxSize = 400;
 
 
               if(
@@ -1090,7 +996,7 @@ function compressImage(file){
                 height > maxSize
               ){
 
-                if(width > height){
+                if(width >= height){
 
                   height =
                     Math.round(
@@ -1099,8 +1005,7 @@ function compressImage(file){
                       width
                     );
 
-                  width =
-                    maxSize;
+                  width = maxSize;
 
                 }else{
 
@@ -1111,11 +1016,8 @@ function compressImage(file){
                       height
                     );
 
-                  height =
-                    maxSize;
-
+                  height = maxSize;
                 }
-
               }
 
 
@@ -1124,18 +1026,12 @@ function compressImage(file){
                   "canvas"
                 );
 
-
-              canvas.width =
-                width;
-
-              canvas.height =
-                height;
+              canvas.width = width;
+              canvas.height = height;
 
 
               const ctx =
-                canvas.getContext(
-                  "2d"
-                );
+                canvas.getContext("2d");
 
 
               ctx.drawImage(
@@ -1153,50 +1049,31 @@ function compressImage(file){
                   0.7
                 )
               );
-
             };
 
 
-          img.onerror =
-            reject;
-
+          img.onerror = reject;
 
           img.src =
-            e.target.result;
-
+            event.target.result;
         };
 
 
-      reader.onerror =
-        reject;
+      reader.onerror = reject;
 
-
-      reader.readAsDataURL(
-        file
-      );
-
+      reader.readAsDataURL(file);
     }
   );
-
 }
 
-
-/* ==================================================
-   PHOTO PREVIEW
-================================================== */
 
 async function previewPhoto(){
 
   const input =
-    document.getElementById(
-      "photo"
-    );
-
+    document.getElementById("photo");
 
   const preview =
-    document.getElementById(
-      "photoPreview"
-    );
+    document.getElementById("photoPreview");
 
 
   if(
@@ -1214,27 +1091,16 @@ async function previewPhoto(){
         input.files[0]
       );
 
-
-    preview.innerHTML =
-      "";
+    preview.innerHTML = "";
 
 
     const img =
-      document.createElement(
-        "img"
-      );
+      document.createElement("img");
 
+    img.src = currentPhoto;
+    img.alt = "Animal Photo";
 
-    img.src =
-      currentPhoto;
-
-    img.alt =
-      "Animal Photo";
-
-
-    preview.appendChild(
-      img
-    );
+    preview.appendChild(img);
 
   }catch(error){
 
@@ -1242,9 +1108,7 @@ async function previewPhoto(){
       "Photo error:",
       error
     );
-
   }
-
 }
 
 
@@ -1254,47 +1118,31 @@ async function previewPhoto(){
 
 function clearForm(){
 
-  editingId =
-    null;
+  editingId = null;
+  currentPhoto = "";
 
-  currentPhoto =
-    "";
+  document.getElementById("animalName")
+    .value = "";
 
+  document.getElementById("pregDate")
+    .value = "";
 
-  document.getElementById(
-    "animalName"
-  ).value = "";
+  document.getElementById("note")
+    .value = "";
 
+  document.getElementById("photo")
+    .value = "";
 
-  document.getElementById(
-    "pregDate"
-  ).value = "";
+  document.getElementById("photoPreview")
+    .innerHTML = "";
 
+  document.getElementById("editingInfo")
+    .textContent = "";
 
-  document.getElementById(
-    "note"
-  ).value = "";
-
-
-  document.getElementById(
-    "photo"
-  ).value = "";
-
-
-  document.getElementById(
-    "photoPreview"
-  ).innerHTML = "";
-
-
-  document.getElementById(
-    "editingInfo"
-  ).classList.remove(
-    "show"
-  );
-
+  document.getElementById("editingInfo")
+    .classList.remove("show");
 
   updateLanguageUI();
-
 }
 
 
@@ -1305,49 +1153,38 @@ function clearForm(){
 async function saveData(){
 
   const name =
-    document.getElementById(
-      "animalName"
-    ).value.trim();
-
+    document.getElementById("animalName")
+      .value.trim();
 
   const pregDate =
-    document.getElementById(
-      "pregDate"
-    ).value;
-
+    document.getElementById("pregDate")
+      .value;
 
   const note =
-    document.getElementById(
-      "note"
-    ).value.trim();
-
+    document.getElementById("note")
+      .value.trim();
 
   const photoInput =
-    document.getElementById(
-      "photo"
-    );
+    document.getElementById("photo");
 
 
   if(!pregDate){
 
-    const lang =
-      getLang();
-
+    const lang = getLang();
 
     alert(
       lang === "mr"
-        ? "कृपया गाभण / AI तारीख निवडा."
-        : lang === "hi"
-        ? "कृपया गर्भाधान / AI तारीख चुनें।"
-        : "Please select Pregnancy / AI date."
+      ? "कृपया गाभण / AI तारीख निवडा."
+      : lang === "hi"
+      ? "कृपया गर्भाधान / AI तारीख चुनें।"
+      : "Please select Pregnancy / AI date."
     );
 
     return;
   }
 
 
-  let photo =
-    currentPhoto;
+  let photo = currentPhoto || "";
 
 
   if(
@@ -1368,19 +1205,16 @@ async function saveData(){
         "Photo compression error:",
         error
       );
-
     }
-
   }
 
 
-  const db =
-    getDB();
+  const db = getDB();
 
 
-  /* =========================
-     UPDATE EXISTING RECORD
-  ========================= */
+  /* ================================================
+     UPDATE EXISTING
+  ================================================ */
 
   if(editingId !== null){
 
@@ -1392,56 +1226,91 @@ async function saveData(){
             String(item.id) ===
             String(editingId)
           );
-
         }
       );
 
 
     if(index !== -1){
 
-      db[index].type =
-        cur;
+      const oldPhoto =
+        db[index].photo || "";
 
 
-      db[index].name =
-        name;
+      db[index] = {
+        ...db[index],
+        type:cur,
+        name:name,
+        pregDate:pregDate,
+        note:note,
+        photo:photo || oldPhoto,
+        updatedAt:Date.now()
+      };
 
 
-      db[index].pregDate =
-        pregDate;
-
-
-      db[index].note =
-        note;
-
-
-      if(photo){
-
-        db[index].photo =
-          photo;
-
+      if(!setDB(db)){
+        return;
       }
 
 
-      db[index].updatedAt =
-        Date.now();
+      clearForm();
 
-
-      if(setDB(db)){
-
-        clearForm();
-
-        draw();
-
-        drawReminders();
-
-      }
-
+      draw();
+      drawReminders();
 
       return;
-
     }
 
 
-    editingId =
+    editingId = null;
+  }
+
+
+  /* ================================================
+     NEW RECORD
+  ================================================ */
+
+  const record = {
+
+    id:
+      Date.now().toString() +
+      Math.random()
+        .toString(36)
+        .slice(2,8),
+
+    type:cur,
+
+    name:name,
+
+    pregDate:pregDate,
+
+    note:note,
+
+    photo:photo,
+
+    createdAt:Date.now()
+  };
+
+
+  db.push(record);
+
+
+  if(!setDB(db)){
+    return;
+  }
+
+
+  clearForm();
+
+  draw();
+  drawReminders();
+}
+
+
+/* ==================================================
+   DELETE
+================================================== */
+
+function delData(id){
+
+  const targetId =
    
