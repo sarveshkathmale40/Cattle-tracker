@@ -24,63 +24,46 @@ body{
 #appScreen{
   max-width:600px;
   margin:auto;
-  padding:8px;
+  padding:10px;
 }
 
 /* BRAND */
 .brand-title{
   text-align:center;
-  font-size:14px;
+  font-size:15px;
   font-weight:bold;
   color:#15803d;
-  margin-bottom:4px;
+  margin-bottom:5px;
 }
 
 /* HEADER */
 .app-header{
   background:linear-gradient(135deg,#15803d,#16a34a);
   color:white;
-  padding:10px;
-  border-radius:11px;
+  padding:12px;
+  border-radius:12px;
   text-align:center;
-  margin-bottom:7px;
+  margin-bottom:9px;
   box-shadow:0 3px 9px rgba(21,128,61,0.16);
 }
 
 .app-header h1{
   margin:0;
-  font-size:22px;
+  font-size:23px;
 }
 
 .app-header p{
-  margin:2px 0 0;
-  font-size:11px;
-  opacity:0.95;
-}
-
-/* SMALL LANGUAGE */
-.language-box{
-  display:flex;
-  justify-content:flex-end;
-  margin-bottom:7px;
-}
-
-#language{
-  width:auto;
-  min-width:105px;
-  padding:5px 7px;
-  margin:0;
+  margin:3px 0 0;
   font-size:12px;
-  border-radius:6px;
-  background:white;
+  opacity:0.95;
 }
 
 /* CARD */
 .card{
   background:white;
-  padding:9px;
-  border-radius:10px;
-  margin-bottom:8px;
+  padding:10px;
+  border-radius:11px;
+  margin-bottom:9px;
   box-shadow:0 2px 7px rgba(0,0,0,0.05);
   border:1px solid #ecfdf5;
 }
@@ -88,19 +71,19 @@ body{
 label{
   display:block;
   font-weight:bold;
-  margin-bottom:3px;
-  font-size:12px;
+  margin-bottom:4px;
+  font-size:13px;
 }
 
 input,
 select,
 textarea{
   width:100%;
-  padding:8px;
+  padding:9px;
   border:1px solid #d1d5db;
   border-radius:7px;
-  margin-bottom:7px;
-  font-size:13px;
+  margin-bottom:8px;
+  font-size:14px;
   background:#fff;
 }
 
@@ -120,15 +103,15 @@ textarea{
 button{
   border:none;
   border-radius:7px;
-  padding:8px 11px;
-  font-size:12px;
+  padding:9px 12px;
+  font-size:13px;
   cursor:pointer;
 }
 
 .animal-buttons{
   display:flex;
-  gap:6px;
-  margin-bottom:9px;
+  gap:7px;
+  margin-bottom:10px;
 }
 
 .animal-buttons button{
@@ -150,34 +133,34 @@ button{
   background:linear-gradient(135deg,#15803d,#16a34a);
   color:white;
   font-weight:bold;
-  font-size:14px;
-  padding:9px;
+  font-size:15px;
+  padding:10px;
 }
 
 .delete-btn{
   background:#fee2e2;
   color:#b91c1c;
-  margin-top:5px;
+  margin-top:6px;
 }
 
 .repeat-btn{
   background:#dcfce7;
   color:#166534;
-  margin-top:5px;
+  margin-top:6px;
 }
 
 /* STATS */
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:6px;
-  margin-bottom:8px;
+  gap:7px;
+  margin-bottom:9px;
 }
 
 .stat{
   background:white;
-  padding:6px 3px;
-  border-radius:8px;
+  padding:7px 4px;
+  border-radius:9px;
   text-align:center;
   box-shadow:0 2px 6px rgba(0,0,0,0.04);
   border-top:3px solid #22c55e;
@@ -193,34 +176,35 @@ button{
 
 .stat strong{
   display:block;
-  font-size:17px;
+  font-size:18px;
   color:#15803d;
   margin-bottom:1px;
 }
 
 .stat span{
-  font-size:11px;
+  font-size:12px;
 }
 
-/* REMINDERS */
+/* COMPACT REMINDERS */
 #reminderCard{
-  padding:6px 8px;
+  padding:7px 9px;
+  border-left:3px solid #f59e0b;
 }
 
 #reminderCard h2{
-  margin:0 0 5px;
-  font-size:13px;
+  margin:0 0 6px;
+  font-size:14px;
 }
 
 .reminder{
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:7px;
   background:#fff7ed;
   border-left:3px solid #f97316;
-  padding:5px 6px;
-  border-radius:6px;
-  margin-bottom:3px;
+  padding:6px 7px;
+  border-radius:7px;
+  margin-bottom:4px;
 }
 
 .reminder:last-child{
@@ -238,7 +222,7 @@ button{
 }
 
 .reminder-icon{
-  font-size:16px;
+  font-size:18px;
   flex:none;
 }
 
@@ -249,18 +233,18 @@ button{
 
 .reminder-title{
   font-weight:bold;
-  font-size:11px;
+  font-size:12px;
   line-height:1.25;
 }
 
 .reminder-animal{
-  font-size:11px;
+  font-size:12px;
   font-weight:600;
   margin-top:1px;
 }
 
 .reminder-date{
-  font-size:10px;
+  font-size:11px;
   color:#4b5563;
   margin-top:1px;
 }
@@ -268,102 +252,90 @@ button{
 /* RECORD */
 .record{
   border:1px solid #e5e7eb;
-  border-radius:8px;
-  padding:8px;
-  margin-bottom:7px;
+  border-radius:9px;
+  padding:9px;
+  margin-bottom:8px;
   background:#ffffff;
 }
 
 .record h3{
-  margin:0 0 4px;
-  font-size:15px;
+  margin:0 0 5px;
+  font-size:16px;
   color:#166534;
 }
 
 .record p{
   margin:3px 0;
-  font-size:12px;
+  font-size:13px;
 }
 
 .record img{
   width:100%;
-  max-height:180px;
+  max-height:200px;
   object-fit:cover;
-  border-radius:7px;
-  margin-top:5px;
+  border-radius:8px;
+  margin-top:6px;
 }
 
 .photo-preview{
   width:100%;
-  max-height:180px;
+  max-height:200px;
   object-fit:cover;
-  border-radius:7px;
+  border-radius:8px;
   display:none;
-  margin-bottom:7px;
+  margin-bottom:8px;
 }
 
 .empty{
   text-align:center;
   color:#6b7280;
   padding:10px;
-  font-size:12px;
+  font-size:13px;
 }
 
 .editing-note{
   background:#eff6ff;
   color:#1d4ed8;
-  border-radius:6px;
-  padding:5px 7px;
-  margin-bottom:7px;
-  font-size:11px;
+  border-radius:7px;
+  padding:6px 8px;
+  margin-bottom:8px;
+  font-size:12px;
   font-weight:bold;
-}
-
-/* RECORD BUTTONS */
-.record-actions{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-}
-
-.record-actions button{
-  flex:1;
-  min-width:120px;
 }
 
 /* MOBILE */
 @media(max-width:400px){
 
   #appScreen{
-    padding:7px;
-  }
-
-  .app-header h1{
-    font-size:20px;
-  }
-
-  .card{
     padding:8px;
   }
 
+  .app-header h1{
+    font-size:21px;
+  }
+
+  .card{
+    padding:9px;
+  }
+
   .stat strong{
-    font-size:16px;
+    font-size:17px;
   }
 
   .stat span{
-    font-size:10px;
+    font-size:11px;
   }
 
   .reminder-title{
-    font-size:10px;
+    font-size:11px;
   }
 
   .reminder-animal{
-    font-size:10px;
+    font-size:11px;
   }
 
   .reminder-date{
-    font-size:9px;
+    font-size:10px;
   }
 
 }
@@ -383,20 +355,26 @@ button{
     <p id="appSubtitle">गाभण व खुराक व्यवस्थापन</p>
   </div>
 
-  <!-- SMALL LANGUAGE SELECTOR -->
-  <div class="language-box">
+  <!-- LANGUAGE -->
+  <div class="card">
+
+    <label for="language">
+      Language / भाषा
+    </label>
+
     <select id="language" onchange="changeLanguage()">
       <option value="mr">मराठी</option>
       <option value="hi">हिंदी</option>
       <option value="en">English</option>
     </select>
+
   </div>
 
   <!-- REMINDERS -->
   <div id="reminderCard" class="card">
 
     <h2 id="reminderTitle">
-      🔔 सूचना
+      🔔 आजच्या सूचना
     </h2>
 
     <div id="reminders"></div>
@@ -527,13 +505,12 @@ button{
 let cur = "cow";
 
 /*
+  Repeat/Edit mode.
   null = नवीन record
-  id = existing record update
+  number = existing record update
 */
 let editingId = null;
 
-
-/* LANGUAGE */
 
 const langData = {
 
@@ -578,7 +555,7 @@ const langData = {
     deliveryDate:"अपेक्षित विण्याची तारीख",
 
     delete:"🗑️ हटवा",
-    repeat:"🔁 Repeat / आजची तारीख",
+    repeat:"🔁 Repeat / तारीख बदला",
 
     daysLeft:"दिवस बाकी",
 
@@ -589,9 +566,8 @@ const langData = {
 
     confirmDelete:"ही नोंद हटवायची आहे का?",
 
-    dateRequired:"कृपया गाभण / AI तारीख निवडा.",
+    dateRequired:"कृपया गाभण / AI तारीख निवडा."
 
-    noRecords:"अजून कोणतीही नोंद नाही."
   },
 
 
@@ -636,7 +612,7 @@ const langData = {
     deliveryDate:"अनुमानित प्रसव तारीख",
 
     delete:"🗑️ हटाएं",
-    repeat:"🔁 Repeat / आज की तारीख",
+    repeat:"🔁 Repeat / तारीख बदलें",
 
     daysLeft:"दिन बाकी",
 
@@ -647,9 +623,8 @@ const langData = {
 
     confirmDelete:"यह जानकारी हटानी है क्या?",
 
-    dateRequired:"कृपया गर्भाधान / AI तारीख चुनें।",
+    dateRequired:"कृपया गर्भाधान / AI तारीख चुनें।"
 
-    noRecords:"अभी कोई रिकॉर्ड नहीं है।"
   },
 
 
@@ -694,7 +669,7 @@ const langData = {
     deliveryDate:"Expected calving date",
 
     delete:"🗑️ Delete",
-    repeat:"🔁 Repeat / Use Today",
+    repeat:"🔁 Repeat / Change Date",
 
     daysLeft:"days left",
 
@@ -705,9 +680,8 @@ const langData = {
 
     confirmDelete:"Delete this record?",
 
-    dateRequired:"Please select Pregnancy / AI date.",
+    dateRequired:"Please select Pregnancy / AI date."
 
-    noRecords:"No records yet."
   }
 
 };
@@ -720,7 +694,7 @@ function getLang(){
 }
 
 
-/* LANGUAGE CHANGE */
+/* LANGUAGE */
 
 function changeLanguage(){
 
@@ -847,117 +821,84 @@ function setDB(data){
 }
 
 
-/* TODAY */
-
-function todayISO(){
-
-  const d = new Date();
-
-  const y =
-    d.getFullYear();
-
-  const m =
-    String(
-      d.getMonth() + 1
-    ).padStart(2,"0");
-
-  const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
-  return `${y}-${m}-${day}`;
-
-}
-
-
-/* IMAGE COMPRESSION */
+/* IMAGE */
 
 function compressImage(file){
 
   return new Promise((resolve,reject)=>{
 
-    const reader =
-      new FileReader();
+    const reader = new FileReader();
 
-    reader.onload =
-      function(e){
+    reader.onload = function(e){
 
-        const img =
-          new Image();
+      const img = new Image();
 
-        img.onload =
-          function(){
+      img.onload = function(){
 
-            const canvas =
-              document.createElement(
-                "canvas"
+        const canvas =
+          document.createElement("canvas");
+
+        let width = img.width;
+        let height = img.height;
+
+        const max = 400;
+
+        if(
+          width > max ||
+          height > max
+        ){
+
+          if(width > height){
+
+            height =
+              Math.round(
+                height * max / width
               );
 
-            let width =
-              img.width;
+            width = max;
 
-            let height =
-              img.height;
+          }
+          else{
 
-            const max = 400;
+            width =
+              Math.round(
+                width * max / height
+              );
 
-            if(
-              width > max ||
-              height > max
-            ){
+            height = max;
 
-              if(width > height){
+          }
 
-                height =
-                  Math.round(
-                    height * max / width
-                  );
+        }
 
-                width = max;
+        canvas.width = width;
+        canvas.height = height;
 
-              }
-              else{
+        const ctx =
+          canvas.getContext("2d");
 
-                width =
-                  Math.round(
-                    width * max / height
-                  );
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          width,
+          height
+        );
 
-                height = max;
-
-              }
-
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-
-            const ctx =
-              canvas.getContext("2d");
-
-            ctx.drawImage(
-              img,
-              0,
-              0,
-              width,
-              height
-            );
-
-            resolve(
-              canvas.toDataURL(
-                "image/jpeg",
-                0.7
-              )
-            );
-
-          };
-
-        img.onerror = reject;
-
-        img.src = e.target.result;
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            0.7
+          )
+        );
 
       };
+
+      img.onerror = reject;
+
+      img.src = e.target.result;
+
+    };
 
     reader.onerror = reject;
 
@@ -968,17 +909,13 @@ function compressImage(file){
 }
 
 
-/* PHOTO PREVIEW */
-
 async function previewPhoto(){
 
   const input =
     document.getElementById("photo");
 
   const preview =
-    document.getElementById(
-      "photoPreview"
-    );
+    document.getElementById("photoPreview");
 
   if(!input.files.length){
 
@@ -1044,7 +981,9 @@ async function saveData(){
 
   const db = getDB();
 
-  /* NEW RECORD */
+  /*
+    NEW RECORD
+  */
 
   if(editingId === null){
 
@@ -1074,13 +1013,13 @@ async function saveData(){
 
     }
 
-    db.push({
+    const data = {
 
       id:Date.now(),
 
       type:cur,
 
-      name:name,
+      name:name || "",
 
       pregDate:pregDate,
 
@@ -1088,11 +1027,15 @@ async function saveData(){
 
       photo:photo
 
-    });
+    };
+
+    db.push(data);
 
   }
 
-  /* UPDATE EXISTING RECORD */
+  /*
+    UPDATE EXISTING RECORD
+  */
 
   else{
 
@@ -1117,6 +1060,11 @@ async function saveData(){
 
     const photoInput =
       document.getElementById("photo");
+
+    /*
+      New photo selected:
+      replace old photo.
+    */
 
     if(photoInput.files.length){
 
@@ -1234,6 +1182,12 @@ function delData(id){
 
   setDB(db);
 
+  /*
+    जर delete केलेला record
+    edit mode मध्ये असेल तर
+    edit mode बंद.
+  */
+
   if(editingId === id){
 
     clearForm();
@@ -1247,15 +1201,12 @@ function delData(id){
 
 
 /*
-  REPEAT
+  REPEAT / CHANGE DATE
 
-  IMPORTANT:
-  Repeat केल्यावर:
-  - जुना record delete होत नाही
-  - नवीन duplicate तयार होत नाही
-  - त्याच record ची AI date आजची होते
-  - जुने नाव/photo/note कायम राहतात
-  - Save केल्यावर त्याच record वर update होते
+  जुना record delete होत नाही.
+  Form मध्ये त्याची माहिती येते.
+  User नवीन date टाकतो.
+  Save केल्यावर तोच record update होतो.
 */
 
 function repeatData(id){
@@ -1284,15 +1235,10 @@ function repeatData(id){
   ).value =
     item.name || "";
 
-  /*
-    सर्वात महत्त्वाचा बदल:
-    Repeat = आजची तारीख
-  */
-
   document.getElementById(
     "pregDate"
   ).value =
-    todayISO();
+    item.pregDate || "";
 
   document.getElementById(
     "note"
@@ -1300,7 +1246,7 @@ function repeatData(id){
     item.note || "";
 
   /*
-    जुना photo preview मध्ये दाखवा
+    जुना photo preview मध्ये दाखवा.
   */
 
   const preview =
@@ -1311,28 +1257,19 @@ function repeatData(id){
   if(item.photo){
 
     preview.src = item.photo;
-
-    preview.style.display =
-      "block";
+    preview.style.display = "block";
 
   }
   else{
 
     preview.src = "";
-
-    preview.style.display =
-      "none";
+    preview.style.display = "none";
 
   }
 
-  /*
-    Editing message
-  */
-
   document.getElementById(
     "editingNote"
-  ).style.display =
-    "block";
+  ).style.display = "block";
 
   document.getElementById(
     "saveBtn"
@@ -1340,7 +1277,7 @@ function repeatData(id){
     langData[getLang()].update;
 
   /*
-    Form वर scroll
+    Form जवळ scroll.
   */
 
   document
@@ -1353,7 +1290,7 @@ function repeatData(id){
 }
 
 
-/* DATE CALCULATION */
+/* DATE */
 
 function updateDate(date,days){
 
@@ -1377,4 +1314,90 @@ function updateDate(date,days){
   const day =
     String(
       d.getDate()
-    ).padStart(2,"
+    ).padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+
+}
+
+
+function formatDate(date){
+
+  if(!date) return "";
+
+  const d =
+    new Date(
+      date + "T00:00:00"
+    );
+
+  return d.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+/* PREGNANCY CALCULATION */
+
+function getPregnancyData(item){
+
+  const isCow =
+    item.type === "cow";
+
+  /*
+    Cow:
+    282 days
+
+    Buffalo:
+    310 days
+  */
+
+  const totalDays =
+    isCow ? 282 : 310;
+
+  /*
+    Dry-off:
+    Cow = 210
+    Buffalo = 235
+  */
+
+  const dryDay =
+    isCow ? 210 : 235;
+
+  /*
+    Heat / return:
+    21 days
+  */
+
+  const heatDay = 21;
+
+  /*
+    Transition feed:
+    21 days before calving
+  */
+
+  const transitionDay =
+    totalDays - 21;
+
+  return {
+
+    heat:
+      updateDate(
+        item.pregDate,
+        heatDay
+      ),
+
+    dry:
+      updateDate(
+        item.pregDate,
+        dryDay
+      ),
+
+    transition:
+      updateDate(
+        item.pregDate
