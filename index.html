@@ -261,15 +261,15 @@ input:focus,select:focus,textarea:focus{
   box-shadow:0 0 0 4px rgba(22,163,74,.1);
 }
 
-/* Animal & Mode Buttons */
-.animal-buttons, .mode-buttons{
+/* Animal Buttons */
+.animal-buttons{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
   margin-bottom:14px;
 }
 
-.animal-btn, .mode-btn{
+.animal-btn{
   border:2px solid #e2e8f0;
   background:#f8fafc;
   padding:12px 8px;
@@ -278,11 +278,11 @@ input:focus,select:focus,textarea:focus{
   font-weight:bold;
   color:#64748b;
   text-align:center;
-  font-size:13px;
+  font-size:14px;
   transition:all .2s;
 }
 
-.animal-btn.active, .mode-btn.active{
+.animal-btn.active{
   border-color:#16a34a;
   background:#dcfce7;
   color:#15803d;
@@ -471,18 +471,6 @@ input:focus,select:focus,textarea:focus{
   font-weight:500;
 }
 
-.info-box{
-  background:#f0fdf4;
-  border:1px solid #bbf7d0;
-  border-radius:8px;
-  padding:8px;
-  font-size:11.5px;
-  color:#166534;
-  margin-top:6px;
-  font-weight:700;
-  line-height:1.4;
-}
-
 /* Action Buttons */
 .action-btns{
   display:flex;
@@ -658,22 +646,14 @@ input:focus,select:focus,textarea:focus{
         <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
       </div>
 
-      <!-- Mode Buttons: Breeding Entry vs Calving Entry -->
-      <div class="mode-buttons">
-        <button class="mode-btn active" id="modeBreedBtn" type="button" onclick="selectMode('breed')">🔗 <span id="modeBreedTxt">गाय गाभण नोंद</span></button>
-        <button class="mode-btn" id="modeCalveBtn" type="button" onclick="selectMode('calve')">🐄 <span id="modeCalveTxt">गाय वेवल्याची नोंद</span></button>
-      </div>
-
       <label id="lblNameLbl">पशुचे नाव / ओळख</label>
       <input type="text" id="cName" placeholder="उदा. कावेरी">
 
       <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
       <input type="date" id="cDate">
 
-      <div id="doctorNoteContainer">
-        <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील (पर्यायी)</label>
-        <textarea id="cNote" placeholder="उदा. डॉक्टरचे नाव, सिमेन ब्रँड"></textarea>
-      </div>
+      <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील (पर्यायी)</label>
+      <textarea id="cNote" placeholder="उदा. डॉक्टरचे नाव, सिमेन ब्रँड"></textarea>
 
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
@@ -739,7 +719,6 @@ function closeImageModal(){
 }
 
 let cur = 'cow';
-let currentMode = 'breed'; // 'breed' or 'calve'
 let activeActionId = null;
 let activeActionType = null;
 
@@ -747,25 +726,6 @@ function selectAnimal(type){
   cur = type==='buffalo' ? 'buffalo' : 'cow';
   document.getElementById('cowBtn').classList.toggle('active', cur==='cow');
   document.getElementById('buffaloBtn').classList.toggle('active', cur==='buffalo');
-}
-
-function selectMode(mode){
-  currentMode = mode;
-  document.getElementById('modeBreedBtn').classList.toggle('active', currentMode==='breed');
-  document.getElementById('modeCalveBtn').classList.toggle('active', currentMode==='calve');
-  
-  const docContainer = document.getElementById('doctorNoteContainer');
-  const lblDate = document.getElementById('lblDate');
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-
-  if(currentMode === 'calve'){
-    docContainer.style.display = 'none';
-    lblDate.innerText = t.calveDateLbl;
-  } else {
-    docContainer.style.display = 'block';
-    lblDate.innerText = t.dtLbl;
-  }
 }
 
 function openDateModal(type, id){
@@ -781,7 +741,7 @@ function openDateModal(type, id){
 
   if(type === 'repeat') title.innerText = 'गाय उलटल्यामुळे नवीन गाभण तारीख निवडा:';
   else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
-  else if(type === 'newPregnancy') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
+  else if(type === 'newPregnancy') title.innerText = 'नवीन गाय लावल्याची तारीख टाका:';
 
   modal.style.display = 'flex';
 }
@@ -801,11 +761,12 @@ function submitModalDate(){
   const db = getDB();
   for(let i=0; i<db.length; i++){
     if(Number(db[i].id) === Number(activeActionId)){
-      if(activeActionType === 'repeat'){
+      if(activeActionType === 'repeat' || activeActionType === 'newPregnancy'){
         db[i].date = val;
         db[i].isCalved = false;
         db[i].calvedDate = '';
-      } else if(activeActionType === 'calved' || activeActionType === 'newPregnancy'){
+        db[i].note = ''; // Reset note for new cycle if desired or keep
+      } else if(activeActionType === 'calved'){
         db[i].isCalved = true;
         db[i].calvedDate = val;
       }
@@ -823,14 +784,13 @@ const langData={
     headerSub:'Cattle Pregnancy Tracker',
     tot:'एकूण', cow:'गाय', buf:'म्हैस',
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
-    modeBreedTxt:'गाय गाभण नोंद', modeCalveTxt:'गाय वेवल्याची नोंद',
     namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / ओळख', 
-    dtLbl:'गाय गाभण राहिल्याची तारीख', calveDateLbl:'गाय वेवल्याची तारीख',
+    dtLbl:'गाय गाभण राहिल्याची तारीख',
     noteLbl:'डॉक्टर / सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
     saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 गाय वेली',
-    setNewDateBtn:'📅 गाय वेवल्याची तारीख टाका',
-    infoPrompt:'💡 अचूक माहिती मिळवण्यासाठी गाय वेवल्याची अचूक तारीख टाका',
+    setNewDateBtn:'📅 नवीन गाय लावली (तारीख टाका)',
+    changeCalveDateBtn:'📅 गाय वेवल्याची तारीख बदला',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
     deworm:'💉 जंतनाशक <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
@@ -854,14 +814,13 @@ const langData={
     headerSub:'Cattle Pregnancy Tracker',
     tot:'कुल', cow:'गाय', buf:'भैंस',
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
-    modeBreedTxt:'गर्भधारण नोंद', modeCalveTxt:'ब्याने की नोंद',
     namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', 
-    dtLbl:'गाय गर्भधारण की तारीख', calveDateLbl:'गाय ब्याने की तारीख',
+    dtLbl:'गाय गर्भधारण की तारीख',
     noteLbl:'डॉक्टर / सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 पशु ब्याया',
-    setNewDateBtn:'📅 गाय ब्याने की तारीख दर्ज करें',
-    infoPrompt:'💡 सटीक जानकारी के लिए ब्याने की सही तारीख दर्ज करें',
+    setNewDateBtn:'📅 नई गाय ब्याई/लगाई (तारीख दर्ज करें)',
+    changeCalveDateBtn:'📅 गाय ब्याने की तारीख बदलें',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
     deworm:'💉 डिवॉर्मिंग <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
@@ -885,14 +844,13 @@ const langData={
     headerSub:'Cattle Pregnancy Tracker',
     tot:'Total', cow:'Cow', buf:'Buffalo',
     formT:'➕ Add New Animal', bCow:'Cow', bBuf:'Buffalo',
-    modeBreedTxt:'Pregnancy Entry', modeCalveTxt:'Calving Entry',
     namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag No.', 
-    dtLbl:'Cow Pregnancy Date', calveDateLbl:'Exact Calving Date',
+    dtLbl:'Cow Pregnancy Date',
     noteLbl:'Doctor / Semen Details (Optional)', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
     delBtn:'🗑️ Del', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
-    setNewDateBtn:'📅 Enter Calving Date',
-    infoPrompt:'💡 Enter exact calving date for accurate heat tracking',
+    setNewDateBtn:'📅 Enter New Breeding Date',
+    changeCalveDateBtn:'📅 Change Calving Date',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
     deworm:'💉 Deworming <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
@@ -950,10 +908,9 @@ function changeLanguage(){
   document.getElementById('formTitle').innerText = t.formT;
   document.getElementById('btnCowTxt').innerText = t.bCow;
   document.getElementById('btnBufTxt').innerText = t.bBuf;
-  document.getElementById('modeBreedTxt').innerText = t.modeBreedTxt;
-  document.getElementById('modeCalveTxt').innerText = t.modeCalveTxt;
   document.getElementById('lblNameLbl').innerText = t.nameLbl;
   document.getElementById('cName').placeholder = t.namePh;
+  document.getElementById('lblDate').innerText = t.dtLbl;
   document.getElementById('lblNoteLbl').innerText = t.noteLbl;
   document.getElementById('cNote').placeholder = t.notePh;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
@@ -966,7 +923,6 @@ function changeLanguage(){
   document.getElementById('btnLogin').innerText = t.btnLogin;
 
   if(pwaBtn && t.installTxt) pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
-  selectMode(currentMode);
   draw();
 }
 
@@ -1178,11 +1134,10 @@ function draw(){
         html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
       }
 
-      html += '<div class="info-box">'+t.infoPrompt+'</div>';
-
-      html += '<div class="action-btns">';
-      html += '<button class="btn-calved" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<div class="action-btns" style="flex-wrap:wrap;">';
+      html += '<button class="btn-calved" style="flex:1;" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
+      html += '<button class="btn-repeat" style="flex:1;" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
+      html += '<button class="btn-del" type="flex:0 0 auto;" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
     }
 
@@ -1272,30 +1227,16 @@ function saveData(){
   const photo = previewImg.style.display==='block' ? previewImg.src : '';
 
   const db = getDB();
-  
-  if(currentMode === 'calve'){
-    db.unshift({ 
-      id: Date.now(), 
-      name: nm, 
-      type: cur, 
-      date: dt, 
-      note: '', 
-      photo: photo,
-      isCalved: true,
-      calvedDate: dt
-    });
-  } else {
-    db.unshift({ 
-      id: Date.now(), 
-      name: nm, 
-      type: cur, 
-      date: dt, 
-      note: nt, 
-      photo: photo,
-      isCalved: false,
-      calvedDate: ''
-    });
-  }
+  db.unshift({ 
+    id: Date.now(), 
+    name: nm, 
+    type: cur, 
+    date: dt, 
+    note: nt, 
+    photo: photo,
+    isCalved: false,
+    calvedDate: ''
+  });
 
   try{
     localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
