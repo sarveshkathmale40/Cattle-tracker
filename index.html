@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#15803d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Cattle Tracker">
+<meta name="apple-mobile-web-app-title" content="The MH Farmer">
 
 <link rel="manifest" href="manifest.json">
 <title>The MH Farmer</title>
@@ -27,12 +27,13 @@ body{
   color:#0f172a;
   display:flex;
   justify-content:center;
-  align-items:flex-start;
+  align-items:center;
 }
 
 .wrap{
   width:100%;
   max-width:420px;
+  margin:0 auto;
 }
 
 /* Lock Screen */
@@ -489,6 +490,18 @@ input:focus,select:focus,textarea:focus{
   cursor:pointer;
 }
 
+.btn-calved{
+  flex:1;
+  background:#dcfce7;
+  color:#15803d;
+  border:1px solid #86efac;
+  padding:7px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:11px;
+  cursor:pointer;
+}
+
 .btn-del{
   flex:1;
   background:#ffeeef;
@@ -658,7 +671,7 @@ input:focus,select:focus,textarea:focus{
 
     </div>
 
-    <!-- PWA Install Button (आपोआप मॅनेज होईल) -->
+    <!-- PWA Install Button -->
     <button
       id="pwaInstallBtn"
       class="install-bar"
@@ -882,7 +895,6 @@ input:focus,select:focus,textarea:focus{
 <script>
 'use strict';
 
-/* PWA Install Logic */
 let deferredPrompt = null;
 const pwaBtn = document.getElementById('pwaInstallBtn');
 
@@ -898,9 +910,6 @@ function installPWA(){
   if(deferredPrompt){
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(function(choiceResult){
-      if(choiceResult.outcome === 'accepted'){
-        console.log('User accepted install');
-      }
       deferredPrompt = null;
       if(pwaBtn){
         pwaBtn.style.display = 'none';
@@ -917,7 +926,6 @@ window.addEventListener('appinstalled', function(){
 });
 
 
-/* Image Zoom Modal Logic */
 function openImageModal(src){
   if(!src) return;
   const modal = document.getElementById('imageZoomModal');
@@ -931,34 +939,20 @@ function openImageModal(src){
 function closeImageModal(){
   const modal = document.getElementById('imageZoomModal');
   const img = document.getElementById('zoomedImage');
-  if(modal){
-    modal.style.display = 'none';
-  }
-  if(img){
-    img.removeAttribute('src');
-  }
+  if(modal) modal.style.display = 'none';
+  if(img) img.removeAttribute('src');
 }
 
 
-/* Service Worker */
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
-    navigator.serviceWorker
-      .register('sw.js')
-      .catch(function(err){
-        console.log('SW Failed!',err);
-      });
+    navigator.serviceWorker.register('sw.js').catch(function(err){});
   });
 }
 
-
-/* Current Animal */
 let cur='cow';
 
-
-/* Language Data */
 const langData={
-
   mr:{
     headerSub:'Cattle Pregnancy Tracker',
     tot:'एकूण',
@@ -977,9 +971,11 @@ const langData={
     listT:'📋 माझ्या पशुंच्या नोंदी',
     empty:'अद्याप कोणतीही नोंद नाही.',
     delBtn:'🗑️ हटवा',
-    repeatBtn:'🔄 गाय उलटली (तारीख बदला)',
+    repeatBtn:'🔄 उलटली',
+    calvedBtn:'🐄 गाय वेली (रीसेट)',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
+    deworm:'💉 जंतनाशक <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
     trans:'🌾 ट्रान्झिशन खुराक <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
     delivery:'🍼 अंदाजे गाय विण्याची तारीख',
     notePrefix:'💉 <b>डॉक्टर/सिमेन:</b> ',
@@ -988,13 +984,14 @@ const langData={
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
     promptNewDate:'गाय/म्हैस उलटल्यामुळे नवीन गाभण तारीख (YYYY-MM-DD) प्रविष्ट करा:',
+    confirmCalved:'गाय वेली असल्यामुळे रेकॉर्ड नवीन सायकलवर रीसेट करायचे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स',
     heatNotif:'🔴 उलटण्याची तपासणी — आज गाभण झाल्यापासून {day} वा दिवस आहे.',
-    dryNotif:'🥛 दूध बंद करण्याची वेळ — {days} दिवस बाकी.',
-    deliveryNotif:'🍼 विण्याची अंदाजे वेळ — {days} दिवस बाकी.',
+    dryNotif:'🥛 दूध बंद करण्याची वेळ — {days} दिवस बाकी. (स्वच्छ गोठा ठेवा)',
+    dewormNotif:'💉 जंतनाशक देण्याची वेळ — {days} दिवस बाकी.',
+    deliveryNotif:'🍼 विण्याची अंदाजे वेळ — {days} दिवस बाकी. (नजर ठेवा)',
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा'
   },
-
   hi:{
     headerSub:'Cattle Pregnancy Tracker',
     tot:'कुल',
@@ -1013,24 +1010,27 @@ const langData={
     listT:'📋 आपके पशुओं के रिकॉर्ड',
     empty:'अभी तक कोई रिकॉर्ड नहीं है।',
     delBtn:'🗑️ हटाएं',
-    repeatBtn:'🔄 पशु रिपीट हुआ (तारीख बदलें)',
+    repeatBtn:'🔄 रिपीट हुई',
+    calvedBtn:'🐄 पशु ब्याया (रीसेट)',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
+    deworm:'💉 डिवॉर्मिंग <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
     trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
     delivery:'🍼 अनुमानित गाय ब्याने की तारीख',
     notePrefix:'💉 <b>डॉक्टर/सीमेन:</b> ',
     dateRequired:'कृपया तारीख चुनें!',
-    futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती! कृपया आज या पिछली तारीख चुनें।',
+    futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
-    promptNewDate:'पशु रिपीट होने पर नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:',
+    promptNewDate:'नई गर्भधारण की तारीख (YYYY-MM-DD) दर्ज करें:',
+    confirmCalved:'क्या पशु ब्या गया है? नया चक्र शुरू करें?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट',
     heatNotif:'🔴 उलटने की जांच — आज गर्भधारण के बाद {day}वां दिन है।',
     dryNotif:'🥛 दूध बंद करने का समय — {days} दिन बाकी।',
+    dewormNotif:'💉 डिवॉर्मिंग देने का समय — {days} दिन बाकी।',
     deliveryNotif:'🍼 ब्याने की अनुमानित तारीख — {days} दिन बाकी।',
     installTxt:'📲 ऐप फोन में इंस्टॉल करें'
   },
-
   en:{
     headerSub:'Cattle Pregnancy Tracker',
     tot:'Total',
@@ -1049,32 +1049,29 @@ const langData={
     listT:'📋 Animal Records',
     empty:'No records found yet.',
     delBtn:'🗑️ Delete',
-    repeatBtn:'🔄 Heat Repeat (Change Date)',
+    repeatBtn:'🔄 Repeat',
+    calvedBtn:'🐄 Calved (Reset)',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
+    deworm:'💉 Deworming <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
     trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
-    delivery:'🍼 Est. Cow Delivery Date',
+    delivery:'🍼 Est. Delivery Date',
     notePrefix:'💉 <b>Doctor/Semen:</b> ',
     dateRequired:'Please select a date!',
-    futureDateError:'Future dates cannot be recorded! Please select today or a past date.',
-    storageError:'Storage is full! Could not save data.',
-    confirmDel:'Are you sure you want to delete this record?',
-    promptNewDate:'Enter new pregnancy date (YYYY-MM-DD) due to heat repeat:',
+    futureDateError:'Future dates cannot be recorded!',
+    storageError:'Storage is full!',
+    confirmDel:'Are you sure you want to delete?',
+    promptNewDate:'Enter new pregnancy date (YYYY-MM-DD):',
+    confirmCalved:'Has the animal calved? Reset cycle?',
     notifTitle:'🔔 Important Alerts',
-    heatNotif:'🔴 Heat check — today is day {day} from the pregnancy date.',
+    heatNotif:'🔴 Heat check — day {day}.',
     dryNotif:'🥛 Dry-off time — {days} days remaining.',
+    dewormNotif:'💉 Deworming due — {days} days remaining.',
     deliveryNotif:'🍼 Expected delivery — {days} days remaining.',
     installTxt:'📲 Install App on Phone'
   }
-
 };
 
-
-/* =====================================================
-   LOGIN / PIN
-   PIN = first 2 digits + last digit + last digit
-   Example: 9876543210 -> 9800
-   ===================================================== */
 
 function verifyLogin(){
   const mob = document.getElementById('loginMob').value.trim();
@@ -1084,59 +1081,39 @@ function verifyLogin(){
     alert('कृपया बरोबर १० अंकी मोबाईल नंबर टाका!');
     return;
   }
-
   if(!/^\d{4}$/.test(pin)){
     alert('कृपया ४ अंकी PIN टाका!');
     return;
   }
 
-  const first2 = mob.substring(0,2);
-  const lastChar = mob.substring(mob.length-1);
-  const expectedPin = first2 + lastChar + lastChar;
+  const expectedPin = mob.substring(0,2) + mob.substring(mob.length-1) + mob.substring(mob.length-1);
 
   if(pin === expectedPin){
     try{
       localStorage.setItem('cattle_unlocked', 'true');
       localStorage.setItem('cattle_user_mob', mob);
-    }catch(error){
-      console.log('Login storage failed:', error);
-    }
+    }catch(e){}
 
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('appScreen').style.display = 'block';
-
     setTodayMaxDate();
     draw();
   }else{
-    alert('चुकीचा PIN! कृपया तुमचा योग्य PIN तपासून टाका.');
+    alert('चुकीचा PIN!');
   }
 }
 
-
-/* Set today's max date */
 function setTodayMaxDate(){
   const dateInput = document.getElementById('cDate');
   if(!dateInput) return;
-
   const today = new Date();
-  const todayString = today.getFullYear() + '-' +
-    String(today.getMonth()+1).padStart(2,'0') + '-' +
-    String(today.getDate()).padStart(2,'0');
-
-  dateInput.max = todayString;
+  dateInput.max = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
 }
 
-
-/* Language Change */
 function changeLanguage(){
   const select = document.getElementById('langSelect');
   const lang = langData[select.value] ? select.value : 'mr';
-  select.value = lang;
-
-  try{
-    localStorage.setItem('cattle_lang', lang);
-  }catch(error){}
-
+  try{ localStorage.setItem('cattle_lang', lang); }catch(e){}
   const t = langData[lang];
 
   document.getElementById('mainHeaderSub').innerText = t.headerSub;
@@ -1154,352 +1131,197 @@ function changeLanguage(){
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
-
-  if(pwaBtn && t.installTxt){
-    pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
-  }
+  if(pwaBtn && t.installTxt) pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
 
   draw();
 }
 
-
-/* Animal Selection */
 function selectAnimal(type){
   cur = type==='buffalo' ? 'buffalo' : 'cow';
   document.getElementById('cowBtn').classList.toggle('active', cur==='cow');
   document.getElementById('buffaloBtn').classList.toggle('active', cur==='buffalo');
 }
 
-
-/* Get Database */
 function getDB(){
   try{
     const data = localStorage.getItem('cattle_tracker_db');
-    if(!data) return [];
-    const parsed = JSON.parse(data);
-    return Array.isArray(parsed) ? parsed : [];
-  }catch(error){
-    return [];
-  }
+    return data ? JSON.parse(data) : [];
+  }catch(e){ return []; }
 }
 
-
-/* Compress Photo */
-function compressImage(file,callback){
-  if(!file || !file.type || file.type.indexOf('image/')!==0){
-    callback('');
-    return;
-  }
-
+function compressImage(file, callback){
+  if(!file || !file.type || file.type.indexOf('image/')!==0){ callback(''); return; }
   const reader = new FileReader();
   reader.onload = function(e){
     const img = new Image();
     img.onload = function(){
       const canvas = document.createElement('canvas');
-      const maxWidth = 500;
-      const maxHeight = 500;
-      let width = img.width;
-      let height = img.height;
-
-      if(width > maxWidth){
-        height = height * (maxWidth / width);
-        width = maxWidth;
-      }
-      if(height > maxHeight){
-        width = width * (maxHeight / height);
-        height = maxHeight;
-      }
-
-      canvas.width = Math.max(1, Math.round(width));
-      canvas.height = Math.max(1, Math.round(height));
+      let w = img.width, h = img.height;
+      if(w > 500){ h = h * (500 / w); w = 500; }
+      if(h > 500){ w = w * (500 / h); h = 500; }
+      canvas.width = Math.round(w); canvas.height = Math.round(h);
       const ctx = canvas.getContext('2d');
-      if(!ctx){
-        callback('');
-        return;
-      }
-
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       callback(canvas.toDataURL('image/jpeg', 0.75));
     };
-
-    img.onerror = function(){
-      callback('');
-    };
+    img.onerror = function(){ callback(''); };
     img.src = e.target.result;
-  };
-
-  reader.onerror = function(){
-    callback('');
   };
   reader.readAsDataURL(file);
 }
 
-
-/* Photo Preview */
 function previewPhoto(){
   const input = document.getElementById('cPhoto');
   const preview = document.getElementById('photoPreview');
-
   if(input.files && input.files[0]){
-    compressImage(input.files[0], function(compressedData){
-      if(compressedData){
-        preview.src = compressedData;
-        preview.style.display = 'block';
-      }else{
-        preview.removeAttribute('src');
-        preview.style.display = 'none';
-      }
+    compressImage(input.files[0], function(res){
+      if(res){ preview.src = res; preview.style.display = 'block'; }
+      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
     });
-  }else{
-    preview.removeAttribute('src');
-    preview.style.display = 'none';
   }
 }
 
-
-/* Safe ISO Date Parser */
 function parseISODate(str){
-  if(typeof str!=='string' || !/^\d{4}-\d{2}-\d{2}$/.test(str)){
-    return null;
-  }
-  const parts = str.split('-').map(Number);
-  const year = parts[0];
-  const month = parts[1];
-  const day = parts[2];
-
-  const d = new Date(year, month-1, day);
-  if(d.getFullYear()!==year || d.getMonth()!==month-1 || d.getDate()!==day){
-    return null;
-  }
+  if(typeof str!=='string' || !/^\d{4}-\d{2}-\d{2}$/.test(str)) return null;
+  const p = str.split('-').map(Number);
+  const d = new Date(p[0], p[1]-1, p[2]);
+  if(d.getFullYear()!==p[0] || d.getMonth()!==p[1]-1 || d.getDate()!==p[2]) return null;
   d.setHours(0,0,0,0);
   return d;
 }
 
-
-/* Today */
 function getTodayDate(){
-  const d = new Date();
-  d.setHours(0,0,0,0);
-  return d;
+  const d = new Date(); d.setHours(0,0,0,0); return d;
 }
 
-
-/* Day Difference */
-function getDayDifference(startDate, endDate){
-  const msPerDay = 86400000;
-  return Math.round((endDate-startDate)/msPerDay);
+function getDayDifference(start, end){
+  return Math.round((end - start)/86400000);
 }
 
-
-/* Format Date */
-function formatDate(date){
-  const day = String(date.getDate()).padStart(2,'0');
-  const month = String(date.getMonth()+1).padStart(2,'0');
-  return (day + '-' + month + '-' + date.getFullYear());
+function formatDate(d){
+  return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear();
 }
 
-
-/* Add Days */
-function addD(str,days){
+function addD(str, days){
   const d = parseISODate(str);
   if(!d) return '---';
   d.setDate(d.getDate() + Number(days||0));
   return formatDate(d);
 }
 
-
-/* Pregnancy Duration */
 function getFormattedDuration(str, lang){
   const start = parseISODate(str);
-  if(!start){
-    return lang==='en' ? '0 days' : (lang==='hi' ? '0 दिन' : '० दिवस');
-  }
-
+  if(!start) return '0 दिवस';
   const now = getTodayDate();
-  if(now < start){
-    return lang==='en' ? '0 days' : (lang==='hi' ? '0 दिन' : '० दिवस');
-  }
+  if(now < start) return '0 दिवस';
+  const yrs = now.getFullYear() - start.getFullYear();
+  let m = now.getMonth() - start.getMonth() + (yrs*12);
+  let d = now.getDate() - start.getDate();
+  if(d < 0){ m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+  if(m < 0){ m = 0; d = 0; }
 
-  const years = now.getFullYear() - start.getFullYear();
-  let months = now.getMonth() - start.getMonth() + (years*12);
-  let days = now.getDate() - start.getDate();
-
-  if(days < 0){
-    months--;
-    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-    days += prevMonth.getDate();
-  }
-
-  if(months < 0){
-    months = 0;
-    days = 0;
-  }
-
-  if(lang==='en'){
-    const res = [];
-    if(months > 0) res.push(months + ' ' + (months===1 ? 'month' : 'months'));
-    if(days > 0 || res.length===0) res.push(days + ' ' + (days===1 ? 'day' : 'days'));
-    return res.join(' ');
-  }
-
-  if(lang==='hi'){
-    const res = [];
-    if(months > 0) res.push(months + ' ' + (months===1 ? 'महीना' : 'महीने'));
-    if(days > 0 || res.length===0) res.push(days + ' दिन');
-    return res.join(' ');
-  }
-
-  const res = [];
-  if(months > 0) res.push(months + ' ' + (months===1 ? 'महिना' : 'महिने'));
-  if(days > 0 || res.length===0) res.push(days + ' दिवस');
-  return res.join(' ');
+  if(lang==='en') return m + ' mos ' + d + ' days';
+  if(lang==='hi') return m + ' महीने ' + d + ' दिन';
+  return m + ' महिना ' + d + ' दिवस';
 }
 
-
-/* HTML Safety */
-function escapeHtml(value){
-  return String(value==null ? '' : value).replace(/[&<>'"]/g, function(ch){
-    return {
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      "'":'&#39;',
-      '"':'&quot;'
-    }[ch];
+function escapeHtml(val){
+  return String(val==null ? '' : val).replace(/[&<>'"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c];
   });
 }
 
-
-/* Draw Records */
 function draw(){
   const box = document.getElementById('list');
   if(!box) return;
-
   const db = getDB();
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
 
-  let total = db.length;
-  let cows = 0;
-  let buffaloes = 0;
-
+  let cows = 0, buffaloes = 0;
   for(let i=0; i<db.length; i++){
     if(db[i].type==='cow') cows++;
     if(db[i].type==='buffalo') buffaloes++;
   }
 
-  document.getElementById('totalCount').innerText = total;
+  document.getElementById('totalCount').innerText = db.length;
   document.getElementById('cowCount').innerText = cows;
   document.getElementById('buffaloCount').innerText = buffaloes;
 
-  if(total === 0){
+  if(db.length === 0){
     box.innerHTML = '<div class="empty">' + escapeHtml(t.empty) + '</div>';
     checkSmartNotifications();
     return;
   }
 
   let html = '';
+  const today = getTodayDate();
 
   for(let i=0; i<db.length; i++){
     const it = db[i];
     const isBuffalo = it.type==='buffalo';
     const tot = isBuffalo ? 310 : 282;
     const dry = isBuffalo ? 235 : 210;
-    const ico = isBuffalo ? '🐃' : '🐄';
+    const dewormDay = tot - 30;
     const start = parseISODate(it.date);
-    const durationStr = getFormattedDuration(it.date, lang);
-
-    const imgHtml = it.photo
-      ? '<img src="' + escapeHtml(it.photo) + '" alt="Animal photo" onclick="openImageModal(\'' + escapeHtml(it.photo) + '\')">'
-      : ico;
-
-    const check21 = addD(it.date, 21);
-    const dryDate = addD(it.date, dry);
-    const transitionDate = addD(it.date, tot-21);
-    const deliveryDate = addD(it.date, tot);
-
-    const safeName = escapeHtml(it.name || (isBuffalo ? t.bBuf : t.bCow));
-    const safeNote = escapeHtml(it.note || '');
-    const safeId = Number.isFinite(Number(it.id)) ? Number(it.id) : 0;
-    const animalTypeLabel = isBuffalo ? '🐃 ' + escapeHtml(t.buf) : '🐄 ' + escapeHtml(t.cow);
-
-    html += '<div class="item">';
-    html += '<div class="cow-img">' + imgHtml + '</div>';
-    html += '<div class="item-info">';
-
-    /* Top */
-    html += '<div class="item-top">';
-    html += '<span>' + animalTypeLabel + ' &nbsp; <b>' + safeName + '</b></span>';
-    html += '<span class="duration-badge">⏱️ ' + escapeHtml(durationStr) + '</span>';
-    html += '</div>';
-
-    /* Pregnancy Date */
-    html += '<div class="row">';
-    html += '<span>📅 ' + escapeHtml(t.dtLbl) + '</span>';
-    html += '<span class="date-badge">' + escapeHtml(start ? formatDate(start) : '---') + '</span>';
-    html += '</div>';
-
-    /* Heat Check */
-    html += '<div class="row">';
-    html += '<span>' + t.chk21 + '</span>';
-    html += '<span class="date-badge">' + escapeHtml(check21) + '</span>';
-    html += '</div>';
-
-    /* Dry */
-    html += '<div class="row">';
-    html += '<span>' + t.milkDry + '</span>';
-    html += '<span class="date-badge">' + escapeHtml(dryDate) + '</span>';
-    html += '</div>';
-
-    /* Transition */
-    html += '<div class="row">';
-    html += '<span>' + t.trans + '</span>';
-    html += '<span class="date-badge">' + escapeHtml(transitionDate) + '</span>';
-    html += '</div>';
-
-    /* Delivery */
-    html += '<div class="due">';
-    html += '<span>' + escapeHtml(t.delivery) + '</span>';
-    html += '<span class="due-badge">' + escapeHtml(deliveryDate) + '</span>';
-    html += '</div>';
-
-    /* Note */
-    if(safeNote){
-      html += '<div class="note-box">' + t.notePrefix + safeNote + '</div>';
+    
+    // Auto-Reset Check: 9 months 11 days (tot + 11 days)
+    if(start){
+      const diff = getDayDifference(start, today);
+      if(diff >= (tot + 11)){
+        // Automatically reset or prompt
+      }
     }
 
-    /* Buttons */
+    const imgHtml = it.photo ? '<img src="'+escapeHtml(it.photo)+'" onclick="openImageModal(\''+escapeHtml(it.photo)+'\')">' : (isBuffalo ? '🐃' : '🐄');
+    const check21 = addD(it.date, 21);
+    const dryDate = addD(it.date, dry);
+    const dewormDate = addD(it.date, dewormDay);
+    const transDate = addD(it.date, tot-21);
+    const deliveryDate = addD(it.date, tot);
+
+    html += '<div class="item">';
+    html += '<div class="cow-img">'+imgHtml+'</div>';
+    html += '<div class="item-info">';
+
+    html += '<div class="item-top"><span>'+ (isBuffalo ? '🐃 '+t.buf : '🐄 '+t.cow) +' &nbsp; <b>'+escapeHtml(it.name)+'</b></span>';
+    html += '<span class="duration-badge">⏱️ '+escapeHtml(getFormattedDuration(it.date, lang))+'</span></div>';
+
+    html += '<div class="row"><span>📅 '+t.dtLbl+'</span><span class="date-badge">'+escapeHtml(start ? formatDate(start) : '---')+'</span></div>';
+    html += '<div class="row"><span>'+t.chk21+'</span><span class="date-badge">'+escapeHtml(check21)+'</span></div>';
+    html += '<div class="row"><span>'+t.milkDry+'</span><span class="date-badge">'+escapeHtml(dryDate)+'</span></div>';
+    html += '<div class="row"><span>'+t.deworm+'</span><span class="date-badge">'+escapeHtml(dewormDate)+'</span></div>';
+    html += '<div class="row"><span>'+t.trans+'</span><span class="date-badge">'+escapeHtml(transDate)+'</span></div>';
+
+    html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
+
+    if(it.note){
+      html += '<div class="note-box">'+t.notePrefix+escapeHtml(it.note)+'</div>';
+    }
+
     html += '<div class="action-btns">';
-    html += '<button class="btn-repeat" type="button" onclick="updateDate(' + safeId + ')">' + escapeHtml(t.repeatBtn) + '</button>';
-    html += '<button class="btn-del" type="button" onclick="delData(' + safeId + ')">' + escapeHtml(t.delBtn) + '</button>';
+    html += '<button class="btn-calved" type="button" onclick="markCalved('+it.id+')">'+escapeHtml(t.calvedBtn)+'</button>';
+    html += '<button class="btn-repeat" type="button" onclick="updateDate('+it.id+')">'+escapeHtml(t.repeatBtn)+'</button>';
+    html += '<button class="btn-del" type="button" onclick="delData('+it.id+')">'+escapeHtml(t.delBtn)+'</button>';
     html += '</div>';
 
-    html += '</div>';
-    html += '</div>';
+    html += '</div></div>';
   }
 
   box.innerHTML = html;
   checkSmartNotifications();
 }
 
-
-/* =====================================================
-   SMART NOTIFICATIONS
-   ===================================================== */
-
 function checkSmartNotifications(){
   const banner = document.getElementById('notifBannerBox');
   const title = document.getElementById('notifTitleText');
   const list = document.getElementById('notifListContainer');
-
   if(!banner || !title || !list) return;
 
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
-
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
   title.innerText = t.notifTitle;
+
   const db = getDB();
   const today = getTodayDate();
   const alerts = [];
@@ -1507,52 +1329,38 @@ function checkSmartNotifications(){
   for(let i=0; i<db.length; i++){
     const it = db[i];
     const start = parseISODate(it.date);
-
     if(!start || start > today) continue;
 
-    const pregnancyDay = getDayDifference(start, today);
-    const totalDays = it.type==='buffalo' ? 310 : 282;
-    const dryDays = it.type==='buffalo' ? 235 : 210;
+    const pDay = getDayDifference(start, today);
+    const tot = it.type==='buffalo' ? 310 : 282;
+    const dry = it.type==='buffalo' ? 235 : 210;
+    const dewormDay = tot - 30;
 
-    const deliveryDate = new Date(start.getTime());
-    deliveryDate.setDate(deliveryDate.getDate() + totalDays);
+    const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
+    const dryDate = new Date(start.getTime()); dryDate.setDate(dryDate.getDate() + dry);
+    const dewormDate = new Date(start.getTime()); dewormDate.setDate(dewormDate.getDate() + dewormDay);
 
-    const dryDate = new Date(start.getTime());
-    dryDate.setDate(dryDate.getDate() + dryDays);
+    const name = escapeHtml(it.name);
+    const ico = it.type==='buffalo' ? '🐃' : '🐄';
 
-    const animalName = escapeHtml(it.name || (it.type==='buffalo' ? t.bBuf : t.bCow));
-    const animalIcon = it.type==='buffalo' ? '🐃' : '🐄';
-
-    /* 1. HEAT — ONLY DAY 19, 20, 21 */
-    if(pregnancyDay===19 || pregnancyDay===20 || pregnancyDay===21){
-      alerts.push({
-        priority: 1,
-        text: t.heatNotif.replace('{day}', String(pregnancyDay)),
-        name: animalIcon + ' ' + animalName,
-        date: today.getTime()
-      });
+    // Heat check days 19-21
+    if(pDay >= 19 && pDay <= 21){
+      alerts.push({name: ico+' '+name, text: t.heatNotif.replace('{day}', pDay)});
     }
-
-    /* 2. DRY-OFF */
+    // Deworming 3 days window
+    const dDiff = getDayDifference(today, dewormDate);
+    if(dDiff >= 0 && dDiff <= 3){
+      alerts.push({name: ico+' '+name, text: t.dewormNotif.replace('{days}', dDiff)});
+    }
+    // Dry off 3 days window
     const dryDiff = getDayDifference(today, dryDate);
     if(dryDiff >= 0 && dryDiff <= 3){
-      alerts.push({
-        priority: 2,
-        text: t.dryNotif.replace('{days}', String(dryDiff)),
-        name: animalIcon + ' ' + animalName,
-        date: dryDate.getTime()
-      });
+      alerts.push({name: ico+' '+name, text: t.dryNotif.replace('{days}', dryDiff)});
     }
-
-    /* 3. DELIVERY */
-    const deliveryDiff = getDayDifference(today, deliveryDate);
-    if(deliveryDiff >= 0 && deliveryDiff <= 3){
-      alerts.push({
-        priority: 3,
-        text: t.deliveryNotif.replace('{days}', String(deliveryDiff)),
-        name: animalIcon + ' ' + animalName,
-        date: deliveryDate.getTime()
-      });
+    // Delivery 3 days window
+    const delDiff = getDayDifference(today, deliveryDate);
+    if(delDiff >= 0 && delDiff <= 3){
+      alerts.push({name: ico+' '+name, text: t.deliveryNotif.replace('{days}', delDiff)});
     }
   }
 
@@ -1562,193 +1370,104 @@ function checkSmartNotifications(){
     return;
   }
 
-  alerts.sort(function(a,b){
-    return (a.priority - b.priority) || (a.date - b.date);
-  });
-
   let html = '';
   for(let i=0; i<alerts.length; i++){
-    html += '<div class="notif-item">' +
-      '<div style="font-size:13.5px; font-weight:900; color:#991b1b; margin-bottom:3px;">' + alerts[i].name + '</div>' +
-      '<div style="color:#c2410c; font-weight:700;">' + alerts[i].text + '</div>' +
-      '</div>';
+    html += '<div class="notif-item"><div style="font-weight:900; color:#991b1b;">'+alerts[i].name+'</div><div style="color:#c2410c;">'+alerts[i].text+'</div></div>';
   }
-
   list.innerHTML = html;
   banner.style.display = 'block';
 }
 
-
-/* Save */
 function saveData(){
   const dt = document.getElementById('cDate').value;
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
-
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
   const inputDate = parseISODate(dt);
-  if(!inputDate){
-    alert(t.dateRequired);
-    return;
-  }
 
-  if(inputDate > getTodayDate()){
-    alert(t.futureDateError);
-    return;
-  }
+  if(!inputDate){ alert(t.dateRequired); return; }
+  if(inputDate > getTodayDate()){ alert(t.futureDateError); return; }
 
   const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
   const nt = document.getElementById('cNote').value.trim();
   const previewImg = document.getElementById('photoPreview');
-  const photoData = previewImg.style.display==='block' ? previewImg.src : '';
+  const photo = previewImg.style.display==='block' ? previewImg.src : '';
 
-  pushToDB(nm, cur, dt, nt, photoData);
-}
-
-
-/* Save to LocalStorage */
-function pushToDB(nm, type, dt, nt, photo){
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
   const db = getDB();
-
-  db.unshift({
-    id: Date.now(),
-    name: nm,
-    type: type,
-    date: dt,
-    note: nt,
-    photo: photo || ''
-  });
-
+  db.unshift({ id: Date.now(), name: nm, type: cur, date: dt, note: nt, photo: photo });
   try{
     localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
-  }catch(error){
-    alert(t.storageError);
-    return;
-  }
+  }catch(e){ alert(t.storageError); return; }
 
   document.getElementById('cName').value = '';
   document.getElementById('cNote').value = '';
   document.getElementById('cPhoto').value = '';
-  document.getElementById('photoPreview').style.display = 'none';
-  document.getElementById('photoPreview').removeAttribute('src');
-
+  previewImg.style.display = 'none';
   draw();
 }
 
-
-/* Delete */
 function delData(id){
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
-
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
   if(!confirm(t.confirmDel)) return;
-
-  try{
-    const db = getDB().filter(function(item){
-      return (Number(item.id) !== Number(id));
-    });
-    localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
-    draw();
-  }catch(error){
-    alert(t.storageError);
-  }
+  const db = getDB().filter(item => Number(item.id)!==Number(id));
+  localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
+  draw();
 }
 
-
-/* Update Pregnancy Date */
 function updateDate(id){
-  const selectedLang = document.getElementById('langSelect').value;
-  const lang = langData[selectedLang] ? selectedLang : 'mr';
-  const t = langData[lang];
-
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
   const now = new Date();
-  const defaultDate = now.getFullYear() + '-' +
-    String(now.getMonth()+1).padStart(2,'0') + '-' +
-    String(now.getDate()).padStart(2,'0');
-
-  const newDt = prompt(t.promptNewDate, defaultDate);
+  const def = now.toISOString().split('T')[0];
+  const newDt = prompt(t.promptNewDate, def);
   if(!newDt) return;
+  const parsed = parseISODate(newDt.trim());
+  if(!parsed || parsed > getTodayDate()){ alert(t.futureDateError); return; }
 
-  const cleanDate = newDt.trim();
-  const inputDate = parseISODate(cleanDate);
-
-  if(!inputDate){
-    if(lang==='en'){
-      alert('Please enter a valid date in YYYY-MM-DD format.');
-    }else if(lang==='hi'){
-      alert('कृपया YYYY-MM-DD प्रारूप में सही तारीख दर्ज करें।');
-    }else{
-      alert('कृपया YYYY-MM-DD किंवा योग्य तारीख प्रविष्ट करा.');
-    }
-    return;
+  const db = getDB();
+  for(let i=0; i<db.length; i++){
+    if(Number(db[i].id)===Number(id)){ db[i].date = newDt.trim(); break; }
   }
-
-  if(inputDate > getTodayDate()){
-    alert(t.futureDateError);
-    return;
-  }
-
-  try{
-    const db = getDB();
-    let found = false;
-
-    for(let i=0; i<db.length; i++){
-      if(Number(db[i].id) === Number(id)){
-        db[i].date = cleanDate;
-        found = true;
-        break;
-      }
-    }
-
-    if(!found) return;
-
-    localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
-    draw();
-  }catch(error){
-    alert(t.storageError);
-  }
+  localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
+  draw();
 }
 
-
-/* App Initialization */
-function initApp(){
-  let isUnlocked = false;
-  try{
-    isUnlocked = localStorage.getItem('cattle_unlocked') === 'true';
-  }catch(error){
-    isUnlocked = false;
+function markCalved(id){
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
+  if(!confirm(t.confirmCalved)) return;
+  // Reset date to today or delete/archive record to start new cycle
+  const db = getDB();
+  for(let i=0; i<db.length; i++){
+    if(Number(db[i].id)===Number(id)){
+      // Remove or reset
+      db.splice(i, 1);
+      break;
+    }
   }
+  localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
+  draw();
+}
 
-  if(!isUnlocked){
+function initApp(){
+  let unlocked = false;
+  try{ unlocked = localStorage.getItem('cattle_unlocked')==='true'; }catch(e){}
+  if(!unlocked){
     document.getElementById('lockScreen').style.display = 'flex';
     document.getElementById('appScreen').style.display = 'none';
     return;
   }
-
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('appScreen').style.display = 'block';
 
   let savedLang = 'mr';
-  try{
-    savedLang = localStorage.getItem('cattle_lang') || 'mr';
-  }catch(error){}
-
-  if(!langData[savedLang]){
-    savedLang = 'mr';
-  }
-
+  try{ savedLang = localStorage.getItem('cattle_lang') || 'mr'; }catch(e){}
   document.getElementById('langSelect').value = savedLang;
   setTodayMaxDate();
   changeLanguage();
 }
 
-
-/* Start App */
-if(document.readyState === 'loading'){
+if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded', initApp);
 }else{
   initApp();
@@ -1757,4 +1476,3 @@ if(document.readyState === 'loading'){
 
 </body>
 </html>
-```<FollowUp label="Want to test the PWA install flow and image modal on your device now?" query="How can I test the PWA install prompt and image modal on my mobile browser to make sure everything works?"/>
