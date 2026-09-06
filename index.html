@@ -483,50 +483,65 @@ input:focus,select:focus,textarea:focus{
   line-height:1.4;
 }
 
-/* Action Buttons */
+/* Clear Action Buttons Design (Clearly Visible as Buttons) */
 .action-btns{
   display:flex;
   gap:8px;
-  margin-top:8px;
+  margin-top:10px;
 }
 
 .btn-repeat{
   flex:2;
-  background:#eff6ff;
+  background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);
   color:#1d4ed8;
-  border:1px solid #bfdbfe;
-  padding:7px;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:11px;
+  border:2px solid #3b82f6;
+  padding:9px 10px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:11.5px;
   cursor:pointer;
   text-align:center;
+  box-shadow:0 2px 6px rgba(59,130,246,.2);
+  transition:all .2s;
+}
+.btn-repeat:active{
+  transform:scale(.97);
 }
 
 .btn-calved{
   flex:2;
-  background:#dcfce7;
-  color:#15803d;
-  border:1px solid #86efac;
-  padding:7px;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:11px;
+  background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);
+  color:#14532d;
+  border:2px solid #22c55e;
+  padding:9px 10px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:11.5px;
   cursor:pointer;
   text-align:center;
+  box-shadow:0 2px 6px rgba(34,197,94,.2);
+  transition:all .2s;
+}
+.btn-calved:active{
+  transform:scale(.97);
 }
 
 .btn-del{
   flex:1;
-  background:#ffeeef;
-  color:#b91c1c;
-  border:1px solid #fecaca;
-  padding:7px;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:11px;
+  background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);
+  color:#991b1b;
+  border:2px solid #ef4444;
+  padding:9px 8px;
+  border-radius:12px;
+  font-weight:900;
+  font-size:12px;
   cursor:pointer;
   text-align:center;
+  box-shadow:0 2px 6px rgba(239,68,68,.2);
+  transition:all .2s;
+}
+.btn-del:active{
+  transform:scale(.97);
 }
 
 .empty{
@@ -736,7 +751,7 @@ function openDateModal(type, id){
 
   if(type === 'repeat') title.innerText = 'गाय उलटल्यामुळे नवीन गाभण तारीख निवडा:';
   else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख निवडा:';
-  else if(type === 'newPregnancy') title.innerText = 'गाय वेवल्याची अचूक तारीख बदला (नवीन तारीख):';
+  else if(type === 'newPregnancy') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
 
   modal.style.display = 'flex';
 }
@@ -783,16 +798,16 @@ const langData={
     namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / ओळख', dtLbl:'गाय गाभण राहिल्याची तारीख',
     noteLbl:'डॉक्टर / सिमेन तपशील', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
     saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
-    delBtn:'🗑️', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 गाय वेली',
-    setNewDateBtn:'📅 गाय वेवल्याची अचूक तारीख बदला',
+    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 गाय वेली',
+    setNewDateBtn:'📅 गाय वेवल्याची तारीख टाका',
     infoPrompt:'💡 अचूक माहिती मिळवण्यासाठी गाय वेवल्याची अचूक तारीख टाका',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
     deworm:'💉 जंतनाशक <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
     trans:'🌾 ट्रान्झिशन खुराक <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
     delivery:'🍼 अंदाजे गाय विण्याची तारीख',
+    calvedDateLbl:'📅 गाय वेवल्याची तारीख',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील भरवण्याची (Heat) तयारी ठेवा:',
-    notePrefix:'💉 <b>डॉक्टर/सिमेन:</b> ',
     dateRequired:'कृपया तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
@@ -810,16 +825,16 @@ const langData={
     namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', dtLbl:'गाय गर्भधारण की तारीख',
     noteLbl:'डॉक्टर / सीमेन विवरण', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
-    delBtn:'🗑️', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 पशु ब्याया',
-    setNewDateBtn:'📅 ब्याने की सटीक तारीख बदलें',
+    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 पशु ब्याया',
+    setNewDateBtn:'📅 गाय ब्याने की तारीख दर्ज करें',
     infoPrompt:'💡 सटीक जानकारी के लिए ब्याने की सही तारीख दर्ज करें',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
     deworm:'💉 डिवॉर्मिंग <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
     trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
     delivery:'🍼 अनुमानित गाय ब्याने की तारीख',
+    calvedDateLbl:'📅 गाय ब्याने की तारीख',
     heatWindowText:'💡 90 दिन के विश्रांति काल के बाद इस तारीख से अगली बार गर्भधारण के लिए तैयार करें:',
-    notePrefix:'💉 <b>डॉक्टर/सीमेन:</b> ',
     dateRequired:'कृपया तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
@@ -837,16 +852,16 @@ const langData={
     namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag No.', dtLbl:'Cow Pregnancy Date',
     noteLbl:'Doctor / Semen Details', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
-    delBtn:'🗑️', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
-    setNewDateBtn:'📅 Change Exact Calving Date',
+    delBtn:'🗑️ Del', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
+    setNewDateBtn:'📅 Enter Calving Date',
     infoPrompt:'💡 Enter exact calving date for accurate heat tracking',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
     deworm:'💉 Deworming <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
     trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
     delivery:'🍼 Est. Delivery Date',
+    calvedDateLbl:'📅 Calving Date',
     heatWindowText:'💡 Ready for next AI / Heat check from:',
-    notePrefix:'💉 <b>Doctor/Semen:</b> ',
     dateRequired:'Please select a date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage is full!', confirmDel:'Are you sure you want to delete?',
     notifTitle:'🔔 Important Alerts',
@@ -877,7 +892,9 @@ function setTodayMaxDate(){
   const dateInput = document.getElementById('cDate');
   if(!dateInput) return;
   const today = new Date();
-  dateInput.max = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  dateInput.value = todayStr;
+  dateInput.max = todayStr;
 }
 
 function changeLanguage(){
@@ -976,6 +993,11 @@ function addD(str, days){
   if(!d) return '---';
   d.setDate(d.getDate() + Number(days||0));
   return formatDate(d);
+}
+
+function formatIsoToDisplay(isoStr){
+  const d = parseISODate(isoStr);
+  return d ? formatDate(d) : '---';
 }
 
 function getFormattedDuration(str, lang){
@@ -1112,9 +1134,12 @@ function draw(){
       html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 वेली आहे</span></div>';
 
       html += '<div class="row"><span>📅 गाय वेऊन झालेले दिवस</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+' दिवस</span></div>';
+      
+      // Exact Calved Date row displayed clearly
+      html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
+
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
-      // Replaced doctor note with clear instruction box for exact calving date
       html += '<div class="info-box">'+t.infoPrompt+'</div>';
 
       html += '<div class="action-btns">';
@@ -1228,6 +1253,7 @@ function saveData(){
   document.getElementById('cNote').value = '';
   document.getElementById('cPhoto').value = '';
   previewImg.style.display = 'none';
+  setTodayMaxDate();
   draw();
 }
 
