@@ -742,6 +742,7 @@ function openDateModal(type, id){
   if(type === 'repeat') title.innerText = 'गाय उलटल्यामुळे नवीन गाभण तारीख निवडा:';
   else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
   else if(type === 'newPregnancy') title.innerText = 'नवीन गाय लावल्याची तारीख टाका:';
+  else if(type === 'changeCalve') title.innerText = 'गाय वेवल्याची अचूक तारीख बदला:';
 
   modal.style.display = 'flex';
 }
@@ -765,8 +766,10 @@ function submitModalDate(){
         db[i].date = val;
         db[i].isCalved = false;
         db[i].calvedDate = '';
-        db[i].note = ''; // Reset note for new cycle if desired or keep
-      } else if(activeActionType === 'calved'){
+        // Allow updating doctor/semen note if needed
+        const newNote = prompt("नवीन डॉक्टर / सिमेन तपशील टाका (किंवा तसेच ठेवा):", db[i].note || "");
+        if(newNote !== null) db[i].note = newNote.trim();
+      } else if(activeActionType === 'calved' || activeActionType === 'changeCalve'){
         db[i].isCalved = true;
         db[i].calvedDate = val;
       }
@@ -793,7 +796,7 @@ const langData={
     changeCalveDateBtn:'📅 गाय वेवल्याची तारीख बदला',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
-    deworm:'💉 जंतनाशक <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
+    deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
     trans:'🌾 ट्रान्झिशन खुराक <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
     delivery:'🍼 अंदाजे गाय विण्याची तारीख',
     calvedDateLbl:'📅 गाय वेवल्याची तारीख',
@@ -802,10 +805,10 @@ const langData={
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स',
-    heatNotif:'🔴 उलटण्याची तपासणी — आज गाभण झाल्यापासून {day} वा दिवस आहे.',
-    dryNotif:'🥛 दूध बंद करण्याची वेळ — {days} दिवस बाकी.',
-    dewormNotif:'💉 जंतनाशक देण्याची वेळ — {days} दिवस बाकी.',
-    deliveryNotif:'🍼 विण्याची अंदाजे वेळ — {days} दिवस बाकी.',
+    heatNotif:'🔴 आज गाभण राहून २१ दिवस पूर्ण झाले आहेत. कृपया गाय उलटली का ते तपासा.',
+    dryNotif:'🥛 आज दूध बंद करण्याची (आटवण्याची) वेळ आली आहे. कृपया योग्य काळजी घ्या.',
+    dewormNotif:'💊 आज वीण्याच्या नेमका महिनाभर आधीची जंतनाशक गोळी/औषध देण्याची वेळ आहे.',
+    deliveryNotif:'🍼 आज गाय विण्याची अंदाजे वेळ आहे. कृपया गोठ्यात लक्ष ठेवा.',
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀'
@@ -823,7 +826,7 @@ const langData={
     changeCalveDateBtn:'📅 गाय ब्याने की तारीख बदलें',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
-    deworm:'💉 डिवॉर्मिंग <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
+    deworm:'💊 डिवॉर्मिंग दवा <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
     trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
     delivery:'🍼 अनुमानित गाय ब्याने की तारीख',
     calvedDateLbl:'📅 गाय ब्याने की तारीख',
@@ -832,10 +835,10 @@ const langData={
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट',
-    heatNotif:'🔴 उलटने की जांच — आज गर्भधारण के बाद {day}वां दिन है।',
-    dryNotif:'🥛 दूध बंद करने का समय — {days} दिन बाकी।',
-    dewormNotif:'💉 डिवॉर्मिंग देने का समय — {days} दिन बाकी।',
-    deliveryNotif:'🍼 ब्याने की अनुमानित तारीख — {days} दिन बाकी।',
+    heatNotif:'🔴 आज गर्भधारण के 21 दिन पूरे हो गए हैं। कृपया जांच करें कि गाय रिपीट हुई है या नहीं।',
+    dryNotif:'🥛 आज दूध बंद करने का समय आ गया है। कृपया उचित देखभाल करें।',
+    dewormNotif:'💊 आज ब्याने से ठीक एक महीना पहले की डिवॉर्मिंग दवा देने का दिन है।',
+    deliveryNotif:'🍼 आज गाय के ब्याने की अनुमानित तारीख है। कृपया नजर रखें।',
     installTxt:'📲 ऐप इंस्टॉल करें',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और पिन दर्ज करें',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀'
@@ -853,7 +856,7 @@ const langData={
     changeCalveDateBtn:'📅 Change Calving Date',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
-    deworm:'💉 Deworming <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
+    deworm:'💊 Deworming Medicine <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
     trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
     delivery:'🍼 Est. Delivery Date',
     calvedDateLbl:'📅 Calving Date',
@@ -861,10 +864,10 @@ const langData={
     dateRequired:'Please select a date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage is full!', confirmDel:'Are you sure you want to delete?',
     notifTitle:'🔔 Important Alerts',
-    heatNotif:'🔴 Heat check — day {day}.',
-    dryNotif:'🥛 Dry-off time — {days} days remaining.',
-    dewormNotif:'💉 Deworming due — {days} days remaining.',
-    deliveryNotif:'🍼 Expected delivery — {days} days remaining.',
+    heatNotif:'🔴 Today marks 21 days of pregnancy. Please check if the animal is in heat.',
+    dryNotif:'🥛 Today is the dry-off period. Please take proper care.',
+    dewormNotif:'💊 Today is the deworming medicine schedule, exactly one month prior to delivery.',
+    deliveryNotif:'🍼 Expected delivery is today. Please keep a close watch.',
     installTxt:'📲 Install App on Phone',
     lockSubTxt:'Enter your mobile number and PIN to use the app',
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀'
@@ -1023,34 +1026,11 @@ function draw(){
   const t = langData[lang] || langData.mr;
 
   let cows = 0, buffaloes = 0;
-  const today = getTodayDate();
-  let dbUpdated = false;
 
   for(let i=0; i<db.length; i++){
     const it = db[i];
-    const isBuffalo = it.type==='buffalo';
-    const tot = isBuffalo ? 310 : 282;
-
-    if(!it.isCalved){
-      const start = parseISODate(it.date);
-      if(start){
-        const pDays = getDayDifference(start, today);
-        if(pDays >= tot){
-          it.isCalved = true;
-          const expectedDelivery = new Date(start.getTime());
-          expectedDelivery.setDate(expectedDelivery.getDate() + tot);
-          it.calvedDate = expectedDelivery.getFullYear() + '-' + String(expectedDelivery.getMonth()+1).padStart(2,'0') + '-' + String(expectedDelivery.getDate()).padStart(2,'0');
-          dbUpdated = true;
-        }
-      }
-    }
-
     if(it.type==='cow') cows++;
     if(it.type==='buffalo') buffaloes++;
-  }
-
-  if(dbUpdated){
-    try{ localStorage.setItem('cattle_tracker_db', JSON.stringify(db)); }catch(e){}
   }
 
   document.getElementById('totalCount').innerText = db.length;
@@ -1064,6 +1044,7 @@ function draw(){
   }
 
   let html = '';
+  const today = getTodayDate();
 
   for(let i=0; i<db.length; i++){
     const it = db[i];
@@ -1104,7 +1085,7 @@ function draw(){
       html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
 
       if(safeNote && safeNote.toLowerCase() !== 'undefined' && safeNote !== ''){
-        html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
+        html += '<div class="note-box">💉 <b>डॉक्टर/सिमेन:</b> ' + safeNote + '</div>';
       }
 
       html += '<div class="action-btns">';
@@ -1131,13 +1112,13 @@ function draw(){
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
       if(safeNote && safeNote.toLowerCase() !== 'undefined' && safeNote !== ''){
-        html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
+        html += '<div class="note-box">💉 <b>डॉक्टर/सिमेन:</b> ' + safeNote + '</div>';
       }
 
       html += '<div class="action-btns" style="flex-wrap:wrap;">';
       html += '<button class="btn-calved" style="flex:1;" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
       html += '<button class="btn-repeat" style="flex:1;" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="flex:0 0 auto;" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-del" style="flex:0 0 auto;" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
     }
 
@@ -1164,7 +1145,17 @@ function checkSmartNotifications(){
 
   for(let i=0; i<db.length; i++){
     const it = db[i];
-    if(it.isCalved) continue;
+    if(it.isCalved){
+      // Check 90 days rest period alert for heat
+      const calvedDate = parseISODate(it.calvedDate);
+      if(calvedDate){
+        const cDay = getDayDifference(calvedDate, today);
+        if(cDay === 90){
+          alerts.push({name: (it.type==='buffalo'?'🐃':'🐄')+' '+escapeHtml(it.name), text: '💡 वेऊन ९० दिवस पूर्ण झाले आहेत. आता गाय माजावर आली असेल तर तपासून भरवून घ्या.'});
+        }
+      }
+      continue;
+    }
 
     const start = parseISODate(it.date);
     if(!start || start > today) continue;
@@ -1181,20 +1172,20 @@ function checkSmartNotifications(){
     const name = escapeHtml(it.name);
     const ico = it.type==='buffalo' ? '🐃' : '🐄';
 
-    if(pDay >= 19 && pDay <= 21){
-      alerts.push({name: ico+' '+name, text: t.heatNotif.replace('{day}', pDay)});
+    if(pDay === 21){
+      alerts.push({name: ico+' '+name, text: t.heatNotif});
     }
     const dDiff = getDayDifference(today, dewormDate);
-    if(dDiff >= 0 && dDiff <= 3){
-      alerts.push({name: ico+' '+name, text: t.dewormNotif.replace('{days}', dDiff)});
+    if(dDiff === 0){
+      alerts.push({name: ico+' '+name, text: t.dewormNotif});
     }
     const dryDiff = getDayDifference(today, dryDate);
-    if(dryDiff >= 0 && dryDiff <= 3){
-      alerts.push({name: ico+' '+name, text: t.dryNotif.replace('{days}', dryDiff)});
+    if(dryDiff === 0){
+      alerts.push({name: ico+' '+name, text: t.dryNotif});
     }
     const delDiff = getDayDifference(today, deliveryDate);
-    if(delDiff >= 0 && delDiff <= 3){
-      alerts.push({name: ico+' '+name, text: t.deliveryNotif.replace('{days}', delDiff)});
+    if(delDiff === 0){
+      alerts.push({name: ico+' '+name, text: t.deliveryNotif});
     }
   }
 
