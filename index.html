@@ -483,7 +483,7 @@ input:focus,select:focus,textarea:focus{
   line-height:1.4;
 }
 
-/* Clear Action Buttons Design (Clearly Visible as Buttons) */
+/* Action Buttons */
 .action-btns{
   display:flex;
   gap:8px;
@@ -502,10 +502,6 @@ input:focus,select:focus,textarea:focus{
   cursor:pointer;
   text-align:center;
   box-shadow:0 2px 6px rgba(59,130,246,.2);
-  transition:all .2s;
-}
-.btn-repeat:active{
-  transform:scale(.97);
 }
 
 .btn-calved{
@@ -520,10 +516,6 @@ input:focus,select:focus,textarea:focus{
   cursor:pointer;
   text-align:center;
   box-shadow:0 2px 6px rgba(34,197,94,.2);
-  transition:all .2s;
-}
-.btn-calved:active{
-  transform:scale(.97);
 }
 
 .btn-del{
@@ -538,10 +530,6 @@ input:focus,select:focus,textarea:focus{
   cursor:pointer;
   text-align:center;
   box-shadow:0 2px 6px rgba(239,68,68,.2);
-  transition:all .2s;
-}
-.btn-del:active{
-  transform:scale(.97);
 }
 
 .empty{
@@ -660,21 +648,36 @@ input:focus,select:focus,textarea:focus{
       </div>
     </div>
 
+    <!-- Form -->
     <div class="card">
       <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
       <div class="animal-buttons">
         <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">गाय</span></button>
         <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
       </div>
+
       <label id="lblNameLbl">पशुचे नाव / ओळख</label>
       <input type="text" id="cName" placeholder="उदा. कावेरी">
-      <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
+
+      <!-- Status Choice: Pregnant vs Already Calved -->
+      <label id="lblStatusType">पशुची सद्यस्थिती निवडा</label>
+      <select id="statusType" onchange="toggleStatusInputs()">
+        <option value="pregnant">गाय गाभण आहे (तारीख माहिती आहे)</option>
+        <option value="calved">गाय आधीच वेली आहे (काल/परवा वेली)</option>
+      </select>
+
+      <div id="dateContainerLabel">
+        <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
+      </div>
       <input type="date" id="cDate">
-      <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील</label>
+
+      <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील (पर्यायी)</label>
       <textarea id="cNote" placeholder="उदा. डॉक्टरचे नाव, सिमेन ब्रँड"></textarea>
+
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
+
       <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 नोंद जतन करा</button>
     </div>
 
@@ -738,6 +741,21 @@ let cur = 'cow';
 let activeActionId = null;
 let activeActionType = null;
 
+function toggleStatusInputs(){
+  const status = document.getElementById('statusType').value;
+  const lblDate = document.getElementById('lblDate');
+  const lang = document.getElementById('langSelect').value;
+  if(status === 'calved'){
+    if(lang==='en') lblDate.innerText = 'Exact Calving Date';
+    else if(lang==='hi') lblDate.innerText = 'गाय ब्याने की सटीक तारीख';
+    else lblDate.innerText = 'गाय वेवल्याची अचूक तारीख';
+  } else {
+    if(lang==='en') lblDate.innerText = 'Cow Pregnancy Date';
+    else if(lang==='hi') lblDate.innerText = 'गाय गर्भधारण की तारीख';
+    else lblDate.innerText = 'गाय गाभण राहिल्याची तारीख';
+  }
+}
+
 function openDateModal(type, id){
   activeActionType = type;
   activeActionId = id;
@@ -750,7 +768,7 @@ function openDateModal(type, id){
   input.max = input.value;
 
   if(type === 'repeat') title.innerText = 'गाय उलटल्यामुळे नवीन गाभण तारीख निवडा:';
-  else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख निवडा:';
+  else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
   else if(type === 'newPregnancy') title.innerText = 'गाय वेवल्याची अचूक तारीख टाका:';
 
   modal.style.display = 'flex';
@@ -775,11 +793,9 @@ function submitModalDate(){
         db[i].date = val;
         db[i].isCalved = false;
         db[i].calvedDate = '';
-      } else if(activeActionType === 'calved'){
+      } else if(activeActionType === 'calved' || activeActionType === 'newPregnancy'){
         db[i].isCalved = true;
         db[i].calvedDate = val;
-      } else if(activeActionType === 'newPregnancy'){
-        db[i].calvedDate = val; // Update exact calved date safely
       }
       break;
     }
@@ -796,7 +812,7 @@ const langData={
     tot:'एकूण', cow:'गाय', buf:'म्हैस',
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
     namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / ओळख', dtLbl:'गाय गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर / सिमेन तपशील', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
+    noteLbl:'डॉक्टर / सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
     saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 गाय वेली',
     setNewDateBtn:'📅 गाय वेवल्याची तारीख टाका',
@@ -823,7 +839,7 @@ const langData={
     tot:'कुल', cow:'गाय', buf:'भैंस',
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
     namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', dtLbl:'गाय गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर / सीमेन विवरण', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
+    noteLbl:'डॉक्टर / सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 पशु ब्याया',
     setNewDateBtn:'📅 गाय ब्याने की तारीख दर्ज करें',
@@ -850,7 +866,7 @@ const langData={
     tot:'Total', cow:'Cow', buf:'Buffalo',
     formT:'➕ Add New Animal', bCow:'Cow', bBuf:'Buffalo',
     namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag No.', dtLbl:'Cow Pregnancy Date',
-    noteLbl:'Doctor / Semen Details', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
+    noteLbl:'Doctor / Semen Details (Optional)', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
     delBtn:'🗑️ Del', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter Calving Date',
@@ -912,13 +928,13 @@ function changeLanguage(){
   document.getElementById('btnBufTxt').innerText = t.bBuf;
   document.getElementById('lblNameLbl').innerText = t.nameLbl;
   document.getElementById('cName').placeholder = t.namePh;
-  document.getElementById('lblDate').innerText = t.dtLbl;
   document.getElementById('lblNoteLbl').innerText = t.noteLbl;
   document.getElementById('cNote').placeholder = t.notePh;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
   if(pwaBtn && t.installTxt) pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
+  toggleStatusInputs();
   draw();
 }
 
@@ -993,11 +1009,6 @@ function addD(str, days){
   if(!d) return '---';
   d.setDate(d.getDate() + Number(days||0));
   return formatDate(d);
-}
-
-function formatIsoToDisplay(isoStr){
-  const d = parseISODate(isoStr);
-  return d ? formatDate(d) : '---';
 }
 
 function getFormattedDuration(str, lang){
@@ -1110,7 +1121,8 @@ function draw(){
 
       html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
 
-      if(safeNote){
+      // Safe note check: render only if note is present and not 'undefined'
+      if(safeNote && safeNote.toLowerCase() !== 'undefined'){
         html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
       }
 
@@ -1125,7 +1137,7 @@ function draw(){
     } else {
       const calvedDate = parseISODate(it.calvedDate);
       const cDays = calvedDate ? getDayDifference(calvedDate, today) : 0;
-      const restDays = 90; // Exactly 90 days rest period
+      const restDays = 90;
       
       const heatStart = new Date(calvedDate.getTime());
       heatStart.setDate(heatStart.getDate() + restDays);
@@ -1134,11 +1146,12 @@ function draw(){
       html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 वेली आहे</span></div>';
 
       html += '<div class="row"><span>📅 गाय वेऊन झालेले दिवस</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+' दिवस</span></div>';
-      
-      // Exact Calved Date row displayed clearly
       html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
-
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
+
+      if(safeNote && safeNote.toLowerCase() !== 'undefined'){
+        html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
+      }
 
       html += '<div class="info-box">'+t.infoPrompt+'</div>';
 
@@ -1232,18 +1245,33 @@ function saveData(){
   const nt = document.getElementById('cNote').value.trim();
   const previewImg = document.getElementById('photoPreview');
   const photo = previewImg.style.display==='block' ? previewImg.src : '';
+  const statusType = document.getElementById('statusType').value;
 
   const db = getDB();
-  db.unshift({ 
-    id: Date.now(), 
-    name: nm, 
-    type: cur, 
-    date: dt, 
-    note: nt, 
-    photo: photo,
-    isCalved: false,
-    calvedDate: ''
-  });
+  
+  if(statusType === 'calved'){
+    db.unshift({ 
+      id: Date.now(), 
+      name: nm, 
+      type: cur, 
+      date: dt, // stored as reference 
+      note: nt, 
+      photo: photo,
+      isCalved: true,
+      calvedDate: dt
+    });
+  } else {
+    db.unshift({ 
+      id: Date.now(), 
+      name: nm, 
+      type: cur, 
+      date: dt, 
+      note: nt, 
+      photo: photo,
+      isCalved: false,
+      calvedDate: ''
+    });
+  }
 
   try{
     localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
