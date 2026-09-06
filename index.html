@@ -471,6 +471,18 @@ input:focus,select:focus,textarea:focus{
   font-weight:500;
 }
 
+.info-box{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  border-radius:8px;
+  padding:8px;
+  font-size:11.5px;
+  color:#166534;
+  margin-top:6px;
+  font-weight:700;
+  line-height:1.4;
+}
+
 /* Action Buttons */
 .action-btns{
   display:flex;
@@ -709,7 +721,7 @@ function closeImageModal(){
 
 let cur = 'cow';
 let activeActionId = null;
-let activeActionType = null; // 'repeat' or 'calved' or 'newPregnancy'
+let activeActionType = null;
 
 function openDateModal(type, id){
   activeActionType = type;
@@ -724,7 +736,7 @@ function openDateModal(type, id){
 
   if(type === 'repeat') title.innerText = 'गाय उलटल्यामुळे नवीन गाभण तारीख निवडा:';
   else if(type === 'calved') title.innerText = 'गाय वेवल्याची अचूक तारीख निवडा:';
-  else if(type === 'newPregnancy') title.innerText = 'पुन्हा गाभण राहिल्याची तारीख निवडा:';
+  else if(type === 'newPregnancy') title.innerText = 'गाय वेवल्याची अचूक तारीख बदला (नवीन तारीख):';
 
   modal.style.display = 'flex';
 }
@@ -752,9 +764,7 @@ function submitModalDate(){
         db[i].isCalved = true;
         db[i].calvedDate = val;
       } else if(activeActionType === 'newPregnancy'){
-        db[i].date = val;
-        db[i].isCalved = false;
-        db[i].calvedDate = '';
+        db[i].calvedDate = val; // Update exact calved date safely
       }
       break;
     }
@@ -774,7 +784,8 @@ const langData={
     noteLbl:'डॉक्टर / सिमेन तपशील', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
     saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
     delBtn:'🗑️', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 गाय वेली',
-    setNewDateBtn:'📅 गाय लावली (तारीख बदला)',
+    setNewDateBtn:'📅 गाय वेवल्याची अचूक तारीख बदला',
+    infoPrompt:'💡 अचूक माहिती मिळवण्यासाठी गाय वेवल्याची अचूक तारीख टाका',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
     deworm:'💉 जंतनाशक <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
@@ -800,7 +811,8 @@ const langData={
     noteLbl:'डॉक्टर / सीमेन विवरण', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
     delBtn:'🗑️', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 पशु ब्याया',
-    setNewDateBtn:'📅 गर्भधारण तारीख बदलें',
+    setNewDateBtn:'📅 ब्याने की सटीक तारीख बदलें',
+    infoPrompt:'💡 सटीक जानकारी के लिए ब्याने की सही तारीख दर्ज करें',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
     deworm:'💉 डिवॉर्मिंग <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
@@ -826,7 +838,8 @@ const langData={
     noteLbl:'Doctor / Semen Details', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
     delBtn:'🗑️', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
-    setNewDateBtn:'📅 Change Breeding Date',
+    setNewDateBtn:'📅 Change Exact Calving Date',
+    infoPrompt:'💡 Enter exact calving date for accurate heat tracking',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
     deworm:'💉 Deworming <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
@@ -1003,7 +1016,6 @@ function draw(){
     const isBuffalo = it.type==='buffalo';
     const tot = isBuffalo ? 310 : 282;
 
-    // EXACT 282/310 DAYS AUTO-CALVED CHECK
     if(!it.isCalved){
       const start = parseISODate(it.date);
       if(start){
@@ -1102,9 +1114,8 @@ function draw(){
       html += '<div class="row"><span>📅 गाय वेऊन झालेले दिवस</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+' दिवस</span></div>';
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
-      if(safeNote){
-        html += '<div class="note-box">'+t.notePrefix+safeNote+'</div>';
-      }
+      // Replaced doctor note with clear instruction box for exact calving date
+      html += '<div class="info-box">'+t.infoPrompt+'</div>';
 
       html += '<div class="action-btns">';
       html += '<button class="btn-calved" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
