@@ -12,104 +12,699 @@
 <title>The MH Farmer</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 50%,#f8fafc 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:center;}
-.wrap{width:100%;max-width:420px;margin:0 auto;}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:system-ui,-apple-system,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left,rgba(34,197,94,.14),transparent 35%),
+    linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 50%,#f8fafc 100%);
+  min-height:100vh;
+  padding:10px;
+  color:#0f172a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.wrap{
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+}
 
 /* Lock Screen */
-#lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:90vh;}
-.lock-card{background:white;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:1px solid #e2e8f0;text-align:center;}
-.lock-title{font-size:22px;font-weight:900;color:#15803d;margin-bottom:6px;}
-.lock-sub{font-size:12px;color:#64748b;margin-bottom:20px;font-weight:600;line-height:1.4;}
+#lockScreen{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:90vh;
+}
 
-/* 3D Attractive Header */
-.app-header{background:linear-gradient(135deg,#15803d 0%,#16a34a 50%,#22c55e 100%);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 10px 25px -5px rgba(22,163,74,.4),inset 0 2px 4px rgba(255,255,255,.3);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #14532d;}
-.header-title{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 3px 6px rgba(0,0,0,.2);background:linear-gradient(to right, #ffffff, #dcfce7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.header-sub{font-size:11px;color:#bbf7d0;margin-top:2px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;}
+.lock-card{
+  background:linear-gradient(145deg,#ffffff 0%,#f8fafc 100%);
+  border-radius:26px;
+  padding:24px;
+  box-shadow:
+    0 18px 40px rgba(15,23,42,.12),
+    inset 0 2px 4px rgba(255,255,255,.9);
+  border:2px solid #dbeafe;
+  text-align:center;
+}
+
+.lock-title{
+  font-size:22px;
+  font-weight:900;
+  color:#15803d;
+  margin-bottom:6px;
+  text-shadow:0 2px 4px rgba(21,128,61,.15);
+}
+
+.lock-sub{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:20px;
+  font-weight:600;
+  line-height:1.4;
+}
+
+/* Premium 3D Header */
+.app-header{
+  background:
+    linear-gradient(135deg,#14532d 0%,#15803d 38%,#16a34a 70%,#22c55e 100%);
+  border-radius:24px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:
+    0 12px 28px rgba(22,163,74,.35),
+    inset 0 2px 5px rgba(255,255,255,.35),
+    inset 0 -4px 8px rgba(0,0,0,.12);
+  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:white;
+  border:2px solid #14532d;
+}
+
+.header-title{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:.5px;
+  text-shadow:0 3px 7px rgba(0,0,0,.25);
+  background:linear-gradient(to right,#ffffff,#dcfce7);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.header-sub{
+  font-size:11px;
+  color:#bbf7d0;
+  margin-top:2px;
+  font-weight:800;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
 
 /* Install PWA Button */
-.install-bar{display:none;background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:10px 14px;border-radius:14px;margin-bottom:12px;text-align:center;box-shadow:0 6px 15px rgba(16,185,129,.3);font-size:13px;font-weight:800;border:none;width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;}
+.install-bar{
+  display:none;
+  background:linear-gradient(135deg,#047857 0%,#059669 45%,#10b981 100%);
+  color:white;
+  padding:11px 14px;
+  border-radius:15px;
+  margin-bottom:12px;
+  text-align:center;
+  box-shadow:
+    0 7px 16px rgba(16,185,129,.32),
+    inset 0 2px 3px rgba(255,255,255,.3);
+  font-size:13px;
+  font-weight:900;
+  border:2px solid #047857;
+  width:100%;
+  cursor:pointer;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  transition:all .15s ease;
+}
+
+.install-bar:active{
+  transform:translateY(2px) scale(.98);
+  box-shadow:0 3px 8px rgba(16,185,129,.25);
+}
 
 /* Language */
-#langSelect{background:rgba(255,255,255,.25);color:white;border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:bold;outline:none;cursor:pointer;}
-#langSelect option{background:#15803d;color:white;}
+#langSelect{
+  background:rgba(255,255,255,.22);
+  color:white;
+  border:2px solid rgba(255,255,255,.5);
+  border-radius:11px;
+  padding:7px 10px;
+  font-size:12px;
+  font-weight:bold;
+  outline:none;
+  cursor:pointer;
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.15),
+    inset 0 1px 2px rgba(255,255,255,.25);
+}
+
+#langSelect option{
+  background:#15803d;
+  color:white;
+}
 
 /* Notifications */
-.notification-banner{background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);border:2px solid #fdba74;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(194,65,12,.15);}
-.notif-title{font-size:13px;font-weight:900;color:#c2410c;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
-.notif-list{display:flex;flex-direction:column;gap:6px;}
-.notif-item{background:white;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#7c2d12;font-weight:600;border:1.5px solid #fed7aa;line-height:1.4;border-left:4px solid #ea580c;}
+.notification-banner{
+  background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);
+  border:2px solid #fb923c;
+  border-radius:17px;
+  padding:12px;
+  margin-bottom:12px;
+  box-shadow:
+    0 7px 20px rgba(194,65,12,.15),
+    inset 0 2px 3px rgba(255,255,255,.7);
+}
+
+.notif-title{
+  font-size:13px;
+  font-weight:900;
+  color:#c2410c;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.notif-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.notif-item{
+  background:linear-gradient(145deg,#ffffff 0%,#fff7ed 100%);
+  border-radius:11px;
+  padding:8px 10px;
+  font-size:11.5px;
+  color:#7c2d12;
+  font-weight:600;
+  border:1.5px solid #fed7aa;
+  line-height:1.4;
+  border-left:5px solid #ea580c;
+  box-shadow:0 3px 8px rgba(0,0,0,.05);
+}
 
 /* 3D Stats Cards */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.stat{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);padding:10px 6px;border-radius:16px;text-align:center;box-shadow:0 6px 15px rgba(0,0,0,.05),inset 0 2px 3px rgba(255,255,255,.8);border:2px solid #e2e8f0;}
-.stat-number{font-size:18px;font-weight:900;color:#15803d;}
-.stat-label{font-size:10.5px;color:#64748b;font-weight:800;margin-top:1px;}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.stat{
+  background:linear-gradient(145deg,#ffffff 0%,#f1f5f9 100%);
+  padding:11px 6px;
+  border-radius:17px;
+  text-align:center;
+  box-shadow:
+    0 7px 16px rgba(0,0,0,.07),
+    inset 0 2px 4px rgba(255,255,255,.9);
+  border:2px solid #dbeafe;
+  transition:transform .15s ease;
+}
+
+.stat:active{
+  transform:scale(.97);
+}
+
+.stat-number{
+  font-size:18px;
+  font-weight:900;
+  color:#15803d;
+  text-shadow:0 2px 4px rgba(21,128,61,.15);
+}
+
+.stat-label{
+  font-size:10.5px;
+  color:#64748b;
+  font-weight:800;
+  margin-top:1px;
+}
 
 /* Main Card */
-.card{background:white;border-radius:20px;padding:14px;margin-bottom:12px;box-shadow:0 8px 25px rgba(0,0,0,.05);border:2px solid #e2e8f0;}
-.card h3{font-size:15px;margin-bottom:10px;color:#15803d;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.3px;}
+.card{
+  background:linear-gradient(145deg,#ffffff 0%,#f8fafc 100%);
+  border-radius:21px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:
+    0 9px 25px rgba(15,23,42,.07),
+    inset 0 2px 4px rgba(255,255,255,.9);
+  border:2px solid #e2e8f0;
+}
+
+.card h3{
+  font-size:15px;
+  margin-bottom:10px;
+  color:#15803d;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+}
 
 /* Inputs */
-label{display:block;text-align:left;font-size:10.5px;font-weight:800;color:#475569;margin-bottom:4px;margin-left:2px;}
-input,select,textarea{width:100%;padding:10px 12px;border:2px solid #cbd5e1;border-radius:12px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:8px;font-weight:700;font-family:inherit;transition:all .2s;}
-input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;box-shadow:0 0 0 3px rgba(22,163,74,.15);}
-textarea{height:55px;resize:none;}
+label{
+  display:block;
+  text-align:left;
+  font-size:10.5px;
+  font-weight:800;
+  color:#475569;
+  margin-bottom:4px;
+  margin-left:2px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:10px 12px;
+  border:2px solid #cbd5e1;
+  border-radius:13px;
+  font-size:14px;
+  outline:none;
+  background:#f8fafc;
+  margin-bottom:8px;
+  font-weight:700;
+  font-family:inherit;
+  transition:all .2s;
+  box-shadow:inset 0 2px 4px rgba(15,23,42,.04);
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#16a34a;
+  background:white;
+  box-shadow:
+    0 0 0 3px rgba(22,163,74,.15),
+    inset 0 2px 4px rgba(15,23,42,.03);
+}
+
+textarea{
+  height:55px;
+  resize:none;
+}
 
 /* 3D Animal Buttons */
-.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;}
-.animal-btn{border:2px solid #cbd5e1;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);padding:10px 6px;border-radius:12px;cursor:pointer;font-weight:900;color:#64748b;text-align:center;font-size:13px;box-shadow:0 4px 10px rgba(0,0,0,.04),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
-.animal-btn:active{transform:scale(.96);}
-.animal-btn.active{border-color:#15803d;background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);color:#14532d;box-shadow:0 6px 15px rgba(22,163,74,.25),inset 0 2px 4px rgba(255,255,255,.6);}
+.animal-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:10px;
+}
 
-/* 3D Interactive Buttons with Animation */
-.btn{width:100%;background:linear-gradient(135deg,#16a34a 0%,#15803d 50%,#14532d 100%);color:white;border:2px solid #14532d;padding:12px;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;margin-top:4px;box-shadow:0 6px 18px rgba(22,163,74,.35),inset 0 2px 4px rgba(255,255,255,.3);letter-spacing:.3px;transition:all .15s ease;}
-.btn:active{transform:scale(.96);box-shadow:0 2px 6px rgba(22,163,74,.3);}
+.animal-btn{
+  border:2px solid #cbd5e1;
+  background:linear-gradient(145deg,#ffffff 0%,#e2e8f0 100%);
+  padding:11px 6px;
+  border-radius:13px;
+  cursor:pointer;
+  font-weight:900;
+  color:#64748b;
+  text-align:center;
+  font-size:13px;
+  box-shadow:
+    0 5px 0 #cbd5e1,
+    0 7px 13px rgba(0,0,0,.07),
+    inset 0 2px 3px rgba(255,255,255,.9);
+  transition:all .15s ease;
+}
 
-/* Photo Preview (Clean Natural Frame) */
-.photo-preview{width:65px;height:65px;border-radius:14px;object-fit:cover;display:none;margin:4px auto 8px;border:1px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer;}
+.animal-btn:active{
+  transform:translateY(4px) scale(.98);
+  box-shadow:0 2px 4px rgba(0,0,0,.08);
+}
+
+.animal-btn.active{
+  border-color:#15803d;
+  background:linear-gradient(145deg,#dcfce7 0%,#86efac 100%);
+  color:#14532d;
+  box-shadow:
+    0 5px 0 #15803d,
+    0 8px 16px rgba(22,163,74,.25),
+    inset 0 2px 4px rgba(255,255,255,.65);
+}
+
+/* Premium 3D Main Buttons */
+.btn{
+  width:100%;
+  background:linear-gradient(145deg,#22c55e 0%,#16a34a 45%,#14532d 100%);
+  color:white;
+  border:2px solid #14532d;
+  padding:12px;
+  border-radius:13px;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:4px;
+  box-shadow:
+    0 6px 0 #14532d,
+    0 10px 20px rgba(22,163,74,.28),
+    inset 0 2px 4px rgba(255,255,255,.35);
+  letter-spacing:.3px;
+  transition:all .15s ease;
+}
+
+.btn:active{
+  transform:translateY(5px) scale(.98);
+  box-shadow:
+    0 2px 5px rgba(22,163,74,.25),
+    inset 0 2px 4px rgba(0,0,0,.12);
+}
+
+/* Photo Preview */
+.photo-preview{
+  width:65px;
+  height:65px;
+  border-radius:14px;
+  object-fit:cover;
+  display:none;
+  margin:4px auto 8px;
+  border:2px solid #cbd5e1;
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.1),
+    inset 0 2px 3px rgba(255,255,255,.8);
+  cursor:pointer;
+}
 
 /* Records Item */
-.item{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border-radius:16px;padding:12px;border:2px solid #e2e8f0;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 4px 15px rgba(0,0,0,.03);}
-.cow-img{width:72px;height:72px;border-radius:14px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:32px;flex-shrink:0;overflow:hidden;border:1px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,.06);cursor:pointer;}
-.cow-img img{width:100%;height:100%;object-fit:cover;}
-.item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;align-items:center;gap:4px;font-weight:900;font-size:12.5px;border-bottom:2px solid #f1f5f9;padding-bottom:5px;margin-bottom:5px;color:#1e293b;}
-.duration-badge{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;font-weight:900;font-size:11px;padding:3px 8px;border-radius:8px;border:1.5px solid #93c5fd;white-space:nowrap;}
+.item{
+  background:linear-gradient(145deg,#ffffff 0%,#f8fafc 100%);
+  border-radius:17px;
+  padding:12px;
+  border:2px solid #dbeafe;
+  margin-bottom:10px;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  box-shadow:
+    0 6px 16px rgba(15,23,42,.06),
+    inset 0 2px 4px rgba(255,255,255,.9);
+}
 
-.row{display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:11px;padding:5px 0;color:#334155;font-weight:700;border-bottom:1px dashed #e2e8f0;}
-.row span:first-child{flex:1;line-height:1.3;}
-.date-badge{background:linear-gradient(135deg,#fef08a 0%,#fde047 100%);color:#78350f;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:900;border:1.5px solid #ca8a04;text-align:right;width:90px;flex-shrink:0;}
+.cow-img{
+  width:72px;
+  height:72px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#f1f5f9,#e2e8f0);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  flex-shrink:0;
+  overflow:hidden;
+  border:2px solid #cbd5e1;
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.07),
+    inset 0 2px 3px rgba(255,255,255,.8);
+  cursor:pointer;
+}
 
-.due{background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);padding:6px 8px;border-radius:10px;color:#14532d;font-weight:900;margin-top:6px;font-size:11.5px;border:1.5px solid #22c55e;display:flex;justify-content:space-between;align-items:center;}
-.due span:first-child{flex:1;}
-.due-badge{background:#15803d;color:white;padding:2px 7px;border-radius:6px;font-size:11px;font-weight:900;text-align:right;width:90px;flex-shrink:0;}
+.cow-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-.note-box{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1.5px solid #f59e0b;border-radius:8px;padding:5px 7px;font-size:11px;color:#92400e;margin-top:5px;font-weight:700;}
+.item-info{
+  flex-grow:1;
+  min-width:0;
+}
 
-/* Small Subtext Message for Auto Assumption & Guidance */
-.small-assumption-note{font-size:9.5px;color:#64748b;font-weight:600;margin-top:4px;line-height:1.3;background:#f1f5f9;padding:5px 7px;border-radius:6px;border-left:3px solid #16a34a;}
+.item-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:4px;
+  font-weight:900;
+  font-size:12.5px;
+  border-bottom:2px solid #f1f5f9;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  color:#1e293b;
+}
 
-/* 3D Action Buttons with Active Press Animation */
-.action-btns{display:flex;gap:6px;margin-top:8px;}
-.btn-repeat{flex:2;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;border:2px solid #3b82f6;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(59,130,246,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
-.btn-repeat:active{transform:scale(.95);}
-.btn-calved{flex:2;background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);color:#14532d;border:2px solid #22c55e;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(34,197,94,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
-.btn-calved:active{transform:scale(.95);}
-.btn-del{flex:1;background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);color:#991b1b;border:2px solid #ef4444;padding:7px 6px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(239,68,68,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
-.btn-del:active{transform:scale(.95);}
+.duration-badge{
+  background:linear-gradient(145deg,#eff6ff 0%,#bfdbfe 100%);
+  color:#1d4ed8;
+  font-weight:900;
+  font-size:11px;
+  padding:3px 8px;
+  border-radius:8px;
+  border:1.5px solid #93c5fd;
+  white-space:nowrap;
+  box-shadow:
+    0 3px 6px rgba(59,130,246,.12),
+    inset 0 1px 2px rgba(255,255,255,.8);
+}
 
-.empty{text-align:center;color:#94a3b8;font-size:12px;padding:20px;font-weight:700;}
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:4px;
+  font-size:11px;
+  padding:5px 0;
+  color:#334155;
+  font-weight:700;
+  border-bottom:1px dashed #e2e8f0;
+}
+
+.row span:first-child{
+  flex:1;
+  line-height:1.3;
+}
+
+.date-badge{
+  background:linear-gradient(145deg,#fef9c3 0%,#fde047 100%);
+  color:#78350f;
+  padding:2px 7px;
+  border-radius:6px;
+  font-size:10.5px;
+  font-weight:900;
+  border:1.5px solid #ca8a04;
+  text-align:right;
+  width:90px;
+  flex-shrink:0;
+  box-shadow:0 2px 5px rgba(202,138,4,.15);
+}
+
+.due{
+  background:linear-gradient(145deg,#dcfce7 0%,#86efac 100%);
+  padding:7px 8px;
+  border-radius:11px;
+  color:#14532d;
+  font-weight:900;
+  margin-top:6px;
+  font-size:11.5px;
+  border:2px solid #22c55e;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:
+    0 4px 9px rgba(34,197,94,.18),
+    inset 0 2px 3px rgba(255,255,255,.7);
+}
+
+.due span:first-child{
+  flex:1;
+}
+
+.due-badge{
+  background:linear-gradient(145deg,#16a34a,#14532d);
+  color:white;
+  padding:3px 7px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:900;
+  text-align:right;
+  width:90px;
+  flex-shrink:0;
+  box-shadow:0 3px 6px rgba(20,83,45,.2);
+}
+
+.note-box{
+  background:linear-gradient(145deg,#fef3c7 0%,#fde68a 100%);
+  border:1.5px solid #f59e0b;
+  border-radius:9px;
+  padding:6px 7px;
+  font-size:11px;
+  color:#92400e;
+  margin-top:5px;
+  font-weight:700;
+  box-shadow:0 3px 7px rgba(245,158,11,.1);
+}
+
+/* Small Note */
+.small-assumption-note{
+  font-size:9.5px;
+  color:#64748b;
+  font-weight:600;
+  margin-top:4px;
+  line-height:1.3;
+  background:#f1f5f9;
+  padding:5px 7px;
+  border-radius:6px;
+  border-left:3px solid #16a34a;
+}
+
+/* 3D Action Buttons */
+.action-btns{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.btn-repeat{
+  flex:2;
+  background:linear-gradient(145deg,#eff6ff 0%,#bfdbfe 100%);
+  color:#1d4ed8;
+  border:2px solid #3b82f6;
+  padding:7px 8px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:11px;
+  cursor:pointer;
+  text-align:center;
+  box-shadow:
+    0 4px 0 #2563eb,
+    0 6px 11px rgba(59,130,246,.18),
+    inset 0 1px 2px rgba(255,255,255,.9);
+  transition:all .15s ease;
+}
+
+.btn-repeat:active{
+  transform:translateY(3px) scale(.97);
+  box-shadow:0 2px 4px rgba(59,130,246,.2);
+}
+
+.btn-calved{
+  flex:2;
+  background:linear-gradient(145deg,#dcfce7 0%,#86efac 100%);
+  color:#14532d;
+  border:2px solid #22c55e;
+  padding:7px 8px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:11px;
+  cursor:pointer;
+  text-align:center;
+  box-shadow:
+    0 4px 0 #16a34a,
+    0 6px 11px rgba(34,197,94,.18),
+    inset 0 1px 2px rgba(255,255,255,.9);
+  transition:all .15s ease;
+}
+
+.btn-calved:active{
+  transform:translateY(3px) scale(.97);
+  box-shadow:0 2px 4px rgba(34,197,94,.2);
+}
+
+.btn-del{
+  flex:1;
+  background:linear-gradient(145deg,#fee2e2 0%,#fca5a5 100%);
+  color:#991b1b;
+  border:2px solid #ef4444;
+  padding:7px 6px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:11px;
+  cursor:pointer;
+  text-align:center;
+  box-shadow:
+    0 4px 0 #dc2626,
+    0 6px 11px rgba(239,68,68,.18),
+    inset 0 1px 2px rgba(255,255,255,.9);
+  transition:all .15s ease;
+}
+
+.btn-del:active{
+  transform:translateY(3px) scale(.97);
+  box-shadow:0 2px 4px rgba(239,68,68,.2);
+}
+
+.empty{
+  text-align:center;
+  color:#94a3b8;
+  font-size:12px;
+  padding:20px;
+  font-weight:700;
+}
 
 /* Modal */
-.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(3px);}
-.date-modal-card{background:white;padding:20px;border-radius:20px;width:100%;max-width:320px;box-shadow:0 15px 35px rgba(0,0,0,0.25);text-align:center;border:2px solid #16a34a;}
-.date-modal-card h4{font-size:15px;color:#15803d;margin-bottom:12px;font-weight:900;}
+.date-modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,.6);
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+  backdrop-filter:blur(3px);
+}
+
+.date-modal-card{
+  background:linear-gradient(145deg,#ffffff,#f8fafc);
+  padding:20px;
+  border-radius:21px;
+  width:100%;
+  max-width:320px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.25),
+    inset 0 2px 4px rgba(255,255,255,.9);
+  text-align:center;
+  border:2px solid #16a34a;
+}
+
+.date-modal-card h4{
+  font-size:15px;
+  color:#15803d;
+  margin-bottom:12px;
+  font-weight:900;
+}
 
 /* Image Zoom */
-#imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
-#zoomedImage{max-width:95%;max-height:80%;object-fit:contain;border-radius:14px;}
-.modal-close-btn{position:absolute;top:20px;right:20px;color:white;font-size:32px;font-weight:bold;background:rgba(255,255,255,0.2);width:44px;height:44px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+#imageZoomModal{
+  display:none;
+  position:fixed;
+  z-index:99999;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,.92);
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:16px;
+}
+
+#zoomedImage{
+  max-width:95%;
+  max-height:80%;
+  object-fit:contain;
+  border-radius:14px;
+}
+
+.modal-close-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  color:white;
+  font-size:32px;
+  font-weight:bold;
+  background:rgba(255,255,255,.2);
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
 </style>
 </head>
 
@@ -122,10 +717,13 @@ textarea{height:55px;resize:none;}
     <div class="lock-card">
       <div class="lock-title">🔐 The MH Farmer</div>
       <div class="lock-sub" id="lockSubTxt">ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा</div>
+
       <label id="lblMob">मोबाईल नंबर (१० अंकी)</label>
       <input type="tel" id="loginMob" maxlength="10" inputmode="numeric">
+
       <label id="lblPin">सिक्रेट पिन (PIN)</label>
       <input type="password" id="loginPin" maxlength="4" inputmode="numeric">
+
       <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
     </div>
   </div>
@@ -139,6 +737,7 @@ textarea{height:55px;resize:none;}
         <div class="header-title">🌾 The MH Farmer</div>
         <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
       </div>
+
       <div>
         <select id="langSelect" onchange="changeLanguage()">
           <option value="mr">मराठी</option>
@@ -159,18 +758,34 @@ textarea{height:55px;resize:none;}
 
     <!-- Stats -->
     <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण</div></div>
-      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
-      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
+      <div class="stat">
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label" id="lblTotal">एकूण</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="cowCount">0</div>
+        <div class="stat-label" id="lblCow">गाय</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number" id="buffaloCount">0</div>
+        <div class="stat-label" id="lblBuf">म्हैस</div>
+      </div>
     </div>
 
     <!-- Compact Form -->
     <div class="card">
       <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
-      
+
       <div class="animal-buttons">
-        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">गाय</span></button>
-        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
+        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">
+          🐄 <span id="btnCowTxt">गाय</span>
+        </button>
+
+        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">
+          🐃 <span id="btnBufTxt">म्हैस</span>
+        </button>
       </div>
 
       <label id="lblNameLbl">पशुचे नाव / ओळख</label>
@@ -184,9 +799,17 @@ textarea{height:55px;resize:none;}
 
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
-      <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
-      <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 नोंद जतन करा</button>
+      <img
+        id="photoPreview"
+        class="photo-preview"
+        alt="Preview"
+        onclick="openImageModal(this.src)"
+      >
+
+      <button class="btn" id="btnSave" type="button" onclick="saveData()">
+        💾 नोंद जतन करा
+      </button>
     </div>
 
     <div class="card">
@@ -202,16 +825,34 @@ textarea{height:55px;resize:none;}
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
+
     <input type="date" id="modalDateInput" style="margin-bottom:12px;">
-    <button class="btn" type="button" onclick="submitModalDate()">✅ ओके</button>
-    <button class="btn" type="button" style="background:#64748b; margin-top:6px;" onclick="closeDateModal()">रद्द करा</button>
+
+    <button class="btn" type="button" onclick="submitModalDate()">
+      ✅ ओके
+    </button>
+
+    <button
+      class="btn"
+      type="button"
+      style="background:linear-gradient(145deg,#94a3b8,#475569);border-color:#475569;box-shadow:0 6px 0 #334155,0 10px 18px rgba(71,85,105,.2);margin-top:8px;"
+      onclick="closeDateModal()"
+    >
+      रद्द करा
+    </button>
   </div>
 </div>
 
 <!-- Image Zoom Lightbox Modal -->
 <div id="imageZoomModal" onclick="closeImageModal()">
   <div class="modal-close-btn" onclick="closeImageModal()">&times;</div>
-  <img id="zoomedImage" src="" alt="Zoomed Photo" onclick="event.stopPropagation()">
+
+  <img
+    id="zoomedImage"
+    src=""
+    alt="Zoomed Photo"
+    onclick="event.stopPropagation()"
+  >
 </div>
 
 <script>
@@ -223,6 +864,7 @@ const pwaBtn = document.getElementById('pwaInstallBtn');
 window.addEventListener('beforeinstallprompt', function(e){
   e.preventDefault();
   deferredPrompt = e;
+
   if(pwaBtn && !window.matchMedia('(display-mode: standalone)').matches){
     pwaBtn.style.display = 'flex';
   }
@@ -231,12 +873,20 @@ window.addEventListener('beforeinstallprompt', function(e){
 function installPWA(){
   if(deferredPrompt){
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(){ deferredPrompt = null; if(pwaBtn) pwaBtn.style.display = 'none'; });
+
+    deferredPrompt.userChoice.then(function(){
+      deferredPrompt = null;
+
+      if(pwaBtn){
+        pwaBtn.style.display = 'none';
+      }
+    });
   }
 }
 
 function openImageModal(src){
   if(!src) return;
+
   document.getElementById('zoomedImage').src = src;
   document.getElementById('imageZoomModal').style.display = 'flex';
 }
@@ -250,51 +900,110 @@ let activeActionId = null;
 let activeActionType = null;
 
 function selectAnimal(type){
-  cur = type==='buffalo' ? 'buffalo' : 'cow';
-  document.getElementById('cowBtn').classList.toggle('active', cur==='cow');
-  document.getElementById('buffaloBtn').classList.toggle('active', cur==='buffalo');
+  cur = type === 'buffalo' ? 'buffalo' : 'cow';
+
+  document.getElementById('cowBtn').classList.toggle(
+    'active',
+    cur === 'cow'
+  );
+
+  document.getElementById('buffaloBtn').classList.toggle(
+    'active',
+    cur === 'buffalo'
+  );
 
   const lang = document.getElementById('langSelect').value;
   const t = langData[lang] || langData.mr;
-  document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
+
+  document.getElementById('lblDate').innerText =
+    cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
 }
 
 function openDateModal(type, id){
   activeActionType = type;
   activeActionId = id;
+
   const modal = document.getElementById('customDateModal');
   const input = document.getElementById('modalDateInput');
   const title = document.getElementById('modalTitleText');
-  
+
   const now = new Date();
-  input.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+
+  input.value =
+    now.getFullYear() + '-' +
+    String(now.getMonth()+1).padStart(2,'0') + '-' +
+    String(now.getDate()).padStart(2,'0');
+
   input.max = input.value;
 
   const db = getDB();
   let animalType = 'गाय';
+
   for(let i=0; i<db.length; i++){
     if(Number(db[i].id) === Number(id)){
-      animalType = (db[i].type === 'buffalo') ? 'म्हैस' : 'गाय';
+      animalType =
+        db[i].type === 'buffalo' ? 'म्हैस' : 'गाय';
       break;
     }
   }
 
   const lang = document.getElementById('langSelect').value;
+
   if(lang === 'hi'){
-    if(type === 'repeat') title.innerText = animalType + ' रिपीट होने के कारण नई तारीख चुनें:';
-    else if(type === 'calved') title.innerText = animalType + ' ब्याने की सटीक तारीख दर्ज करें:';
-    else if(type === 'newPregnancy') title.innerText = 'नई ' + animalType + ' लगाने की तारीख दर्ज करें:';
-    else if(type === 'changeCalve') title.innerText = animalType + ' ब्याने की सटीक तारीख बदलें:';
-  } else if(lang === 'en'){
-    if(type === 'repeat') title.innerText = 'Select new pregnancy date for ' + animalType + ':';
-    else if(type === 'calved') title.innerText = 'Enter exact calving date for ' + animalType + ':';
-    else if(type === 'newPregnancy') title.innerText = 'Enter new breeding date for ' + animalType + ':';
-    else if(type === 'changeCalve') title.innerText = 'Change calving date for ' + animalType + ':';
-  } else {
-    if(type === 'repeat') title.innerText = animalType + ' उलटल्यामुळे नवीन गाभण तारीख निवडा:';
-    else if(type === 'calved') title.innerText = animalType + ' वेवल्याची अचूक तारीख टाका:';
-    else if(type === 'newPregnancy') title.innerText = 'नवीन ' + animalType + ' लावल्याची तारीख टाका:';
-    else if(type === 'changeCalve') title.innerText = animalType + ' वेवल्याची अचूक तारीख बदला:';
+    if(type === 'repeat'){
+      title.innerText =
+        animalType + ' रिपीट होने के कारण नई तारीख चुनें:';
+    }
+    else if(type === 'calved'){
+      title.innerText =
+        animalType + ' ब्याने की सटीक तारीख दर्ज करें:';
+    }
+    else if(type === 'newPregnancy'){
+      title.innerText =
+        'नई ' + animalType + ' लगाने की तारीख दर्ज करें:';
+    }
+    else if(type === 'changeCalve'){
+      title.innerText =
+        animalType + ' ब्याने की सटीक तारीख बदलें:';
+    }
+  }
+
+  else if(lang === 'en'){
+    if(type === 'repeat'){
+      title.innerText =
+        'Select new pregnancy date for ' + animalType + ':';
+    }
+    else if(type === 'calved'){
+      title.innerText =
+        'Enter exact calving date for ' + animalType + ':';
+    }
+    else if(type === 'newPregnancy'){
+      title.innerText =
+        'Enter new breeding date for ' + animalType + ':';
+    }
+    else if(type === 'changeCalve'){
+      title.innerText =
+        'Change calving date for ' + animalType + ':';
+    }
+  }
+
+  else{
+    if(type === 'repeat'){
+      title.innerText =
+        animalType + ' उलटल्यामुळे नवीन गाभण तारीख निवडा:';
+    }
+    else if(type === 'calved'){
+      title.innerText =
+        animalType + ' वेवल्याची अचूक तारीख टाका:';
+    }
+    else if(type === 'newPregnancy'){
+      title.innerText =
+        'नवीन ' + animalType + ' लावल्याची तारीख टाका:';
+    }
+    else if(type === 'changeCalve'){
+      title.innerText =
+        animalType + ' वेवल्याची अचूक तारीख बदला:';
+    }
   }
 
   modal.style.display = 'flex';
@@ -302,313 +1011,866 @@ function openDateModal(type, id){
 
 function closeDateModal(){
   document.getElementById('customDateModal').style.display = 'none';
+
   activeActionId = null;
   activeActionType = null;
 }
 
 function submitModalDate(){
-  const val = document.getElementById('modalDateInput').value;
-  const lang = document.getElementById('langSelect').value;
-  if(!val){ alert(lang==='en'?'Please select date!':(lang==='hi'?'कृपया तारीख चुनें!':'कृपया तारीख निवडा!')); return; }
+  const val =
+    document.getElementById('modalDateInput').value;
+
+  const lang =
+    document.getElementById('langSelect').value;
+
+  if(!val){
+    alert(
+      lang === 'en'
+        ? 'Please select date!'
+        : (
+            lang === 'hi'
+              ? 'कृपया तारीख चुनें!'
+              : 'कृपया तारीख निवडा!'
+          )
+    );
+    return;
+  }
+
   const parsed = parseISODate(val);
-  if(!parsed || parsed > getTodayDate()){ alert(lang==='en'?'Future dates not allowed!':(lang==='hi'?'भविष्य की तारीख मान्य नहीं!':'भविष्यातील तारीख चालणार नाही!')); return; }
+
+  if(!parsed || parsed > getTodayDate()){
+    alert(
+      lang === 'en'
+        ? 'Future dates not allowed!'
+        : (
+            lang === 'hi'
+              ? 'भविष्य की तारीख मान्य नहीं!'
+              : 'भविष्यातील तारीख चालणार नाही!'
+          )
+    );
+    return;
+  }
 
   const db = getDB();
+
   for(let i=0; i<db.length; i++){
+
     if(Number(db[i].id) === Number(activeActionId)){
-      if(activeActionType === 'repeat' || activeActionType === 'newPregnancy'){
+
+      if(
+        activeActionType === 'repeat' ||
+        activeActionType === 'newPregnancy'
+      ){
         db[i].date = val;
         db[i].isCalved = false;
         db[i].isAssumedCalved = false;
         db[i].calvedDate = '';
-        const promptMsg = lang==='en'?'Enter new Doctor / Semen details (or keep as is):':(lang==='hi'?'नया डॉक्टर / सीमेन विवरण दर्ज करें:':'नवीन डॉक्टर / सिमेन तपशील टाका (किंवा तसेच ठेवा):');
-        const newNote = prompt(promptMsg, db[i].note || "");
-        if(newNote !== null) db[i].note = newNote.trim();
-      } else if(activeActionType === 'calved' || activeActionType === 'changeCalve'){
+
+        const promptMsg =
+          lang === 'en'
+            ? 'Enter new Doctor / Semen details (or keep as is):'
+            : (
+                lang === 'hi'
+                  ? 'नया डॉक्टर / सीमेन विवरण दर्ज करें:'
+                  : 'नवीन डॉक्टर / सिमेन तपशील टाका (किंवा तसेच ठेवा):'
+              );
+
+        const newNote =
+          prompt(promptMsg, db[i].note || "");
+
+        if(newNote !== null){
+          db[i].note = newNote.trim();
+        }
+      }
+
+      else if(
+        activeActionType === 'calved' ||
+        activeActionType === 'changeCalve'
+      ){
         db[i].isCalved = true;
         db[i].isAssumedCalved = false;
         db[i].calvedDate = val;
       }
+
       break;
     }
   }
 
-  localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
+  localStorage.setItem(
+    'cattle_tracker_db',
+    JSON.stringify(db)
+  );
+
   closeDateModal();
   draw();
 }
 
-const langData={
+const langData = {
+
   mr:{
     headerSub:'Cattle Pregnancy Tracker',
-    tot:'एकूण', cow:'गाय', buf:'म्हैस',
-    formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
-    namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / ओळख', 
-    dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर / सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
-    saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
-    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 उलटली', calvedBtn:'🐄 वेली आहे',
+    tot:'एकूण',
+    cow:'गाय',
+    buf:'म्हैस',
+
+    formT:'➕ नवीन पशु नोंद',
+    bCow:'गाय',
+    bBuf:'म्हैस',
+
+    namePh:'उदा. कावेरी',
+    nameLbl:'पशुचे नाव / ओळख',
+
+    dtLblCow:'गाय गाभण राहिल्याची तारीख',
+    dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
+
+    noteLbl:'डॉक्टर / सिमेन तपशील (पर्यायी)',
+    photoLbl:'पशुचा फोटो (पर्यायी)',
+    notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
+
+    saveBtn:'💾 नोंद जतन करा',
+    listT:'📋 माझ्या पशुंच्या नोंदी',
+    empty:'अद्याप कोणतीही नोंद नाही.',
+
+    delBtn:'🗑️ डिलीट',
+    repeatBtn:'🔄 उलटली',
+    calvedBtn:'🐄 वेली आहे',
+
     setNewDateBtn:'📅 नवीन गाय/म्हैस लावली (तारीख टाका)',
     changeCalveDateBtn:'📅 वेवल्याची तारीख बदला',
+
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
+
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(७ वा महिना)</span>',
+
     deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
+
     trans:'🌾 ट्रान्झिशन खुराक <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
+
     delivery:'🍼 अंदाजे विण्याची तारीख',
     calvedDateLbl:'📅 वेवल्याची तारीख',
+
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील भरवण्याची (Heat) तयारी ठेवा:',
+
     assumedNote:'* ९ महिने ९ दिवस पूर्ण झाल्यामुळे अंदाजे वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी वरील बटण दाबा.',
+
     guidanceNote:'💡 ज्या दिवशी तुम्ही गाय/म्हैस पुन्हा गाभण शकाल, त्या दिवशी ॲपमध्ये हे बटण दाबून "नवीन तारीख" नक्की नोंदवा.',
-    dateRequired:'कृपया तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
+
+    dateRequired:'कृपया तारीख निवडा!',
+    futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
-    confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
+
+    confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे?',
+
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स',
+
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
+
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
-    lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀'
+
+    lblMob:'मोबाईल नंबर (१० अंकी)',
+    lblPin:'सिक्रेट पिन (PIN)',
+    btnLogin:'ॲप सुरू करा 🚀'
   },
+
   hi:{
     headerSub:'Cattle Pregnancy Tracker',
-    tot:'कुल', cow:'गाय', buf:'भैंस',
-    formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
-    namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', 
-    dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर / सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
-    saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
-    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 रिपीट', calvedBtn:'🐄 ब्याया है',
+    tot:'कुल',
+    cow:'गाय',
+    buf:'भैंस',
+
+    formT:'➕ नया पशु रिकॉर्ड',
+    bCow:'गाय',
+    bBuf:'भैंस',
+
+    namePh:'उदा. कावेरी',
+    nameLbl:'पशु का नाम / टैग नंबर',
+
+    dtLblCow:'गाय गर्भधारण की तारीख',
+    dtLblBuf:'भैंस गर्भधारण की तारीख',
+
+    noteLbl:'डॉक्टर / सीमेन विवरण (वैकल्पिक)',
+    photoLbl:'पशु की फोटो (वैकल्पिक)',
+    notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
+
+    saveBtn:'💾 रिकॉर्ड सहेजें',
+    listT:'📋 आपके पशुओं के रिकॉर्ड',
+    empty:'अभी तक कोई रिकॉर्ड नहीं है।',
+
+    delBtn:'🗑️ डिलीट',
+    repeatBtn:'🔄 रिपीट',
+    calvedBtn:'🐄 ब्याया है',
+
     setNewDateBtn:'📅 नई गाय/भैंस ब्याई/लगाई (तारीख दर्ज करें)',
     changeCalveDateBtn:'📅 ब्याने की तारीख बदलें',
+
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
+
     milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(7वां महीना)</span>',
+
     deworm:'💊 डिवॉर्मिंग दवा <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
+
     trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
+
     delivery:'🍼 अनुमानित ब्याने की तारीख',
     calvedDateLbl:'📅 ब्याने की तारीख',
+
     heatWindowText:'💡 90 दिन के विश्रांति काल के बाद इस तारीख से अगली बार गर्भधारण के लिए तैयार करें:',
+
     assumedNote:'* 9 महीने 9 दिन पूरे होने के कारण अनुमानित ब्याया हुआ माना गया है। सटीक तारीख बदलने के लिए ऊपर बटन दबाएं।',
+
     guidanceNote:'💡 जिस दिन आप गाय/भैंस को दोबारा गर्भधारण कराएंगे, उस दिन ऐप में यह बटन दबाकर "नई तारीख" जरूर दर्ज करें।',
-    dateRequired:'कृपया तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
+
+    dateRequired:'कृपया तारीख चुनें!',
+    futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
+
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
+
     notifTitle:'🔔 महत्वपूर्ण अलर्ट',
+
     installTxt:'📲 ऐप इंस्टॉल करें',
-    lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और पिन दर्ज करें',
-    lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀'
+
+    lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और PIN दर्ज करें',
+
+    lblMob:'मोबाइल नंबर (10 अंक)',
+    lblPin:'गुप्त PIN (PIN)',
+    btnLogin:'ऐप शुरू करें 🚀'
   },
+
   en:{
     headerSub:'Cattle Pregnancy Tracker',
-    tot:'Total', cow:'Cow', buf:'Buffalo',
-    formT:'➕ Add New Animal', bCow:'Cow', bBuf:'Buffalo',
-    namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag No.', 
-    dtLblCow:'Cow Pregnancy Date', dtLblBuf:'Buffalo Pregnancy Date',
-    noteLbl:'Doctor / Semen Details (Optional)', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
-    saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
-    delBtn:'🗑️ Del', repeatBtn:'🔄 Repeat', calvedBtn:'🐄 Calved',
+    tot:'Total',
+    cow:'Cow',
+    buf:'Buffalo',
+
+    formT:'➕ Add New Animal',
+    bCow:'Cow',
+    bBuf:'Buffalo',
+
+    namePh:'e.g., Kaveri',
+    nameLbl:'Animal Name / Tag No.',
+
+    dtLblCow:'Cow Pregnancy Date',
+    dtLblBuf:'Buffalo Pregnancy Date',
+
+    noteLbl:'Doctor / Semen Details (Optional)',
+    photoLbl:'Animal Photo (Optional)',
+    notePh:'e.g., Doctor name, Semen brand',
+
+    saveBtn:'💾 Save Record',
+    listT:'📋 Animal Records',
+    empty:'No records found yet.',
+
+    delBtn:'🗑️ Del',
+    repeatBtn:'🔄 Repeat',
+    calvedBtn:'🐄 Calved',
+
     setNewDateBtn:'📅 Enter New Breeding Date',
     changeCalveDateBtn:'📅 Change Calving Date',
+
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
+
     milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Month 7)</span>',
+
     deworm:'💊 Deworming Medicine <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
+
     trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
+
     delivery:'🍼 Est. Delivery Date',
     calvedDateLbl:'📅 Calving Date',
+
     heatWindowText:'💡 Ready for next AI / Heat check from:',
+
     assumedNote:'* Assumed calved as 9 months & 9 days completed. Please update with exact date using button above.',
+
     guidanceNote:'💡 On the day you breed this animal again, please update the new date here using this button.',
-    dateRequired:'Please select a date!', futureDateError:'Future dates cannot be recorded!',
-    storageError:'Storage is full!', confirmDel:'Are you sure you want to delete?',
+
+    dateRequired:'Please select a date!',
+    futureDateError:'Future dates cannot be recorded!',
+
+    storageError:'Storage is full!',
+
+    confirmDel:'Are you sure you want to delete?',
+
     notifTitle:'🔔 Important Alerts',
+
     installTxt:'📲 Install App on Phone',
+
     lockSubTxt:'Enter your mobile number and PIN to use the app',
-    lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀'
+
+    lblMob:'Mobile Number (10 Digits)',
+    lblPin:'Secret PIN',
+    btnLogin:'Start App 🚀'
   }
 };
 
 function verifyLogin(){
-  const mob = document.getElementById('loginMob').value.trim();
-  const pin = document.getElementById('loginPin').value.trim();
-  const lang = document.getElementById('langSelect').value;
-  if(!/^\d{10}$/.test(mob)){ alert(lang==='en'?'Enter valid 10-digit mobile!':(lang==='hi'?'सही 10 अंकों का मोबाइल नंबर दर्ज करें!':'कृपया बरोबर १० अंकी मोबाईल नंबर टाका!')); return; }
-  if(!/^\d{4}$/.test(pin)){ alert(lang==='en'?'Enter 4-digit PIN!':(lang==='hi'?'4 अंकों का पिन दर्ज करें!':'कृपया ४ अंकी PIN टाका!')); return; }
-  const expectedPin = mob.substring(0,2) + mob.substring(mob.length-1) + mob.substring(mob.length-1);
+
+  const mob =
+    document.getElementById('loginMob').value.trim();
+
+  const pin =
+    document.getElementById('loginPin').value.trim();
+
+  const lang =
+    document.getElementById('langSelect').value;
+
+  if(!/^\d{10}$/.test(mob)){
+    alert(
+      lang === 'en'
+        ? 'Enter valid 10-digit mobile!'
+        : (
+            lang === 'hi'
+              ? 'सही 10 अंकों का मोबाइल नंबर दर्ज करें!'
+              : 'कृपया बरोबर १० अंकी मोबाईल नंबर टाका!'
+          )
+    );
+    return;
+  }
+
+  if(!/^\d{4}$/.test(pin)){
+    alert(
+      lang === 'en'
+        ? 'Enter 4-digit PIN!'
+        : (
+            lang === 'hi'
+              ? '4 अंकों का पिन दर्ज करें!'
+              : 'कृपया ४ अंकी PIN टाका!'
+          )
+    );
+    return;
+  }
+
+  const expectedPin =
+    mob.substring(0,2) +
+    mob.substring(mob.length-1) +
+    mob.substring(mob.length-1);
+
   if(pin === expectedPin){
-    try{ localStorage.setItem('cattle_unlocked', 'true'); localStorage.setItem('cattle_user_mob', mob); }catch(e){}
+
+    try{
+      localStorage.setItem(
+        'cattle_unlocked',
+        'true'
+      );
+
+      localStorage.setItem(
+        'cattle_user_mob',
+        mob
+      );
+    }catch(e){}
+
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('appScreen').style.display = 'block';
+
     setTodayMaxDate();
     draw();
-  }else{ alert(lang==='en'?'Wrong PIN!':(lang==='hi'?'गलत पिन!':'चुकीचा PIN!')); }
+
+  }else{
+
+    alert(
+      lang === 'en'
+        ? 'Wrong PIN!'
+        : (
+            lang === 'hi'
+              ? 'गलत पिन!'
+              : 'चुकीचा PIN!'
+          )
+    );
+  }
 }
 
 function setTodayMaxDate(){
-  const dateInput = document.getElementById('cDate');
+
+  const dateInput =
+    document.getElementById('cDate');
+
   if(!dateInput) return;
+
   const today = new Date();
-  const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+
+  const todayStr =
+    today.getFullYear() + '-' +
+    String(today.getMonth()+1).padStart(2,'0') + '-' +
+    String(today.getDate()).padStart(2,'0');
+
   dateInput.value = todayStr;
   dateInput.max = todayStr;
-  
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
+
+  const lang =
+    document.getElementById('langSelect').value;
+
+  const t =
+    langData[lang] || langData.mr;
+
+  document.getElementById('lblDate').innerText =
+    cur === 'buffalo'
+      ? t.dtLblBuf
+      : t.dtLblCow;
 }
 
 function changeLanguage(){
-  const select = document.getElementById('langSelect');
-  const lang = langData[select.value] ? select.value : 'mr';
-  try{ localStorage.setItem('cattle_lang', lang); }catch(e){}
+
+  const select =
+    document.getElementById('langSelect');
+
+  const lang =
+    langData[select.value]
+      ? select.value
+      : 'mr';
+
+  try{
+    localStorage.setItem(
+      'cattle_lang',
+      lang
+    );
+  }catch(e){}
+
   const t = langData[lang];
 
-  document.getElementById('mainHeaderSub').innerText = t.headerSub;
-  document.getElementById('lblTotal').innerText = t.tot;
-  document.getElementById('lblCow').innerText = t.cow;
-  document.getElementById('lblBuf').innerText = t.buf;
-  document.getElementById('formTitle').innerText = t.formT;
-  document.getElementById('btnCowTxt').innerText = t.bCow;
-  document.getElementById('btnBufTxt').innerText = t.bBuf;
-  document.getElementById('lblNameLbl').innerText = t.nameLbl;
-  document.getElementById('cName').placeholder = t.namePh;
-  document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
-  document.getElementById('lblNoteLbl').innerText = t.noteLbl;
-  document.getElementById('cNote').placeholder = t.notePh;
-  document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
-  document.getElementById('btnSave').innerText = t.saveBtn;
-  document.getElementById('listTitle').innerText = t.listT;
+  document.getElementById('mainHeaderSub').innerText =
+    t.headerSub;
 
-  document.getElementById('lockSubTxt').innerText = t.lockSubTxt;
-  document.getElementById('lblMob').innerText = t.lblMob;
-  document.getElementById('lblPin').innerText = t.lblPin;
-  document.getElementById('btnLogin').innerText = t.btnLogin;
+  document.getElementById('lblTotal').innerText =
+    t.tot;
 
-  if(pwaBtn && t.installTxt) pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
+  document.getElementById('lblCow').innerText =
+    t.cow;
+
+  document.getElementById('lblBuf').innerText =
+    t.buf;
+
+  document.getElementById('formTitle').innerText =
+    t.formT;
+
+  document.getElementById('btnCowTxt').innerText =
+    t.bCow;
+
+  document.getElementById('btnBufTxt').innerText =
+    t.bBuf;
+
+  document.getElementById('lblNameLbl').innerText =
+    t.nameLbl;
+
+  document.getElementById('cName').placeholder =
+    t.namePh;
+
+  document.getElementById('lblDate').innerText =
+    cur === 'buffalo'
+      ? t.dtLblBuf
+      : t.dtLblCow;
+
+  document.getElementById('lblNoteLbl').innerText =
+    t.noteLbl;
+
+  document.getElementById('cNote').placeholder =
+    t.notePh;
+
+  document.getElementById('lblPhotoLbl').innerText =
+    t.photoLbl;
+
+  document.getElementById('btnSave').innerText =
+    t.saveBtn;
+
+  document.getElementById('listTitle').innerText =
+    t.listT;
+
+  document.getElementById('lockSubTxt').innerText =
+    t.lockSubTxt;
+
+  document.getElementById('lblMob').innerText =
+    t.lblMob;
+
+  document.getElementById('lblPin').innerText =
+    t.lblPin;
+
+  document.getElementById('btnLogin').innerText =
+    t.btnLogin;
+
+  if(pwaBtn && t.installTxt){
+    pwaBtn.innerHTML =
+      '<span>' + t.installTxt + '</span>';
+  }
+
   draw();
 }
 
 function getDB(){
+
   try{
-    const data = localStorage.getItem('cattle_tracker_db');
-    return data ? JSON.parse(data) : [];
-  }catch(e){ return []; }
+    const data =
+      localStorage.getItem('cattle_tracker_db');
+
+    return data
+      ? JSON.parse(data)
+      : [];
+
+  }catch(e){
+    return [];
+  }
 }
 
 function compressImage(file, callback){
-  if(!file || !file.type || file.type.indexOf('image/')!==0){ callback(''); return; }
+
+  if(
+    !file ||
+    !file.type ||
+    file.type.indexOf('image/') !== 0
+  ){
+    callback('');
+    return;
+  }
+
   const reader = new FileReader();
+
   reader.onload = function(e){
+
     const img = new Image();
+
     img.onload = function(){
-      const canvas = document.createElement('canvas');
-      let w = img.width, h = img.height;
-      if(w > 500){ h = h * (500 / w); w = 500; }
-      if(h > 500){ w = w * (500 / h); h = 500; }
-      canvas.width = Math.round(w); canvas.height = Math.round(h);
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      callback(canvas.toDataURL('image/jpeg', 0.75));
+
+      const canvas =
+        document.createElement('canvas');
+
+      let w = img.width;
+      let h = img.height;
+
+      if(w > 500){
+        h = h * (500 / w);
+        w = 500;
+      }
+
+      if(h > 500){
+        w = w * (500 / h);
+        h = 500;
+      }
+
+      canvas.width = Math.round(w);
+      canvas.height = Math.round(h);
+
+      const ctx =
+        canvas.getContext('2d');
+
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      callback(
+        canvas.toDataURL(
+          'image/jpeg',
+          0.75
+        )
+      );
     };
-    img.onerror = function(){ callback(''); };
+
+    img.onerror = function(){
+      callback('');
+    };
+
     img.src = e.target.result;
   };
+
   reader.readAsDataURL(file);
 }
 
 function previewPhoto(){
-  const input = document.getElementById('cPhoto');
-  const preview = document.getElementById('photoPreview');
+
+  const input =
+    document.getElementById('cPhoto');
+
+  const preview =
+    document.getElementById('photoPreview');
+
   if(input.files && input.files[0]){
-    compressImage(input.files[0], function(res){
-      if(res){ preview.src = res; preview.style.display = 'block'; }
-      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
-    });
+
+    compressImage(
+      input.files[0],
+      function(res){
+
+        if(res){
+          preview.src = res;
+          preview.style.display = 'block';
+        }
+
+        else{
+          preview.removeAttribute('src');
+          preview.style.display = 'none';
+        }
+      }
+    );
   }
 }
 
 function parseISODate(str){
-  if(typeof str!=='string' || !/^\d{4}-\d{2}-\d{2}$/.test(str)) return null;
-  const p = str.split('-').map(Number);
-  const d = new Date(p[0], p[1]-1, p[2]);
-  if(d.getFullYear()!==p[0] || d.getMonth()!==p[1]-1 || d.getDate()!==p[2]) return null;
+
+  if(
+    typeof str !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(str)
+  ){
+    return null;
+  }
+
+  const p =
+    str.split('-').map(Number);
+
+  const d =
+    new Date(
+      p[0],
+      p[1]-1,
+      p[2]
+    );
+
+  if(
+    d.getFullYear() !== p[0] ||
+    d.getMonth() !== p[1]-1 ||
+    d.getDate() !== p[2]
+  ){
+    return null;
+  }
+
   d.setHours(0,0,0,0);
+
   return d;
 }
 
 function getTodayDate(){
-  const d = new Date(); d.setHours(0,0,0,0); return d;
+
+  const d = new Date();
+
+  d.setHours(0,0,0,0);
+
+  return d;
 }
 
-function getDayDifference(start, end){
-  return Math.round((end - start)/86400000);
+function getDayDifference(start,end){
+
+  return Math.round(
+    (end-start)/86400000
+  );
 }
 
 function formatDate(d){
-  return String(d.getDate()).padStart(2,'0') + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + d.getFullYear();
+
+  return String(d.getDate()).padStart(2,'0') +
+    '-' +
+    String(d.getMonth()+1).padStart(2,'0') +
+    '-' +
+    d.getFullYear();
 }
 
-function addD(str, days){
+function addD(str,days){
+
   const d = parseISODate(str);
+
   if(!d) return '---';
-  d.setDate(d.getDate() + Number(days||0));
+
+  d.setDate(
+    d.getDate() +
+    Number(days || 0)
+  );
+
   return formatDate(d);
 }
 
-function getFormattedDuration(str, lang){
-  const start = parseISODate(str);
-  if(!start) return lang==='en'?'0 days':(lang==='hi'?'0 दिन':'० दिवस');
-  const now = getTodayDate();
-  if(now < start) return lang==='en'?'0 days':(lang==='hi'?'0 दिन':'० दिवस');
-  const yrs = now.getFullYear() - start.getFullYear();
-  let m = now.getMonth() - start.getMonth() + (yrs*12);
-  let d = now.getDate() - start.getDate();
-  if(d < 0){ m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
-  if(m < 0){ m = 0; d = 0; }
+function getFormattedDuration(str,lang){
 
-  if(lang==='en') return m + ' mos ' + d + ' days';
-  if(lang==='hi') return m + ' महीने ' + d + ' दिन';
+  const start =
+    parseISODate(str);
+
+  if(!start){
+    return lang === 'en'
+      ? '0 days'
+      : (
+          lang === 'hi'
+            ? '0 दिन'
+            : '० दिवस'
+        );
+  }
+
+  const now =
+    getTodayDate();
+
+  if(now < start){
+    return lang === 'en'
+      ? '0 days'
+      : (
+          lang === 'hi'
+            ? '0 दिन'
+            : '० दिवस'
+        );
+  }
+
+  const yrs =
+    now.getFullYear() -
+    start.getFullYear();
+
+  let m =
+    now.getMonth() -
+    start.getMonth() +
+    (yrs * 12);
+
+  let d =
+    now.getDate() -
+    start.getDate();
+
+  if(d < 0){
+    m--;
+    d +=
+      new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        0
+      ).getDate();
+  }
+
+  if(m < 0){
+    m = 0;
+    d = 0;
+  }
+
+  if(lang === 'en'){
+    return m + ' mos ' + d + ' days';
+  }
+
+  if(lang === 'hi'){
+    return m + ' महीने ' + d + ' दिन';
+  }
+
   return m + ' महिना ' + d + ' दिवस';
 }
 
 function escapeHtml(val){
-  return String(val==null ? '' : val).replace(/[&<>'"]/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c];
-  });
+
+  return String(
+    val == null ? '' : val
+  ).replace(
+    /[&<>'"]/g,
+    function(c){
+      return {
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '\'':'&#39;',
+        '"':'&quot;'
+      }[c];
+    }
+  );
 }
 
 function draw(){
-  const box = document.getElementById('list');
-  if(!box) return;
-  const db = getDB();
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
 
-  let cows = 0, buffaloes = 0;
-  const today = getTodayDate();
+  const box =
+    document.getElementById('list');
+
+  if(!box) return;
+
+  const db = getDB();
+
+  const lang =
+    document.getElementById('langSelect').value;
+
+  const t =
+    langData[lang] || langData.mr;
+
+  let cows = 0;
+  let buffaloes = 0;
+
+  const today =
+    getTodayDate();
+
+  /*
+    IMPORTANT:
+    Exact 282nd cow day / 310th buffalo day
+    should still show delivery alert.
+    Therefore automatic assumption starts AFTER
+    the final delivery day, not ON the final day.
+  */
 
   for(let i=0; i<db.length; i++){
+
     const it = db[i];
-    const start = parseISODate(it.date);
+
+    const start =
+      parseISODate(it.date);
+
     if(start && !it.isCalved){
-      const pDays = getDayDifference(start, today);
-      const tot = it.type==='buffalo' ? 310 : 282;
-      if(pDays >= tot && !it.calvedDate){
+
+      const pDays =
+        getDayDifference(
+          start,
+          today
+        );
+
+      const tot =
+        it.type === 'buffalo'
+          ? 310
+          : 282;
+
+      if(
+        pDays > tot &&
+        !it.calvedDate
+      ){
+
         it.isCalved = true;
         it.isAssumedCalved = true;
-        const assumedCalveDate = new Date(start.getTime());
-        assumedCalveDate.setDate(assumedCalveDate.getDate() + tot);
-        it.calvedDate = assumedCalveDate.getFullYear() + '-' + String(assumedCalveDate.getMonth()+1).padStart(2,'0') + '-' + String(assumedCalveDate.getDate()).padStart(2,'0');
+
+        const assumedCalveDate =
+          new Date(start.getTime());
+
+        assumedCalveDate.setDate(
+          assumedCalveDate.getDate() +
+          tot
+        );
+
+        it.calvedDate =
+          assumedCalveDate.getFullYear() +
+          '-' +
+          String(
+            assumedCalveDate.getMonth()+1
+          ).padStart(2,'0') +
+          '-' +
+          String(
+            assumedCalveDate.getDate()
+          ).padStart(2,'0');
       }
     }
 
-    if(it.type==='cow') cows++;
-    if(it.type==='buffalo') buffaloes++;
-  }
-  try{ localStorage.setItem('cattle_tracker_db', JSON.stringify(db)); }catch(e){}
+    if(it.type === 'cow'){
+      cows++;
+    }
 
-  document.getElementById('totalCount').innerText = db.length;
-  document.getElementById('cowCount').innerText = cows;
-  document.getElementById('buffaloCount').innerText = buffaloes;
+    if(it.type === 'buffalo'){
+      buffaloes++;
+    }
+  }
+
+  try{
+    localStorage.setItem(
+      'cattle_tracker_db',
+      JSON.stringify(db)
+    );
+  }catch(e){}
+
+  document.getElementById('totalCount').innerText =
+    db.length;
+
+  document.getElementById('cowCount').innerText =
+    cows;
+
+  document.getElementById('buffaloCount').innerText =
+    buffaloes;
 
   if(db.length === 0){
-    box.innerHTML = '<div class="empty">' + escapeHtml(t.empty) + '</div>';
+
+    box.innerHTML =
+      '<div class="empty">' +
+      escapeHtml(t.empty) +
+      '</div>';
+
     checkSmartNotifications();
     return;
   }
@@ -616,264 +1878,1140 @@ function draw(){
   let html = '';
 
   for(let i=0; i<db.length; i++){
+
     const it = db[i];
-    const isBuffalo = it.type==='buffalo';
-    const tot = isBuffalo ? 310 : 282;
-    const start = parseISODate(it.date);
 
-    const imgHtml = it.photo ? '<img src="'+escapeHtml(it.photo)+'" onclick="openImageModal(\''+escapeHtml(it.photo)+'\')">' : (isBuffalo ? '🐃' : '🐄');
-    const safeName = escapeHtml(it.name);
-    const safeNote = escapeHtml(it.note || '').trim();
-    const animalLabel = isBuffalo ? '🐃 ' + t.buf : '🐄 ' + t.cow;
-    const safeId = Number(it.id);
+    const isBuffalo =
+      it.type === 'buffalo';
 
-    html += '<div class="item">';
-    html += '<div class="cow-img">'+imgHtml+'</div>';
-    html += '<div class="item-info">';
+    const tot =
+      isBuffalo ? 310 : 282;
+
+    const start =
+      parseISODate(it.date);
+
+    const imgHtml =
+      it.photo
+        ? '<img src="' +
+          escapeHtml(it.photo) +
+          '" onclick="openImageModal(\'' +
+          escapeHtml(it.photo) +
+          '\')">'
+        : (
+            isBuffalo
+              ? '🐃'
+              : '🐄'
+          );
+
+    const safeName =
+      escapeHtml(it.name);
+
+    const safeNote =
+      escapeHtml(
+        it.note || ''
+      ).trim();
+
+    const animalLabel =
+      isBuffalo
+        ? '🐃 ' + t.buf
+        : '🐄 ' + t.cow;
+
+    const safeId =
+      Number(it.id);
+
+    html +=
+      '<div class="item">';
+
+    html +=
+      '<div class="cow-img">' +
+      imgHtml +
+      '</div>';
+
+    html +=
+      '<div class="item-info">';
 
     if(!it.isCalved){
-      const pDays = start ? getDayDifference(start, today) : 0;
-      const dry = isBuffalo ? 235 : 210;
-      const dewormDay = tot - 30;
 
-      const check21 = addD(it.date, 21);
-      const dryDate = addD(it.date, dry);
-      const dewormDate = addD(it.date, dewormDay);
-      const transDate = addD(it.date, tot-21);
-      const deliveryDate = addD(it.date, tot);
+      const pDays =
+        start
+          ? getDayDifference(
+              start,
+              today
+            )
+          : 0;
 
-      html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge">⏱️ '+escapeHtml(getFormattedDuration(it.date, lang))+'</span></div>';
+      const dry =
+        isBuffalo ? 235 : 210;
 
-      html += '<div class="row"><span>📅 '+(isBuffalo?t.dtLblBuf:t.dtLblCow)+'</span><span class="date-badge">'+escapeHtml(start ? formatDate(start) : '---')+'</span></div>';
-      html += '<div class="row"><span>'+t.chk21+'</span><span class="date-badge">'+escapeHtml(check21)+'</span></div>';
-      html += '<div class="row"><span>'+t.milkDry+'</span><span class="date-badge">'+escapeHtml(dryDate)+'</span></div>';
-      html += '<div class="row"><span>'+t.deworm+'</span><span class="date-badge">'+escapeHtml(dewormDate)+'</span></div>';
-      html += '<div class="row"><span>'+t.trans+'</span><span class="date-badge">'+escapeHtml(transDate)+'</span></div>';
+      const dewormDay =
+        tot - 30;
 
-      html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
+      const check21 =
+        addD(it.date,21);
 
-      if(safeNote && safeNote.toLowerCase() !== 'undefined' && safeNote !== ''){
-        html += '<div class="note-box">💉 <b>'+(lang==='en'?'Doctor/Semen:':(lang==='hi'?'डॉक्टर/सीमेन:':'डॉक्टर/सिमेन:'))+'</b> ' + safeNote + '</div>';
+      const dryDate =
+        addD(it.date,dry);
+
+      const dewormDate =
+        addD(it.date,dewormDay);
+
+      const transDate =
+        addD(it.date,tot-21);
+
+      const deliveryDate =
+        addD(it.date,tot);
+
+      html +=
+        '<div class="item-top">' +
+        '<span>' +
+        animalLabel +
+        ' &nbsp; <b>' +
+        safeName +
+        '</b></span>' +
+        '<span class="duration-badge">' +
+        '⏱️ ' +
+        escapeHtml(
+          getFormattedDuration(
+            it.date,
+            lang
+          )
+        ) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>📅 ' +
+        (
+          isBuffalo
+            ? t.dtLblBuf
+            : t.dtLblCow
+        ) +
+        '</span>' +
+        '<span class="date-badge">' +
+        escapeHtml(
+          start
+            ? formatDate(start)
+            : '---'
+        ) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.chk21 +
+        '</span>' +
+        '<span class="date-badge">' +
+        escapeHtml(check21) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.milkDry +
+        '</span>' +
+        '<span class="date-badge">' +
+        escapeHtml(dryDate) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.deworm +
+        '</span>' +
+        '<span class="date-badge">' +
+        escapeHtml(dewormDate) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.trans +
+        '</span>' +
+        '<span class="date-badge">' +
+        escapeHtml(transDate) +
+        '</span>' +
+        '</div>';
+
+      html +=
+        '<div class="due">' +
+        '<span>' +
+        t.delivery +
+        '</span>' +
+        '<span class="due-badge">' +
+        escapeHtml(deliveryDate) +
+        '</span>' +
+        '</div>';
+
+      if(
+        safeNote &&
+        safeNote.toLowerCase() !== 'undefined' &&
+        safeNote !== ''
+      ){
+
+        html +=
+          '<div class="note-box">' +
+          '💉 <b>' +
+          (
+            lang === 'en'
+              ? 'Doctor/Semen:'
+              : (
+                  lang === 'hi'
+                    ? 'डॉक्टर/सीमेन:'
+                    : 'डॉक्टर/सिमेन:'
+                )
+          ) +
+          '</b> ' +
+          safeNote +
+          '</div>';
       }
 
-      html += '<div class="action-btns">';
+      html +=
+        '<div class="action-btns">';
+
       if(pDays >= 265){
-        html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
-      }
-      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
-      html += '</div>';
 
-    } else {
-      const calvedDate = parseISODate(it.calvedDate);
-      const cDays = calvedDate ? getDayDifference(calvedDate, today) : 0;
-      const restDays = 90;
-      
-      const heatStart = new Date(calvedDate.getTime());
-      heatStart.setDate(heatStart.getDate() + restDays);
-
-      const calvedTitleTxt = lang==='en'?'Calved':(lang==='hi'?'ब्याई है':'वेली आहे');
-      const daysCountLbl = lang==='en'?'Days since calving:':(lang==='hi'?'ब्याने के बाद के दिन:':'वेऊन झालेले दिवस:');
-      const daysUnitTxt = lang==='en'?' days':(lang==='hi'?' दिन':' दिवस');
-
-      html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 '+calvedTitleTxt+'</span></div>';
-
-      html += '<div class="row"><span>📅 '+daysCountLbl+'</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+daysUnitTxt+'</span></div>';
-      html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
-      html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
-
-      // Dynamic Assumption Note vs Guidance Note
-      if(it.isAssumedCalved){
-        html += '<div class="small-assumption-note">'+escapeHtml(t.assumedNote)+'</div>';
-      } else {
-        html += '<div class="small-assumption-note" style="border-left-color:#3b82f6;">'+escapeHtml(t.guidanceNote)+'</div>';
+        html +=
+          '<button ' +
+          'class="btn-calved" ' +
+          'type="button" ' +
+          'onclick="openDateModal(\'calved\',' +
+          safeId +
+          ')">' +
+          escapeHtml(t.calvedBtn) +
+          '</button>';
       }
 
-      html += '<div class="action-btns" style="flex-wrap:wrap;">';
-      html += '<button class="btn-calved" style="flex:1;" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
-      html += '<button class="btn-repeat" style="flex:1;" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" style="flex:0 0 auto;" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
-      html += '</div>';
+      html +=
+        '<button ' +
+        'class="btn-repeat" ' +
+        'type="button" ' +
+        'onclick="openDateModal(\'repeat\',' +
+        safeId +
+        ')">' +
+        escapeHtml(t.repeatBtn) +
+        '</button>';
+
+      html +=
+        '<button ' +
+        'class="btn-del" ' +
+        'type="button" ' +
+        'onclick="delData(' +
+        safeId +
+        ')">' +
+        escapeHtml(t.delBtn) +
+        '</button>';
+
+      html +=
+        '</div>';
+
     }
 
-    html += '</div></div>';
+    else{
+
+      const calvedDate =
+        parseISODate(
+          it.calvedDate
+        );
+
+      const cDays =
+        calvedDate
+          ? getDayDifference(
+              calvedDate,
+              today
+            )
+          : 0;
+
+      const restDays = 90;
+
+      const heatStart =
+        new Date(
+          calvedDate.getTime()
+        );
+
+      heatStart.setDate(
+        heatStart.getDate() +
+        restDays
+      );
+
+      const calvedTitleTxt =
+        lang === 'en'
+          ? 'Calved'
+          : (
+              lang === 'hi'
+                ? 'ब्याई है'
+                : 'वेली आहे'
+            );
+
+      const daysCountLbl =
+        lang === 'en'
+          ? 'Days since calving:'
+          : (
+              lang === 'hi'
+                ? 'ब्याने के बाद के दिन:'
+                : 'वेऊन झालेले दिवस:'
+            );
+
+      const daysUnitTxt =
+        lang === 'en'
+          ? ' days'
+          : (
+              lang === 'hi'
+                ? ' दिन'
+                : ' दिवस'
+            );
+
+      html +=
+        '<div class="item-top">' +
+        '<span>' +
+        animalLabel +
+        ' &nbsp; <b>' +
+        safeName +
+        '</b></span>' +
+
+        '<span class="duration-badge" ' +
+        'style="background:#dcfce7;color:#15803d;border-color:#86efac;">' +
+        '🐄 ' +
+        calvedTitleTxt +
+        '</span>' +
+
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>📅 ' +
+        daysCountLbl +
+        '</span>' +
+
+        '<span class="date-badge" ' +
+        'style="background:#dbeafe;color:#1e40af;border-color:#93c5fd;">' +
+        cDays +
+        daysUnitTxt +
+        '</span>' +
+
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.calvedDateLbl +
+        '</span>' +
+
+        '<span class="date-badge">' +
+        escapeHtml(
+          calvedDate
+            ? formatDate(calvedDate)
+            : '---'
+        ) +
+        '</span>' +
+
+        '</div>';
+
+      html +=
+        '<div class="row">' +
+        '<span>' +
+        t.heatWindowText +
+        '</span>' +
+
+        '<span class="date-badge">' +
+        formatDate(heatStart) +
+        '</span>' +
+
+        '</div>';
+
+      if(it.isAssumedCalved){
+
+        html +=
+          '<div class="small-assumption-note">' +
+          escapeHtml(
+            t.assumedNote
+          ) +
+          '</div>';
+
+      }else{
+
+        html +=
+          '<div class="small-assumption-note" ' +
+          'style="border-left-color:#3b82f6;">' +
+          escapeHtml(
+            t.guidanceNote
+          ) +
+          '</div>';
+      }
+
+      html +=
+        '<div class="action-btns" ' +
+        'style="flex-wrap:wrap;">';
+
+      html +=
+        '<button ' +
+        'class="btn-calved" ' +
+        'style="flex:1;" ' +
+        'type="button" ' +
+        'onclick="openDateModal(\'changeCalve\',' +
+        safeId +
+        ')">' +
+        escapeHtml(
+          t.changeCalveDateBtn
+        ) +
+        '</button>';
+
+      html +=
+        '<button ' +
+        'class="btn-repeat" ' +
+        'style="flex:1;" ' +
+        'type="button" ' +
+        'onclick="openDateModal(\'newPregnancy\',' +
+        safeId +
+        ')">' +
+        escapeHtml(
+          t.setNewDateBtn
+        ) +
+        '</button>';
+
+      html +=
+        '<button ' +
+        'class="btn-del" ' +
+        'style="flex:0 0 auto;" ' +
+        'type="button" ' +
+        'onclick="delData(' +
+        safeId +
+        ')">' +
+        escapeHtml(t.delBtn) +
+        '</button>';
+
+      html +=
+        '</div>';
+    }
+
+    html +=
+      '</div></div>';
   }
 
   box.innerHTML = html;
+
   checkSmartNotifications();
 }
 
 function checkSmartNotifications(){
-  const banner = document.getElementById('notifBannerBox');
-  const title = document.getElementById('notifTitleText');
-  const list = document.getElementById('notifListContainer');
-  if(!banner || !title || !list) return;
 
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  title.innerText = t.notifTitle;
+  const banner =
+    document.getElementById(
+      'notifBannerBox'
+    );
 
-  const db = getDB();
-  const today = getTodayDate();
+  const title =
+    document.getElementById(
+      'notifTitleText'
+    );
+
+  const list =
+    document.getElementById(
+      'notifListContainer'
+    );
+
+  if(!banner || !title || !list){
+    return;
+  }
+
+  const lang =
+    document.getElementById(
+      'langSelect'
+    ).value;
+
+  const t =
+    langData[lang] || langData.mr;
+
+  title.innerText =
+    t.notifTitle;
+
+  const db =
+    getDB();
+
+  const today =
+    getTodayDate();
+
   const alerts = [];
 
   for(let i=0; i<db.length; i++){
-    const it = db[i];
-    const isBuff = it.type === 'buffalo';
-    const animalName = (isBuff ? '🐃' : '🐄') + ' ' + escapeHtml(it.name);
-    const animalWord = isBuff ? (lang==='en'?'Buffalo':(lang==='hi'?'भैंस':'म्हैस')) : (lang==='en'?'Cow':(lang==='hi'?'गाय':'गाय'));
 
+    const it = db[i];
+
+    const isBuff =
+      it.type === 'buffalo';
+
+    const animalName =
+      (isBuff ? '🐃' : '🐄') +
+      ' ' +
+      escapeHtml(it.name);
+
+    const animalWord =
+      isBuff
+        ? (
+            lang === 'en'
+              ? 'Buffalo'
+              : (
+                  lang === 'hi'
+                    ? 'भैंस'
+                    : 'म्हैस'
+                )
+          )
+        : (
+            lang === 'en'
+              ? 'Cow'
+              : 'गाय'
+          );
+
+    /* Calved animal */
     if(it.isCalved){
-      const calvedDate = parseISODate(it.calvedDate);
+
+      const calvedDate =
+        parseISODate(
+          it.calvedDate
+        );
+
       if(calvedDate){
-        const cDay = getDayDifference(calvedDate, today);
+
+        const cDay =
+          getDayDifference(
+            calvedDate,
+            today
+          );
+
+        /*
+          90 दिवस पूर्ण झाल्यावर
+          एकदाच Heat/AI reminder.
+        */
+
         if(cDay === 90){
-          let heatMsg = lang==='en' ? ('💡 90 days of rest completed. If ' + animalWord + ' is in heat, check and breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूरे हो गए हैं। यदि ' + animalWord + ' हीट में है तो जाँच कर गर्भधारण कराएं।') : ('💡 वेऊन ९० दिवस पूर्ण झाले आहेत. आता ' + animalWord + ' माजावर आली असेल तर तपासून भरवून घ्या.'));
-          alerts.push({name: animalName, text: heatMsg});
+
+          let heatMsg;
+
+          if(lang === 'en'){
+
+            heatMsg =
+              '💡 90 days of rest completed. If ' +
+              animalWord +
+              ' is in heat, check and breed.';
+
+          }
+
+          else if(lang === 'hi'){
+
+            heatMsg =
+              '💡 ब्याने के 90 दिन पूरे हो गए हैं। यदि ' +
+              animalWord +
+              ' हीट में है तो जाँच कर गर्भधारण कराएं।';
+
+          }
+
+          else{
+
+            heatMsg =
+              '💡 वेऊन ९० दिवस पूर्ण झाले आहेत. आता ' +
+              animalWord +
+              ' माजावर आली असेल तर तपासून भरवून घ्या.';
+          }
+
+          alerts.push({
+            name:animalName,
+            text:heatMsg
+          });
         }
       }
+
       continue;
     }
 
-    const start = parseISODate(it.date);
-    if(!start || start > today) continue;
+    const start =
+      parseISODate(it.date);
 
-    const pDay = getDayDifference(start, today);
-    const tot = isBuff ? 310 : 282;
-    const dry = isBuff ? 235 : 210;
-    const dewormDay = tot - 30;
+    if(!start || start > today){
+      continue;
+    }
 
-    const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
-    const dryDate = new Date(start.getTime()); dryDate.setDate(dryDate.getDate() + dry);
-    const dewormDate = new Date(start.getTime()); dewormDate.setDate(dewormDate.getDate() + dewormDay);
+    const pDay =
+      getDayDifference(
+        start,
+        today
+      );
 
-    const daysToDelivery = Math.round((deliveryDate - today) / 86400000);
-    const ninthMonthStartDays = tot - 30;
+    const tot =
+      isBuff ? 310 : 282;
 
-    if(pDay >= ninthMonthStartDays && pDay <= tot + 9){
+    const dry =
+      isBuff ? 235 : 210;
+
+    const dewormDay =
+      tot - 30;
+
+    const deliveryDate =
+      new Date(
+        start.getTime()
+      );
+
+    deliveryDate.setDate(
+      deliveryDate.getDate() +
+      tot
+    );
+
+    const dryDate =
+      new Date(
+        start.getTime()
+      );
+
+    dryDate.setDate(
+      dryDate.getDate() +
+      dry
+    );
+
+    const dewormDate =
+      new Date(
+        start.getTime()
+      );
+
+    dewormDate.setDate(
+      dewormDate.getDate() +
+      dewormDay
+    );
+
+    /*
+      ==============================
+      DELIVERY ALERT WINDOW
+      ==============================
+
+      Cow:
+      Day 265 to Day 282
+
+      Buffalo:
+      Day 295 to Day 310
+
+      याच्या आधी delivery alert नाही.
+      यानंतरही delivery alert नाही.
+    */
+
+    const deliveryAlertStart =
+      isBuff ? 295 : 265;
+
+    const deliveryAlertEnd =
+      isBuff ? 310 : 282;
+
+    const daysToDelivery =
+      getDayDifference(
+        today,
+        deliveryDate
+      );
+
+    if(
+      pDay >= deliveryAlertStart &&
+      pDay <= deliveryAlertEnd
+    ){
+
       let dayCountText = '';
-      if(lang==='en'){
-        if(daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' days remaining)';
-        else if(daysToDelivery === 0) dayCountText = '(Expected today)';
-        else dayCountText = '(Time has arrived)';
-      } else if(lang==='hi'){
-        if(daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिन बाकी हैं)';
-        else if(daysToDelivery === 0) dayCountText = '(आज अनुमानित समय है)';
-        else dayCountText = '(समय आ गया है)';
-      } else {
-        if(daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिवस बाकी आहेत)';
-        else if(daysToDelivery === 0) dayCountText = '(आज अंदाजे वेळ आहे)';
-        else dayCountText = '(नुकतीच वेळ झाली आहे)';
+
+      if(lang === 'en'){
+
+        if(daysToDelivery > 0){
+          dayCountText =
+            '(' +
+            daysToDelivery +
+            ' days remaining)';
+        }
+
+        else if(daysToDelivery === 0){
+          dayCountText =
+            '(Expected today)';
+        }
+
+        else{
+          dayCountText =
+            '(Time has arrived)';
+        }
       }
 
-      let delNotifTxt = lang==='en' ? ('🍼 ' + animalWord + ' delivery time near, 9th month started ' + dayCountText + '. If calved, update system & click "Calved"!') : (lang==='hi' ? ('🍼 ' + animalWord + ' के ब्याने का समय नजदीक है, 9वां महीना शुरू हो गया है ' + dayCountText + '. यदि ब्या गई है, तो सिस्टम में अपडेट करें और "ब्याया है" बटन दबाएं!') : ('🍼 ' + animalWord + ' वेवण्याची वेळ जवळ आली आहे, नववा महिना सुरू झाला आहे ' + dayCountText + '. जर ' + animalWord + ' वेवली असेल, तर लगेच सिस्टीममध्ये अपडेट करा आणि "वेली आहे" हे बटण दाबा!'));
+      else if(lang === 'hi'){
 
-      alerts.push({ name: animalName, text: delNotifTxt });
+        if(daysToDelivery > 0){
+          dayCountText =
+            '(' +
+            daysToDelivery +
+            ' दिन बाकी हैं)';
+        }
+
+        else if(daysToDelivery === 0){
+          dayCountText =
+            '(आज अनुमानित समय है)';
+        }
+
+        else{
+          dayCountText =
+            '(समय आ गया है)';
+        }
+      }
+
+      else{
+
+        if(daysToDelivery > 0){
+          dayCountText =
+            '(' +
+            daysToDelivery +
+            ' दिवस बाकी आहेत)';
+        }
+
+        else if(daysToDelivery === 0){
+          dayCountText =
+            '(आज अंदाजे वेळ आहे)';
+        }
+
+        else{
+          dayCountText =
+            '(नुकतीच वेळ झाली आहे)';
+        }
+      }
+
+      let delNotifTxt;
+
+      if(lang === 'en'){
+
+        delNotifTxt =
+          '🍼 ' +
+          animalWord +
+          ' delivery time is near ' +
+          dayCountText +
+          '. If calved, update system & click "Calved"!';
+
+      }
+
+      else if(lang === 'hi'){
+
+        delNotifTxt =
+          '🍼 ' +
+          animalWord +
+          ' के ब्याने का समय नजदीक है ' +
+          dayCountText +
+          '. यदि ब्या गई है, तो सिस्टम में अपडेट करें और "ब्याया है" बटन दबाएं!';
+
+      }
+
+      else{
+
+        delNotifTxt =
+          '🍼 ' +
+          animalWord +
+          ' वेवण्याची वेळ जवळ आली आहे ' +
+          dayCountText +
+          '. जर ' +
+          animalWord +
+          ' वेवली असेल, तर लगेच सिस्टीममध्ये अपडेट करा आणि "वेली आहे" हे बटण दाबा!';
+      }
+
+      alerts.push({
+        name:animalName,
+        text:delNotifTxt
+      });
     }
 
-    if(pDay >= 19 && pDay <= 21){
-      let heatTxt = lang==='en' ? (pDay===21 ? 'Today marks 21 days of pregnancy. Check if animal is in heat.' : 'Pregnancy reached ' + pDay + ' days. Prepare for heat check.') : (lang==='hi' ? (pDay===21 ? 'आज गर्भधारण के 21 दिन पूरे हो गए हैं। कृपया जांच करें कि पशु रिपीट हुआ है या नहीं।' : 'गर्भधारण के ' + pDay + ' दिन हो गए हैं। उलट जांच की तैयारी रखें।') : (pDay===21 ? '🔴 आज गाभण राहून २१ दिवस पूर्ण झाले आहेत. कृपया गाय/म्हैस उलटली का ते तपासा.' : '🔴 गाभण राहून ' + pDay + ' दिवस झाले आहेत. उलट तपासणीची तयारी ठेवा.'));
-      alerts.push({name: animalName, text: heatTxt});
+    /*
+      ==============================
+      HEAT / REPEAT ALERT
+      ==============================
+
+      फक्त 19, 20 आणि 21 दिवस.
+      18 नाही.
+      22 नाही.
+    */
+
+    if(
+      pDay >= 19 &&
+      pDay <= 21
+    ){
+
+      let heatTxt;
+
+      if(lang === 'en'){
+
+        heatTxt =
+          pDay === 21
+            ? '🔴 Today marks 21 days of pregnancy. Check if animal is in heat.'
+            : '🔴 Pregnancy reached ' +
+              pDay +
+              ' days. Prepare for heat check.';
+      }
+
+      else if(lang === 'hi'){
+
+        heatTxt =
+          pDay === 21
+            ? '🔴 आज गर्भधारण के 21 दिन पूरे हो गए हैं। कृपया जांच करें कि पशु रिपीट हुआ है या नहीं।'
+            : '🔴 गर्भधारण के ' +
+              pDay +
+              ' दिन हो गए हैं। उलट जांच की तैयारी रखें.';
+      }
+
+      else{
+
+        heatTxt =
+          pDay === 21
+            ? '🔴 आज गाभण राहून २१ दिवस पूर्ण झाले आहेत. कृपया गाय/म्हैस उलटली का ते तपासा.'
+            : '🔴 गाभण राहून ' +
+              pDay +
+              ' दिवस झाले आहेत. उलट तपासणीची तयारी ठेवा.';
+      }
+
+      alerts.push({
+        name:animalName,
+        text:heatTxt
+      });
     }
 
-    const dDiff = getDayDifference(today, dewormDate);
-    if(dDiff >= 0 && dDiff <= 3){
-      let dewTxt = lang==='en' ? (dDiff===0 ? 'Today is deworming medicine schedule.' : 'Deworming schedule near (' + dDiff + ' days left).') : (lang==='hi' ? (dDiff===0 ? 'आज डिवॉर्मिंग दवा देने का दिन है।' : 'डिवॉर्मिंग दवा का समय नजदीक है (' + dDiff + ' दिन बाकी).') : (dDiff===0 ? '💊 आज वीण्याच्या नेमका महिनाभर आधीची जंतनाशक गोळी/औषध देण्याची वेळ आहे.' : '💊 जंतनाशक औषध देण्याची वेळ जवळ येत आहे ('+dDiff+' दिवस बाकी).'));
-      alerts.push({name: animalName, text: dewTxt});
+    /* Deworming */
+    const dDiff =
+      getDayDifference(
+        today,
+        dewormDate
+      );
+
+    if(
+      dDiff >= 0 &&
+      dDiff <= 3
+    ){
+
+      let dewTxt;
+
+      if(lang === 'en'){
+
+        dewTxt =
+          dDiff === 0
+            ? '💊 Today is deworming medicine schedule.'
+            : '💊 Deworming schedule near (' +
+              dDiff +
+              ' days left).';
+      }
+
+      else if(lang === 'hi'){
+
+        dewTxt =
+          dDiff === 0
+            ? '💊 आज डिवॉर्मिंग दवा देने का दिन है।'
+            : '💊 डिवॉर्मिंग दवा का समय नजदीक है (' +
+              dDiff +
+              ' दिन बाकी).';
+      }
+
+      else{
+
+        dewTxt =
+          dDiff === 0
+            ? '💊 आज वीण्याच्या नेमका महिनाभर आधीची जंतनाशक गोळी/औषध देण्याची वेळ आहे.'
+            : '💊 जंतनाशक औषध देण्याची वेळ जवळ येत आहे (' +
+              dDiff +
+              ' दिवस बाकी).';
+      }
+
+      alerts.push({
+        name:animalName,
+        text:dewTxt
+      });
     }
 
-    const dryDiff = getDayDifference(today, dryDate);
-    if(dryDiff >= 0 && dryDiff <= 3){
-      let dryTxt = lang==='en' ? (dryDiff===0 ? 'Today is dry-off period.' : 'Dry-off period near (' + dryDiff + ' days left).') : (lang==='hi' ? (dryDiff===0 ? 'आज दूध बंद करने का समय है।' : 'दूध बंद करने का समय नजदीक है (' + dryDiff + ' दिन बाकी).') : (dryDiff===0 ? '🥛 आज दूध बंद करण्याची (आटवण्याची) वेळ आली आहे.' : '🥛 दूध आटवण्याची वेळ जवळ येत आहे ('+dryDiff+' दिवस बाकी).'));
-      alerts.push({name: animalName, text: dryTxt});
+    /*
+      ==============================
+      DRY-OFF ALERT
+      ==============================
+
+      3 दिवस आधी + 2 + 1 + event day 0
+    */
+
+    const dryDiff =
+      getDayDifference(
+        today,
+        dryDate
+      );
+
+    if(
+      dryDiff >= 0 &&
+      dryDiff <= 3
+    ){
+
+      let dryTxt;
+
+      if(lang === 'en'){
+
+        dryTxt =
+          dryDiff === 0
+            ? '🥛 Today is dry-off period.'
+            : '🥛 Dry-off period near (' +
+              dryDiff +
+              ' days left).';
+      }
+
+      else if(lang === 'hi'){
+
+        dryTxt =
+          dryDiff === 0
+            ? '🥛 आज दूध बंद करने का समय है।'
+            : '🥛 दूध बंद करने का समय नजदीक है (' +
+              dryDiff +
+              ' दिन बाकी).';
+      }
+
+      else{
+
+        dryTxt =
+          dryDiff === 0
+            ? '🥛 आज दूध बंद करण्याची (आटवण्याची) वेळ आली आहे.'
+            : '🥛 दूध आटवण्याची वेळ जवळ येत आहे (' +
+              dryDiff +
+              ' दिवस बाकी).';
+      }
+
+      alerts.push({
+        name:animalName,
+        text:dryTxt
+      });
     }
+
+    /*
+      Transition Feed notification intentionally नाही.
+    */
   }
 
   if(alerts.length === 0){
+
     banner.style.display = 'none';
     list.innerHTML = '';
+
     return;
   }
 
   let html = '';
+
   for(let i=0; i<alerts.length; i++){
-    html += '<div class="notif-item"><div style="font-weight:900; color:#991b1b;">'+alerts[i].name+'</div><div style="color:#c2410c;">'+alerts[i].text+'</div></div>';
+
+    html +=
+      '<div class="notif-item">' +
+
+      '<div style="font-weight:900;color:#991b1b;">' +
+      alerts[i].name +
+      '</div>' +
+
+      '<div style="color:#c2410c;">' +
+      alerts[i].text +
+      '</div>' +
+
+      '</div>';
   }
+
   list.innerHTML = html;
   banner.style.display = 'block';
 }
 
 function saveData(){
-  const dt = document.getElementById('cDate').value;
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  const inputDate = parseISODate(dt);
 
-  if(!inputDate){ alert(t.dateRequired); return; }
-  if(inputDate > getTodayDate()){ alert(t.futureDateError); return; }
+  const dt =
+    document.getElementById(
+      'cDate'
+    ).value;
 
-  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
-  const nt = document.getElementById('cNote').value.trim();
-  const previewImg = document.getElementById('photoPreview');
-  const photo = previewImg.style.display==='block' ? previewImg.src : '';
+  const lang =
+    document.getElementById(
+      'langSelect'
+    ).value;
 
-  const db = getDB();
-  db.unshift({ 
-    id: Date.now(), 
-    name: nm, 
-    type: cur, 
-    date: dt, 
-    note: nt, 
-    photo: photo,
-    isCalved: false,
-    calvedDate: '',
-    isAssumedCalved: false
+  const t =
+    langData[lang] || langData.mr;
+
+  const inputDate =
+    parseISODate(dt);
+
+  if(!inputDate){
+
+    alert(t.dateRequired);
+    return;
+  }
+
+  if(inputDate > getTodayDate()){
+
+    alert(t.futureDateError);
+    return;
+  }
+
+  const nm =
+    document.getElementById(
+      'cName'
+    ).value.trim() ||
+    (
+      cur === 'cow'
+        ? t.bCow
+        : t.bBuf
+    );
+
+  const nt =
+    document.getElementById(
+      'cNote'
+    ).value.trim();
+
+  const previewImg =
+    document.getElementById(
+      'photoPreview'
+    );
+
+  const photo =
+    previewImg.style.display === 'block'
+      ? previewImg.src
+      : '';
+
+  const db =
+    getDB();
+
+  db.unshift({
+
+    id:Date.now(),
+
+    name:nm,
+
+    type:cur,
+
+    date:dt,
+
+    note:nt,
+
+    photo:photo,
+
+    isCalved:false,
+
+    calvedDate:'',
+
+    isAssumedCalved:false
   });
 
   try{
-    localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
-  }catch(e){ alert(t.storageError); return; }
 
-  document.getElementById('cName').value = '';
-  document.getElementById('cNote').value = '';
-  document.getElementById('cPhoto').value = '';
+    localStorage.setItem(
+      'cattle_tracker_db',
+      JSON.stringify(db)
+    );
+
+  }catch(e){
+
+    alert(t.storageError);
+    return;
+  }
+
+  document.getElementById(
+    'cName'
+  ).value = '';
+
+  document.getElementById(
+    'cNote'
+  ).value = '';
+
+  document.getElementById(
+    'cPhoto'
+  ).value = '';
+
   previewImg.style.display = 'none';
+
   setTodayMaxDate();
+
   draw();
 }
 
 function delData(id){
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  if(!confirm(t.confirmDel)) return;
-  const db = getDB().filter(item => Number(item.id)!==Number(id));
-  localStorage.setItem('cattle_tracker_db', JSON.stringify(db));
+
+  const lang =
+    document.getElementById(
+      'langSelect'
+    ).value;
+
+  const t =
+    langData[lang] || langData.mr;
+
+  if(!confirm(t.confirmDel)){
+    return;
+  }
+
+  const db =
+    getDB().filter(
+      item =>
+        Number(item.id) !== Number(id)
+    );
+
+  localStorage.setItem(
+    'cattle_tracker_db',
+    JSON.stringify(db)
+  );
+
   draw();
 }
 
 function initApp(){
+
   let unlocked = false;
-  try{ unlocked = localStorage.getItem('cattle_unlocked')==='true'; }catch(e){}
+
+  try{
+
+    unlocked =
+      localStorage.getItem(
+        'cattle_unlocked'
+      ) === 'true';
+
+  }catch(e){}
+
   if(!unlocked){
-    document.getElementById('lockScreen').style.display = 'flex';
-    document.getElementById('appScreen').style.display = 'none';
+
+    document.getElementById(
+      'lockScreen'
+    ).style.display = 'flex';
+
+    document.getElementById(
+      'appScreen'
+    ).style.display = 'none';
+
     return;
   }
-  document.getElementById('lockScreen').style.display = 'none';
-  document.getElementById('appScreen').style.display = 'block';
+
+  document.getElementById(
+    'lockScreen'
+  ).style.display = 'none';
+
+  document.getElementById(
+    'appScreen'
+  ).style.display = 'block';
 
   let savedLang = 'mr';
-  try{ savedLang = localStorage.getItem('cattle_lang') || 'mr'; }catch(e){}
-  document.getElementById('langSelect').value = savedLang;
+
+  try{
+
+    savedLang =
+      localStorage.getItem(
+        'cattle_lang'
+      ) || 'mr';
+
+  }catch(e){}
+
+  document.getElementById(
+    'langSelect'
+  ).value = savedLang;
+
   setTodayMaxDate();
+
   changeLanguage();
 }
 
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded', initApp);
+if(document.readyState === 'loading'){
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    initApp
+  );
+
 }else{
+
   initApp();
 }
 </script>
