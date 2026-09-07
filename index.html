@@ -400,7 +400,7 @@ const langData={
     delivery:'🍼 अंदाजे विण्याची तारीख',
     calvedDateLbl:'📅 वेवल्याची तारीख',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील भरवण्याची (Heat) तयारी ठेवा:',
-    assumedNote:'* मुदत (नऊ महिने / दिवस) पूर्ण झाल्यामुळे गाय/म्हैस वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी खालील <span style="color:#059669; font-weight:900;">वेवल्याची तारीख बदला</span> हे बटण दाबा.',
+    assumedNote:'* मुदत पूर्ण झाल्यामुळे गाय/म्हैस वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी खालील <span style="color:#059669; font-weight:900;">वेवल्याची तारीख बदला</span> हे बटण दाबा.',
     guidanceNote:'💡 जेव्हा पुन्हा गाभण शकाल, तेव्हा खालील <span style="color:#0284c7; font-weight:900;">नवीन लावल्याची तारीख टाका</span> हे बटण दाबून नवीन तारीख नोंदवा.',
     dateRequired:'कृपया तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
@@ -409,7 +409,8 @@ const langData={
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
-    lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव'
+    lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
+    docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव'
   },
   hi:{
     headerSub:'Cattle Pregnancy Tracker',
@@ -438,7 +439,8 @@ const langData={
     installTxt:'📲 ऐप इंस्टॉल करें',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और पिन दर्ज करें',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
-    lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम'
+    lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
+    docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम'
   },
   en:{
     headerSub:'Cattle Pregnancy Tracker',
@@ -466,7 +468,8 @@ const langData={
     installTxt:'📲 Install App on Phone',
     lockSubTxt:'Enter your mobile number and PIN to use the app',
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
-    lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name'
+    lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
+    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name'
   }
 };
 
@@ -516,6 +519,8 @@ function changeLanguage(){
   document.getElementById('cName').placeholder = t.namePh;
   document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
   document.getElementById('lblNoteLbl').innerText = t.noteLbl;
+  document.getElementById('cDoc').placeholder = t.docPlaceholder;
+  document.getElementById('cSemen').placeholder = t.semenPlaceholder;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
@@ -707,7 +712,8 @@ function draw(){
       }
 
       html += '<div class="action-btns">';
-      if(pDays >= (tot - 20)){
+      const calveThreshold = isBuffalo ? 285 : 252;
+      if(pDays >= calveThreshold){
         html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
       }
       html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
