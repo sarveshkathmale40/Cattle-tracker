@@ -22,9 +22,9 @@ body{background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 50%,#f8fafc 100%);min-
 .lock-title{font-size:22px;font-weight:900;color:#047857;margin-bottom:6px;}
 .lock-sub{font-size:12px;color:#64748b;margin-bottom:20px;font-weight:600;line-height:1.4;}
 
-/* Premium Glass & Gold Glow Header */
+/* Premium Glass & Golden Wheat Glow Header */
 .app-header{background:linear-gradient(135deg,#022c22 0%,#064e3b 50%,#047857 100%);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 12px 30px -5px rgba(4,120,87,.45),inset 0 2px 6px rgba(255,255,255,.25);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #065f46;position:relative;overflow:hidden;}
-.app-header::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(252,211,77,0.12) 0%, transparent 70%);pointer-events:none;}
+.app-header::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(252,211,77,0.18) 0%, transparent 70%);pointer-events:none;}
 .header-title{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 2px 5px rgba(0,0,0,0.3);background:linear-gradient(to right, #ffffff, #fef08a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .header-sub{font-size:10.5px;color:#a7f3d0;margin-top:2px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
 
@@ -55,7 +55,9 @@ body{background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 50%,#f8fafc 100%);min-
 label{display:block;text-align:left;font-size:10.5px;font-weight:800;color:#475569;margin-bottom:4px;margin-left:2px;}
 input,select,textarea{width:100%;padding:10px 12px;border:2px solid #cbd5e1;border-radius:12px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:8px;font-weight:700;font-family:inherit;transition:all .2s;}
 input:focus,select:focus,textarea:focus{border-color:#059669;background:white;box-shadow:0 0 0 3px rgba(5,150,105,.15);}
-textarea{height:55px;resize:none;}
+
+/* Split Inputs Container */
+.split-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
 
 /* 3D Animal Buttons */
 .animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;}
@@ -86,7 +88,7 @@ textarea{height:55px;resize:none;}
 .due span:first-child{flex:1;}
 .due-badge{background:#16a34a;color:white;padding:2px 7px;border-radius:6px;font-size:11px;font-weight:900;text-align:right;width:90px;flex-shrink:0;}
 
-.note-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #fcd34d;border-radius:8px;padding:5px 7px;font-size:11px;color:#78350f;margin-top:5px;font-weight:700;}
+.note-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #fcd34d;border-radius:8px;padding:6px 8px;font-size:11px;color:#78350f;margin-top:5px;font-weight:700;display:flex;flex-direction:column;gap:2px;}
 
 /* Guidance Note */
 .small-assumption-note{font-size:11px;color:#334155;font-weight:700;margin-top:6px;line-height:1.4;background:#f8fafc;padding:8px 10px;border-radius:10px;border:1.5px solid #cbd5e1;box-shadow:0 2px 6px rgba(0,0,0,.03);}
@@ -94,11 +96,11 @@ textarea{height:55px;resize:none;}
 /* SUPER FAINT & CLASSY PASTEL 3D ACTION BUTTONS (~20-25% Intensity) */
 .action-btns{display:flex;gap:6px;margin-top:8px;}
 
-/* Faint Soft Mint Green (तारीख बदला) */
+/* Faint Soft Mint Green (वेवल्याची तारीख बदला) */
 .btn-repeat{flex:1;background:linear-gradient(135deg,#a7f3d0 0%,#6ee7b7 50%,#34d399 100%);color:#064e3b;border:1px solid #10b981;padding:10px 4px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 0 #059669, 0 6px 12px rgba(52,211,153,.2);transition:all .1s ease;}
 .btn-repeat:active{transform:translateY(3px);box-shadow:0 1px 0 #059669, 0 2px 4px rgba(52,211,153,.15);}
 
-/* Faint Soft Sky Blue (नवीन तारीख टाका) */
+/* Faint Soft Sky Blue (नवीन लावल्याची तारीख टाका) */
 .btn-calved{flex:1;background:linear-gradient(135deg,#bae6fd 0%,#7dd3fc 50%,#38bdf8 100%);color:#0c4a6e;border:1px solid #0284c7;padding:10px 4px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 0 #0284c7, 0 6px 12px rgba(56,189,248,.2);transition:all .1s ease;}
 .btn-calved:active{transform:translateY(3px);box-shadow:0 1px 0 #0284c7, 0 2px 4px rgba(56,189,248,.15);}
 
@@ -140,11 +142,14 @@ textarea{height:55px;resize:none;}
   <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
-    <!-- Header -->
+    <!-- Header with Golden Wheat Touch -->
     <div class="app-header">
-      <div style="text-align:left;">
-        <div class="header-title">🌾 The MH Farmer</div>
-        <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
+      <div style="text-align:left; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:26px; filter: drop-shadow(0 2px 4px rgba(252,211,77,0.5));">🌾</span>
+        <div>
+          <div class="header-title">The MH Farmer</div>
+          <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
+        </div>
       </div>
       <div>
         <select id="langSelect" onchange="changeLanguage()">
@@ -171,7 +176,7 @@ textarea{height:55px;resize:none;}
       <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
     </div>
 
-    <!-- Compact Form -->
+    <!-- Compact Form with Split Doctor & Semen Inputs -->
     <div class="card">
       <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
       
@@ -186,8 +191,11 @@ textarea{height:55px;resize:none;}
       <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
       <input type="date" id="cDate">
 
-      <label id="lblNoteLbl">डॉक्टर / सिमेन तपशील (पर्यायी)</label>
-      <textarea id="cNote" placeholder="उदा. डॉक्टरचे नाव, सिमेन ब्रँड"></textarea>
+      <label id="lblNoteLbl">डॉक्टर व सिमेन तपशील (पर्यायी)</label>
+      <div class="split-inputs">
+        <input type="text" id="cDoc" placeholder="डॉक्टरचे नाव">
+        <input type="text" id="cSemen" placeholder="सिमेन ब्रँड/नाव">
+      </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
@@ -205,7 +213,7 @@ textarea{height:55px;resize:none;}
 
 </div>
 
-<!-- Professional Custom Modal for Date & Doctor/Semen -->
+<!-- Professional Custom Modal for Date & Split Doctor/Semen Entry -->
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
@@ -348,10 +356,6 @@ function submitModalDate(){
 
   const docName = document.getElementById('modalDoctorInput').value.trim();
   const semenName = document.getElementById('modalSemenInput').value.trim();
-  let combinedNote = '';
-  if(docName && semenName) combinedNote = docName + ' | ' + semenName;
-  else if(docName) combinedNote = docName;
-  else if(semenName) combinedNote = semenName;
 
   const db = getDB();
   for(let i=0; i<db.length; i++){
@@ -361,7 +365,8 @@ function submitModalDate(){
         db[i].isCalved = false;
         db[i].isAssumedCalved = false;
         db[i].calvedDate = '';
-        if(combinedNote) db[i].note = combinedNote;
+        if(docName) db[i].doctor = docName;
+        if(semenName) db[i].semen = semenName;
       } else if(activeActionType === 'calved' || activeActionType === 'changeCalve'){
         db[i].isCalved = true;
         db[i].isAssumedCalved = false;
@@ -383,11 +388,11 @@ const langData={
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
     namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / ओळख', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर / सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)', notePh:'उदा. डॉक्टरचे नाव, सिमेन ब्रँड',
+    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)',
     saveBtn:'💾 नोंद जतन करा', listT:'📋 माझ्या पशुंच्या नोंदी', empty:'अद्याप कोणतीही नोंद नाही.',
-    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 तारीख बदला', calvedBtn:'🐄 वेली आहे',
-    setNewDateBtn:'📅 नवीन तारीख टाका',
-    changeCalveDateBtn:'📅 तारीख बदला',
+    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 वेवल्याची तारीख बदला', calvedBtn:'🐄 वेली आहे',
+    setNewDateBtn:'📅 नवीन लावल्याची तारीख टाका',
+    changeCalveDateBtn:'📅 वेवल्याची तारीख बदला',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
     milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(योग्य महिना)</span>',
     deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
@@ -395,8 +400,8 @@ const langData={
     delivery:'🍼 अंदाजे विण्याची तारीख',
     calvedDateLbl:'📅 वेवल्याची तारीख',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील भरवण्याची (Heat) तयारी ठेवा:',
-    assumedNote:'* मुदत पूर्ण झाल्यामुळे अंदाजे वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी वरील बटण दाबा.',
-    guidanceNote:'💡 जेव्हा पुन्हा गाभण शकाल, तेव्हा खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख टाका</span> हे बटण दाबून नवीन तारीख नोंदवा.',
+    assumedNote:'* मुदत (नऊ महिने / दिवस) पूर्ण झाल्यामुळे गाय/म्हैस वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी खालील <span style="color:#059669; font-weight:900;">वेवल्याची तारीख बदला</span> हे बटण दाबा.',
+    guidanceNote:'💡 जेव्हा पुन्हा गाभण शकाल, तेव्हा खालील <span style="color:#0284c7; font-weight:900;">नवीन लावल्याची तारीख टाका</span> हे बटण दाबून नवीन तारीख नोंदवा.',
     dateRequired:'कृपया तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
@@ -412,7 +417,7 @@ const langData={
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
     namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर / सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)', notePh:'उदा. डॉक्टर का नाम, सीमेन ब्रांड',
+    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 आपके पशुओं के रिकॉर्ड', empty:'अभी तक कोई रिकॉर्ड नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 तारीख बदलें', calvedBtn:'🐄 ब्याया है',
     setNewDateBtn:'📅 नई तारीख दर्ज करें',
@@ -424,8 +429,8 @@ const langData={
     delivery:'🍼 अनुमानित ब्याने की तारीख',
     calvedDateLbl:'📅 ब्याने की तारीख',
     heatWindowText:'💡 90 दिन के विश्रांति काल के बाद इस तारीख से अगली बार गर्भधारण के लिए तैयार करें:',
-    assumedNote:'* अवधि पूरी होने के कारण अनुमानित ब्याया हुआ माना गया है। सटीक तारीख बदलने के लिए ऊपर बटन दबाएं।',
-    guidanceNote:'💡 जब दोबारा गर्भधारण कराएं, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें।',
+    assumedNote:'* अवधि पूरी होने के कारण पशु ब्याया हुआ माना गया है। सटीक तारीख बदलने के लिए नीचे <span style="color:#059669; font-weight:900;">तारीख बदलें</span> बटन दबाएं।',
+    guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें।',
     dateRequired:'कृपया तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
@@ -441,7 +446,7 @@ const langData={
     formT:'➕ Add New Animal', bCow:'Cow', bBuf:'Buffalo',
     namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag No.', 
     dtLblCow:'Cow Pregnancy Date', dtLblBuf:'Buffalo Pregnancy Date',
-    noteLbl:'Doctor / Semen Details (Optional)', photoLbl:'Animal Photo (Optional)', notePh:'e.g., Doctor name, Semen brand',
+    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Optional)',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records', empty:'No records found yet.',
     delBtn:'🗑️ Del', repeatBtn:'🔄 Change Date', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter New Date',
@@ -453,7 +458,7 @@ const langData={
     delivery:'🍼 Est. Delivery Date',
     calvedDateLbl:'📅 Calving Date',
     heatWindowText:'💡 Ready for next AI / Heat check from:',
-    assumedNote:'* Assumed calved as term completed. Please update with exact date using button above.',
+    assumedNote:'* Assumed calved as full term is completed. Please update with exact date by clicking the <span style="color:#059669; font-weight:900;">Change Date</span> button below.',
     guidanceNote:'💡 When you breed again, please click the <span style="color:#0284c7; font-weight:900;">Enter New Date</span> button below.',
     dateRequired:'Please select a date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage is full!', confirmDel:'Are you sure you want to delete?',
@@ -511,7 +516,6 @@ function changeLanguage(){
   document.getElementById('cName').placeholder = t.namePh;
   document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
   document.getElementById('lblNoteLbl').innerText = t.noteLbl;
-  document.getElementById('cNote').placeholder = t.notePh;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
@@ -664,7 +668,8 @@ function draw(){
 
     const imgHtml = it.photo ? '<img src="'+escapeHtml(it.photo)+'" onclick="openImageModal(\''+escapeHtml(it.photo)+'\')">' : (isBuffalo ? '🐃' : '🐄');
     const safeName = escapeHtml(it.name);
-    const safeNote = escapeHtml(it.note || '').trim();
+    const docName = escapeHtml(it.doctor || '').trim();
+    const semenName = escapeHtml(it.semen || '').trim();
     const animalLabel = isBuffalo ? '🐃 ' + t.buf : '🐄 ' + t.cow;
     const safeId = Number(it.id);
 
@@ -694,8 +699,11 @@ function draw(){
 
       html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
 
-      if(safeNote && safeNote.toLowerCase() !== 'undefined' && safeNote !== ''){
-        html += '<div class="note-box">💉 <b>'+(lang==='en'?'Doctor/Semen:':(lang==='hi'?'डॉक्टर/सीमेन:':'डॉक्टर/सिमेन:'))+'</b> ' + safeNote + '</div>';
+      if(docName || semenName){
+        html += '<div class="note-box">';
+        if(docName) html += '<div>💉 <b>डॉक्टर:</b> ' + docName + '</div>';
+        if(semenName) html += '<div>🧬 <b>सिमेन:</b> ' + semenName + '</div>';
+        html += '</div>';
       }
 
       html += '<div class="action-btns">';
@@ -726,7 +734,7 @@ function draw(){
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
       if(it.isAssumedCalved){
-        html += '<div class="small-assumption-note">'+escapeHtml(t.assumedNote)+'</div>';
+        html += '<div class="small-assumption-note">'+t.assumedNote+'</div>';
       } else {
         html += '<div class="small-assumption-note">'+t.guidanceNote+'</div>';
       }
@@ -855,7 +863,8 @@ function saveData(){
   if(inputDate > getTodayDate()){ alert(t.futureDateError); return; }
 
   const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
-  const nt = document.getElementById('cNote').value.trim();
+  const doc = document.getElementById('cDoc').value.trim();
+  const semen = document.getElementById('cSemen').value.trim();
   const previewImg = document.getElementById('photoPreview');
   const photo = previewImg.style.display==='block' ? previewImg.src : '';
 
@@ -865,7 +874,8 @@ function saveData(){
     name: nm, 
     type: cur, 
     date: dt, 
-    note: nt, 
+    doctor: doc,
+    semen: semen,
     photo: photo,
     isCalved: false,
     calvedDate: '',
@@ -877,7 +887,8 @@ function saveData(){
   }catch(e){ alert(t.storageError); return; }
 
   document.getElementById('cName').value = '';
-  document.getElementById('cNote').value = '';
+  document.getElementById('cDoc').value = '';
+  document.getElementById('cSemen').value = '';
   document.getElementById('cPhoto').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
