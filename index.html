@@ -13,7 +13,7 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 50%,#f8fafc 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:center;}
+body{background:linear-gradient(135deg,#e6f4ea 0%,#f0fdf4 50%,#f8fafc 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:center;}
 .wrap{width:100%;max-width:420px;margin:0 auto;}
 
 /* Lock Screen */
@@ -22,90 +22,92 @@ body{background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 50%,#f8fafc 100%);min-
 .lock-title{font-size:22px;font-weight:900;color:#15803d;margin-bottom:6px;}
 .lock-sub{font-size:12px;color:#64748b;margin-bottom:20px;font-weight:600;line-height:1.4;}
 
-/* 3D Attractive Header */
-.app-header{background:linear-gradient(135deg,#15803d 0%,#16a34a 50%,#22c55e 100%);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 10px 25px -5px rgba(22,163,74,.4),inset 0 2px 4px rgba(255,255,255,.3);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #14532d;}
-.header-title{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 3px 6px rgba(0,0,0,.2);background:linear-gradient(to right, #ffffff, #dcfce7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.header-sub{font-size:11px;color:#bbf7d0;margin-top:2px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;}
+/* 3D Attractive Header with Vibrant Touch */
+.app-header{background:linear-gradient(135deg,#065f46 0%,#047857 50%,#10b981 100%);border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 10px 25px -5px rgba(5,150,105,.4),inset 0 2px 4px rgba(255,255,255,.3);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #064e3b;}
+.header-title{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 3px 6px rgba(0,0,0,.2);background:linear-gradient(to right, #ffffff, #d1fae5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.header-sub{font-size:11px;color:#a7f3d0;margin-top:2px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;}
 
 /* Install PWA Button */
 .install-bar{display:none;background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:10px 14px;border-radius:14px;margin-bottom:12px;text-align:center;box-shadow:0 6px 15px rgba(16,185,129,.3);font-size:13px;font-weight:800;border:none;width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;}
 
 /* Language */
 #langSelect{background:rgba(255,255,255,.25);color:white;border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:6px 10px;font-size:12px;font-weight:bold;outline:none;cursor:pointer;}
-#langSelect option{background:#15803d;color:white;}
+#langSelect option{background:#065f46;color:white;}
 
 /* Notifications */
-.notification-banner{background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%);border:2px solid #fdba74;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(194,65,12,.15);}
-.notif-title{font-size:13px;font-weight:900;color:#c2410c;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:16px;padding:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(217,119,6,.15);}
+.notif-title{font-size:13px;font-weight:900;color:#b45309;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
 .notif-list{display:flex;flex-direction:column;gap:6px;}
-.notif-item{background:white;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#7c2d12;font-weight:600;border:1.5px solid #fed7aa;line-height:1.4;border-left:4px solid #ea580c;}
+.notif-item{background:white;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;font-weight:600;border:1.5px solid #fde68a;line-height:1.4;border-left:4px solid #d97706;}
 
 /* Stats Cards */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.stat{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);padding:10px 6px;border-radius:16px;text-align:center;box-shadow:0 6px 15px rgba(0,0,0,.05),inset 0 2px 3px rgba(255,255,255,.8);border:2px solid #e2e8f0;}
-.stat-number{font-size:18px;font-weight:900;color:#15803d;}
-.stat-label{font-size:10.5px;color:#64748b;font-weight:800;margin-top:1px;}
+.stat{background:linear-gradient(135deg,#ffffff 0%,#f1f8f5 100%);padding:10px 6px;border-radius:16px;text-align:center;box-shadow:0 6px 15px rgba(0,0,0,.05),inset 0 2px 3px rgba(255,255,255,.8);border:2px solid #d1fae5;}
+.stat-number{font-size:18px;font-weight:900;color:#047857;}
+.stat-label{font-size:10.5px;color:#475569;font-weight:800;margin-top:1px;}
 
 /* Main Card */
 .card{background:white;border-radius:20px;padding:14px;margin-bottom:12px;box-shadow:0 8px 25px rgba(0,0,0,.05);border:2px solid #e2e8f0;}
-.card h3{font-size:15px;margin-bottom:10px;color:#15803d;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.3px;}
+.card h3{font-size:15px;margin-bottom:10px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.3px;}
 
 /* Inputs */
 label{display:block;text-align:left;font-size:10.5px;font-weight:800;color:#475569;margin-bottom:4px;margin-left:2px;}
 input,select,textarea{width:100%;padding:10px 12px;border:2px solid #cbd5e1;border-radius:12px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:8px;font-weight:700;font-family:inherit;transition:all .2s;}
-input:focus,select:focus,textarea:focus{border-color:#16a34a;background:white;box-shadow:0 0 0 3px rgba(22,163,74,.15);}
+input:focus,select:focus,textarea:focus{border-color:#10b981;background:white;box-shadow:0 0 0 3px rgba(16,185,129,.15);}
 textarea{height:55px;resize:none;}
 
 /* 3D Animal Buttons */
 .animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px;}
 .animal-btn{border:2px solid #cbd5e1;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);padding:10px 6px;border-radius:12px;cursor:pointer;font-weight:900;color:#64748b;text-align:center;font-size:13px;box-shadow:0 4px 10px rgba(0,0,0,.04),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
 .animal-btn:active{transform:scale(.96);}
-.animal-btn.active{border-color:#15803d;background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);color:#14532d;box-shadow:0 6px 15px rgba(22,163,74,.25),inset 0 2px 4px rgba(255,255,255,.6);}
+.animal-btn.active{border-color:#059669;background:linear-gradient(135deg,#a7f3d0 0%,#6ee7b7 100%);color:#064e3b;box-shadow:0 6px 15px rgba(5,150,105,.25),inset 0 2px 4px rgba(255,255,255,.6);}
 
 /* 3D Main Button */
-.btn{width:100%;background:linear-gradient(135deg,#16a34a 0%,#15803d 50%,#14532d 100%);color:white;border:2px solid #14532d;padding:12px;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;margin-top:4px;box-shadow:0 6px 18px rgba(22,163,74,.35),inset 0 2px 4px rgba(255,255,255,.3);letter-spacing:.3px;transition:all .15s ease;}
-.btn:active{transform:scale(.96);box-shadow:0 2px 6px rgba(22,163,74,.3);}
+.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 50%,#064e3b 100%);color:white;border:2px solid #064e3b;padding:12px;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;margin-top:4px;box-shadow:0 6px 18px rgba(5,150,105,.35),inset 0 2px 4px rgba(255,255,255,.3);letter-spacing:.3px;transition:all .15s ease;}
+.btn:active{transform:scale(.96);box-shadow:0 2px 6px rgba(5,150,105,.3);}
 
-/* Photo Preview */
-.photo-preview{width:65px;height:65px;border-radius:14px;object-fit:cover;display:none;margin:4px auto 8px;border:1px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer;}
+/* Photo Preview (Clean, No Border) */
+.photo-preview{width:65px;height:65px;border-radius:14px;object-fit:cover;display:none;margin:4px auto 8px;box-shadow:0 4px 12px rgba(0,0,0,.12);cursor:pointer;}
 
 /* Records Item */
-.item{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border-radius:16px;padding:12px;border:2px solid #e2e8f0;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 4px 15px rgba(0,0,0,.03);}
-.cow-img{width:72px;height:72px;border-radius:14px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:32px;flex-shrink:0;overflow:hidden;border:1px solid #cbd5e1;box-shadow:0 4px 10px rgba(0,0,0,.06);cursor:pointer;}
+.item{background:linear-gradient(135deg,#ffffff 0%,#fdfefe 100%);border-radius:16px;padding:12px;border:2px solid #e2e8f0;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 4px 15px rgba(0,0,0,.03);}
+.cow-img{width:72px;height:72px;border-radius:14px;background:#f1f5f9;display:flex;justify-content:center;align-items:center;font-size:32px;flex-shrink:0;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.08);cursor:pointer;}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
 .item-info{flex-grow:1;min-width:0;}
 .item-top{display:flex;justify-content:space-between;align-items:center;gap:4px;font-weight:900;font-size:12.5px;border-bottom:2px solid #f1f5f9;padding-bottom:5px;margin-bottom:5px;color:#1e293b;}
-.duration-badge{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;font-weight:900;font-size:11px;padding:3px 8px;border-radius:8px;border:1.5px solid #93c5fd;white-space:nowrap;}
+.duration-badge{background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 100%);color:#0369a1;font-weight:900;font-size:11px;padding:3px 8px;border-radius:8px;border:1.5px solid #7dd3fc;white-space:nowrap;}
 
 .row{display:flex;justify-content:space-between;align-items:center;gap:4px;font-size:11px;padding:5px 0;color:#334155;font-weight:700;border-bottom:1px dashed #e2e8f0;}
 .row span:first-child{flex:1;line-height:1.3;}
-.date-badge{background:linear-gradient(135deg,#fef08a 0%,#fde047 100%);color:#78350f;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:900;border:1.5px solid #ca8a04;text-align:right;width:90px;flex-shrink:0;}
+.date-badge{background:linear-gradient(135deg,#fef9c3 0%,#fde047 100%);color:#713f12;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:900;border:1.5px solid #eab308;text-align:right;width:90px;flex-shrink:0;}
 
-.due{background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);padding:6px 8px;border-radius:10px;color:#14532d;font-weight:900;margin-top:6px;font-size:11.5px;border:1.5px solid #22c55e;display:flex;justify-content:space-between;align-items:center;}
+.due{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);padding:6px 8px;border-radius:10px;color:#064e3b;font-weight:900;margin-top:6px;font-size:11.5px;border:1.5px solid #10b981;display:flex;justify-content:space-between;align-items:center;}
 .due span:first-child{flex:1;}
-.due-badge{background:#15803d;color:white;padding:2px 7px;border-radius:6px;font-size:11px;font-weight:900;text-align:right;width:90px;flex-shrink:0;}
+.due-badge{background:#047857;color:white;padding:2px 7px;border-radius:6px;font-size:11px;font-weight:900;text-align:right;width:90px;flex-shrink:0;}
 
-.note-box{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1.5px solid #f59e0b;border-radius:8px;padding:5px 7px;font-size:11px;color:#92400e;margin-top:5px;font-weight:700;}
+.note-box{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1.5px solid #f59e0b;border-radius:8px;padding:5px 7px;font-size:11px;color:#78350f;margin-top:5px;font-weight:700;}
 
-.small-assumption-note{font-size:9.5px;color:#64748b;font-weight:600;margin-top:4px;line-height:1.3;background:#f1f5f9;padding:5px 7px;border-radius:6px;border-left:3px solid #16a34a;}
+/* Enhanced Guidance Note with Highlighted Button Box */
+.small-assumption-note{font-size:10.5px;color:#1e293b;font-weight:700;margin-top:6px;line-height:1.4;background:#f8fafc;padding:8px 10px;border-radius:10px;border:1.5px solid #cbd5e1;box-shadow:0 2px 6px rgba(0,0,0,.03);}
+.highlight-action-box{display:inline-block;background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;padding:3px 8px;border-radius:6px;border:1.5px solid #059669;font-weight:900;margin-top:4px;box-shadow:0 2px 4px rgba(5,150,105,.15);}
 
-/* 3D Action Buttons with Active Press Animation */
+/* 3D Action Buttons */
 .action-btns{display:flex;gap:6px;margin-top:8px;}
-.btn-repeat{flex:2;background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;border:2px solid #3b82f6;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(59,130,246,.25),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
+.btn-repeat{flex:2;background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 100%);color:#0369a1;border:2px solid #0284c7;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(2,132,199,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
 .btn-repeat:active{transform:scale(.95);}
 
-.btn-calved{flex:2;background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);color:#14532d;border:2px solid #22c55e;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(34,197,94,.25),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
+.btn-calved{flex:2;background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;border:2px solid #059669;padding:7px 8px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(5,150,105,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
 .btn-calved:active{transform:scale(.95);}
 
-.btn-del{flex:1;background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);color:#991b1b;border:2px solid #ef4444;padding:7px 6px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(239,68,68,.25),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
+.btn-del{flex:1;background:linear-gradient(135deg,#fee2e2 0%,#fecaca 100%);color:#991b1b;border:2px solid #ef4444;padding:7px 6px;border-radius:10px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;box-shadow:0 4px 10px rgba(239,68,68,.2),inset 0 1px 2px rgba(255,255,255,.8);transition:all .15s;}
 .btn-del:active{transform:scale(.95);}
 
 .empty{text-align:center;color:#94a3b8;font-size:12px;padding:20px;font-weight:700;}
 
 /* Modal */
 .date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(3px);}
-.date-modal-card{background:white;padding:20px;border-radius:20px;width:100%;max-width:320px;box-shadow:0 15px 35px rgba(0,0,0,0.25);text-align:center;border:2px solid #16a34a;}
-.date-modal-card h4{font-size:15px;color:#15803d;margin-bottom:12px;font-weight:900;}
+.date-modal-card{background:white;padding:20px;border-radius:20px;width:100%;max-width:320px;box-shadow:0 15px 35px rgba(0,0,0,0.25);text-align:center;border:2px solid #059669;}
+.date-modal-card h4{font-size:15px;color:#064e3b;margin-bottom:12px;font-weight:900;}
 
 /* Zoom */
 #imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
@@ -359,7 +361,7 @@ const langData={
     calvedDateLbl:'📅 वेवल्याची तारीख',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील भरवण्याची (Heat) तयारी ठेवा:',
     assumedNote:'* मुदत पूर्ण झाल्यामुळे अंदाजे वेवली असल्याचे गृहीत धरले आहे. अचूक तारीख बदलण्यासाठी वरील बटण दाबा.',
-    guidanceNote:'💡 ज्या दिवशी तुम्ही गाय/म्हैस पुन्हा गाभण शकाल, त्या दिवशी ॲपमध्ये हे बटण दाबून "नवीन तारीख" नक्की नोंदवा.',
+    guidanceNote:'💡 ज्या दिवशी तुम्ही गाय/म्हैस पुन्हा गाभण शकाल, त्या दिवशी खालील <span class="highlight-action-box">📅 नवीन गाय/म्हैस लावली (तारीख टाका)</span> हे बटण दाबून नवीन तारीख नक्की नोंदवा.',
     dateRequired:'कृपया तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'स्टोरेज फुल झाल्यामुळे डेटा सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरंच ही नोंद डिलीट करायची आहे का?',
@@ -387,7 +389,7 @@ const langData={
     calvedDateLbl:'📅 ब्याने की तारीख',
     heatWindowText:'💡 90 दिन के विश्रांति काल के बाद इस तारीख से अगली बार गर्भधारण के लिए तैयार करें:',
     assumedNote:'* अवधि पूरी होने के कारण अनुमानित ब्याया हुआ माना गया है। सटीक तारीख बदलने के लिए ऊपर बटन दबाएं।',
-    guidanceNote:'💡 जिस दिन आप गाय/भैंस को दोबारा गर्भधारण कराएंगे, उस दिन ऐप में यह बटन दबाकर "नई तारीख" जरूर दर्ज करें।',
+    guidanceNote:'💡 जिस दिन आप गाय/भैंस को दोबारा गर्भधारण कराएंगे, उस दिन नीचे दिए गए <span class="highlight-action-box">📅 नई गाय/भैंस ब्याई/लगाई (तारीख दर्ज करें)</span> बटन को दबाकर नई तारीख जरूर दर्ज करें।',
     dateRequired:'कृपया तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'स्टोरेज फुल होने के कारण डेटा सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
@@ -415,7 +417,7 @@ const langData={
     calvedDateLbl:'📅 Calving Date',
     heatWindowText:'💡 Ready for next AI / Heat check from:',
     assumedNote:'* Assumed calved as term completed. Please update with exact date using button above.',
-    guidanceNote:'💡 On the day you breed this animal again, please update the new date here using this button.',
+    guidanceNote:'💡 On the day you breed this animal again, please click the <span class="highlight-action-box">📅 Enter New Breeding Date</span> button below to update the new date.',
     dateRequired:'Please select a date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage is full!', confirmDel:'Are you sure you want to delete?',
     notifTitle:'🔔 Important Alerts',
@@ -688,7 +690,7 @@ function draw(){
       if(it.isAssumedCalved){
         html += '<div class="small-assumption-note">'+escapeHtml(t.assumedNote)+'</div>';
       } else {
-        html += '<div class="small-assumption-note" style="border-left-color:#3b82f6;">'+escapeHtml(t.guidanceNote)+'</div>';
+        html += '<div class="small-assumption-note">'+t.guidanceNote+'</div>';
       }
 
       html += '<div class="action-btns" style="flex-wrap:wrap;">';
