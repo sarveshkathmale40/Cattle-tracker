@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#064e3b">
+<meta name="theme-color" content="#047857">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="The MH Farmer">
@@ -12,103 +12,104 @@
 <title>The MH Farmer - Smart Dairy Suite</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
 
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:linear-gradient(180deg, #022c22 0%, #064e3b 35%, #0f172a 100%);min-height:100vh;padding:14px 10px 40px;color:#f8fafc;display:flex;justify-content:center;align-items:flex-start;}
+body{background:radial-gradient(circle at top,#f0fdf4 0%,#dcfce7 40%,#cbd5e1 100%);min-height:100vh;padding:12px 10px 40px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:430px;margin:0 auto;}
 
 /* Lock Screen */
-#lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:92vh;}
-.lock-card{background:rgba(15, 23, 42, 0.75);backdrop-filter:blur(20px);border-radius:32px;padding:32px 24px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);text-align:center;}
-.lock-logo-badge{width:70px;height:70px;margin:0 auto 16px;background:linear-gradient(135deg, #10b981 0%, #047857 100%);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 12px 24px -6px rgba(16,185,129,0.5);border:2px solid rgba(255,255,255,0.2);}
-.lock-title{font-size:24px;font-weight:900;background:linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px;margin-bottom:6px;}
-.lock-sub{font-size:12.5px;color:#94a3b8;margin-bottom:26px;font-weight:600;line-height:1.5;}
+#lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:90vh;}
+.lock-card{background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);border-radius:30px;padding:30px 22px;box-shadow:0 25px 50px -10px rgba(4,120,87,0.25), 0 0 0 2px rgba(52,211,153,0.3);text-align:center;}
+.lock-logo-badge{width:68px;height:68px;margin:0 auto 14px;background:linear-gradient(135deg, #10b981 0%, #047857 100%);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 12px 24px -6px rgba(16,185,129,0.5);border:2px solid #ffffff;}
+.lock-title{font-size:24px;font-weight:900;color:#064e3b;letter-spacing:-0.4px;margin-bottom:6px;}
+.lock-sub{font-size:12.5px;color:#475569;margin-bottom:24px;font-weight:700;line-height:1.5;}
 
 /* Header Card */
-.app-header{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);border-radius:26px;padding:18px 20px;margin-bottom:14px;box-shadow:0 20px 40px -15px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;align-items:center;position:relative;overflow:hidden;}
-.app-header::after{content:'';position:absolute;top:-40%;right:-20%;width:180px;height:180px;background:radial-gradient(circle, rgba(16,185,129,0.25) 0%, transparent 70%);pointer-events:none;}
-.brand-box{display:flex;align-items:center;gap:12px;}
-.brand-icon{width:46px;height:46px;background:linear-gradient(135deg,#10b981,#047857);border-radius:14px;display:flex;justify-content:center;align-items:center;font-size:24px;box-shadow:0 8px 16px rgba(16,185,129,0.3);border:1.5px solid rgba(255,255,255,0.25);}
-.header-title{font-size:20px;font-weight:900;letter-spacing:-0.4px;color:#ffffff;}
-.header-sub{font-size:10px;color:#6ee7b7;margin-top:2px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;background:rgba(16,185,129,0.15);padding:2px 8px;border-radius:20px;display:inline-block;border:1px solid rgba(16,185,129,0.3);}
+.app-header{background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);border-radius:26px;padding:18px 16px;margin-bottom:14px;box-shadow:0 18px 36px -8px rgba(4,120,87,.55),inset 0 2px 6px rgba(255,255,255,.35);display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #34d399;position:relative;overflow:hidden;}
+.app-header::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(252,211,77,0.25) 0%, transparent 70%);pointer-events:none;}
+.brand-box{display:flex;align-items:center;gap:10px;text-align:left;}
+.brand-icon{font-size:30px;filter:drop-shadow(0 2px 6px rgba(252,211,77,0.7));}
+.header-title{font-size:20px;font-weight:900;letter-spacing:-0.3px;color:#ffffff;text-shadow:0 2px 4px rgba(0,0,0,0.3);}
+.header-sub{font-size:9.5px;color:#a7f3d0;margin-top:2px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:20px;display:inline-block;border:1px solid rgba(255,255,255,0.25);}
 
 /* Language Selector */
-#langSelect{background:rgba(15,23,42,0.8);color:#f8fafc;border:1.5px solid rgba(255,255,255,0.15);border-radius:14px;padding:8px 12px;font-size:12.5px;font-weight:800;outline:none;cursor:pointer;backdrop-filter:blur(10px);box-shadow:0 4px 12px rgba(0,0,0,0.2);}
-#langSelect option{background:#0f172a;color:#ffffff;}
+#langSelect{background:#022c22;color:#ffffff;border:2px solid #34d399;border-radius:12px;padding:8px 10px;font-size:12px;font-weight:900;outline:none;cursor:pointer;box-shadow:0 6px 15px rgba(0,0,0,0.25);}
+#langSelect option{background:#064e3b;color:white;font-weight:bold;}
 
 /* Install Button */
-.install-bar{display:none;background:linear-gradient(135deg, #10b981 0%, #059669 100%);color:white;padding:12px 16px;border-radius:18px;margin-bottom:14px;text-align:center;box-shadow:0 10px 25px -5px rgba(16,185,129,0.5);font-size:13.5px;font-weight:800;border:1px solid rgba(255,255,255,0.25);width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;transition:all 0.2s;}
+.install-bar{display:none;background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:12px 16px;border-radius:16px;margin-bottom:14px;text-align:center;box-shadow:0 8px 20px rgba(16,185,129,.35);font-size:13.5px;font-weight:800;border:none;width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;}
 
 /* Notification Banner */
-.notification-banner{background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);border-radius:22px;padding:14px;margin-bottom:14px;box-shadow:0 12px 30px -10px rgba(245,158,11,0.2);backdrop-filter:blur(12px);}
-.notif-title{font-size:13.5px;font-weight:900;color:#fbbf24;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:20px;padding:14px;margin-bottom:14px;box-shadow:0 10px 25px rgba(217,119,6,.18);}
+.notif-title{font-size:13.5px;font-weight:900;color:#b45309;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .notif-list{display:flex;flex-direction:column;gap:8px;}
-.notif-item{background:rgba(15,23,42,0.85);border-radius:14px;padding:10px 14px;font-size:12px;color:#fde68a;font-weight:700;border:1px solid rgba(245,158,11,0.25);line-height:1.45;border-left:4px solid #f59e0b;}
+.notif-item{background:white;border-radius:12px;padding:10px 12px;font-size:12px;color:#78350f;font-weight:700;border:1.5px solid #fde68a;line-height:1.45;border-left:5px solid #d97706;}
 
-/* Modern Stats Counter */
+/* Stats Cards */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.stat{background:rgba(255,255,255,0.05);backdrop-filter:blur(14px);padding:14px 8px;border-radius:20px;text-align:center;box-shadow:0 10px 25px -5px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.08);transition:transform 0.2s;}
-.stat-number{font-size:22px;font-weight:900;background:linear-gradient(135deg, #34d399, #10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.stat-label{font-size:10.5px;color:#94a3b8;font-weight:800;margin-top:2px;letter-spacing:0.5px;text-transform:uppercase;}
+.stat{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);padding:12px 6px;border-radius:18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06),inset 0 2px 4px rgba(255,255,255,.9);border:2px solid #e2e8f0;}
+.stat-number{font-size:21px;font-weight:900;color:#047857;}
+.stat-label{font-size:10.5px;color:#475569;font-weight:800;margin-top:2px;text-transform:uppercase;}
 
-/* Cards */
-.card{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border-radius:26px;padding:18px;margin-bottom:14px;box-shadow:0 15px 35px -10px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);}
-.card h3{font-size:15px;margin-bottom:14px;color:#a7f3d0;font-weight:900;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:0.6px;}
+/* Form Card */
+.card{background:rgba(255,255,255,0.98);backdrop-filter:blur(10px);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 12px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
+.card h3{font-size:15px;margin-bottom:12px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px;}
 
-/* Inputs & Form Controls */
-label{display:block;text-align:left;font-size:11.5px;font-weight:800;color:#94a3b8;margin-bottom:6px;margin-left:4px;letter-spacing:0.2px;}
-input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid rgba(255,255,255,0.12);border-radius:16px;font-size:14px;outline:none;background:rgba(15,23,42,0.6);color:#ffffff;margin-bottom:12px;font-weight:700;font-family:inherit;transition:all .2s;}
-input:focus,select:focus,textarea:focus{border-color:#10b981;background:rgba(15,23,42,0.9);box-shadow:0 0 0 4px rgba(16,185,129,0.25);}
-input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);}
+label{display:block;text-align:left;font-size:11px;font-weight:800;color:#334155;margin-bottom:5px;margin-left:3px;}
+input,select,textarea{width:100%;padding:11px 14px;border:2px solid #cbd5e1;border-radius:14px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:10px;font-weight:700;font-family:inherit;transition:all .25s;}
+input:focus,select:focus,textarea:focus{border-color:#059669;background:white;box-shadow:0 0 0 4px rgba(5,150,105,.18);}
 
 .split-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 
-.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
-.animal-btn{border:1.5px solid rgba(255,255,255,0.1);background:rgba(15,23,42,0.5);padding:12px 8px;border-radius:16px;cursor:pointer;font-weight:900;color:#94a3b8;text-align:center;font-size:14px;transition:all 0.2s;}
-.animal-btn.active{border-color:#10b981;background:linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(5,150,105,0.4) 100%);color:#34d399;box-shadow:0 8px 20px -5px rgba(16,185,129,0.4);}
+.animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+.animal-btn{border:2px solid #cbd5e1;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);padding:12px 8px;border-radius:14px;cursor:pointer;font-weight:900;color:#475569;text-align:center;font-size:14px;box-shadow:0 6px 15px rgba(0,0,0,.05),inset 0 1px 3px rgba(255,255,255,.9);transition:all .15s;}
+.animal-btn.active{border-color:#059669;background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;box-shadow:0 8px 20px rgba(5,150,105,.3),inset 0 2px 5px rgba(255,255,255,.7);}
 
-.btn{width:100%;background:linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);color:white;border:1px solid rgba(255,255,255,0.2);padding:14px;border-radius:16px;font-weight:900;font-size:15px;cursor:pointer;margin-top:6px;box-shadow:0 12px 25px -5px rgba(16,185,129,0.4);letter-spacing:0.4px;transition:all .15s ease;}
-.btn:active{transform:scale(0.98);box-shadow:0 4px 10px rgba(16,185,129,0.3);}
+.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 50%,#064e3b 100%);color:white;border:2px solid #065f46;padding:14px;border-radius:14px;font-weight:900;font-size:15px;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(5,150,105,.4),inset 0 2px 5px rgba(255,255,255,.35);letter-spacing:.4px;transition:all .15s ease;}
+.btn:active{transform:scale(.97);box-shadow:0 3px 8px rgba(5,150,105,.3);}
 
-.photo-preview{width:76px;height:76px;border-radius:18px;object-fit:cover;display:none;margin:8px auto 12px;box-shadow:0 8px 20px rgba(0,0,0,0.3);cursor:pointer;border:2px solid #10b981;}
+.photo-preview{width:70px;height:70px;border-radius:16px;object-fit:cover;display:none;margin:6px auto 10px;box-shadow:0 6px 15px rgba(0,0,0,.1);cursor:pointer;border:2px solid #059669;}
 
-/* Record Items */
-.item{background:rgba(15,23,42,0.75);backdrop-filter:blur(14px);border-radius:22px;padding:16px;border:1px solid rgba(255,255,255,0.1);margin-bottom:12px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 12px 28px -10px rgba(0,0,0,0.5);}
-.cow-img{width:80px;height:80px;border-radius:18px;background:rgba(255,255,255,0.06);display:flex;justify-content:center;align-items:center;font-size:36px;flex-shrink:0;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,0.3);cursor:pointer;border:1.5px solid rgba(255,255,255,0.15);}
+/* Records Item */
+.item{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border-radius:20px;padding:14px;border:2px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.04);}
+.cow-img{width:76px;height:76px;border-radius:16px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;box-shadow:0 6px 15px rgba(0,0,0,.08);cursor:pointer;border:2px solid #cbd5e1;}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
 .item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:900;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:8px;margin-bottom:8px;color:#ffffff;}
-.duration-badge{background:rgba(59,130,246,0.15);color:#60a5fa;font-weight:900;font-size:11px;padding:4px 10px;border-radius:10px;border:1px solid rgba(59,130,246,0.3);white-space:nowrap;}
+.item-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:900;font-size:13px;border-bottom:2px solid #f1f5f9;padding-bottom:6px;margin-bottom:6px;color:#1e293b;}
+.duration-badge{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;font-weight:900;font-size:11px;padding:4px 8px;border-radius:10px;border:1.5px solid #93c5fd;white-space:nowrap;}
 
-.row{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;padding:6px 0;color:#cbd5e1;font-weight:700;border-bottom:1px dashed rgba(255,255,255,0.08);}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;padding:6px 0;color:#334155;font-weight:700;border-bottom:1px dashed #cbd5e1;}
 .row span:first-child{flex:1;line-height:1.35;}
-.date-badge{background:rgba(255,255,255,0.08);color:#fef08a;padding:4px 8px;border-radius:8px;font-size:11px;font-weight:900;border:1px solid rgba(254,240,138,0.25);text-align:right;width:95px;flex-shrink:0;}
+.date-badge{background:linear-gradient(135deg,#fefce8 0%,#fef9c3 100%);color:#854d0e;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:900;border:1.5px solid #fef08a;text-align:right;width:95px;flex-shrink:0;}
 
-.due{background:linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(5,150,105,0.25) 100%);padding:8px 12px;border-radius:14px;color:#6ee7b7;font-weight:900;margin-top:10px;font-size:12.5px;border:1px solid rgba(16,185,129,0.35);display:flex;justify-content:space-between;align-items:center;}
+.due{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);padding:7px 10px;border-radius:12px;color:#14532d;font-weight:900;margin-top:8px;font-size:12px;border:1.5px solid #86efac;display:flex;justify-content:space-between;align-items:center;}
 .due span:first-child{flex:1;}
-.due-badge{background:#10b981;color:#ffffff;padding:4px 9px;border-radius:8px;font-size:11.5px;font-weight:900;text-align:right;width:95px;flex-shrink:0;box-shadow:0 4px 10px rgba(16,185,129,0.3);}
+.due-badge{background:#16a34a;color:white;padding:3px 8px;border-radius:7px;font-size:11.5px;font-weight:900;text-align:right;width:95px;flex-shrink:0;}
 
-.note-box{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:12px;padding:8px 12px;font-size:11.5px;color:#fde68a;margin-top:8px;font-weight:700;display:flex;flex-direction:column;gap:4px;}
-.small-assumption-note{font-size:11.5px;color:#94a3b8;font-weight:700;margin-top:10px;line-height:1.45;background:rgba(255,255,255,0.04);padding:10px 12px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);}
+.note-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #fcd34d;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;margin-top:6px;font-weight:700;display:flex;flex-direction:column;gap:3px;}
+.small-assumption-note{font-size:11px;color:#475569;font-weight:700;margin-top:8px;line-height:1.45;background:#f8fafc;padding:8px 10px;border-radius:12px;border:1.5px solid #cbd5e1;}
 
-/* Action Buttons */
-.action-btns{display:flex;gap:8px;margin-top:12px;}
-.btn-repeat{flex:1;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#ffffff;border:none;padding:10px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;box-shadow:0 4px 12px rgba(16,185,129,0.25);}
-.btn-calved{flex:1;background:linear-gradient(135deg,#0284c7 0%,#0369a1 100%);color:#ffffff;border:none;padding:10px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;box-shadow:0 4px 12px rgba(2,132,199,0.25);}
-.btn-del{flex:0 0 auto;background:rgba(225,29,72,0.15);color:#fda4af;border:1px solid rgba(225,29,72,0.35);padding:10px 12px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+/* COMPACT ACTION BUTTONS (NO LONG UGLY BUTTONS) */
+.action-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:10px;align-items:center;}
+.action-grid-calved{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:10px;align-items:center;}
 
-.empty{text-align:center;color:#64748b;font-size:13px;padding:32px 16px;font-weight:800;}
+.btn-action{padding:9px 4px;border-radius:11px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;white-space:nowrap;border:none;display:flex;justify-content:center;align-items:center;gap:3px;transition:all .15s;}
+.btn-repeat{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;border:1px solid #10b981;box-shadow:0 3px 0 #059669;}
+.btn-calved{background:linear-gradient(135deg,#bae6fd 0%,#7dd3fc 100%);color:#0c4a6e;border:1px solid #0284c7;box-shadow:0 3px 0 #0284c7;}
+.btn-del{background:linear-gradient(135deg,#fee2e2 0%,#fecdd3 100%);color:#991b1b;border:1px solid #fb7185;padding:9px 10px;box-shadow:0 3px 0 #e11d48;}
+
+.empty{text-align:center;color:#64748b;font-size:13px;padding:24px;font-weight:800;}
 
 /* Modals */
-.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.75);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(8px);}
-.date-modal-card{background:#0f172a;padding:24px;border-radius:26px;width:100%;max-width:330px;box-shadow:0 25px 50px rgba(0,0,0,0.5);text-align:center;border:1.5px solid rgba(255,255,255,0.15);}
-.date-modal-card h4{font-size:16px;color:#34d399;margin-bottom:14px;font-weight:900;}
+.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px);}
+.date-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
+.date-modal-card h4{font-size:15px;color:#047857;margin-bottom:14px;font-weight:900;}
 
 /* Zoom */
-#imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
-#zoomedImage{max-width:96%;max-height:82%;object-fit:contain;border-radius:20px;}
-.modal-close-btn{position:absolute;top:22px;right:22px;color:white;font-size:32px;font-weight:bold;background:rgba(255,255,255,0.2);width:46px;height:46px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+#imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.94);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
+#zoomedImage{max-width:96%;max-height:82%;object-fit:contain;border-radius:16px;}
+.modal-close-btn{position:absolute;top:22px;right:22px;color:white;font-size:34px;font-weight:bold;background:rgba(255,255,255,0.22);width:46px;height:46px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;}
 </style>
 </head>
 
@@ -122,11 +123,11 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);}
       <div class="lock-logo-badge">🌾</div>
       <div class="lock-title">The MH Farmer</div>
       <div class="lock-sub" id="lockSubTxt">Smart Dairy & Cattle Lifecycle Suite</div>
-      <label id="lblMob">Mobile Number / मोबाईल नंबर</label>
+      <label id="lblMob">मोबाईल नंबर (१० अंकी)</label>
       <input type="tel" id="loginMob" maxlength="10" inputmode="numeric" placeholder="10 Digits">
-      <label id="lblPin">Security PIN / सिक्रेट पिन</label>
+      <label id="lblPin">सिक्रेट पिन (PIN)</label>
       <input type="password" id="loginPin" maxlength="4" inputmode="numeric" placeholder="4 Digits">
-      <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">Launch Suite 🚀</button>
+      <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
     </div>
   </div>
 
@@ -138,7 +139,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);}
         <div class="brand-icon">🌾</div>
         <div>
           <div class="header-title">The MH Farmer</div>
-          <div class="header-sub" id="mainHeaderSub">Breeding & Reproduction AI</div>
+          <div class="header-sub" id="mainHeaderSub">Cattle Lifecycle & Breeding AI</div>
         </div>
       </div>
       <div>
@@ -151,49 +152,49 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);}
     </div>
 
     <button id="pwaInstallBtn" class="install-bar" type="button" onclick="installPWA()" style="display:none;">
-      <span>📲 Install App / ॲप इन्स्टॉल करा</span>
+      <span>📲 ॲप फोनमध्ये इन्स्टॉल करा</span>
     </button>
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
-      <div class="notif-title" id="notifTitleText">🔔 Critical Breeding Alerts</div>
+      <div class="notif-title" id="notifTitleText">🔔 महत्त्वाचे अलर्ट्स व सूचना</div>
       <div id="notifListContainer" class="notif-list"></div>
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">Total Animals</div></div>
-      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">Cows</div></div>
-      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">Buffaloes</div></div>
+      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंद</div></div>
+      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
+      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
     </div>
 
     <div class="card">
-      <h3 id="formTitle">➕ New Breeding Entry</h3>
+      <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
       
       <div class="animal-buttons">
         <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">Cow (गाय)</span></button>
         <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">Buffalo (म्हैस)</span></button>
       </div>
 
-      <label id="lblNameLbl">Animal Name / Tag No (नाव किंवा टॅग नंबर)</label>
-      <input type="text" id="cName" placeholder="उदा. कावेरी / Tag #104">
+      <label id="lblNameLbl">पशुचे नाव / टॅग नंबर</label>
+      <input type="text" id="cName" placeholder="उदा. कावेरी / Tag #102">
 
-      <label id="lblDate">Breeding / AI Date (गर्भधारणा दिनांक)</label>
+      <label id="lblDate">Breeding / गाभण राहिल्याची तारीख</label>
       <input type="date" id="cDate">
 
-      <label id="lblNoteLbl">Doctor & Semen Details (पर्यायी)</label>
+      <label id="lblNoteLbl">डॉक्टर व सिमेन तपशील (पर्यायी)</label>
       <div class="split-inputs">
         <input type="text" id="cDoc" placeholder="Doctor Name">
         <input type="text" id="cSemen" placeholder="Semen Brand / Bull">
       </div>
 
-      <label id="lblPhotoLbl">Animal Photo (फोटो - पर्यायी)</label>
+      <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
-      <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 Save Record</button>
+      <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 रेकॉर्ड सेव्ह करा</button>
     </div>
 
     <div class="card">
-      <h3 id="listTitle">📋 Active Cattle Database</h3>
+      <h3 id="listTitle">📋 पशु रेकॉर्ड यादी</h3>
       <div id="list"></div>
     </div>
 
@@ -204,21 +205,21 @@ input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);}
 <!-- Modal For Dates -->
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
-    <h4 id="modalTitleText">Select Date</h4>
+    <h4 id="modalTitleText">तारीख निवडा</h4>
     
-    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#94a3b8; margin-bottom:4px;" id="modalDateLbl">Date</label>
+    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="modalDateLbl">तारीख निवडा</label>
     <input type="date" id="modalDateInput" style="margin-bottom:12px;">
 
     <div id="modalDoctorSemenContainer" style="display:none;">
-      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#94a3b8; margin-bottom:4px;" id="lblDocName">Doctor Name</label>
+      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblDocName">डॉक्टरचे नाव</label>
       <input type="text" id="modalDoctorInput" placeholder="उदा. Dr. Patil" style="margin-bottom:10px;">
 
-      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#94a3b8; margin-bottom:4px;" id="lblSemenName">Semen Brand</label>
+      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblSemenName">सिमेन ब्रँड / नाव</label>
       <input type="text" id="modalSemenInput" placeholder="उदा. ABS / SAG / HF" style="margin-bottom:14px;">
     </div>
 
-    <button class="btn" type="button" onclick="submitModalDate()">✅ OK / सेव्ह करा</button>
-    <button class="btn" type="button" style="background:#475569; margin-top:8px;" onclick="closeDateModal()">Cancel / रद्द करा</button>
+    <button class="btn" type="button" onclick="submitModalDate()">✅ ओके</button>
+    <button class="btn" type="button" style="background:#64748b; margin-top:8px;" onclick="closeDateModal()">रद्द करा</button>
   </div>
 </div>
 
@@ -243,7 +244,7 @@ requestPersistentStorage();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Error:', err));
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
   });
 }
 
@@ -317,7 +318,7 @@ async function deleteRecordFromDB(id) {
   });
 }
 
-/* --- 3. UI LOGIC --- */
+/* --- 3. APP LOGIC --- */
 let deferredPrompt = null;
 const pwaBtn = document.getElementById('pwaInstallBtn');
 
@@ -397,20 +398,20 @@ async function openDateModal(type, id) {
   }
 
   if (lang === 'hi') {
-    if (type === 'repeat') title.innerText = animalType + ' रिपीट (Repeat) - नई AI तारीख:';
-    else if (type === 'calved') title.innerText = animalType + ' Calving Date (ब्याने की सटीक तारीख):';
+    if (type === 'repeat') title.innerText = animalType + ' Repeat AI - नई तारीख चुनें:';
+    else if (type === 'calved') title.innerText = animalType + ' Calving Date (ब्याने की तारीख):';
     else if (type === 'newPregnancy') title.innerText = 'New Breeding Date for ' + animalType + ':';
     else if (type === 'changeCalve') title.innerText = 'Change Calving Date:';
   } else if (lang === 'en') {
     if (type === 'repeat') title.innerText = 'Select New AI Date for ' + animalType + ':';
-    else if (type === 'calved') title.innerText = 'Enter Exact Calving Date for ' + animalType + ':';
+    else if (type === 'calved') title.innerText = 'Enter Calving Date for ' + animalType + ':';
     else if (type === 'newPregnancy') title.innerText = 'New Breeding Date for ' + animalType + ':';
     else if (type === 'changeCalve') title.innerText = 'Change Calving Date:';
   } else {
     if (type === 'repeat') title.innerText = animalType + ' Repeat AI - नवीन तारीख निवडा:';
     else if (type === 'calved') title.innerText = animalType + ' Calving Date (विण्याची अचूक तारीख):';
     else if (type === 'newPregnancy') title.innerText = 'New Breeding Date (' + animalType + '):';
-    else if (type === 'changeCalve') title.innerText = 'Change Calving Date:';
+    else if (type === 'changeCalve') title.innerText = 'विण्याची अचूक तारीख बदला:';
   }
 
   modal.style.display = 'flex';
@@ -458,97 +459,97 @@ async function submitModalDate() {
   draw();
 }
 
-/* SMART HYBRID TERMINOLOGY (GEN-Z & MODERN FARMING) */
 const langData = {
   mr:{
-    headerSub:'Breeding & Reproduction AI',
-    tot:'Total Herd (एकूण)', cow:'Cows (गाय)', buf:'Buffaloes (म्हैस)',
-    formT:'➕ New Breeding Entry', bCow:'Cow (गाय)', bBuf:'Buffalo (म्हैस)',
-    namePh:'उदा. कावेरी / Tag #104', nameLbl:'Animal Name / Tag No', 
-    dtLblCow:'Cow AI / Breeding Date (तारीख)', dtLblBuf:'Buffalo AI / Breeding Date (तारीख)',
-    noteLbl:'Doctor & Semen Details (पर्यायी)', photoLbl:'Animal Photo (फोटो - पर्यायी)',
-    saveBtn:'💾 Save Record', listT:'📋 Active Cattle Database', empty:'कोणतीही नोंद उपलब्ध नाही. नवीन एंट्री जोडा.',
-    delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calving Done',
+    headerSub:'Cattle Lifecycle & Breeding AI',
+    tot:'Total Herd', cow:'Cow (गाय)', buf:'Buffalo (म्हैस)',
+    formT:'➕ नवीन पशु नोंद', bCow:'Cow (गाय)', bBuf:'Buffalo (म्हैस)',
+    namePh:'उदा. कावेरी / Tag #102', nameLbl:'पशुचे नाव / टॅग नंबर', 
+    dtLblCow:'Cow AI / गाभण तारीख', dtLblBuf:'Buffalo AI / गाभण तारीख',
+    noteLbl:'Doctor & Semen Details (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)',
+    saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
+    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved (विली)',
     setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calving Date',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#94a3b8;">(२१ वा दिवस)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#94a3b8;">(दूध आटवणे)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#94a3b8;">(३० दिवस आधी)</span>',
-    trans:'🌾 Transition Diet <span style="font-size:10px; color:#94a3b8;">(२१ दिवस आधी)</span>',
+    changeCalveDateBtn:'📅 Edit Calved',
+    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
+    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(दूध आटवणे)</span>',
+    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
+    trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
     delivery:'🍼 Expected Calving Date',
     calvedDateLbl:'📅 Calved Date',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर Next Heat Cycle:',
-    assumedNote:'* Gestation Period पूर्ण झाल्यामुळे Calved स्टेटस गृहीत धरले आहे. अचूक दिवसांसाठी खालील <span style="color:#38bdf8; font-weight:900;">Edit Calving Date</span> बटण वापरा.',
-    guidanceNote:'💡 पुढील AI नोंदवण्यासाठी खालील <span style="color:#38bdf8; font-weight:900;">New AI Date</span> बटण वापरा.',
+    assumedNote:'* Gestation काळ पूर्ण झाल्यामुळे Calved स्टेटस गृहीत धरले आहे. अचूक दिवसांसाठी <span style="color:#0284c7; font-weight:900;">Edit Calved</span> बटण दाबा.',
+    guidanceNote:'💡 पुढील AI नोंदवण्यासाठी <span style="color:#0284c7; font-weight:900;">New AI Date</span> बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
-    storageError:'Storage Error! रेकॉर्ड सेव्ह होऊ शकला नाही.',
+    storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
-    notifTitle:'🔔 Critical Breeding Alerts',
-    installTxt:'📲 Install App / ॲप इन्स्टॉल करा',
+    notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
+    installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
     lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
-    lblMob:'Mobile Number / मोबाईल नंबर', lblPin:'Security PIN / सिक्रेट पिन', btnLogin:'Launch Suite 🚀',
+    lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Bull',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand (उदा. ABS, SAG)',
     lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Repeat Check (Day 21)', milkDryText:'Dry Off Period', dewormText:'Deworming Dose', transText:'Transition Diet'
+    chk21Text:'Repeat Check (२१ वा दिवस)', milkDryText:'Dry Off Period (दूध आटवणे)', dewormText:'Deworming Dose (जंतनाशक)', transText:'Transition Diet (ट्रान्झिशन आहार)'
   },
   hi:{
-    headerSub:'Breeding & Reproduction AI',
+    headerSub:'Cattle Lifecycle & Breeding AI',
     tot:'Total Herd', cow:'गाय', buf:'भैंस',
-    formT:'➕ New Breeding Record', bCow:'गाय', bBuf:'भैंस',
-    namePh:'उदा. कावेरी / Tag #104', nameLbl:'Animal Name / Tag No', 
-    dtLblCow:'Cow AI / Breeding Date', dtLblBuf:'Buffalo AI / Breeding Date',
-    noteLbl:'Doctor & Semen Details (वैकल्पिक)', photoLbl:'Animal Photo (वैकल्पिक)',
-    saveBtn:'💾 Save Record', listT:'📋 Active Cattle Database', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
-    delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calving Done',
+    formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
+    namePh:'उदा. कावेरी / Tag #102', nameLbl:'पशु का नाम / टैग नंबर', 
+    dtLblCow:'Cow AI / गर्भधारण तारीख', dtLblBuf:'Buffalo AI / गर्भधारण तारीख',
+    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)',
+    saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
+    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved (ब्याई)',
     setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calving Date',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#94a3b8;">(21वां दिन)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#94a3b8;">(दूध बंद)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#94a3b8;">(30 दिन पूर्व)</span>',
-    trans:'🌾 Transition Diet <span style="font-size:10px; color:#94a3b8;">(21 दिन पूर्व)</span>',
+    changeCalveDateBtn:'📅 Edit Calved',
+    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
+    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(दूध बंद)</span>',
+    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(30 दिन पूर्व)</span>',
+    trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(21 दिन पूर्व)</span>',
     delivery:'🍼 Expected Calving Date',
     calvedDateLbl:'📅 Calved Date',
     heatWindowText:'💡 90 दिन विश्राम के बाद Next Heat Window:',
-    assumedNote:'* Gestation पूर्ण होने पर Calved माना गया है। सही तारीख के लिए <span style="color:#38bdf8; font-weight:900;">Edit Calving Date</span> दबाएं।',
-    guidanceNote:'💡 अगली AI के लिए नीचे दिया गया <span style="color:#38bdf8; font-weight:900;">New AI Date</span> बटन दबाएं।',
+    assumedNote:'* Gestation पूर्ण होने पर Calved माना गया है। सही तारीख के लिए <span style="color:#0284c7; font-weight:900;">Edit Calved</span> दबाएं।',
+    guidanceNote:'💡 अगली AI के लिए <span style="color:#0284c7; font-weight:900;">New AI Date</span> बटन दबाएं।',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
-    storageError:'डेटा सेव्ह करताना त्रुटी आली!', confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
-    notifTitle:'🔔 Critical Breeding Alerts',
-    installTxt:'📲 Install App',
+    storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
+    confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
+    notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
+    installTxt:'📲 ऐप इंस्टॉल करें',
     lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
-    lblMob:'Mobile Number', lblPin:'Security PIN', btnLogin:'Launch Suite 🚀',
+    lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand',
-    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand / Bull',
+    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand',
     lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Repeat Check (21वां दिन)', milkDryText:'Dry Off Period', dewormText:'Deworming Dose', transText:'Transition Diet'
+    chk21Text:'Repeat Check (21वां दिन)', milkDryText:'Dry Off Period (दूध बंद)', dewormText:'Deworming Dose', transText:'Transition Diet'
   },
   en:{
-    headerSub:'Breeding & Reproduction AI',
+    headerSub:'Cattle Lifecycle & Breeding AI',
     tot:'Total Herd', cow:'Cow', buf:'Buffalo',
-    formT:'➕ New Breeding Entry', bCow:'Cow', bBuf:'Buffalo',
-    namePh:'e.g., Kaveri / Tag #104', nameLbl:'Animal Name / Tag No', 
+    formT:'➕ Add New Record', bCow:'Cow', bBuf:'Buffalo',
+    namePh:'e.g., Kaveri / Tag #102', nameLbl:'Animal Name / Tag No', 
     dtLblCow:'Cow AI / Breeding Date', dtLblBuf:'Buffalo AI / Breeding Date',
     noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Optional)',
-    saveBtn:'💾 Save Record', listT:'📋 Active Cattle Database', empty:'No records available yet.',
-    delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calving Done',
+    saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available.',
+    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calving Date',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#94a3b8;">(Day 21)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#94a3b8;">(Proper Month)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#94a3b8;">(30 Days Prior)</span>',
-    trans:'🌾 Transition Diet <span style="font-size:10px; color:#94a3b8;">(21 Days Prior)</span>',
+    changeCalveDateBtn:'📅 Edit Calved',
+    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
+    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(Dry Month)</span>',
+    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(30 Days Prior)</span>',
+    trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(21 Days Prior)</span>',
     delivery:'🍼 Expected Calving Date',
-    calvedDateLbl:'📅 Calved Date',
-    heatWindowText:'💡 Ready for next AI / Heat Cycle from:',
-    assumedNote:'* Assumed calved as gestation period completed. Click <span style="color:#38bdf8; font-weight:900;">Edit Calving Date</span> to set exact dates.',
-    guidanceNote:'💡 When breeding again, click <span style="color:#38bdf8; font-weight:900;">New AI Date</span> below.',
+    calvedDateLbl:'📅 Calving Date',
+    heatWindowText:'💡 Ready for next AI / breeding cycle from:',
+    assumedNote:'* Assumed calved as gestation completed. Click <span style="color:#0284c7; font-weight:900;">Edit Calved</span> to set exact date.',
+    guidanceNote:'💡 When breeding again, click <span style="color:#0284c7; font-weight:900;">New AI Date</span> below.',
     dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
-    storageError:'Storage Error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
-    notifTitle:'🔔 Critical Breeding Alerts',
+    storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
+    notifTitle:'🔔 Important Alerts & Notices',
     installTxt:'📲 Install App',
     lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
-    lblMob:'Mobile Number', lblPin:'Security PIN', btnLogin:'Launch Suite 🚀',
+    lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Bull',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand / Bull',
     lblDocField:'Doctor', lblSemenField:'Semen',
@@ -680,16 +681,17 @@ function addD(str, days) {
 
 function getFormattedDuration(str, lang) {
   const start = parseISODate(str);
-  if (!start) return '0 Days';
+  if (!start) return lang==='en'?'0 days':'० दिवस';
   const now = getTodayDate();
-  if (now < start) return '0 Days';
+  if (now < start) return lang==='en'?'0 days':'० दिवस';
   const yrs = now.getFullYear() - start.getFullYear();
   let m = now.getMonth() - start.getMonth() + (yrs*12);
   let d = now.getDate() - start.getDate();
   if (d < 0) { m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
   if (m < 0) { m = 0; d = 0; }
 
-  return m + ' M, ' + d + ' D';
+  if (lang==='en') return m + ' M, ' + d + ' D';
+  return m + ' महिना ' + d + ' दिवस';
 }
 
 function escapeHtml(val) {
@@ -786,13 +788,16 @@ async function draw() {
         html += '</div>';
       }
 
-      html += '<div class="action-btns">';
-      const calveThreshold = isBuffalo ? 285 : 252;
+      /* COMPACT BUTTONS GRID */
+      const calveThreshold = isBuffalo ? 295 : 265;
+      html += '<div class="action-grid">';
       if (pDays >= calveThreshold) {
-        html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
+        html += '<button class="btn-action btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
+      } else {
+        html += '<div></div>';
       }
-      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-action btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
+      html += '<button class="btn-action btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
 
     } else {
@@ -804,13 +809,13 @@ async function draw() {
       heatStart.setDate(heatStart.getDate() + restDays);
 
       const calvedTitleTxt = 'Calved (विली)';
-      const daysCountLbl = 'Days in Milk / दिवस:';
-      const daysUnitTxt = ' Days';
+      const daysCountLbl = 'विण्यापासून दिवस:';
+      const daysUnitTxt = ' दिवस';
 
       html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge" style="background:rgba(16,185,129,0.2); color:#34d399; border-color:rgba(16,185,129,0.4);">🐄 '+calvedTitleTxt+'</span></div>';
+      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 '+calvedTitleTxt+'</span></div>';
 
-      html += '<div class="row"><span>📅 '+daysCountLbl+'</span><span class="date-badge" style="background:rgba(56,189,248,0.15); color:#38bdf8; border-color:rgba(56,189,248,0.3);">'+cDays+daysUnitTxt+'</span></div>';
+      html += '<div class="row"><span>📅 '+daysCountLbl+'</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+daysUnitTxt+'</span></div>';
       html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
       html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
@@ -820,10 +825,10 @@ async function draw() {
         html += '<div class="small-assumption-note">'+t.guidanceNote+'</div>';
       }
 
-      html += '<div class="action-btns" style="flex-wrap:wrap;">';
-      html += '<button class="btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
-      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<div class="action-grid-calved">';
+      html += '<button class="btn-action btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
+      html += '<button class="btn-action btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
+      html += '<button class="btn-action btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
     }
 
@@ -834,6 +839,7 @@ async function draw() {
   checkSmartNotifications(db);
 }
 
+/* 100% PRECISE NOTIFICATIONS LOGIC */
 function checkSmartNotifications(db) {
   const banner = document.getElementById('notifBannerBox');
   const title = document.getElementById('notifTitleText');
@@ -851,14 +857,15 @@ function checkSmartNotifications(db) {
     const it = db[i];
     const isBuff = it.type === 'buffalo';
     const animalName = (isBuff ? '🐃' : '🐄') + ' ' + escapeHtml(it.name);
-    const animalWord = isBuff ? 'Buffalo' : 'Cow';
+    const animalWord = isBuff ? (lang==='en'?'Buffalo':(lang==='hi'?'भैंस':'म्हैस')) : (lang==='en'?'Cow':(lang==='hi'?'गाय':'गाय'));
 
+    // 1. Post-Calving 90 Days Heat Check Alert (88 to 92 days)
     if (it.isCalved) {
       const calvedDate = parseISODate(it.calvedDate);
       if (calvedDate) {
         const cDay = getDayDifference(calvedDate, today);
-        if (cDay === 90) {
-          let heatMsg = '💡 90 Days Post-Calving completed. Check ' + animalWord + ' for Next Heat / Breeding Cycle.';
+        if (cDay >= 88 && cDay <= 93) {
+          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर (Heat) आली असल्यास तपासून AI / गर्भधारणा करा.'));
           alerts.push({name: animalName, text: heatMsg});
         }
       }
@@ -870,36 +877,53 @@ function checkSmartNotifications(db) {
 
     const pDay = getDayDifference(start, today);
     const tot = isBuff ? 310 : 282;
-    const dewormDay = tot - 30;
 
-    const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
-    const dewormDate = new Date(start.getTime()); dewormDate.setDate(dewormDate.getDate() + dewormDay);
-
-    const notificationStartDays = isBuff ? 285 : 252;
-
-    function checkEventReminder(targetDate, eventNameMR, eventNameHI, eventNameEN) {
-      const diff = getDayDifference(today, targetDate);
-      if (diff >= 0 && diff <= 3) {
-        let msg = diff === 0 ? (`Today is the schedule for ${eventNameEN}.`) : (`${eventNameEN} schedule is near (${diff} days left).`);
-        alerts.push({ name: animalName, text: msg });
-      }
+    // 2. Repeat Check Alert (18th to 22nd Day - 5 Days Window)
+    if (pDay >= 18 && pDay <= 22) {
+      const rem = 21 - pDay;
+      let msg = '';
+      if (rem > 0) msg = `🔴 उलट तपासणी (Repeat Check) चे दिवस जवळ आहेत (${rem} दिवस बाकी). माज/स्त्राव तपासा.`;
+      else if (rem === 0) msg = `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे! व्यवस्थित निरीक्षण करा.`;
+      else msg = `🔴 उलट तपासणी (२२ वा दिवस) - पशु माजावर आले नाही ना याची खात्री करा.`;
+      alerts.push({ name: animalName, text: msg });
     }
 
-    const heatCheckDate = new Date(start.getTime()); heatCheckDate.setDate(heatCheckDate.getDate() + 21);
-    checkEventReminder(heatCheckDate, t.chk21Text, t.chk21Text, 'Repeat Check (Day 21)');
-    checkEventReminder(dewormDate, t.dewormText, t.dewormText, 'Deworming Dose');
-
-    const dryStartDate = new Date(start.getTime()); dryStartDate.setDate(dryStartDate.getDate() + 205);
-    const dryEndDate = new Date(start.getTime()); dryEndDate.setDate(dryEndDate.getDate() + 218);
-    if (today >= dryStartDate && today <= dryEndDate) {
-      let dryMsg = '🥛 Dry Off Period active. Arrange drying off milk production.';
+    // 3. Dry Off Period Alert (Milk Stop: Cow 210-218 days, Buffalo 220-228 days - 8 Days Window)
+    const dryStart = isBuff ? 220 : 210;
+    const dryEnd = isBuff ? 228 : 218;
+    if (pDay >= dryStart && pDay <= dryEnd) {
+      let dryMsg = `🥛 दूध आटवण्याची (Dry Off Period) योग्य वेळ झाली आहे. पुढील निरोगी वासरू व दुधासाठी दूध हळूहळू बंद करा.`;
       alerts.push({ name: animalName, text: dryMsg });
     }
 
+    // 4. Deworming Dose Alert (35 to 30 days prior to delivery - 6 Days Window)
+    const dewormStart = tot - 35;
+    const dewormEnd = tot - 30;
+    if (pDay >= dewormStart && pDay <= dewormEnd) {
+      const daysLeft = tot - pDay;
+      let dewormMsg = `💊 विण्यापूर्वी जंतनाशक औषध (Deworming) देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी). डॉक्टरांचा सल्ला घ्या.`;
+      alerts.push({ name: animalName, text: dewormMsg });
+    }
+
+    // 5. Transition Diet Alert (23 to 21 days prior to delivery)
+    const transStart = tot - 23;
+    const transEnd = tot - 21;
+    if (pDay >= transStart && pDay <= transEnd) {
+      let transMsg = `🌾 ट्रान्झिशन आहार (Transition Diet) सुरू करा, जेणेकरून विल्यानंतर मिल्क फिव्हर होणार नाही व ऊर्जा टिकून राहील.`;
+      alerts.push({ name: animalName, text: transMsg });
+    }
+
+    // 6. Expected Calving Alert: Cow (Starts ONLY at 8 months 25 days = 265 days), Buffalo (Starts at 9 months 25 days = 295 days)
+    const notificationStartDays = isBuff ? 295 : 265;
     if (pDay >= notificationStartDays && pDay <= tot + 9) {
+      const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
       const daysToDelivery = Math.round((deliveryDate - today) / 86400000);
-      let dayCountText = daysToDelivery > 0 ? `(${daysToDelivery} days remaining)` : (daysToDelivery === 0 ? '(Expected Today)' : '(Due Now)');
-      let delNotifTxt = `🍼 Expected Calving time near ${dayCountText}. If calved, click "Calving Done"!`;
+      let dayCountText = '';
+      if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिवस बाकी आहेत)';
+      else if (daysToDelivery === 0) dayCountText = '(आज विण्याची अंदाजे वेळ आहे)';
+      else dayCountText = '(नुकतीच विण्याची वेळ झाली आहे)';
+
+      let delNotifTxt = '🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच "Calved (विली)" हे बटण दाबा!';
       alerts.push({ name: animalName, text: delNotifTxt });
     }
   }
@@ -912,7 +936,7 @@ function checkSmartNotifications(db) {
 
   let html = '';
   for (let i = 0; i < alerts.length; i++) {
-    html += '<div class="notif-item"><div style="font-weight:900; color:#fbbf24;">'+alerts[i].name+'</div><div style="color:#fde68a;">'+alerts[i].text+'</div></div>';
+    html += '<div class="notif-item"><div style="font-weight:900; color:#991b1b;">'+alerts[i].name+'</div><div style="color:#c2410c;">'+alerts[i].text+'</div></div>';
   }
   list.innerHTML = html;
   banner.style.display = 'block';
@@ -927,7 +951,7 @@ async function saveData() {
   if (!inputDate) { alert(t.dateRequired); return; }
   if (inputDate > getTodayDate()) { alert(t.futureDateError); return; }
 
-  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
+  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? 'Cow' : 'Buffalo');
   const doc = document.getElementById('cDoc').value.trim();
   const semen = document.getElementById('cSemen').value.trim();
   const previewImg = document.getElementById('photoPreview');
