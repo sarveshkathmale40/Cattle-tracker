@@ -12,24 +12,21 @@
 <title>The MH Farmer - Smart Dairy Suite</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
-
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;}
 body{background:radial-gradient(circle at top,#f0fdf4 0%,#dcfce7 40%,#cbd5e1 100%);min-height:100vh;padding:12px 10px 40px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:430px;margin:0 auto;}
 
 /* Lock Screen */
 #lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:90vh;}
-.lock-card{background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);border-radius:30px;padding:30px 22px;box-shadow:0 25px 50px -10px rgba(4,120,87,0.25), 0 0 0 2px rgba(52,211,153,0.3);text-align:center;}
+.lock-card{background:rgba(255,255,255,0.96);border-radius:30px;padding:30px 22px;box-shadow:0 25px 50px -10px rgba(4,120,87,0.25), 0 0 0 2px rgba(52,211,153,0.3);text-align:center;}
 .lock-logo-badge{width:68px;height:68px;margin:0 auto 14px;background:linear-gradient(135deg, #10b981 0%, #047857 100%);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 12px 24px -6px rgba(16,185,129,0.5);border:2px solid #ffffff;}
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;letter-spacing:-0.4px;margin-bottom:6px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:24px;font-weight:700;line-height:1.5;}
 
 /* Header Card */
 .app-header{background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);border-radius:26px;padding:18px 16px;margin-bottom:14px;box-shadow:0 18px 36px -8px rgba(4,120,87,.55),inset 0 2px 6px rgba(255,255,255,.35);display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #34d399;position:relative;overflow:hidden;}
-.app-header::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(252,211,77,0.25) 0%, transparent 70%);pointer-events:none;}
 .brand-box{display:flex;align-items:center;gap:10px;text-align:left;}
-.brand-icon{font-size:30px;filter:drop-shadow(0 2px 6px rgba(252,211,77,0.7));}
+.brand-icon{font-size:30px;}
 .header-title{font-size:20px;font-weight:900;letter-spacing:-0.3px;color:#ffffff;text-shadow:0 2px 4px rgba(0,0,0,0.3);}
 .header-sub{font-size:9.5px;color:#a7f3d0;margin-top:2px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:20px;display:inline-block;border:1px solid rgba(255,255,255,0.25);}
 
@@ -53,11 +50,11 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#dcfce7 40%,#cbd5e1 100
 .stat-label{font-size:10.5px;color:#475569;font-weight:800;margin-top:2px;text-transform:uppercase;}
 
 /* Form Card */
-.card{background:rgba(255,255,255,0.98);backdrop-filter:blur(10px);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 12px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
+.card{background:rgba(255,255,255,0.98);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 12px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
 .card h3{font-size:15px;margin-bottom:12px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px;}
 
 label{display:block;text-align:left;font-size:11px;font-weight:800;color:#334155;margin-bottom:5px;margin-left:3px;}
-input,select,textarea{width:100%;padding:11px 14px;border:2px solid #cbd5e1;border-radius:14px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:10px;font-weight:700;font-family:inherit;transition:all .25s;}
+input,select,textarea{width:100%;padding:11px 14px;border:2px solid #cbd5e1;border-radius:14px;font-size:14px;outline:none;background:#f8fafc;margin-bottom:10px;font-weight:700;font-family:inherit;transition:all .2s;}
 input:focus,select:focus,textarea:focus{border-color:#059669;background:white;box-shadow:0 0 0 4px rgba(5,150,105,.18);}
 
 .split-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -90,11 +87,11 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 .note-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #fcd34d;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;margin-top:6px;font-weight:700;display:flex;flex-direction:column;gap:3px;}
 .small-assumption-note{font-size:11px;color:#475569;font-weight:700;margin-top:8px;line-height:1.45;background:#f8fafc;padding:8px 10px;border-radius:12px;border:1.5px solid #cbd5e1;}
 
-/* COMPACT ACTION BUTTONS (NO LONG UGLY BUTTONS) */
+/* Compact Buttons Grid */
 .action-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:10px;align-items:center;}
 .action-grid-calved{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:10px;align-items:center;}
 
-.btn-action{padding:9px 4px;border-radius:11px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;white-space:nowrap;border:none;display:flex;justify-content:center;align-items:center;gap:3px;transition:all .15s;}
+.btn-action{padding:9px 4px;border-radius:11px;font-weight:900;font-size:11px;cursor:pointer;text-align:center;white-space:nowrap;border:none;display:flex;justify-content:center;align-items:center;gap:3px;}
 .btn-repeat{background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;border:1px solid #10b981;box-shadow:0 3px 0 #059669;}
 .btn-calved{background:linear-gradient(135deg,#bae6fd 0%,#7dd3fc 100%);color:#0c4a6e;border:1px solid #0284c7;box-shadow:0 3px 0 #0284c7;}
 .btn-del{background:linear-gradient(135deg,#fee2e2 0%,#fecdd3 100%);color:#991b1b;border:1px solid #fb7185;padding:9px 10px;box-shadow:0 3px 0 #e11d48;}
@@ -102,7 +99,7 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 .empty{text-align:center;color:#64748b;font-size:13px;padding:24px;font-weight:800;}
 
 /* Modals */
-.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px);}
+.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
 .date-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
 .date-modal-card h4{font-size:15px;color:#047857;margin-bottom:14px;font-weight:900;}
 
@@ -177,7 +174,7 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
       <label id="lblNameLbl">पशुचे नाव / टॅग नंबर</label>
       <input type="text" id="cName" placeholder="उदा. कावेरी / Tag #102">
 
-      <label id="lblDate">Breeding / गाभण राहिल्याची तारीख</label>
+      <label id="lblDate">Breeding / गाभण तारीख</label>
       <input type="date" id="cDate">
 
       <label id="lblNoteLbl">डॉक्टर व सिमेन तपशील (पर्यायी)</label>
@@ -231,6 +228,9 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 
 <script>
 'use strict';
+
+/* FAST IN-MEMORY STATE */
+let memoryRecords = [];
 
 /* --- 1. PERSISTENT STORAGE LOCK & SERVICE WORKER --- */
 async function requestPersistentStorage() {
@@ -289,13 +289,19 @@ async function setSetting(key, val) {
   });
 }
 
-async function getAllRecords() {
+async function loadAllRecordsFromDB() {
   const db = await openDB();
   return new Promise((resolve) => {
     const tx = db.transaction('records', 'readonly');
     const req = tx.objectStore('records').getAll();
-    req.onsuccess = () => resolve(req.result || []);
-    req.onerror = () => resolve([]);
+    req.onsuccess = () => {
+      memoryRecords = req.result || [];
+      resolve(memoryRecords);
+    };
+    req.onerror = () => {
+      memoryRecords = [];
+      resolve([]);
+    };
   });
 }
 
@@ -304,7 +310,12 @@ async function saveRecordToDB(record) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction('records', 'readwrite');
     tx.objectStore('records').put(record);
-    tx.oncomplete = () => resolve(true);
+    tx.oncomplete = () => {
+      const idx = memoryRecords.findIndex(r => r.id === record.id);
+      if (idx >= 0) memoryRecords[idx] = record;
+      else memoryRecords.push(record);
+      resolve(true);
+    };
     tx.onerror = (e) => reject(e);
   });
 }
@@ -314,7 +325,10 @@ async function deleteRecordFromDB(id) {
   return new Promise((resolve) => {
     const tx = db.transaction('records', 'readwrite');
     tx.objectStore('records').delete(Number(id));
-    tx.oncomplete = () => resolve(true);
+    tx.oncomplete = () => {
+      memoryRecords = memoryRecords.filter(r => Number(r.id) !== Number(id));
+      resolve(true);
+    };
   });
 }
 
@@ -364,7 +378,7 @@ function selectAnimal(type) {
   document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
 }
 
-async function openDateModal(type, id) {
+function openDateModal(type, id) {
   activeActionType = type;
   activeActionId = id;
   const modal = document.getElementById('customDateModal');
@@ -376,13 +390,12 @@ async function openDateModal(type, id) {
   input.value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
   input.max = input.value;
 
-  const db = await getAllRecords();
   const lang = document.getElementById('langSelect').value;
   const t = langData[lang] || langData.mr;
   let animalType = t.cow;
-  for (let i = 0; i < db.length; i++) {
-    if (Number(db[i].id) === Number(id)) {
-      animalType = (db[i].type === 'buffalo') ? t.buf : t.cow;
+  for (let i = 0; i < memoryRecords.length; i++) {
+    if (Number(memoryRecords[i].id) === Number(id)) {
+      animalType = (memoryRecords[i].type === 'buffalo') ? t.buf : t.cow;
       break;
     }
   }
@@ -435,22 +448,21 @@ async function submitModalDate() {
   const docName = document.getElementById('modalDoctorInput').value.trim();
   const semenName = document.getElementById('modalSemenInput').value.trim();
 
-  const db = await getAllRecords();
-  for (let i = 0; i < db.length; i++) {
-    if (Number(db[i].id) === Number(activeActionId)) {
+  for (let i = 0; i < memoryRecords.length; i++) {
+    if (Number(memoryRecords[i].id) === Number(activeActionId)) {
       if (activeActionType === 'repeat' || activeActionType === 'newPregnancy') {
-        db[i].date = val;
-        db[i].isCalved = false;
-        db[i].isAssumedCalved = false;
-        db[i].calvedDate = '';
-        if (docName) db[i].doctor = docName;
-        if (semenName) db[i].semen = semenName;
+        memoryRecords[i].date = val;
+        memoryRecords[i].isCalved = false;
+        memoryRecords[i].isAssumedCalved = false;
+        memoryRecords[i].calvedDate = '';
+        if (docName) memoryRecords[i].doctor = docName;
+        if (semenName) memoryRecords[i].semen = semenName;
       } else if (activeActionType === 'calved' || activeActionType === 'changeCalve') {
-        db[i].isCalved = true;
-        db[i].isAssumedCalved = false;
-        db[i].calvedDate = val;
+        memoryRecords[i].isCalved = true;
+        memoryRecords[i].isAssumedCalved = false;
+        memoryRecords[i].calvedDate = val;
       }
-      await saveRecordToDB(db[i]);
+      await saveRecordToDB(memoryRecords[i]);
       break;
     }
   }
@@ -570,6 +582,7 @@ async function verifyLogin() {
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('appScreen').style.display = 'block';
     setTodayMaxDate();
+    await loadAllRecordsFromDB();
     draw();
   } else { alert(lang==='en'?'Invalid PIN!':'चुकीचा पिन प्रविष्ट केला आहे!'); }
 }
@@ -587,10 +600,10 @@ function setTodayMaxDate() {
   document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
 }
 
-async function changeLanguage() {
+function changeLanguage() {
   const select = document.getElementById('langSelect');
   const lang = langData[select.value] ? select.value : 'mr';
-  await setSetting('cattle_lang', lang);
+  setSetting('cattle_lang', lang);
   const t = langData[lang];
 
   document.getElementById('mainHeaderSub').innerText = t.headerSub;
@@ -698,18 +711,17 @@ function escapeHtml(val) {
   return String(val==null ? '' : val).replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c]));
 }
 
-async function draw() {
+function draw() {
   const box = document.getElementById('list');
   if (!box) return;
-  const db = await getAllRecords();
   const lang = document.getElementById('langSelect').value;
   const t = langData[lang] || langData.mr;
 
   let cows = 0, buffaloes = 0;
   const today = getTodayDate();
 
-  for (let i = 0; i < db.length; i++) {
-    const it = db[i];
+  for (let i = 0; i < memoryRecords.length; i++) {
+    const it = memoryRecords[i];
     const start = parseISODate(it.date);
     if (start && !it.isCalved) {
       const pDays = getDayDifference(start, today);
@@ -720,7 +732,7 @@ async function draw() {
         const assumedCalveDate = new Date(start.getTime());
         assumedCalveDate.setDate(assumedCalveDate.getDate() + tot);
         it.calvedDate = assumedCalveDate.getFullYear() + '-' + String(assumedCalveDate.getMonth()+1).padStart(2,'0') + '-' + String(assumedCalveDate.getDate()).padStart(2,'0');
-        await saveRecordToDB(it);
+        saveRecordToDB(it);
       }
     }
 
@@ -728,22 +740,22 @@ async function draw() {
     if (it.type==='buffalo') buffaloes++;
   }
 
-  document.getElementById('totalCount').innerText = db.length;
+  document.getElementById('totalCount').innerText = memoryRecords.length;
   document.getElementById('cowCount').innerText = cows;
   document.getElementById('buffaloCount').innerText = buffaloes;
 
-  if (db.length === 0) {
+  if (memoryRecords.length === 0) {
     box.innerHTML = '<div class="empty">' + escapeHtml(t.empty) + '</div>';
-    checkSmartNotifications(db);
+    checkSmartNotifications(memoryRecords);
     return;
   }
 
-  db.sort((a, b) => Number(b.id) - Number(a.id));
+  const sorted = [...memoryRecords].sort((a, b) => Number(b.id) - Number(a.id));
 
   let html = '';
 
-  for (let i = 0; i < db.length; i++) {
-    const it = db[i];
+  for (let i = 0; i < sorted.length; i++) {
+    const it = sorted[i];
     const isBuffalo = it.type==='buffalo';
     const tot = isBuffalo ? 310 : 282;
     const start = parseISODate(it.date);
@@ -836,7 +848,7 @@ async function draw() {
   }
 
   box.innerHTML = html;
-  checkSmartNotifications(db);
+  checkSmartNotifications(sorted);
 }
 
 /* 100% PRECISE NOTIFICATIONS LOGIC */
@@ -878,7 +890,7 @@ function checkSmartNotifications(db) {
     const pDay = getDayDifference(start, today);
     const tot = isBuff ? 310 : 282;
 
-    // 2. Repeat Check Alert (18th to 22nd Day - 5 Days Window)
+    // 2. Repeat Check Alert (18th to 22nd Day)
     if (pDay >= 18 && pDay <= 22) {
       const rem = 21 - pDay;
       let msg = '';
@@ -888,7 +900,7 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: msg });
     }
 
-    // 3. Dry Off Period Alert (Milk Stop: Cow 210-218 days, Buffalo 220-228 days - 8 Days Window)
+    // 3. Dry Off Period Alert (Cow 210-218 days, Buffalo 220-228 days)
     const dryStart = isBuff ? 220 : 210;
     const dryEnd = isBuff ? 228 : 218;
     if (pDay >= dryStart && pDay <= dryEnd) {
@@ -896,7 +908,7 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: dryMsg });
     }
 
-    // 4. Deworming Dose Alert (35 to 30 days prior to delivery - 6 Days Window)
+    // 4. Deworming Dose Alert (35 to 30 days prior)
     const dewormStart = tot - 35;
     const dewormEnd = tot - 30;
     if (pDay >= dewormStart && pDay <= dewormEnd) {
@@ -905,7 +917,7 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: dewormMsg });
     }
 
-    // 5. Transition Diet Alert (23 to 21 days prior to delivery)
+    // 5. Transition Diet Alert (23 to 21 days prior)
     const transStart = tot - 23;
     const transEnd = tot - 21;
     if (pDay >= transStart && pDay <= transEnd) {
@@ -913,7 +925,7 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: transMsg });
     }
 
-    // 6. Expected Calving Alert: Cow (Starts ONLY at 8 months 25 days = 265 days), Buffalo (Starts at 9 months 25 days = 295 days)
+    // 6. Delivery Alert (Cow: 265 days = 8 months 25 days; Buffalo: 295 days)
     const notificationStartDays = isBuff ? 295 : 265;
     if (pDay >= notificationStartDays && pDay <= tot + 9) {
       const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
@@ -1014,6 +1026,7 @@ async function initApp() {
   } catch (e) {}
   document.getElementById('langSelect').value = savedLang;
   setTodayMaxDate();
+  await loadAllRecordsFromDB();
   changeLanguage();
 }
 
