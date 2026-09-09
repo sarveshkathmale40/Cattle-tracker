@@ -1,27 +1,26 @@
 {
   "name": "The MH Farmer - Cattle Tracker",
   "short_name": "MH Farmer",
-  "description": "Cattle pregnancy and gestation tracker app for farmers",
+  "description": "Cattle pregnancy and gestation tracker app for dairy farmers",
   "id": "/Cattle-tracker/",
   "start_url": "/Cattle-tracker/index.html",
   "scope": "/Cattle-tracker/",
   "display": "standalone",
-  "display_override": ["standalone", "window-controls-overlay"],
   "background_color": "#047857",
   "theme_color": "#047857",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23047857'><rect width='512' height='512' rx='100' fill='%23047857'/><text x='50%' y='55%' font-size='220' font-family='sans-serif' text-anchor='middle' fill='white'>🐄</text></svg>",
+      "src": "https://sarveshkathmale40.github.io/Cattle-tracker/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23047857'><rect width='512' height='512' rx='100' fill='%23047857'/><text x='50%' y='55%' font-size='220' font-family='sans-serif' text-anchor='middle' fill='white'>🐄</text></svg>",
+      "src": "https://sarveshkathmale40.github.io/Cattle-tracker/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
