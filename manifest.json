@@ -1,8 +1,7 @@
 {
-  "name": "The MH Farmer",
-  "short_name": "MH Farmer",
+  "name": "The MH Farmer - Cattle Pregnancy Tracker",
+  "short_name": "The MH Farmer",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
   "background_color": "#047857",
   "theme_color": "#047857",
