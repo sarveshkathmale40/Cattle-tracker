@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="The MH Farmer">
 
 <link rel="manifest" href="manifest.json">
-<title>The MH Farmer - Smart Dairy Suite</title>
+<title>The MH Farmer</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;}
@@ -119,11 +119,11 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
     <div class="lock-card">
       <div class="lock-logo-badge">🌾</div>
       <div class="lock-title">The MH Farmer</div>
-      <div class="lock-sub" id="lockSubTxt">Smart Dairy & Cattle Lifecycle Suite</div>
+      <div class="lock-sub" id="lockSubTxt">पशु गाभण व प्रजनन व्यवस्थापन</div>
       <label id="lblMob">मोबाईल नंबर (१० अंकी)</label>
-      <input type="tel" id="loginMob" maxlength="10" inputmode="numeric" placeholder="10 Digits">
+      <input type="tel" id="loginMob" maxlength="10" inputmode="numeric" placeholder="१० अंकी मोबाईल नंबर">
       <label id="lblPin">सिक्रेट पिन (PIN)</label>
-      <input type="password" id="loginPin" maxlength="4" inputmode="numeric" placeholder="4 Digits">
+      <input type="password" id="loginPin" maxlength="4" inputmode="numeric" placeholder="४ अंकी पिन">
       <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
     </div>
   </div>
@@ -136,12 +136,12 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
         <div class="brand-icon">🌾</div>
         <div>
           <div class="header-title">The MH Farmer</div>
-          <div class="header-sub" id="mainHeaderSub">Cattle Lifecycle & Breeding AI</div>
+          <div class="header-sub" id="mainHeaderSub">पशु गाभण व प्रजनन ट्रॅकर</div>
         </div>
       </div>
       <div>
         <select id="langSelect" onchange="changeLanguage()">
-          <option value="mr">मराठी (Smart)</option>
+          <option value="mr">मराठी</option>
           <option value="hi">हिंदी</option>
           <option value="en">English</option>
         </select>
@@ -158,29 +158,29 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंद</div></div>
+      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण जनावरे</div></div>
       <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
       <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
     </div>
 
     <div class="card">
-      <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
+      <h3 id="formTitle">➕ नवीन नोंद करा</h3>
       
       <div class="animal-buttons">
-        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">Cow (गाय)</span></button>
-        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">Buffalo (म्हैस)</span></button>
+        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">गाय</span></button>
+        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
       </div>
 
-      <label id="lblNameLbl">पशुचे नाव / टॅग नंबर</label>
-      <input type="text" id="cName" placeholder="उदा. कावेरी / Tag #102">
+      <label id="lblNameLbl">नाव किंवा टॅग नंबर</label>
+      <input type="text" id="cName" placeholder="उदा. कावेरी / टॅग १०२">
 
-      <label id="lblDate">Breeding / गाभण तारीख</label>
+      <label id="lblDate">गाभण राहिल्याची तारीख</label>
       <input type="date" id="cDate">
 
       <label id="lblNoteLbl">डॉक्टर व सिमेन तपशील (पर्यायी)</label>
       <div class="split-inputs">
-        <input type="text" id="cDoc" placeholder="Doctor Name">
-        <input type="text" id="cSemen" placeholder="Semen Brand / Bull">
+        <input type="text" id="cDoc" placeholder="डॉक्टरचे नाव">
+        <input type="text" id="cSemen" placeholder="सिमेन ब्रँड / वळू">
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी)</label>
@@ -191,7 +191,7 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
     </div>
 
     <div class="card">
-      <h3 id="listTitle">📋 पशु रेकॉर्ड यादी</h3>
+      <h3 id="listTitle">📋 जनावरांची यादी</h3>
       <div id="list"></div>
     </div>
 
@@ -209,10 +209,10 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 
     <div id="modalDoctorSemenContainer" style="display:none;">
       <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblDocName">डॉक्टरचे नाव</label>
-      <input type="text" id="modalDoctorInput" placeholder="उदा. Dr. Patil" style="margin-bottom:10px;">
+      <input type="text" id="modalDoctorInput" placeholder="उदा. डाॅ. पाटील" style="margin-bottom:10px;">
 
       <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblSemenName">सिमेन ब्रँड / नाव</label>
-      <input type="text" id="modalSemenInput" placeholder="उदा. ABS / SAG / HF" style="margin-bottom:14px;">
+      <input type="text" id="modalSemenInput" placeholder="उदा. एचएफ / जर्सी" style="margin-bottom:14px;">
     </div>
 
     <button class="btn" type="button" onclick="submitModalDate()">✅ ओके</button>
@@ -229,10 +229,8 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 <script>
 'use strict';
 
-/* FAST IN-MEMORY STATE */
 let memoryRecords = [];
 
-/* --- 1. PERSISTENT STORAGE LOCK & SERVICE WORKER --- */
 async function requestPersistentStorage() {
   if (navigator.storage && navigator.storage.persist) {
     try {
@@ -244,11 +242,10 @@ requestPersistentStorage();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
   });
 }
 
-/* --- 2. INDEXEDDB ENGINE --- */
 const DB_NAME = 'MHFarmerDB';
 const DB_VERSION = 1;
 let dbInstance = null;
@@ -332,7 +329,6 @@ async function deleteRecordFromDB(id) {
   });
 }
 
-/* --- 3. APP LOGIC --- */
 let deferredPrompt = null;
 const pwaBtn = document.getElementById('pwaInstallBtn');
 
@@ -411,20 +407,20 @@ function openDateModal(type, id) {
   }
 
   if (lang === 'hi') {
-    if (type === 'repeat') title.innerText = animalType + ' Repeat AI - नई तारीख चुनें:';
-    else if (type === 'calved') title.innerText = animalType + ' Calving Date (ब्याने की तारीख):';
-    else if (type === 'newPregnancy') title.innerText = 'New Breeding Date for ' + animalType + ':';
-    else if (type === 'changeCalve') title.innerText = 'Change Calving Date:';
+    if (type === 'repeat') title.innerText = animalType + ' रिपीट - नई तारीख चुनें:';
+    else if (type === 'calved') title.innerText = animalType + ' ब्याने की तारीख:';
+    else if (type === 'newPregnancy') title.innerText = 'नया गर्भधारण - तारीख चुनें:';
+    else if (type === 'changeCalve') title.innerText = 'ब्याने की तारीख बदलें:';
   } else if (lang === 'en') {
-    if (type === 'repeat') title.innerText = 'Select New AI Date for ' + animalType + ':';
+    if (type === 'repeat') title.innerText = 'Select New Breeding Date for ' + animalType + ':';
     else if (type === 'calved') title.innerText = 'Enter Calving Date for ' + animalType + ':';
     else if (type === 'newPregnancy') title.innerText = 'New Breeding Date for ' + animalType + ':';
     else if (type === 'changeCalve') title.innerText = 'Change Calving Date:';
   } else {
-    if (type === 'repeat') title.innerText = animalType + ' Repeat AI - नवीन तारीख निवडा:';
-    else if (type === 'calved') title.innerText = animalType + ' Calving Date (विण्याची अचूक तारीख):';
-    else if (type === 'newPregnancy') title.innerText = 'New Breeding Date (' + animalType + '):';
-    else if (type === 'changeCalve') title.innerText = 'विण्याची अचूक तारीख बदला:';
+    if (type === 'repeat') title.innerText = animalType + ' रिपीट - नवीन तारीख निवडा:';
+    else if (type === 'calved') title.innerText = animalType + ' विण्याची तारीख:';
+    else if (type === 'newPregnancy') title.innerText = 'नवीन गर्भधारणा तारीख निवडा:';
+    else if (type === 'changeCalve') title.innerText = 'विण्याची तारीख बदला:';
   }
 
   modal.style.display = 'flex';
@@ -473,99 +469,102 @@ async function submitModalDate() {
 
 const langData = {
   mr:{
-    headerSub:'Cattle Lifecycle & Breeding AI',
-    tot:'Total Herd', cow:'Cow (गाय)', buf:'Buffalo (म्हैस)',
-    formT:'➕ नवीन पशु नोंद', bCow:'Cow (गाय)', bBuf:'Buffalo (म्हैस)',
-    namePh:'उदा. कावेरी / Tag #102', nameLbl:'पशुचे नाव / टॅग नंबर', 
-    dtLblCow:'Cow AI / गाभण तारीख', dtLblBuf:'Buffalo AI / गाभण तारीख',
-    noteLbl:'Doctor & Semen Details (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)',
-    saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
-    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved (विली)',
-    setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calved',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(दूध आटवणे)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
-    trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
-    delivery:'🍼 Expected Calving Date',
-    calvedDateLbl:'📅 Calved Date',
-    heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर Next Heat Cycle:',
-    assumedNote:'* Gestation काळ पूर्ण झाल्यामुळे Calved स्टेटस गृहीत धरले आहे. अचूक दिवसांसाठी <span style="color:#0284c7; font-weight:900;">Edit Calved</span> बटण दाबा.',
-    guidanceNote:'💡 पुढील AI नोंदवण्यासाठी <span style="color:#0284c7; font-weight:900;">New AI Date</span> बटण वापरा.',
+    headerSub:'पशु गाभण व प्रजनन ट्रॅकर',
+    tot:'एकूण जनावरे', cow:'गाय', buf:'म्हैस',
+    formT:'➕ नवीन नोंद करा', bCow:'गाय', bBuf:'म्हैस',
+    namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'नाव किंवा टॅग नंबर', 
+    dtLblCow:'गाय गाभण तारीख', dtLblBuf:'म्हैस गाभण तारीख',
+    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)',
+    saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 जनावरांची यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
+    delBtn:'🗑️', repeatBtn:'🔄 रिपीट तपासणी', calvedBtn:'🐄 वीण झाली',
+    setNewDateBtn:'📅 नवीन तारीख',
+    changeCalveDateBtn:'📅 वीण तारीख बदला',
+    chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
+    milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(योग्य महिना)</span>',
+    deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
+    trans:'🌾 ट्रान्झिशन आहार <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
+    delivery:'🍼 अंदाजे विण्याची तारीख',
+    calvedDateLbl:'📅 विल्याची तारीख',
+    calvedStatusBadge:'🐄 वीण झाली',
+    heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर पुढील माज तारीख:',
+    assumedNote:'* विण्याचा अपेक्षित काळ पूर्ण झाल्यामुळे वीण झाल्याचे गृहीत धरले आहे. अचूक दिवसांसाठी <span style="color:#0284c7; font-weight:900;">वीण तारीख बदला</span> बटण दाबा.',
+    guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी <span style="color:#0284c7; font-weight:900;">नवीन तारीख</span> बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
-    lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
+    lockSubTxt:'पशु गाभण व प्रजनन व्यवस्थापन',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
-    lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Bull',
-    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand (उदा. ABS, SAG)',
-    lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Repeat Check (२१ वा दिवस)', milkDryText:'Dry Off Period (दूध आटवणे)', dewormText:'Deworming Dose (जंतनाशक)', transText:'Transition Diet (ट्रान्झिशन आहार)'
+    lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / वळू',
+    docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड (उदा. एचएफ, जर्सी)',
+    lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
+    chk21Text:'उलट तपासणी (२१ वा दिवस)', milkDryText:'दूध आटवणे', dewormText:'जंतनाशक औषध', transText:'ट्रान्झिशन आहार'
   },
   hi:{
-    headerSub:'Cattle Lifecycle & Breeding AI',
-    tot:'Total Herd', cow:'गाय', buf:'भैंस',
-    formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
-    namePh:'उदा. कावेरी / Tag #102', nameLbl:'पशु का नाम / टैग नंबर', 
-    dtLblCow:'Cow AI / गर्भधारण तारीख', dtLblBuf:'Buffalo AI / गर्भधारण तारीख',
+    headerSub:'पशु गर्भधारण एवं प्रजनन ट्रैकर',
+    tot:'कुल पशु', cow:'गाय', buf:'भैंस',
+    formT:'➕ नया रिकॉर्ड जोड़ें', bCow:'गाय', bBuf:'भैंस',
+    namePh:'उदा. कावेरी / टैग 102', nameLbl:'नाम या टैग नंबर', 
+    dtLblCow:'गाय गर्भधारण तारीख', dtLblBuf:'भैंस गर्भधारण तारीख',
     noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
-    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved (ब्याई)',
-    setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calved',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(दूध बंद)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(30 दिन पूर्व)</span>',
-    trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(21 दिन पूर्व)</span>',
-    delivery:'🍼 Expected Calving Date',
-    calvedDateLbl:'📅 Calved Date',
-    heatWindowText:'💡 90 दिन विश्राम के बाद Next Heat Window:',
-    assumedNote:'* Gestation पूर्ण होने पर Calved माना गया है। सही तारीख के लिए <span style="color:#0284c7; font-weight:900;">Edit Calved</span> दबाएं।',
-    guidanceNote:'💡 अगली AI के लिए <span style="color:#0284c7; font-weight:900;">New AI Date</span> बटन दबाएं।',
+    delBtn:'🗑️', repeatBtn:'🔄 रिपीट जांच', calvedBtn:'🐄 ब्याई है',
+    setNewDateBtn:'📅 नई तारीख',
+    changeCalveDateBtn:'📅 ब्याने की तारीख बदलें',
+    chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
+    milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(उचित समय)</span>',
+    deworm:'💊 पेट के कीड़ों की दवा <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
+    trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
+    delivery:'🍼 अनुमानित ब्याने की तारीख',
+    calvedDateLbl:'📅 ब्याने की तारीख',
+    calvedStatusBadge:'🐄 ब्याई है',
+    heatWindowText:'💡 90 दिन विश्राम के बाद अगली हीट तारीख:',
+    assumedNote:'* समय पूरा होने पर ब्याई हुई मानी गई है। सही तारीख के लिए <span style="color:#0284c7; font-weight:900;">ब्याने की तारीख बदलें</span> दबाएं।',
+    guidanceNote:'💡 दोबारा गर्भधारण पर <span style="color:#0284c7; font-weight:900;">नई तारीख</span> बटन दबाएं।',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
     installTxt:'📲 ऐप इंस्टॉल करें',
-    lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
+    lockSubTxt:'पशु गर्भधारण एवं प्रजनन प्रबंधन',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
-    lblDocName:'Doctor Name', lblSemenName:'Semen Brand',
-    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand',
-    lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Repeat Check (21वां दिन)', milkDryText:'Dry Off Period (दूध बंद)', dewormText:'Deworming Dose', transText:'Transition Diet'
+    lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / बुल',
+    docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड',
+    lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
+    chk21Text:'उलट जांच (21वां दिन)', milkDryText:'दूध बंद करना', dewormText:'डिवॉर्मिंग दवा', transText:'ट्रांजिशन चारा'
   },
   en:{
-    headerSub:'Cattle Lifecycle & Breeding AI',
-    tot:'Total Herd', cow:'Cow', buf:'Buffalo',
-    formT:'➕ Add New Record', bCow:'Cow', bBuf:'Buffalo',
-    namePh:'e.g., Kaveri / Tag #102', nameLbl:'Animal Name / Tag No', 
-    dtLblCow:'Cow AI / Breeding Date', dtLblBuf:'Buffalo AI / Breeding Date',
+    headerSub:'Cattle Breeding & Gestation Tracker',
+    tot:'Total Cattle', cow:'Cow', buf:'Buffalo',
+    formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
+    namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
+    dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
     noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Optional)',
-    saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available.',
-    delBtn:'🗑️', repeatBtn:'🔄 Repeat AI', calvedBtn:'🐄 Calved',
-    setNewDateBtn:'📅 New AI Date',
-    changeCalveDateBtn:'📅 Edit Calved',
-    chk21:'🔴 Repeat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
-    milkDry:'🥛 Dry Off Period <span style="font-size:10px; color:#64748b;">(Dry Month)</span>',
-    deworm:'💊 Deworming Dose <span style="font-size:10px; color:#64748b;">(30 Days Prior)</span>',
+    saveBtn:'💾 Save Record', listT:'📋 Cattle Records List', empty:'No records available.',
+    delBtn:'🗑️', repeatBtn:'🔄 Repeat Check', calvedBtn:'🐄 Calved',
+    setNewDateBtn:'📅 New Date',
+    changeCalveDateBtn:'📅 Change Calving Date',
+    chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
+    milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Dry Month)</span>',
+    deworm:'💊 Deworming Medicine <span style="font-size:10px; color:#64748b;">(30 Days Prior)</span>',
     trans:'🌾 Transition Diet <span style="font-size:10px; color:#64748b;">(21 Days Prior)</span>',
-    delivery:'🍼 Expected Calving Date',
-    calvedDateLbl:'📅 Calving Date',
-    heatWindowText:'💡 Ready for next AI / breeding cycle from:',
-    assumedNote:'* Assumed calved as gestation completed. Click <span style="color:#0284c7; font-weight:900;">Edit Calved</span> to set exact date.',
-    guidanceNote:'💡 When breeding again, click <span style="color:#0284c7; font-weight:900;">New AI Date</span> below.',
+    delivery:'🍼 Estimated Calving Date',
+    calvedDateLbl:'📅 Calved Date',
+    calvedStatusBadge:'🐄 Calved',
+    heatWindowText:'💡 Ready for next breeding cycle from:',
+    assumedNote:'* Assumed calved as gestation completed. Click <span style="color:#0284c7; font-weight:900;">Change Calving Date</span> to set exact date.',
+    guidanceNote:'💡 When breeding again, click <span style="color:#0284c7; font-weight:900;">New Date</span> below.',
     dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
     notifTitle:'🔔 Important Alerts & Notices',
     installTxt:'📲 Install App',
-    lockSubTxt:'Smart Dairy & Cattle Lifecycle Suite',
+    lockSubTxt:'Cattle Breeding & Lifecycle Suite',
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Bull',
-    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand / Bull',
+    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand',
     lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Repeat Check (Day 21)', milkDryText:'Dry Off Period', dewormText:'Deworming Dose', transText:'Transition Diet'
+    chk21Text:'Heat Check (Day 21)', milkDryText:'Dry Period', dewormText:'Deworming Medicine', transText:'Transition Diet'
   }
 };
 
@@ -694,16 +693,15 @@ function addD(str, days) {
 
 function getFormattedDuration(str, lang) {
   const start = parseISODate(str);
-  if (!start) return lang==='en'?'0 days':'० दिवस';
+  if (!start) return '० दिवस';
   const now = getTodayDate();
-  if (now < start) return lang==='en'?'0 days':'० दिवस';
+  if (now < start) return '० दिवस';
   const yrs = now.getFullYear() - start.getFullYear();
   let m = now.getMonth() - start.getMonth() + (yrs*12);
   let d = now.getDate() - start.getDate();
   if (d < 0) { m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
   if (m < 0) { m = 0; d = 0; }
 
-  if (lang==='en') return m + ' M, ' + d + ' D';
   return m + ' महिना ' + d + ' दिवस';
 }
 
@@ -820,12 +818,11 @@ function draw() {
       const heatStart = new Date(calvedDate.getTime());
       heatStart.setDate(heatStart.getDate() + restDays);
 
-      const calvedTitleTxt = 'Calved (विली)';
       const daysCountLbl = 'विण्यापासून दिवस:';
       const daysUnitTxt = ' दिवस';
 
       html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 '+calvedTitleTxt+'</span></div>';
+      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">'+t.calvedStatusBadge+'</span></div>';
 
       html += '<div class="row"><span>📅 '+daysCountLbl+'</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+daysUnitTxt+'</span></div>';
       html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
@@ -877,7 +874,7 @@ function checkSmartNotifications(db) {
       if (calvedDate) {
         const cDay = getDayDifference(calvedDate, today);
         if (cDay >= 88 && cDay <= 93) {
-          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर (Heat) आली असल्यास तपासून AI / गर्भधारणा करा.'));
+          let heatMsg = '💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर आली असल्यास तपासून गर्भधारणा करा.';
           alerts.push({name: animalName, text: heatMsg});
         }
       }
@@ -894,7 +891,7 @@ function checkSmartNotifications(db) {
     if (pDay >= 18 && pDay <= 22) {
       const rem = 21 - pDay;
       let msg = '';
-      if (rem > 0) msg = `🔴 उलट तपासणी (Repeat Check) चे दिवस जवळ आहेत (${rem} दिवस बाकी). माज/स्त्राव तपासा.`;
+      if (rem > 0) msg = `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी). माज/स्त्राव तपासा.`;
       else if (rem === 0) msg = `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे! व्यवस्थित निरीक्षण करा.`;
       else msg = `🔴 उलट तपासणी (२२ वा दिवस) - पशु माजावर आले नाही ना याची खात्री करा.`;
       alerts.push({ name: animalName, text: msg });
@@ -904,7 +901,7 @@ function checkSmartNotifications(db) {
     const dryStart = isBuff ? 220 : 210;
     const dryEnd = isBuff ? 228 : 218;
     if (pDay >= dryStart && pDay <= dryEnd) {
-      let dryMsg = `🥛 दूध आटवण्याची (Dry Off Period) योग्य वेळ झाली आहे. पुढील निरोगी वासरू व दुधासाठी दूध हळूहळू बंद करा.`;
+      let dryMsg = `🥛 दूध आटवण्याची योग्य वेळ झाली आहे. पुढील निरोगी वासरू व दुधासाठी दूध हळूहळू बंद करा.`;
       alerts.push({ name: animalName, text: dryMsg });
     }
 
@@ -913,7 +910,7 @@ function checkSmartNotifications(db) {
     const dewormEnd = tot - 30;
     if (pDay >= dewormStart && pDay <= dewormEnd) {
       const daysLeft = tot - pDay;
-      let dewormMsg = `💊 विण्यापूर्वी जंतनाशक औषध (Deworming) देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी). डॉक्टरांचा सल्ला घ्या.`;
+      let dewormMsg = `💊 विण्यापूर्वी जंतनाशक औषध देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी). डॉक्टरांचा सल्ला घ्या.`;
       alerts.push({ name: animalName, text: dewormMsg });
     }
 
@@ -921,7 +918,7 @@ function checkSmartNotifications(db) {
     const transStart = tot - 23;
     const transEnd = tot - 21;
     if (pDay >= transStart && pDay <= transEnd) {
-      let transMsg = `🌾 ट्रान्झिशन आहार (Transition Diet) सुरू करा, जेणेकरून विल्यानंतर मिल्क फिव्हर होणार नाही व ऊर्जा टिकून राहील.`;
+      let transMsg = `🌾 ट्रान्झिशन आहार सुरू करा, जेणेकरून विल्यानंतर ऊर्जा टिकून राहील.`;
       alerts.push({ name: animalName, text: transMsg });
     }
 
@@ -935,7 +932,7 @@ function checkSmartNotifications(db) {
       else if (daysToDelivery === 0) dayCountText = '(आज विण्याची अंदाजे वेळ आहे)';
       else dayCountText = '(नुकतीच विण्याची वेळ झाली आहे)';
 
-      let delNotifTxt = '🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच "Calved (विली)" हे बटण दाबा!';
+      let delNotifTxt = '🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच "वीण झाली" हे बटण दाबा!';
       alerts.push({ name: animalName, text: delNotifTxt });
     }
   }
@@ -963,7 +960,7 @@ async function saveData() {
   if (!inputDate) { alert(t.dateRequired); return; }
   if (inputDate > getTodayDate()) { alert(t.futureDateError); return; }
 
-  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? 'Cow' : 'Buffalo');
+  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
   const doc = document.getElementById('cDoc').value.trim();
   const semen = document.getElementById('cSemen').value.trim();
   const previewImg = document.getElementById('photoPreview');
