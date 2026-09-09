@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mh-farmer-v4';
+const CACHE_NAME = 'the-mh-farmer-v2';
 const ASSETS = [
   './',
   './index.html',
