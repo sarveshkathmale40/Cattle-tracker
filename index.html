@@ -13,96 +13,146 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100%);min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:center;}
+body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100%);min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:420px;margin:0 auto;}
 
 /* Lock Screen */
 #lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:90vh;}
-.lock-card{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,0.8);text-align:center;}
+.lock-card{background:rgba(255,255,255,0.98);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.12);border:2px solid #34d399;text-align:center;}
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
-/* Header */
-.app-header{background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);border-radius:26px;padding:20px 18px;margin-bottom:14px;box-shadow:0 18px 40px -8px rgba(4,120,87,.6),inset 0 2px 8px rgba(255,255,255,.35);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #34d399;position:relative;overflow:hidden;}
-.app-header::after{content:'';position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:radial-gradient(circle, rgba(252,211,77,0.25) 0%, transparent 70%);pointer-events:none;}
-.header-title{font-size:24px;font-weight:900;letter-spacing:.8px;text-shadow:0 2px 6px rgba(0,0,0,0.35);background:linear-gradient(to right, #ffffff, #fef08a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.header-sub{font-size:11px;color:#a7f3d0;margin-top:3px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;}
+/* Header Section - Pixel Perfect */
+.app-header{
+  background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);
+  border-radius:24px;
+  padding:14px 16px;
+  margin-bottom:14px;
+  box-shadow:0 16px 36px -8px rgba(4,120,87,.55);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:white;
+  border:2px solid #34d399;
+  gap:10px;
+}
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  flex:1;
+}
+.header-title{
+  font-size:19px;
+  font-weight:900;
+  color:#ffffff;
+  line-height:1.2;
+  white-space:nowrap;
+}
+/* Capsule pill for tracker / future feature switch */
+.tracker-pill{
+  display:inline-block;
+  background:rgba(0,0,0,0.28);
+  border:1px solid rgba(52,211,153,0.45);
+  padding:3px 10px;
+  border-radius:20px;
+  margin-top:4px;
+}
+.header-sub{
+  font-size:9.5px;
+  color:#a7f3d0;
+  font-weight:800;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
 
-/* Install PWA Button */
+/* Lang Dropdown - Never cut off */
+.lang-wrap{
+  flex-shrink:0;
+}
+#langSelect{
+  background:rgba(2,44,34,0.85);
+  color:#ffffff;
+  border:1.5px solid #34d399;
+  border-radius:14px;
+  padding:8px 12px;
+  font-size:13px;
+  font-weight:800;
+  outline:none;
+  cursor:pointer;
+  width:auto;
+}
+
+/* Install Button */
 .install-bar{display:none;background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:12px 16px;border-radius:16px;margin-bottom:14px;text-align:center;box-shadow:0 8px 20px rgba(16,185,129,.35);font-size:13.5px;font-weight:800;border:none;width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;}
 
-/* Language Selector */
-#langSelect{background:#022c22;color:white;border:2px solid #34d399;border-radius:12px;padding:8px 14px;font-size:13px;font-weight:900;outline:none;cursor:pointer;box-shadow:0 6px 15px rgba(0,0,0,0.25);}
-#langSelect option{background:#064e3b;color:white;font-weight:bold;}
-
-/* Notifications */
+/* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
 .notif-title{font-size:13.5px;font-weight:900;color:#b45309;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .notif-list{display:flex;flex-direction:column;gap:8px;}
 .notif-item{background:white;border-radius:12px;padding:10px 12px;font-size:12px;color:#78350f;font-weight:700;border:1.5px solid #fde68a;line-height:1.45;border-left:5px solid #d97706;}
 
-/* Stats Cards */
+/* Stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.stat{background:linear-gradient(135deg,#ffffff 0%,#f1f5f9 100%);padding:12px 8px;border-radius:18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06),inset 0 2px 4px rgba(255,255,255,.9);border:2px solid #e2e8f0;}
+.stat{background:white;padding:12px 8px;border-radius:18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
 .stat-number{font-size:20px;font-weight:900;color:#047857;}
 .stat-label{font-size:11px;color:#475569;font-weight:800;margin-top:2px;text-transform:uppercase;}
 
-/* Main Card */
-.card{background:rgba(255,255,255,0.98);backdrop-filter:blur(8px);border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
-.card h3{font-size:15.5px;margin-bottom:12px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:.4px;}
+/* Form Card */
+.card{background:#ffffff;border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
+.card h3{font-size:15.5px;margin-bottom:12px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;}
 
-/* Inputs */
-label{display:block;text-align:left;font-size:11px;font-weight:800;color:#334155;margin-bottom:5px;margin-left:3px;}
-input,select,textarea{width:100%;padding:11px 14px;border:2px solid #cbd5e1;border-radius:14px;font-size:14.5px;outline:none;background:#f8fafc;margin-bottom:10px;font-weight:700;font-family:inherit;transition:all .25s;}
-input:focus,select:focus,textarea:focus{border-color:#059669;background:white;box-shadow:0 0 0 4px rgba(5,150,105,.18);}
+label{display:block;text-align:left;font-size:11.5px;font-weight:800;color:#334155;margin-bottom:5px;margin-left:3px;}
+input,select{width:100%;padding:11px 14px;border:2px solid #cbd5e1;border-radius:14px;font-size:14.5px;outline:none;background:#f8fafc;margin-bottom:10px;font-weight:700;}
+input:focus,select:focus{border-color:#059669;background:white;}
 
 .split-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 
 .animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
-.animal-btn{border:2px solid #cbd5e1;background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%);padding:12px 8px;border-radius:14px;cursor:pointer;font-weight:900;color:#475569;text-align:center;font-size:14px;box-shadow:0 6px 15px rgba(0,0,0,.05),inset 0 1px 3px rgba(255,255,255,.9);transition:all .15s;}
-.animal-btn.active{border-color:#059669;background:linear-gradient(135deg,#d1fae5 0%,#a7f3d0 100%);color:#064e3b;box-shadow:0 8px 20px rgba(5,150,105,.3),inset 0 2px 5px rgba(255,255,255,.7);}
+.animal-btn{border:2px solid #cbd5e1;background:#f8fafc;padding:12px 8px;border-radius:14px;cursor:pointer;font-weight:900;color:#475569;text-align:center;font-size:14px;}
+.animal-btn.active{border-color:#059669;background:#d1fae5;color:#064e3b;}
 
-.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 50%,#064e3b 100%);color:white;border:2px solid #065f46;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(5,150,105,.4),inset 0 2px 5px rgba(255,255,255,.35);letter-spacing:.4px;transition:all .15s ease;}
-.btn:active{transform:scale(.97);box-shadow:0 3px 8px rgba(5,150,105,.3);}
+.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(5,150,105,.4);}
+.btn:active{transform:scale(.97);}
 
-.photo-preview{width:70px;height:70px;border-radius:16px;object-fit:cover;display:none;margin:6px auto 10px;box-shadow:0 6px 15px rgba(0,0,0,.1);cursor:pointer;border:2px solid #059669;}
+.photo-preview{width:70px;height:70px;border-radius:16px;object-fit:cover;display:none;margin:6px auto 10px;cursor:pointer;border:2px solid #059669;}
 
 /* Records Item */
-.item{background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%);border-radius:20px;padding:14px;border:2px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.04);}
-.cow-img{width:76px;height:76px;border-radius:16px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;box-shadow:0 6px 15px rgba(0,0,0,.08);cursor:pointer;border:2px solid #cbd5e1;}
+.item{background:#ffffff;border-radius:20px;padding:14px;border:2px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.04);contain:content;}
+.cow-img{width:76px;height:76px;border-radius:16px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;border:2px solid #cbd5e1;cursor:pointer;}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
 .item-info{flex-grow:1;min-width:0;}
-.item-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:900;font-size:13px;border-bottom:2px solid #f1f5f9;padding-bottom:6px;margin-bottom:6px;color:#1e293b;}
-.duration-badge{background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%);color:#1d4ed8;font-weight:900;font-size:11.5px;padding:4px 9px;border-radius:10px;border:1.5px solid #93c5fd;white-space:nowrap;}
+.item-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:900;font-size:13px;border-bottom:2px solid #f1f5f9;padding-bottom:6px;margin-bottom:6px;}
+.duration-badge{background:#eff6ff;color:#1d4ed8;font-weight:900;font-size:11.5px;padding:4px 9px;border-radius:10px;border:1.5px solid #93c5fd;white-space:nowrap;}
 
 .row{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;padding:6px 0;color:#334155;font-weight:700;border-bottom:1px dashed #cbd5e1;}
-.row span:first-child{flex:1;line-height:1.35;}
-.date-badge{background:linear-gradient(135deg,#fefce8 0%,#fef9c3 100%);color:#854d0e;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:900;border:1.5px solid #fef08a;text-align:right;width:95px;flex-shrink:0;}
+.date-badge{background:#fefce8;color:#854d0e;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:900;border:1.5px solid #fef08a;text-align:right;width:95px;flex-shrink:0;}
 
-.due{background:linear-gradient(135deg,#f0fdf4 0%,#dcfce7 100%);padding:7px 10px;border-radius:12px;color:#14532d;font-weight:900;margin-top:8px;font-size:12px;border:1.5px solid #86efac;display:flex;justify-content:space-between;align-items:center;}
-.due span:first-child{flex:1;}
+.due{background:#f0fdf4;padding:7px 10px;border-radius:12px;color:#14532d;font-weight:900;margin-top:8px;font-size:12px;border:1.5px solid #86efac;display:flex;justify-content:space-between;align-items:center;}
 .due-badge{background:#16a34a;color:white;padding:3px 8px;border-radius:7px;font-size:11.5px;font-weight:900;text-align:right;width:95px;flex-shrink:0;}
 
-.note-box{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:1.5px solid #fcd34d;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;margin-top:6px;font-weight:700;display:flex;flex-direction:column;gap:3px;}
+.note-box{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;margin-top:6px;font-weight:700;display:flex;flex-direction:column;gap:3px;}
 .small-assumption-note{font-size:11.5px;color:#334155;font-weight:700;margin-top:8px;line-height:1.45;background:#f8fafc;padding:10px 12px;border-radius:12px;border:1.5px solid #cbd5e1;}
 
 /* Action Buttons */
 .action-btns{display:flex;gap:8px;margin-top:10px;}
-.btn-repeat{flex:1;background:linear-gradient(135deg,#a7f3d0 0%,#6ee7b7 50%,#34d399 100%);color:#064e3b;border:1px solid #10b981;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;box-shadow:0 4px 0 #059669, 0 6px 15px rgba(52,211,153,.25);}
-.btn-calved{flex:1;background:linear-gradient(135deg,#bae6fd 0%,#7dd3fc 50%,#38bdf8 100%);color:#0c4a6e;border:1px solid #0284c7;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;box-shadow:0 4px 0 #0284c7, 0 6px 15px rgba(56,189,248,.25);}
-.btn-del{flex:0 0 auto;background:linear-gradient(135deg,#fecdd3 0%,#fda4af 100%);color:#881337;border:1px solid #fb7185;padding:11px 12px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;box-shadow:0 4px 0 #e11d48, 0 6px 15px rgba(251,113,133,.25);}
+.btn-repeat{flex:1;background:#d1fae5;color:#064e3b;border:1px solid #10b981;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+.btn-calved{flex:1;background:#bae6fd;color:#0c4a6e;border:1px solid #0284c7;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+.btn-del{flex:0 0 auto;background:#fee2e2;color:#991b1b;border:1px solid #fb7185;padding:11px 12px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
 
 .empty{text-align:center;color:#64748b;font-size:13px;padding:24px;font-weight:800;}
 
 /* Modal */
-.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px);}
+.date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
 .date-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
 .date-modal-card h4{font-size:16px;color:#047857;margin-bottom:14px;font-weight:900;}
 
 /* Zoom */
 #imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.94);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
 #zoomedImage{max-width:96%;max-height:82%;object-fit:contain;border-radius:16px;}
-.modal-close-btn{position:absolute;top:22px;right:22px;color:white;font-size:34px;font-weight:bold;background:rgba(255,255,255,0.22);width:46px;height:46px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+.modal-close-btn{position:absolute;top:22px;right:22px;color:white;font-size:34px;font-weight:bold;cursor:pointer;}
 </style>
 </head>
 
@@ -116,9 +166,9 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
       <div class="lock-title">🔐 The MH Farmer</div>
       <div class="lock-sub" id="lockSubTxt">ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा</div>
       <label id="lblMob">मोबाईल नंबर (१० अंकी)</label>
-      <input type="tel" id="loginMob" maxlength="10" inputmode="numeric">
+      <input type="tel" id="loginMob" maxlength="10" inputmode="numeric" placeholder="१० अंकी मोबाईल नंबर">
       <label id="lblPin">सिक्रेट पिन (PIN)</label>
-      <input type="password" id="loginPin" maxlength="4" inputmode="numeric">
+      <input type="password" id="loginPin" maxlength="4" inputmode="numeric" placeholder="४ अंकी पिन">
       <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
     </div>
   </div>
@@ -126,15 +176,18 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
   <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
+    <!-- APP HEADER -->
     <div class="app-header">
-      <div style="text-align:left; display:flex; align-items:center; gap:10px;">
-        <span style="font-size:28px; filter: drop-shadow(0 2px 5px rgba(252,211,77,0.7));">🌾</span>
+      <div class="header-left">
+        <span style="font-size:26px;">🌾</span>
         <div>
           <div class="header-title">The MH Farmer</div>
-          <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
+          <div class="tracker-pill">
+            <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
+          </div>
         </div>
       </div>
-      <div>
+      <div class="lang-wrap">
         <select id="langSelect" onchange="changeLanguage()">
           <option value="mr">मराठी</option>
           <option value="hi">हिंदी</option>
@@ -224,24 +277,24 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 <script>
 'use strict';
 
-/* --- 1. PERSISTENT STORAGE & SERVICE WORKER --- */
-async function requestPersistentStorage() {
+/* --- 1. PERSISTENT STORAGE LOCK & OFFLINE CACHE --- */
+async function enablePersistentStorageLock() {
   if (navigator.storage && navigator.storage.persist) {
     try {
       await navigator.storage.persist();
     } catch (e) {}
   }
 }
-requestPersistentStorage();
+enablePersistentStorageLock();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Error:', err));
   });
 }
 
 /* --- 2. INDEXEDDB ENGINE --- */
-const DB_NAME = 'MHFarmerDB';
+const DB_NAME = 'TheMHFarmer_DB';
 const DB_VERSION = 1;
 let dbInstance = null;
 
@@ -310,7 +363,7 @@ async function deleteRecordFromDB(id) {
   });
 }
 
-/* --- 3. PWA PROMPT LOGIC --- */
+/* --- 3. UI LOGIC --- */
 let deferredPrompt = null;
 const pwaBtn = document.getElementById('pwaInstallBtn');
 
@@ -453,10 +506,10 @@ async function submitModalDate() {
 
 const langData = {
   mr:{
-    headerSub:'Cattle Pregnancy Tracker',
+    headerSub:'गाभण पशु ट्रॅकर',
     tot:'एकूण नोंद', cow:'गाय', buf:'म्हैस',
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
-    namePh:'उदा. कावेरी', nameLbl:'पशुचे नाव / टॅग नंबर', 
+    namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
     noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी)',
     saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
@@ -470,7 +523,7 @@ const langData = {
     delivery:'🍼 अंदाजे विण्याची तारीख',
     calvedDateLbl:'📅 विल्याची तारीख',
     heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील गर्भधारणेची तयारी ठेवा:',
-    assumedNote:'* विण्याचा अपेक्षित काळ पूर्ण झाल्यामुळे पशु विल्याचे गृहीत धरले आहे. जर आपले पशु आधीच विले असेल आणि अचूक दिवस व पुढील गर्भधारणेची तारीख हवी असेल, तर खालील <span style="color:#0284c7; font-weight:900;">विण्याची तारीख बदला</span> हे बटण दाबून योग्य तारीख नोंदवा.',
+    assumedNote:'* विण्याचा अपेक्षित काळ पूर्ण झाल्यामुळे पशु विल्याचे गृहीत धरले आहे. अचूक दिवस व पुढील गर्भधारणेची तारीख हवी असल्यास <span style="color:#0284c7; font-weight:900;">विण्याची तारीख बदला</span> हे बटण दाबा.',
     guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
@@ -481,14 +534,13 @@ const langData = {
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
-    lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
-    chk21Text:'उलट तपासणी (२१ वा दिवस)', milkDryText:'दूध आटवणे', dewormText:'जंतनाशक औषध', transText:'ट्रान्झिशन आहार'
+    lblDocField:'डॉक्टर', lblSemenField:'सिमेन'
   },
   hi:{
-    headerSub:'Cattle Pregnancy Tracker',
+    headerSub:'पशु गर्भधारण ट्रैकर',
     tot:'कुल रिकॉर्ड', cow:'गाय', buf:'भैंस',
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
-    namePh:'उदा. कावेरी', nameLbl:'पशु का नाम / टैग नंबर', 
+    namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
     noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
@@ -502,7 +554,7 @@ const langData = {
     delivery:'🍼 अनुमानित ब्याने की तारीख',
     calvedDateLbl:'📅 ब्याने की तारीख',
     heatWindowText:'💡 90 दिन के विश्राम काल के बाद इस तारीख से अगली गर्भधारण के लिए तैयार करें:',
-    assumedNote:'* ब्याने की अनुमानित अवधि पूरी होने के कारण पशु ब्याया हुआ माना गया है। यदि आपका पशु पहले ही ब्या चुका है और सटीक दिन व अगली हीट की तारीख चाहिए, तो नीचे <span style="color:#0284c7; font-weight:900;">ब्याने की तारीख बदलें</span> बटन दबाकर सही तारीख दर्ज करें।',
+    assumedNote:'* ब्याने की अनुमानित अवधि पूरी होने के कारण पशु ब्याया हुआ माना गया है। सटीक दिन के लिए <span style="color:#0284c7; font-weight:900;">ब्याने की तारीख बदलें</span> बटन दबाएं।',
     guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें.',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
@@ -513,15 +565,14 @@ const langData = {
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
     lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
-    lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
-    chk21Text:'उलट जांच (21वां दिन)', milkDryText:'दूध बंद करना', dewormText:'डिवॉर्मिंग दवा', transText:'ट्रांजिशन चारा'
+    lblDocField:'डॉक्टर', lblSemenField:'सीमेन'
   },
   en:{
-    headerSub:'Cattle Pregnancy Tracker',
-    tot:'Total Records', cow:'Cow', buf:'Buffalo',
-    formT:'➕ Add New Animal Record', bCow:'Cow', bBuf:'Buffalo',
-    namePh:'e.g., Kaveri', nameLbl:'Animal Name / Tag Number', 
-    dtLblCow:'Cow Pregnancy Date', dtLblBuf:'Buffalo Pregnancy Date',
+    headerSub:'CATTLE PREGNANCY TRACKER',
+    tot:'Total Cattle', cow:'Cow', buf:'Buffalo',
+    formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
+    namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
+    dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
     noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Optional)',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
     delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
@@ -534,7 +585,7 @@ const langData = {
     delivery:'🍼 Est. Delivery Date',
     calvedDateLbl:'📅 Calving Date',
     heatWindowText:'💡 Ready for next AI / breeding cycle from:',
-    assumedNote:'* Assumed calved as gestation term is completed. If your animal calved earlier and you want exact days and next cycle date, please click the <span style="color:#0284c7; font-weight:900;">Change Calving Date</span> button below.',
+    assumedNote:'* Assumed calved as gestation term is completed. Click <span style="color:#0284c7; font-weight:900;">Change Calving Date</span> to update.',
     guidanceNote:'💡 When breeding again, please click the <span style="color:#0284c7; font-weight:900;">Enter New Date</span> button below.',
     dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
@@ -544,17 +595,18 @@ const langData = {
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
-    lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Heat Check (Day 21)', milkDryText:'Dry Period', dewormText:'Deworming Medicine', transText:'Transition Feed'
+    lblDocField:'Doctor', lblSemenField:'Semen'
   }
 };
 
+/* --- 4. AUTH & DATE UTILS --- */
 async function verifyLogin() {
   const mob = document.getElementById('loginMob').value.trim();
   const pin = document.getElementById('loginPin').value.trim();
   const lang = document.getElementById('langSelect').value;
   if (!/^\d{10}$/.test(mob)) { alert(lang==='en'?'Enter valid 10-digit mobile number!':(lang==='hi'?'कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें!':'कृपया वैध १० अंकी मोबाईल नंबर प्रविष्ट करा!')); return; }
   if (!/^\d{4}$/.test(pin)) { alert(lang==='en'?'Enter 4-digit PIN!':(lang==='hi'?'कृपया 4 अंकों का पिन दर्ज करें!':'कृपया ४ अंकी पिन प्रविष्ट करा!')); return; }
+  
   const expectedPin = mob.substring(0,2) + mob.substring(mob.length-1) + mob.substring(mob.length-1);
   if (pin === expectedPin) {
     await setSetting('cattle_unlocked', 'true');
@@ -782,7 +834,7 @@ async function draw() {
       }
 
       html += '<div class="action-btns">';
-      const calveThreshold = isBuffalo ? 295 : 265;
+      const calveThreshold = isBuffalo ? 296 : 268;
       if (pDays >= calveThreshold) {
         html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
       }
@@ -829,6 +881,7 @@ async function draw() {
   checkSmartNotifications(db);
 }
 
+/* --- 5. NOTIFICATIONS LOGIC --- */
 function checkSmartNotifications(db) {
   const banner = document.getElementById('notifBannerBox');
   const title = document.getElementById('notifTitleText');
@@ -853,7 +906,7 @@ function checkSmartNotifications(db) {
       if (calvedDate) {
         const cDay = getDayDifference(calvedDate, today);
         if (cDay >= 88 && cDay <= 93) {
-          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर (Heat) आली असल्यास तपासून AI / गर्भधारणा करा.'));
+          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर आली असल्यास तपासून AI करा.'));
           alerts.push({name: animalName, text: heatMsg});
         }
       }
@@ -869,44 +922,60 @@ function checkSmartNotifications(db) {
     if (pDay >= 18 && pDay <= 22) {
       const rem = 21 - pDay;
       let msg = '';
-      if (rem > 0) msg = `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी). माज/स्त्राव तपासा.`;
-      else if (rem === 0) msg = `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे! व्यवस्थित निरीक्षण करा.`;
-      else msg = `🔴 उलट तपासणी (२२ वा दिवस) - पशु माजावर आले नाही ना याची खात्री करा.`;
+      if (lang === 'en') {
+        msg = rem > 0 ? `🔴 Heat Check upcoming (${rem} days remaining).` : `🔴 Heat Check Day (Day 21) active.`;
+      } else if (lang === 'hi') {
+        msg = rem > 0 ? `🔴 उलट जांच के दिन नजदीक हैं (${rem} दिन शेष)।` : `🔴 आज उलट जांच (21वां दिन) का मुख्य दिन है!`;
+      } else {
+        msg = rem > 0 ? `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी).` : `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे!`;
+      }
       alerts.push({ name: animalName, text: msg });
     }
 
     const dryStart = isBuff ? 220 : 210;
     const dryEnd = isBuff ? 228 : 218;
     if (pDay >= dryStart && pDay <= dryEnd) {
-      let dryMsg = `🥛 दूध आटवण्याची योग्य वेळ झाली आहे. पुढील निरोगी वासरू व दुधासाठी दूध हळूहळू बंद करा.`;
+      let dryMsg = lang==='en' ? '🥛 Dry period schedule is active. Please arrange to dry off milk production.' : (lang==='hi' ? '🥛 दूध बंद करने का सही समय है।' : '🥛 दूध आटवण्याची योग्य वेळ झाली आहे.');
       alerts.push({ name: animalName, text: dryMsg });
     }
 
-    const dewormStart = tot - 35;
-    const dewormEnd = tot - 30;
+    const dewormStart = tot - 33;
+    const dewormEnd = tot - 28;
     if (pDay >= dewormStart && pDay <= dewormEnd) {
       const daysLeft = tot - pDay;
-      let dewormMsg = `💊 विण्यापूर्वी जंतनाशक औषध देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी). डॉक्टरांचा सल्ला घ्या.`;
+      let dewormMsg = lang==='en' ? `💊 Deworming medicine due (${daysLeft} days before calving).` : (lang==='hi' ? `💊 ब्याने से पहले डिवॉर्मिंग दवा देने का समय (${daysLeft} दिन बाकी)।` : `💊 विण्यापूर्वी जंतनाशक औषध देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी).`);
       alerts.push({ name: animalName, text: dewormMsg });
     }
 
     const transStart = tot - 23;
-    const transEnd = tot - 21;
+    const transEnd = tot - 19;
     if (pDay >= transStart && pDay <= transEnd) {
-      let transMsg = `🌾 ट्रान्झिशन आहार सुरू करा, जेणेकरून विल्यानंतर ऊर्जा टिकून राहील.`;
+      let transMsg = lang==='en' ? '🌾 Start transition feed for healthy calving energy.' : (lang==='hi' ? '🌾 ट्रांजिशन चारा शुरू करें।' : '🌾 ट्रान्झिशन आहार सुरू करा.');
       alerts.push({ name: animalName, text: transMsg });
     }
 
-    const notificationStartDays = isBuff ? 295 : 265;
-    if (pDay >= notificationStartDays && pDay <= tot + 9) {
+    const deliveryNotificationStart = tot - 14;
+    if (pDay >= deliveryNotificationStart && pDay <= tot + 9) {
       const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
       const daysToDelivery = Math.round((deliveryDate - today) / 86400000);
+      
       let dayCountText = '';
-      if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिवस बाकी आहेत)';
-      else if (daysToDelivery === 0) dayCountText = '(आज विण्याची अंदाजे वेळ आहे)';
-      else dayCountText = '(नुकतीच विण्याची वेळ झाली आहे)';
+      if (daysToDelivery > 0) {
+        dayCountText = lang==='en' ? `(${daysToDelivery} days remaining)` : (lang==='hi' ? `(${daysToDelivery} दिन बाकी)` : `(${daysToDelivery} दिवस बाकी आहेत)`);
+      } else if (daysToDelivery === 0) {
+        dayCountText = lang==='en' ? '(Est. delivery today)' : (lang==='hi' ? '(आज अनुमानित समय है)' : '(आज विण्याची अंदाजे वेळ आहे)');
+      } else {
+        dayCountText = lang==='en' ? '(Term completed)' : (lang==='hi' ? '(अवधि पूर्ण हुई)' : '(कालावधी पूर्ण झाला)');
+      }
 
-      let delNotifTxt = '🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच "वीण झाली आहे" हे बटण दाबा!';
+      let delNotifTxt = '';
+      if (lang === 'en') {
+        delNotifTxt = `🍼 ${animalWord} delivery time near ${dayCountText}. If calved, click "Calved"!`;
+      } else if (lang === 'hi') {
+        delNotifTxt = `🍼 ${animalWord} ब्याने का समय नजदीक है ${dayCountText}। यदि ब्या गई है, तो "ब्याया है" बटन दबाएं!`;
+      } else {
+        delNotifTxt = `🍼 ${animalWord} विण्याची वेळ जवळ आली आहे ${dayCountText}. जर पशु विले असेल, तर "वीण झाली आहे" बटण दाबा!`;
+      }
       alerts.push({ name: animalName, text: delNotifTxt });
     }
   }
