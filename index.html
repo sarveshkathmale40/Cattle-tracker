@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="The MH Farmer">
 
 <link rel="manifest" href="manifest.json">
-<title>The MH Farmer - Cattle Tracker</title>
+<title>The MH Farmer - Cattle Pregnancy Tracker</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
@@ -21,10 +21,6 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 .lock-card{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,0.8);text-align:center;}
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
-
-/* Update Notification Banner */
-#updateBanner{display:none;background:linear-gradient(135deg,#1e40af 0%,#3b82f6 100%);color:white;padding:12px 14px;border-radius:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(59,130,246,.35);font-size:12.5px;font-weight:800;justify-content:space-between;align-items:center;}
-.btn-update-now{background:white;color:#1e40af;border:none;padding:6px 12px;border-radius:10px;font-weight:900;font-size:11.5px;cursor:pointer;}
 
 /* Header */
 .app-header{background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);border-radius:26px;padding:20px 18px;margin-bottom:14px;box-shadow:0 18px 40px -8px rgba(4,120,87,.6),inset 0 2px 8px rgba(255,255,255,.35);text-align:center;display:flex;justify-content:space-between;align-items:center;color:white;border:2px solid #34d399;position:relative;overflow:hidden;}
@@ -98,16 +94,10 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 
 .empty{text-align:center;color:#64748b;font-size:13px;padding:24px;font-weight:800;}
 
-/* Modals */
+/* Modal */
 .date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px);}
 .date-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
 .date-modal-card h4{font-size:16px;color:#047857;margin-bottom:14px;font-weight:900;}
-
-/* High-Security Warning Delete Modal */
-.warn-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:340px;box-shadow:0 20px 40px rgba(225,29,72,0.3);text-align:center;border:3px solid #e11d48;}
-.warn-icon{font-size:36px;margin-bottom:6px;}
-.warn-title{font-size:17px;font-weight:900;color:#9f1239;margin-bottom:8px;}
-.warn-desc{font-size:12px;color:#881337;font-weight:700;line-height:1.5;margin-bottom:14px;background:#ffe4e6;padding:10px;border-radius:12px;border:1px dashed #f43f5e;}
 
 /* Zoom */
 #imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.94);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
@@ -119,12 +109,6 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 <body>
 
 <div class="wrap">
-
-  <!-- UPDATE AVAILABLE BANNER -->
-  <div id="updateBanner">
-    <span>🚀 नवीन अपडेट उपलब्ध आहे!</span>
-    <button class="btn-update-now" type="button" onclick="applyUpdate()">आता अपडेट करा</button>
-  </div>
 
   <!-- LOCK SCREEN -->
   <div id="lockScreen" style="display:none;">
@@ -210,7 +194,7 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 
 </div>
 
-<!-- Modal For Dates -->
+<!-- Modal -->
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
@@ -231,19 +215,6 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
   </div>
 </div>
 
-<!-- High-Security Warning Delete Modal -->
-<div id="deleteWarningModal" class="date-modal">
-  <div class="warn-modal-card">
-    <div class="warn-icon">⚠️</div>
-    <div class="warn-title" id="warnModalTitle">अतिशय महत्त्वाची चेतावणी!</div>
-    <div class="warn-desc" id="warnModalDesc">
-      हा रेकॉर्ड डिलीट केल्यास तुमच्या गाय/म्हशीचा सर्व डेटा कायमचा नष्ट होईल. तुम्ही ॲपसाठी भरलेले शुल्क आणि मेहनत वाया जाऊ शकते.
-    </div>
-    <button class="btn" type="button" style="background:linear-gradient(135deg,#e11d48 0%,#be123c 100%); border-color:#9f1239;" onclick="confirmPermanentDelete()">🗑️ होय, कायमचा डिलीट करा</button>
-    <button class="btn" type="button" style="background:#64748b; margin-top:8px; border-color:#475569;" onclick="closeDeleteModal()">नाही, मागे फिरा</button>
-  </div>
-</div>
-
 <!-- Zoom -->
 <div id="imageZoomModal" onclick="closeImageModal()">
   <div class="modal-close-btn" onclick="closeImageModal()">&times;</div>
@@ -253,35 +224,20 @@ input:focus,select:focus,textarea:focus{border-color:#059669;background:white;bo
 <script>
 'use strict';
 
-/* --- 1. PERSISTENT STORAGE & SERVICE WORKER WITH AUTO-UPDATE --- */
+/* --- 1. PERSISTENT STORAGE & SERVICE WORKER --- */
 async function requestPersistentStorage() {
   if (navigator.storage && navigator.storage.persist) {
-    await navigator.storage.persist();
+    try {
+      await navigator.storage.persist();
+    } catch (e) {}
   }
 }
 requestPersistentStorage();
 
-let newWorker;
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then((reg) => {
-      reg.addEventListener('updatefound', () => {
-        newWorker = reg.installing;
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            document.getElementById('updateBanner').style.display = 'flex';
-          }
-        });
-      });
-    }).catch(err => console.log('SW error:', err));
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
   });
-}
-
-function applyUpdate() {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'skipWaiting' });
-  }
-  window.location.reload();
 }
 
 /* --- 2. INDEXEDDB ENGINE --- */
@@ -354,7 +310,7 @@ async function deleteRecordFromDB(id) {
   });
 }
 
-/* --- 3. PWA PROMPT --- */
+/* --- 3. PWA PROMPT LOGIC --- */
 let deferredPrompt = null;
 const pwaBtn = document.getElementById('pwaInstallBtn');
 
@@ -389,7 +345,6 @@ function closeImageModal() {
 let cur = 'cow';
 let activeActionId = null;
 let activeActionType = null;
-let pendingDeleteId = null;
 
 function selectAnimal(type) {
   cur = type === 'buffalo' ? 'buffalo' : 'cow';
@@ -496,30 +451,6 @@ async function submitModalDate() {
   draw();
 }
 
-/* --- HIGH-SECURITY DELETE MODAL --- */
-function promptDeleteWarning(id) {
-  pendingDeleteId = id;
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  
-  document.getElementById('warnModalTitle').innerText = t.warnTitle;
-  document.getElementById('warnModalDesc').innerHTML = t.warnDesc;
-  document.getElementById('deleteWarningModal').style.display = 'flex';
-}
-
-function closeDeleteModal() {
-  document.getElementById('deleteWarningModal').style.display = 'none';
-  pendingDeleteId = null;
-}
-
-async function confirmPermanentDelete() {
-  if (pendingDeleteId) {
-    await deleteRecordFromDB(pendingDeleteId);
-    closeDeleteModal();
-    draw();
-  }
-}
-
 const langData = {
   mr:{
     headerSub:'Cattle Pregnancy Tracker',
@@ -543,6 +474,7 @@ const langData = {
     guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
+    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
     installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
@@ -550,9 +482,7 @@ const langData = {
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
     lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
-    chk21Text:'उलट तपासणी (२१ वा दिवस)', milkDryText:'दूध आटवणे', dewormText:'जंतनाशक औषध', transText:'ट्रान्झिशन आहार',
-    warnTitle:'⚠️ अतिशय महत्त्वाची चेतावणी!',
-    warnDesc:'हा रेकॉर्ड डिलीट केल्यास तुमच्या पशुचा सर्व डेटा कायमचा नष्ट होईल. तुम्ही ॲपसाठी भरलेले शुल्क आणि मेहनत वाया जाऊ शकते!'
+    chk21Text:'उलट तपासणी (२१ वा दिवस)', milkDryText:'दूध आटवणे', dewormText:'जंतनाशक औषध', transText:'ट्रान्झिशन आहार'
   },
   hi:{
     headerSub:'Cattle Pregnancy Tracker',
@@ -576,6 +506,7 @@ const langData = {
     guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें.',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
+    confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
     installTxt:'📲 ऐप इंस्टॉल करें',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और गुप्त पिन दर्ज करें',
@@ -583,9 +514,7 @@ const langData = {
     lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
     lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
-    chk21Text:'उलट जांच (21वां दिन)', milkDryText:'दूध बंद करना', dewormText:'डिवॉर्मिंग दवा', transText:'ट्रांजिशन चारा',
-    warnTitle:'⚠️ अति महत्वपूर्ण चेतावनी!',
-    warnDesc:'यह रिकॉर्ड हटाने से आपके पशु का सारा डेटा स्थायी रूप से नष्ट हो जाएगा। आपका भुगतान और मेहनत व्यर्थ हो सकती है!'
+    chk21Text:'उलट जांच (21वां दिन)', milkDryText:'दूध बंद करना', dewormText:'डिवॉर्मिंग दवा', transText:'ट्रांजिशन चारा'
   },
   en:{
     headerSub:'Cattle Pregnancy Tracker',
@@ -608,7 +537,7 @@ const langData = {
     assumedNote:'* Assumed calved as gestation term is completed. If your animal calved earlier and you want exact days and next cycle date, please click the <span style="color:#0284c7; font-weight:900;">Change Calving Date</span> button below.',
     guidanceNote:'💡 When breeding again, please click the <span style="color:#0284c7; font-weight:900;">Enter New Date</span> button below.',
     dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
-    storageError:'Storage error! Could not save record.',
+    storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
     notifTitle:'🔔 Important Alerts & Notices',
     installTxt:'📲 Install App on Phone',
     lockSubTxt:'Enter your mobile number and secret PIN to access the application',
@@ -616,9 +545,7 @@ const langData = {
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
     lblDocField:'Doctor', lblSemenField:'Semen',
-    chk21Text:'Heat Check (Day 21)', milkDryText:'Dry Period', dewormText:'Deworming Medicine', transText:'Transition Feed',
-    warnTitle:'⚠️ Critical Warning!',
-    warnDesc:'Deleting this record will permanently erase your cattle data. Your fees and efforts may be lost!'
+    chk21Text:'Heat Check (Day 21)', milkDryText:'Dry Period', dewormText:'Deworming Medicine', transText:'Transition Feed'
   }
 };
 
@@ -855,12 +782,12 @@ async function draw() {
       }
 
       html += '<div class="action-btns">';
-      const calveThreshold = isBuffalo ? 285 : 252;
+      const calveThreshold = isBuffalo ? 295 : 265;
       if (pDays >= calveThreshold) {
         html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
       }
       html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="promptDeleteWarning('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
 
     } else {
@@ -891,7 +818,7 @@ async function draw() {
       html += '<div class="action-btns" style="flex-wrap:wrap;">';
       html += '<button class="btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
       html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="promptDeleteWarning('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
     }
 
@@ -925,8 +852,8 @@ function checkSmartNotifications(db) {
       const calvedDate = parseISODate(it.calvedDate);
       if (calvedDate) {
         const cDay = getDayDifference(calvedDate, today);
-        if (cDay === 90) {
-          let heatMsg = lang==='en' ? ('💡 90 days of rest completed. If ' + animalWord + ' is in heat, check and breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूरे हो गए हैं। यदि ' + animalWord + ' हीट में है तो जाँच कर गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत. आता ' + animalWord + ' माजावर (Heat) आली असेल तर तपासून गर्भधारणा करा.'));
+        if (cDay >= 88 && cDay <= 93) {
+          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर (Heat) आली असल्यास तपासून AI / गर्भधारणा करा.'));
           alerts.push({name: animalName, text: heatMsg});
         }
       }
@@ -938,58 +865,48 @@ function checkSmartNotifications(db) {
 
     const pDay = getDayDifference(start, today);
     const tot = isBuff ? 310 : 282;
-    const dewormDay = tot - 30;
 
-    const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
-    const dewormDate = new Date(start.getTime()); dewormDate.setDate(dewormDate.getDate() + dewormDay);
-
-    const notificationStartDays = isBuff ? 285 : 252;
-
-    function checkEventReminder(targetDate, eventNameMR, eventNameHI, eventNameEN) {
-      const diff = getDayDifference(today, targetDate);
-      if (diff >= 0 && diff <= 3) {
-        let msg = '';
-        if (lang === 'en') {
-          msg = diff === 0 ? (`Today is the schedule for ${eventNameEN}.`) : (`${eventNameEN} schedule is near (${diff} days left).`);
-        } else if (lang === 'hi') {
-          msg = diff === 0 ? (`आज ${eventNameHI} का दिन है।`) : (`${eventNameHI} का समय नजदीक है (${diff} दिन बाकी)।`);
-        } else {
-          msg = diff === 0 ? (`आज ${eventNameMR} ची नेमकी वेळ आहे.`) : (`${eventNameMR} ची वेळ जवळ येत आहे (${diff} दिवस बाकी).`);
-        }
-        alerts.push({ name: animalName, text: msg });
-      }
+    if (pDay >= 18 && pDay <= 22) {
+      const rem = 21 - pDay;
+      let msg = '';
+      if (rem > 0) msg = `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी). माज/स्त्राव तपासा.`;
+      else if (rem === 0) msg = `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे! व्यवस्थित निरीक्षण करा.`;
+      else msg = `🔴 उलट तपासणी (२२ वा दिवस) - पशु माजावर आले नाही ना याची खात्री करा.`;
+      alerts.push({ name: animalName, text: msg });
     }
 
-    const heatCheckDate = new Date(start.getTime()); heatCheckDate.setDate(heatCheckDate.getDate() + 21);
-    checkEventReminder(heatCheckDate, t.chk21Text, t.chk21Text, 'Heat Check (Day 21)');
-    checkEventReminder(dewormDate, t.dewormText, t.dewormText, 'Deworming Medicine');
-
-    const dryStartDate = new Date(start.getTime()); dryStartDate.setDate(dryStartDate.getDate() + 205);
-    const dryEndDate = new Date(start.getTime()); dryEndDate.setDate(dryEndDate.getDate() + 218);
-    if (today >= dryStartDate && today <= dryEndDate) {
-      let dryMsg = lang==='en' ? ('🥛 Dry period schedule is active. Please arrange to dry off milk production.') : (lang==='hi' ? ('🥛 दूध बंद करने (आटवने) का समय आ गया है। कृपया उचित कदम उठाएं।') : ('🥛 गायीचे दूध आटवण्याची वेळ झाली आहे. कृपया योग्य नियोजन करा.'));
+    const dryStart = isBuff ? 220 : 210;
+    const dryEnd = isBuff ? 228 : 218;
+    if (pDay >= dryStart && pDay <= dryEnd) {
+      let dryMsg = `🥛 दूध आटवण्याची योग्य वेळ झाली आहे. पुढील निरोगी वासरू व दुधासाठी दूध हळूहळू बंद करा.`;
       alerts.push({ name: animalName, text: dryMsg });
     }
 
+    const dewormStart = tot - 35;
+    const dewormEnd = tot - 30;
+    if (pDay >= dewormStart && pDay <= dewormEnd) {
+      const daysLeft = tot - pDay;
+      let dewormMsg = `💊 विण्यापूर्वी जंतनाशक औषध देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी). डॉक्टरांचा सल्ला घ्या.`;
+      alerts.push({ name: animalName, text: dewormMsg });
+    }
+
+    const transStart = tot - 23;
+    const transEnd = tot - 21;
+    if (pDay >= transStart && pDay <= transEnd) {
+      let transMsg = `🌾 ट्रान्झिशन आहार सुरू करा, जेणेकरून विल्यानंतर ऊर्जा टिकून राहील.`;
+      alerts.push({ name: animalName, text: transMsg });
+    }
+
+    const notificationStartDays = isBuff ? 295 : 265;
     if (pDay >= notificationStartDays && pDay <= tot + 9) {
+      const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
       const daysToDelivery = Math.round((deliveryDate - today) / 86400000);
       let dayCountText = '';
-      if (lang==='en') {
-        if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' days remaining)';
-        else if (daysToDelivery === 0) dayCountText = '(Expected today)';
-        else dayCountText = '(Time has arrived)';
-      } else if (lang==='hi') {
-        if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिन बाकी हैं)';
-        else if (daysToDelivery === 0) dayCountText = '(आज अनुमानित समय है)';
-        else dayCountText = '(समय आ गया है)';
-      } else {
-        if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिवस बाकी आहेत)';
-        else if (daysToDelivery === 0) dayCountText = '(आज विण्याची अंदाजे वेळ आहे)';
-        else dayCountText = '(नुकतीच विण्याची वेळ झाली आहे)';
-      }
+      if (daysToDelivery > 0) dayCountText = '(' + daysToDelivery + ' दिवस बाकी आहेत)';
+      else if (daysToDelivery === 0) dayCountText = '(आज विण्याची अंदाजे वेळ आहे)';
+      else dayCountText = '(नुकतीच विण्याची वेळ झाली आहे)';
 
-      let delNotifTxt = lang==='en' ? ('🍼 ' + animalWord + ' delivery time near ' + dayCountText + '. If calved, update system & click "Calved"!') : (lang==='hi' ? ('🍼 ' + animalWord + ' के ब्याने का समय नजदीक है ' + dayCountText + '. यदि ब्या गई है, तो सिस्टम में अपडेट करें और "ब्याया है" बटन दबाएं!') : ('🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच सिस्टीममध्ये अपडेट करा आणि "वीण झाली आहे" हे बटण दाबा!'));
-
+      let delNotifTxt = '🍼 ' + animalWord + ' विण्याची वेळ जवळ आली आहे ' + dayCountText + '. जर पशु विले असेल, तर लगेच "वीण झाली आहे" हे बटण दाबा!';
       alerts.push({ name: animalName, text: delNotifTxt });
     }
   }
@@ -1049,6 +966,14 @@ async function saveData() {
   document.getElementById('cPhoto').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
+  draw();
+}
+
+async function delData(id) {
+  const lang = document.getElementById('langSelect').value;
+  const t = langData[lang] || langData.mr;
+  if (!confirm(t.confirmDel)) return;
+  await deleteRecordFromDB(id);
   draw();
 }
 
