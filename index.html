@@ -22,7 +22,7 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
-/* Header Section - Pixel Perfect */
+/* Header Section */
 .app-header{
   background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);
   border-radius:24px;
@@ -50,7 +50,6 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
   line-height:1.2;
   white-space:nowrap;
 }
-/* Capsule pill for tracker / future feature switch */
 .tracker-pill{
   display:inline-block;
   background:rgba(0,0,0,0.28);
@@ -68,7 +67,6 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
   white-space:nowrap;
 }
 
-/* Lang Dropdown - Never cut off */
 .lang-wrap{
   flex-shrink:0;
 }
@@ -85,8 +83,29 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
   width:auto;
 }
 
-/* Install Button */
-.install-bar{display:none;background:linear-gradient(135deg,#059669 0%,#10b981 100%);color:white;padding:12px 16px;border-radius:16px;margin-bottom:14px;text-align:center;box-shadow:0 8px 20px rgba(16,185,129,.35);font-size:13.5px;font-weight:800;border:none;width:100%;cursor:pointer;justify-content:center;align-items:center;gap:8px;}
+/* APK Direct Download Button */
+.apk-download-banner {
+  display: flex;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  padding: 13px 16px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(16,185,129,.35);
+  font-size: 14px;
+  font-weight: 800;
+  border: 1.5px solid #34d399;
+  width: 100%;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.apk-download-banner:active {
+  transform: scale(0.98);
+}
 
 /* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
@@ -196,9 +215,10 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
     </div>
 
-    <button id="pwaInstallBtn" class="install-bar" type="button" onclick="installPWA()" style="display:none;">
-      <span>📲 ॲप फोनमध्ये इन्स्टॉल करा</span>
-    </button>
+    <!-- DIRECT APK DOWNLOAD BUTTON -->
+    <a href="./MH%20Farmer.apk" download="MH_Farmer.apk" id="apkDownloadBtn" class="apk-download-banner">
+      <span>📥 ॲप डाऊनलोड करा (.APK)</span>
+    </a>
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
       <div class="notif-title" id="notifTitleText">🔔 महत्त्वाचे अलर्ट्स व सूचना</div>
@@ -364,27 +384,6 @@ async function deleteRecordFromDB(id) {
 }
 
 /* --- 3. UI LOGIC --- */
-let deferredPrompt = null;
-const pwaBtn = document.getElementById('pwaInstallBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (pwaBtn && !window.matchMedia('(display-mode: standalone)').matches) {
-    pwaBtn.style.display = 'flex';
-  }
-});
-
-function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      if (pwaBtn) pwaBtn.style.display = 'none';
-    });
-  }
-}
-
 function openImageModal(src) {
   if (!src) return;
   document.getElementById('zoomedImage').src = src;
@@ -529,7 +528,7 @@ const langData = {
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
-    installTxt:'📲 ॲप फोनमध्ये इन्स्टॉल करा',
+    apkDownloadTxt:'📥 ॲप डाऊनलोड करा (.APK)',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
@@ -560,7 +559,7 @@ const langData = {
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
     confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
-    installTxt:'📲 ऐप इंस्टॉल करें',
+    apkDownloadTxt:'📥 ऐप डाउनलोड करें (.APK)',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और गुप्त पिन दर्ज करें',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
     lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
@@ -590,7 +589,7 @@ const langData = {
     dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
     storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
     notifTitle:'🔔 Important Alerts & Notices',
-    installTxt:'📲 Install App on Phone',
+    apkDownloadTxt:'📥 Download App (.APK)',
     lockSubTxt:'Enter your mobile number and secret PIN to access the application',
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
@@ -659,7 +658,8 @@ async function changeLanguage() {
   document.getElementById('lblPin').innerText = t.lblPin;
   document.getElementById('btnLogin').innerText = t.btnLogin;
 
-  if (pwaBtn && t.installTxt) pwaBtn.innerHTML = '<span>' + t.installTxt + '</span>';
+  const dlBtn = document.getElementById('apkDownloadBtn');
+  if (dlBtn && t.apkDownloadTxt) dlBtn.innerHTML = '<span>' + t.apkDownloadTxt + '</span>';
   draw();
 }
 
