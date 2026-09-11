@@ -25,7 +25,7 @@ jobs:
         # Copy index.html into Android Assets
         cp index.html app/src/main/assets/index.html
         
-        # Create AndroidManifest.xml (Pure Native WebView - No Chrome Browser Wrapper)
+        # Create AndroidManifest.xml (Pure Native WebView)
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android"
             package="com.mh.farmer">
@@ -51,7 +51,7 @@ jobs:
         </manifest>
         EOF
 
-        # Create MainActivity.java (Loads index.html locally with full offline IndexedDB support)
+        # Create MainActivity.java
         cat << 'EOF' > app/src/main/java/com/mh/farmer/MainActivity.java
         package com.mh.farmer;
         import android.app.Activity;
@@ -89,7 +89,7 @@ jobs:
         }
         EOF
 
-        # Create build.gradle for the app module
+        # Create build.gradle for app
         cat << 'EOF' > app/build.gradle
         plugins {
             id 'com.android.application'
@@ -140,7 +140,10 @@ jobs:
         # Create gradle.properties
         echo "android.useAndroidX=true" > gradle.properties
 
-    - name: Build Debug APK with Gradle
+        # Generate Gradle Wrapper to fix gradlew missing error
+        gradle wrapper
+
+    - name: Build Debug APK with Gradle Wrapper
       run: ./gradlew assembleDebug
 
     - name: Upload APK Artifact
