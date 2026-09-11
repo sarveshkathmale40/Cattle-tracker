@@ -25,10 +25,9 @@ jobs:
         # Copy index.html into Android Assets
         cp index.html app/src/main/assets/index.html
         
-        # Create AndroidManifest.xml (Pure Native WebView)
+        # Create AndroidManifest.xml (Without obsolete package attribute)
         cat << 'EOF' > app/src/main/AndroidManifest.xml
-        <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-            package="com.mh.farmer">
+        <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <application
@@ -89,7 +88,7 @@ jobs:
         }
         EOF
 
-        # Create build.gradle for app
+        # Create app/build.gradle
         cat << 'EOF' > app/build.gradle
         plugins {
             id 'com.android.application'
@@ -140,10 +139,10 @@ jobs:
         # Create gradle.properties
         echo "android.useAndroidX=true" > gradle.properties
 
-        # Generate Gradle Wrapper to fix gradlew missing error
-        gradle wrapper
+        # Setup Gradle Wrapper with stable version 8.5
+        gradle wrapper --gradle-version 8.5
 
-    - name: Build Debug APK with Gradle Wrapper
+    - name: Build Debug APK with Stable Gradle
       run: ./gradlew assembleDebug
 
     - name: Upload APK Artifact
