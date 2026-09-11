@@ -1,4 +1,4 @@
-name: Build Native APK
+name: Build Final Native APK
 
 on:
   push:
@@ -18,21 +18,12 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Create Basic Android Project Structure with Custom Icon
+    - name: Create Final Android Project Structure
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values app/src/main/res/mipmap-hdpi
         
-        # Copy index.html into Android Assets
+        # Copy index.html into Android Assets as initial fallback
         cp index.html app/src/main/assets/index.html
-        
-        # Check and copy existing PNG icons from repository if available
-        if [ -f "192.png" ]; then
-          cp 192.png app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp 192.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        elif [ -f "512.png" ]; then
-          cp 512.png app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp 512.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        fi
 
         # Create strings.xml for app name
         cat << 'EOF' > app/src/main/res/values/strings.xml
@@ -41,7 +32,7 @@ jobs:
         </resources>
         EOF
         
-        # Create AndroidManifest.xml with custom launcher icon
+        # Create AndroidManifest.xml (Pure Native, No Browser UI)
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -49,8 +40,6 @@ jobs:
             <application
                 android:allowBackup="true"
                 android:label="@string/app_name"
-                android:icon="@mipmap/ic_launcher"
-                android:roundIcon="@mipmap/ic_launcher"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
@@ -66,7 +55,7 @@ jobs:
         </manifest>
         EOF
 
-        # Create MainActivity.java
+        # Create MainActivity.java with Live Sync OTA capability from GitHub Pages/Raw
         cat << 'EOF' > app/src/main/java/com/mh/farmer/MainActivity.java
         package com.mh.farmer;
         import android.app.Activity;
@@ -74,6 +63,8 @@ jobs:
         import android.webkit.WebSettings;
         import android.webkit.WebView;
         import android.webkit.WebViewClient;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
 
         public class MainActivity extends Activity {
             private WebView webView;
@@ -89,10 +80,25 @@ jobs:
                 settings.setDatabaseEnabled(true);
                 settings.setAllowFileAccess(true);
                 settings.setAllowContentAccess(true);
+                settings.setCacheMode(WebSettings.LOAD_DEFAULT);
                 
                 webView.setWebViewClient(new WebViewClient());
-                webView.loadUrl("file:///android_asset/index.html");
+                
+                // Check internet and load live latest index.html from your GitHub raw repository, fallback to local asset if offline
+                if (isNetworkAvailable()) {
+                    // Direct link to your latest GitHub raw HTML file so any update reflects instantly without reinstalling APK
+                    webView.loadUrl("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html");
+                } else {
+                    webView.loadUrl("file:///android_asset/index.html");
+                }
             }
+            
+            private boolean isNetworkAvailable() {
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+            }
+
             @Override
             public void onBackPressed() {
                 if (webView.canGoBack()) {
@@ -158,11 +164,11 @@ jobs:
         # Setup Gradle Wrapper with stable version 8.5
         gradle wrapper --gradle-version 8.5
 
-    - name: Build Debug APK with Stable Gradle
+    - name: Build Final APK with Stable Gradle
       run: ./gradlew assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Native_App
+        name: MH_Farmer_Final_App
         path: app/build/outputs/apk/debug/app-debug.apk
