@@ -18,23 +18,39 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Create Basic Android Project Structure
+    - name: Create Basic Android Project Structure with Custom Icon
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/mipmap-hdpi
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
         # Copy index.html into Android Assets
         cp index.html app/src/main/assets/index.html
         
-        # Create AndroidManifest.xml (Without obsolete package attribute)
+        # Check and copy existing PNG icons from repository if available
+        if [ -f "192.png" ]; then
+          cp 192.png app/src/main/res/mipmap-hdpi/ic_launcher.png
+          cp 192.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+        elif [ -f "512.png" ]; then
+          cp 512.png app/src/main/res/mipmap-hdpi/ic_launcher.png
+          cp 512.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+        fi
+
+        # Create strings.xml for app name
+        cat << 'EOF' > app/src/main/res/values/strings.xml
+        <resources>
+            <string name="app_name">The MH Farmer</string>
+        </resources>
+        EOF
+        
+        # Create AndroidManifest.xml with custom launcher icon
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <application
                 android:allowBackup="true"
+                android:label="@string/app_name"
                 android:icon="@mipmap/ic_launcher"
-                android:label="The MH Farmer"
-                android:roundIcon="@mipmap/ic_launcher_round"
+                android:roundIcon="@mipmap/ic_launcher"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
