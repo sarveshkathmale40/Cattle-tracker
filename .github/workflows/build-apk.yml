@@ -18,42 +18,12 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Setup Android Project & Clean Icon Handling
+    - name: Generate Clean Android Project
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi app/src/main/res/drawable
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values
         
         # Copy index.html for instant local load and offline fallback
         cp index.html app/src/main/assets/index.html
-
-        # Smart detection of your custom PNG logo in repository
-        FOUND_PNG=""
-        for img in 192.png 512.png logo.png icon.png; do
-          if [ -f "$img" ]; then
-            FOUND_PNG="$img"
-            break
-          fi
-        done
-        
-        if [ -z "$FOUND_PNG" ]; then
-          FOUND_PNG=$(ls *.png 2>/dev/null | head -n 1)
-        fi
-
-        # If custom PNG exists, use it. Otherwise, create a clean modern vector background XML so Android default robot logo NEVER appears.
-        if [ -n "$FOUND_PNG" ] && [ -f "$FOUND_PNG" ]; then
-          echo "Using custom user logo: $FOUND_PNG"
-          cp "$FOUND_PNG" app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp "$FOUND_PNG" app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        else
-          echo "Generating clean modern fallback icon (No Android Robot)"
-          cat << 'EOF' > app/src/main/res/drawable/ic_launcher_background.xml
-          <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-              <solid android:color="#047857"/>
-              <corners android:radius="24dp"/>
-          </shape>
-EOF
-          cp app/src/main/res/drawable/ic_launcher_background.xml app/src/main/res/mipmap-hdpi/ic_launcher.xml
-          cp app/src/main/res/drawable/ic_launcher_background.xml app/src/main/res/mipmap-xxxhdpi/ic_launcher.xml
-        fi
 
         # Create strings.xml
         cat << 'EOF' > app/src/main/res/values/strings.xml
@@ -62,7 +32,7 @@ EOF
         </resources>
         EOF
         
-        # Create AndroidManifest.xml
+        # Create AndroidManifest.xml (Using clean standard system menu agenda icon to guarantee zero resource errors)
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -70,8 +40,8 @@ EOF
             <application
                 android:allowBackup="true"
                 android:label="@string/app_name"
-                android:icon="@mipmap/ic_launcher"
-                android:roundIcon="@mipmap/ic_launcher"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:roundIcon="@android:drawable/ic_menu_agenda"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
