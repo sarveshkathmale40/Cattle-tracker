@@ -1,4 +1,4 @@
-name: Build Perfect Native APK
+name: Build Final Stable APK
 
 on:
   push:
@@ -18,30 +18,21 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Create Native Android App with Custom Icon and Local HTML
+    - name: Generate Stable Android Project
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer app/src/main/res/values
         
-        # 1. Copy your index.html directly into Android Assets so it runs 100% smoothly offline
+        # Copy index.html as offline safety fallback
         cp index.html app/src/main/assets/index.html
 
-        # 2. Copy your custom PNG icons into app resources
-        if [ -f "192.png" ]; then
-          cp 192.png app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp 192.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        elif [ -f "512.png" ]; then
-          cp 512.png app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp 512.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        fi
-
-        # 3. Create strings.xml for app name
+        # Create strings.xml
         cat << 'EOF' > app/src/main/res/values/strings.xml
         <resources>
             <string name="app_name">The MH Farmer</string>
         </resources>
         EOF
         
-        # 4. Create AndroidManifest.xml with custom icon linkage
+        # Create AndroidManifest.xml with standard system launcher icon to prevent resource linking crash
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -49,8 +40,8 @@ jobs:
             <application
                 android:allowBackup="true"
                 android:label="@string/app_name"
-                android:icon="@mipmap/ic_launcher"
-                android:roundIcon="@mipmap/ic_launcher"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:roundIcon="@android:drawable/ic_menu_agenda"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
@@ -66,7 +57,7 @@ jobs:
         </manifest>
         EOF
 
-        # 5. Create MainActivity.java to load local index.html with full JavaScript and Database support
+        # Create MainActivity.java with robust WebView & Live OTA GitHub Sync + Full Database Support
         cat << 'EOF' > app/src/main/java/com/mh/farmer/MainActivity.java
         package com.mh.farmer;
         import android.app.Activity;
@@ -74,6 +65,8 @@ jobs:
         import android.webkit.WebSettings;
         import android.webkit.WebView;
         import android.webkit.WebViewClient;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
 
         public class MainActivity extends Activity {
             private WebView webView;
@@ -89,10 +82,22 @@ jobs:
                 settings.setDatabaseEnabled(true);
                 settings.setAllowFileAccess(true);
                 settings.setAllowContentAccess(true);
+                settings.setCacheMode(WebSettings.LOAD_DEFAULT);
                 
                 webView.setWebViewClient(new WebViewClient());
-                // Load your project file directly from local app assets for instant opening
-                webView.loadUrl("file:///android_asset/index.html");
+                
+                // Fetch live index.html directly from your GitHub repo so future code updates reflect instantly without reinstalling APK
+                if (isNetworkAvailable()) {
+                    webView.loadUrl("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html");
+                } else {
+                    webView.loadUrl("file:///android_asset/index.html");
+                }
+            }
+            
+            private boolean isNetworkAvailable() {
+                ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                return netInfo != null && netInfo.isConnected();
             }
 
             @Override
@@ -106,7 +111,7 @@ jobs:
         }
         EOF
 
-        # 6. Create build configurations
+        # Create app/build.gradle
         cat << 'EOF' > app/build.gradle
         plugins {
             id 'com.android.application'
@@ -132,6 +137,7 @@ jobs:
         }
         EOF
 
+        # Create root build.gradle
         cat << 'EOF' > build.gradle
         buildscript {
             repositories {
@@ -150,17 +156,20 @@ jobs:
         }
         EOF
 
+        # Create settings.gradle
         echo "include ':app'" > settings.gradle
+
+        # Create gradle.properties
         echo "android.useAndroidX=true" > gradle.properties
 
-        # Setup Stable Gradle Wrapper
+        # Setup Stable Gradle Wrapper 8.5
         gradle wrapper --gradle-version 8.5
 
-    - name: Build APK
+    - name: Build Final APK
       run: ./gradlew assembleDebug
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Perfect_App
+        name: MH_Farmer_Final_App
         path: app/build/outputs/apk/debug/app-debug.apk
