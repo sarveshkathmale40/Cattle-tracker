@@ -1,4 +1,4 @@
-name: Build Permanent Live-Sync Production APK
+name: Build Auto-Sync Production APK with HTML Render
 
 on:
   push:
@@ -18,14 +18,30 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Production Android App with Robust Live Sync & Data Safety
+    - name: Build Android App with Auto-Sync & Safe Data
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/drawable
         
         # Local offline fallback asset
         cp index.html app/src/main/assets/index.html
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
+        # Professional Cow Vector Icon to remove pencil icon permanently
+        cat << 'EOF' > app/src/main/res/drawable/ic_launcher.xml
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <path android:fillColor="#047857" android:pathData="M0,0h108v108h-108z"/>
+  <path android:fillColor="#FFFFFF" android:pathData="M34,42c0,-6 4,-10 10,-10h20c6,0 10,4 10,10v24c0,6 -4,10 -10,10h-20c-6,0 -10,-4 -10,-10zM42,50h6v-6h-6zM60,50h6v-6h-6z"/>
+</vector>
+EOF
+
+        mkdir -p app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
+        cp app/src/main/res/drawable/ic_launcher.xml app/src/main/res/mipmap-hdpi/ic_launcher.xml
+        cp app/src/main/res/drawable/ic_launcher.xml app/src/main/res/mipmap-xxxhdpi/ic_launcher.xml
+
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -38,8 +54,8 @@ jobs:
             <application
                 android:allowBackup="true"
                 android:label="@string/app_name"
-                android:icon="@android:drawable/ic_menu_edit"
-                android:roundIcon="@android:drawable/ic_menu_edit"
+                android:icon="@mipmap/ic_launcher"
+                android:roundIcon="@mipmap/ic_launcher"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
@@ -55,7 +71,7 @@ jobs:
         </manifest>
         EOF
 
-        # Robust MainActivity with Render Guarantee, Cache Bypass, and Data Safety
+        # MainActivity using background fetch & loadDataWithBaseURL to guarantee HTML rendering without raw text bugs
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -71,6 +87,10 @@ jobs:
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
         import android.webkit.CookieManager;
+        import java.io.BufferedReader;
+        import java.io.InputStreamReader;
+        import java.net.HttpURLConnection;
+        import java.net.URL;
 
         public class MainActivity extends Activity {
             private WebView webView;
@@ -132,10 +152,46 @@ jobs:
                     }
                 });
                 
-                // Smart Live Sync with Cache Buster to ensure instant rendering without raw text issues
+                // Fetch live from CDN and render as HTML securely, fallback to local asset if offline
                 if (isNetworkAvailable()) {
-                    long timestamp = System.currentTimeMillis();
-                    webView.loadUrl("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/index.html?v=" + timestamp);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                long timestamp = System.currentTimeMillis();
+                                URL url = new URL("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/index.html?v=" + timestamp);
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                conn.setConnectTimeout(5000);
+                                conn.setReadTimeout(5000);
+                                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                                StringBuilder html = new StringBuilder();
+                                String line;
+                                while ((line = reader.readLine()) != null) {
+                                    html.append(line);
+                                }
+                                reader.close();
+                                
+                                final String finalHtml = html.toString();
+                                if (finalHtml.length() > 50) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            webView.loadDataWithBaseURL("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/", finalHtml, "text/html", "UTF-8", null);
+                                        }
+                                    });
+                                    return;
+                                }
+                            } catch (Exception e) {
+                                // Fallback on error
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.loadUrl("file:///android_asset/index.html");
+                                }
+                            });
+                        }
+                    }).start();
                 } else {
                     webView.loadUrl("file:///android_asset/index.html");
                 }
@@ -187,8 +243,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 9
-                versionName "9.0"
+                versionCode 12
+                versionName "12.0"
             }
             buildTypes {
                 release {
@@ -228,5 +284,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Production_App
+        name: MH_Farmer_AutoSync_App
         path: app/build/outputs/apk/debug/app-debug.apk
