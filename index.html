@@ -201,6 +201,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
+      <!-- Both Camera & Gallery Options -->
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -216,7 +217,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL -->
+<!-- SETTINGS MODAL WITH SYNC & REFRESH BUTTON -->
 <div id="settingsModal" class="settings-modal">
   <div class="settings-card">
     <h4 id="settingsModalTitle">⚙️ ॲप सेटिंग्ज</h4>
@@ -228,7 +229,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <option value="en">English</option>
     </select>
 
-    <button class="btn" type="button" onclick="forceSyncUpdate()" style="background:#d97706; margin-bottom:8px;" id="btnSyncRefresh">🔄 ॲप रिफ्रेश व सिंक</button>
+    <button class="btn" type="button" onclick="window.location.reload()" style="background:#d97706; margin-bottom:8px;" id="btnSyncRefresh">🔄 ॲप रिफ्रेश व सिंक</button>
     <button class="btn" type="button" onclick="closeSettingsModal()" id="btnCloseSettings">✅ बंद करा</button>
   </div>
 </div>
@@ -269,6 +270,12 @@ async function enablePersistentStorageLock() {
   }
 }
 enablePersistentStorageLock();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Error:', err));
+  });
+}
 
 const DB_NAME = 'TheMHFarmer_DB';
 const DB_VERSION = 1;
@@ -345,16 +352,6 @@ function openSettingsModal() {
 
 function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
-}
-
-// SAFE SYNC FUNCTION (Bypasses fetch CORS blocks completely, no white screen, perfectly stable)
-function forceSyncUpdate() {
-  if (navigator.onLine) {
-    window.location.href = window.location.pathname + '?v=' + Date.now();
-  } else {
-    alert("इंटरनेट कनेक्शन उपलब्ध नाही!");
-    closeSettingsModal();
-  }
 }
 
 function openImageModal(src) {
