@@ -1,4 +1,4 @@
-name: Build Final Stable Live-Sync APK v21
+name: Build Strict Fresh v23 APK
 
 on:
   push:
@@ -18,12 +18,20 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Permanent Session and Live Sync
+    - name: Force Clean and Build Android App with Fresh Index
       run: |
+        # Remove any cached/stale assets and pull direct raw index from repo explicitly
+        rm -f app/src/main/assets/index.html
         mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
-        # Offline fallback asset
-        cp index.html app/src/main/assets/index.html
+        # Download freshest raw index.html directly during build to bypass any workflow cache
+        curl -sL "https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html" -o app/src/main/assets/index.html
+        
+        # Fallback to local copy if download fails
+        if [ ! -f app/src/main/assets/index.html ] || [ ! -s app/src/main/assets/index.html ]; then
+          cp index.html app/src/main/assets/index.html
+        fi
+
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
         # Custom cow icon setup
@@ -72,7 +80,7 @@ jobs:
         </manifest>
         EOF
 
-        # MainActivity with robust online fetching and permanent session handling
+        # MainActivity enforcing live fetch with strict raw URL
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -247,8 +255,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 21
-                versionName "21.0"
+                versionCode 23
+                versionName "23.0"
             }
             buildTypes {
                 release {
@@ -288,5 +296,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Final_Stable_v21
+        name: MH_Farmer_Fresh_v23
         path: app/build/outputs/apk/debug/app-debug.apk
