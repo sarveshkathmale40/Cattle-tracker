@@ -13,7 +13,7 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100%);min-height:100vh;padding:12px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
+body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:420px;margin:0 auto;}
 
 /* Lock Screen */
@@ -22,65 +22,73 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
-/* Header Section */
+/* Header Section - Perfectly Optimized to Prevent Overlapping */
 .app-header{
   background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);
-  border-radius:24px;
-  padding:14px 16px;
-  margin-bottom:14px;
-  box-shadow:0 16px 36px -8px rgba(4,120,87,.55);
+  border-radius:20px;
+  padding:12px 14px;
+  margin-bottom:12px;
+  box-shadow:0 14px 30px -8px rgba(4,120,87,.5);
   display:flex;
   justify-content:space-between;
   align-items:center;
   color:white;
   border:2px solid #34d399;
-  gap:10px;
+  gap:8px;
 }
 .header-left{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
+  min-width:0;
+  flex:1;
+}
+.header-texts{
   min-width:0;
   flex:1;
 }
 .header-title{
-  font-size:19px;
+  font-size:17px;
   font-weight:900;
   color:#ffffff;
   line-height:1.2;
   white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 .tracker-pill{
   display:inline-block;
   background:rgba(0,0,0,0.28);
   border:1px solid rgba(52,211,153,0.45);
-  padding:3px 10px;
-  border-radius:20px;
-  margin-top:4px;
+  padding:2px 8px;
+  border-radius:14px;
+  margin-top:3px;
+  max-width:100%;
 }
 .header-sub{
-  font-size:9.5px;
+  font-size:8.5px;
   color:#a7f3d0;
   font-weight:800;
-  letter-spacing:.6px;
+  letter-spacing:.4px;
   text-transform:uppercase;
   white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .lang-wrap{
   flex-shrink:0;
 }
 #langSelect{
-  background:rgba(2,44,34,0.85);
+  background:rgba(2,44,34,0.9);
   color:#ffffff;
   border:1.5px solid #34d399;
-  border-radius:14px;
-  padding:8px 12px;
-  font-size:13px;
+  border-radius:12px;
+  padding:6px 10px;
+  font-size:12px;
   font-weight:800;
   outline:none;
   cursor:pointer;
-  width:auto;
 }
 
 /* Notification Banner */
@@ -174,8 +182,8 @@ input:focus,select:focus{border-color:#059669;background:white;}
     <!-- APP HEADER -->
     <div class="app-header">
       <div class="header-left">
-        <span style="font-size:26px;">🌾</span>
-        <div>
+        <span style="font-size:24px; flex-shrink:0;">🌾</span>
+        <div class="header-texts">
           <div class="header-title">The MH Farmer</div>
           <div class="tracker-pill">
             <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
@@ -190,8 +198,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
         </select>
       </div>
     </div>
-
-    <!-- Download APK Banner completely removed as requested -->
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
       <div class="notif-title" id="notifTitleText">🔔 महत्त्वाचे अलर्ट्स व सूचना</div>
@@ -224,7 +230,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
         <input type="text" id="cSemen" placeholder="सिमेन ब्रँड/नाव">
       </div>
 
-      <label id="lblPhotoLbl">पशुचा फोटो (पर्यायी - कॅमेरा किंवा गॅलरी)</label>
+      <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
       <!-- Direct Camera / Gallery Selection Support -->
       <input type="file" id="cPhoto" accept="image/*" capture="environment" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
@@ -479,13 +485,13 @@ const langData = {
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
     namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (पर्यायी - कॅमेरा किंवा गॅलरी)',
+    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा किंवा गॅलरी)',
     saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 गाय पुनरावृत्ती (Repeat)', calvedBtn:'🐄 वीण झाली आहे',
     setNewDateBtn:'📅 नवीन तारीख नोंदवा',
     changeCalveDateBtn:'📅 विण्याची तारीख बदला',
     chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
-    milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(योग्य महिना)</span>',
+    milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(६ महिना २५ दिवस)</span>',
     deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
     trans:'🌾 ट्रान्झिशन आहार <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
     delivery:'🍼 अंदाजे विण्याची तारीख',
@@ -509,13 +515,13 @@ const langData = {
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
     namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (वैकल्पिक - कैमरा या गैलरी)',
+    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कॅमेरा किंवा गॅलरी)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 पशु रिपीट हुआ', calvedBtn:'🐄 ब्याया है',
     setNewDateBtn:'📅 नई तारीख दर्ज करें',
     changeCalveDateBtn:'📅 ब्याने की तारीख बदलें',
     chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
-    milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(उचित महीना)</span>',
+    milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(6 माह 25 दिन)</span>',
     deworm:'💊 डिवॉर्मिंग दवा <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
     trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
     delivery:'🍼 अनुमानित ब्याने की तारीख',
@@ -539,13 +545,13 @@ const langData = {
     formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
     namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
     dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
-    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Optional - Camera or Gallery)',
+    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera or Gallery)',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
     delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter New Date',
     changeCalveDateBtn:'📅 Change Calving Date',
     chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
-    milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(Proper Month)</span>',
+    milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(6m 25d)</span>',
     deworm:'💊 Deworming Medicine <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
     trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
     delivery:'🍼 Est. Delivery Date',
@@ -769,11 +775,10 @@ async function draw() {
 
     if (!it.isCalved) {
       const pDays = start ? getDayDifference(start, today) : 0;
-      const dry = isBuffalo ? 220 : 210;
       const dewormDay = tot - 30;
 
       const check21 = addD(it.date, 21);
-      const dryDate = addD(it.date, dry);
+      const dryDate = addD(it.date, 205); // 6 Months 25 Days exact calculation baseline
       const dewormDate = addD(it.date, dewormDay);
       const transDate = addD(it.date, tot-21);
       const deliveryDate = addD(it.date, tot);
@@ -813,7 +818,7 @@ async function draw() {
       const heatStart = new Date(calvedDate.getTime());
       heatStart.setDate(heatStart.getDate() + restDays);
 
-      const calvedTitleTxt = lang==='en'?'Calved':(lang==='hi'?'ब्याई है':'वीण झाली');
+      const calvedTitleTxt = lang==='en'?'Calved':(lang==='hi'?'ब्याया है':'वीण झाली');
       const daysCountLbl = lang==='en'?'Days since calving:':(lang==='hi'?'ब्याने के बाद के दिन:':'विण्यापासून झालेले दिवस:');
       const daysUnitTxt = lang==='en'?' days':(lang==='hi'?' दिन':' दिवस');
 
@@ -894,10 +899,9 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: msg });
     }
 
-    const dryStart = isBuff ? 220 : 210;
-    const dryEnd = isBuff ? 228 : 218;
-    if (pDay >= dryStart && pDay <= dryEnd) {
-      let dryMsg = lang==='en' ? '🥛 Dry period schedule is active. Please arrange to dry off milk production.' : (lang==='hi' ? '🥛 दूध बंद करने का सही समय है।' : '🥛 दूध आटवण्याची योग्य वेळ झाली आहे.');
+    // Exact Milk Dry period alert starting from 6 Months 25 Days (205 days) up to 7 months (215 days)
+    if (pDay >= 205 && pDay <= 215) {
+      let dryMsg = lang==='en' ? '🥛 Dry period schedule is active (6 months 25 days completed). Please arrange to dry off milk production.' : (lang==='hi' ? '🥛 दूध बंद करने का सही समय है (6 माह 25 दिन पूरे)। दूध आटवना शुरू करें।' : '🥛 दूध आटवण्याची योग्य वेळ झाली आहे (६ महिने २५ दिवस पूर्ण झाले आहेत).');
       alerts.push({ name: animalName, text: dryMsg });
     }
 
