@@ -1,4 +1,4 @@
-name: Build 100% Working Live-Sync APK with HTML Render
+name: Build Pro Live-Sync APK with Settings and Sync
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Bulletproof Background HTML Fetcher
+    - name: Build Android App with Pro Settings and Instant Live Sync
       run: |
         mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
-        # Local offline fallback asset
+        # Offline fallback asset
         cp index.html app/src/main/assets/index.html
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
@@ -153,7 +153,10 @@ jobs:
                     }
                 });
                 
-                // Fetch live from GitHub CDN in background and render as proper HTML securely
+                loadLiveContent();
+            }
+
+            public void loadLiveContent() {
                 if (isNetworkAvailable()) {
                     new Thread(new Runnable() {
                         @Override
@@ -184,7 +187,6 @@ jobs:
                                 }
                             } catch (Exception e) {}
                             
-                            // Fallback to local asset if fetch fails
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -244,8 +246,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 16
-                versionName "16.0"
+                versionCode 17
+                versionName "17.0"
             }
             buildTypes {
                 release {
@@ -285,5 +287,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Perfect_HTML_Sync_App
+        name: MH_Farmer_Pro_Live_Sync_App
         path: app/build/outputs/apk/debug/app-debug.apk
