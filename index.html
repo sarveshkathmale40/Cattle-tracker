@@ -22,7 +22,7 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
-/* Header Section - Perfectly Optimized to Prevent Overlapping */
+/* Header Section */
 .app-header{
   background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);
   border-radius:20px;
@@ -36,60 +36,19 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
   border:2px solid #34d399;
   gap:8px;
 }
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  min-width:0;
-  flex:1;
-}
-.header-texts{
-  min-width:0;
-  flex:1;
-}
-.header-title{
-  font-size:17px;
-  font-weight:900;
-  color:#ffffff;
-  line-height:1.2;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.tracker-pill{
-  display:inline-block;
-  background:rgba(0,0,0,0.28);
-  border:1px solid rgba(52,211,153,0.45);
-  padding:2px 8px;
-  border-radius:14px;
-  margin-top:3px;
-  max-width:100%;
-}
-.header-sub{
-  font-size:8.5px;
-  color:#a7f3d0;
-  font-weight:800;
-  letter-spacing:.4px;
-  text-transform:uppercase;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
+.header-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
+.header-texts{min-width:0;flex:1;}
+.header-title{font-size:17px;font-weight:900;color:#ffffff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tracker-pill{display:inline-block;background:rgba(0,0,0,0.28);border:1px solid rgba(52,211,153,0.45);padding:2px 8px;border-radius:14px;margin-top:3px;max-width:100%;}
+.header-sub{font-size:8.5px;color:#a7f3d0;font-weight:800;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-.lang-wrap{
-  flex-shrink:0;
-}
-#langSelect{
-  background:rgba(2,44,34,0.9);
-  color:#ffffff;
-  border:1.5px solid #34d399;
-  border-radius:12px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:800;
-  outline:none;
-  cursor:pointer;
-}
+/* Settings Gear Modal Button */
+.settings-btn{background:rgba(2,44,34,0.9);color:#ffffff;border:1.5px solid #34d399;border-radius:12px;width:38px;height:38px;display:flex;justify-content:center;align-items:center;font-size:18px;cursor:pointer;flex-shrink:0;}
+
+/* Settings Modal */
+.settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
+.settings-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:310px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
+.settings-card h4{font-size:16px;color:#047857;margin-bottom:14px;font-weight:900;}
 
 /* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
@@ -179,7 +138,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
-    <!-- APP HEADER -->
+    <!-- APP HEADER WITH SETTINGS GEAR -->
     <div class="app-header">
       <div class="header-left">
         <span style="font-size:24px; flex-shrink:0;">🌾</span>
@@ -190,13 +149,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
           </div>
         </div>
       </div>
-      <div class="lang-wrap">
-        <select id="langSelect" onchange="changeLanguage()">
-          <option value="mr">मराठी</option>
-          <option value="hi">हिंदी</option>
-          <option value="en">English</option>
-        </select>
-      </div>
+      <button class="settings-btn" type="button" onclick="openSettingsModal()" title="Settings">⚙️</button>
     </div>
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
@@ -245,6 +198,22 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
   </div>
 
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="settings-modal">
+  <div class="settings-card">
+    <h4 id="settingsModalTitle">⚙️ ॲप सेटिंग्ज</h4>
+    
+    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblSelectLang">भाषा निवडा (Language)</label>
+    <select id="langSelect" onchange="changeLanguage()" style="margin-bottom:16px;">
+      <option value="mr">मराठी</option>
+      <option value="hi">हिंदी</option>
+      <option value="en">English</option>
+    </select>
+
+    <button class="btn" type="button" onclick="closeSettingsModal()">✅ बंद करा</button>
+  </div>
 </div>
 
 <!-- Modal -->
@@ -357,6 +326,14 @@ async function deleteRecordFromDB(id) {
     tx.objectStore('records').delete(Number(id));
     tx.oncomplete = () => resolve(true);
   });
+}
+
+function openSettingsModal() {
+  document.getElementById('settingsModal').style.display = 'flex';
+}
+
+function closeSettingsModal() {
+  document.getElementById('settingsModal').style.display = 'none';
 }
 
 function openImageModal(src) {
@@ -507,7 +484,8 @@ const langData = {
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
-    lblDocField:'डॉक्टर', lblSemenField:'सिमेन'
+    lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
+    settingsTitle:'⚙️ ॲप सेटिंग्ज', lblSelectLang:'भाषा निवडा (Language)'
   },
   hi:{
     headerSub:'पशु गर्भधारण ट्रैकर',
@@ -537,7 +515,8 @@ const langData = {
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
     lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
-    lblDocField:'डॉक्टर', lblSemenField:'सीमेन'
+    lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
+    settingsTitle:'⚙️ ऐप सेटिंग्स', lblSelectLang:'भाषा चुनें (Language)'
   },
   en:{
     headerSub:'CATTLE PREGNANCY TRACKER',
@@ -566,7 +545,8 @@ const langData = {
     lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
-    lblDocField:'Doctor', lblSemenField:'Semen'
+    lblDocField:'Doctor', lblSemenField:'Semen',
+    settingsTitle:'⚙️ App Settings', lblSelectLang:'Select Language'
   }
 };
 
@@ -628,6 +608,9 @@ async function changeLanguage() {
   document.getElementById('lblMob').innerText = t.lblMob;
   document.getElementById('lblPin').innerText = t.lblPin;
   document.getElementById('btnLogin').innerText = t.btnLogin;
+
+  document.getElementById('settingsModalTitle').innerText = t.settingsTitle;
+  document.getElementById('lblSelectLang').innerText = t.lblSelectLang;
 
   draw();
 }
@@ -899,50 +882,26 @@ function checkSmartNotifications(db) {
       alerts.push({ name: animalName, text: msg });
     }
 
-    // Exact Milk Dry period alert starting from 6 Months 25 Days (205 days) up to 7 months (215 days)
+    // 1. Cow / Buffalo Milk Dry Period: Exactly 6 Months 25 Days (205 days) up to 7 months 2 days (215 days)
     if (pDay >= 205 && pDay <= 215) {
       let dryMsg = lang==='en' ? '🥛 Dry period schedule is active (6 months 25 days completed). Please arrange to dry off milk production.' : (lang==='hi' ? '🥛 दूध बंद करने का सही समय है (6 माह 25 दिन पूरे)। दूध आटवना शुरू करें।' : '🥛 दूध आटवण्याची योग्य वेळ झाली आहे (६ महिने २५ दिवस पूर्ण झाले आहेत).');
       alerts.push({ name: animalName, text: dryMsg });
     }
 
-    const dewormStart = tot - 33;
-    const dewormEnd = tot - 28;
-    if (pDay >= dewormStart && pDay <= dewormEnd) {
+    // 2. Cow Delivery Prep: 8 months 25 days onwards (~268 days) up to 282 days
+    // 3. Buffalo Delivery Prep: 9 months 25 days onwards (~296 days) up to 310 days
+    const prepStartDay = isBuff ? 296 : 268;
+    if (pDay >= prepStartDay && pDay <= tot + 5) {
       const daysLeft = tot - pDay;
-      let dewormMsg = lang==='en' ? `💊 Deworming medicine due (${daysLeft} days before calving).` : (lang==='hi' ? `💊 ब्याने से पहले डिवॉर्मिंग दवा देने का समय (${daysLeft} दिन बाकी)।` : `💊 विण्यापूर्वी जंतनाशक औषध देण्याची वेळ झाली आहे (${daysLeft} दिवस बाकी).`);
-      alerts.push({ name: animalName, text: dewormMsg });
-    }
-
-    const transStart = tot - 23;
-    const transEnd = tot - 19;
-    if (pDay >= transStart && pDay <= transEnd) {
-      let transMsg = lang==='en' ? '🌾 Start transition feed for healthy calving energy.' : (lang==='hi' ? '🌾 ट्रांजिशन चारा शुरू करें।' : '🌾 ट्रान्झिशन आहार सुरू करा.');
-      alerts.push({ name: animalName, text: transMsg });
-    }
-
-    const deliveryNotificationStart = tot - 14;
-    if (pDay >= deliveryNotificationStart && pDay <= tot + 9) {
-      const deliveryDate = new Date(start.getTime()); deliveryDate.setDate(deliveryDate.getDate() + tot);
-      const daysToDelivery = Math.round((deliveryDate - today) / 86400000);
-      
-      let dayCountText = '';
-      if (daysToDelivery > 0) {
-        dayCountText = lang==='en' ? `(${daysToDelivery} days remaining)` : (lang==='hi' ? `(${daysToDelivery} दिन बाकी)` : `(${daysToDelivery} दिवस बाकी आहेत)`);
-      } else if (daysToDelivery === 0) {
-        dayCountText = lang==='en' ? '(Est. delivery today)' : (lang==='hi' ? '(आज अनुमानित समय है)' : '(आज विण्याची अंदाजे वेळ आहे)');
+      let prepMsg = '';
+      if (daysLeft > 0) {
+        prepMsg = lang==='en' ? `🌾 ${animalWord} delivery expected in ${daysLeft} days. Start transition feed and care.` : (lang==='hi' ? `🌾 ${animalWord} ब्याने में ${daysLeft} दिन बाकी। ट्रांजिशन चारा और देखभाल शुरू करें।` : `🌾 ${animalWord} विण्यासाठी ${daysLeft} दिवस बाकी आहेत. ट्रान्झिशन आहार व योग्य काळजी घ्या.`);
+      } else if (daysLeft === 0) {
+        prepMsg = lang==='en' ? `🍼 Est. delivery day for ${animalWord} is today!` : (lang==='hi' ? `🍼 आज ${animalWord} के ब्याने का अनुमानित दिन है!` : `🍼 आज ${animalWord} विण्याची अंदाजे तारीख आहे!`);
       } else {
-        dayCountText = lang==='en' ? '(Term completed)' : (lang==='hi' ? '(अवधि पूर्ण हुई)' : '(कालावधी पूर्ण झाला)');
+        prepMsg = lang==='en' ? `🍼 ${animalWord} delivery term completed. If calved, click "Calved"!` : (lang==='hi' ? `🍼 ${animalWord} ब्याने की अवधि पूरी हुई। यदि ब्या गई है, तो "ब्याया है" बटन दबाएं!` : `🍼 ${animalWord} विण्याचा कालावधी पूर्ण झाला आहे. वीण झाली असल्यास "वीण झाली आहे" दाबा!`);
       }
-
-      let delNotifTxt = '';
-      if (lang === 'en') {
-        delNotifTxt = `🍼 ${animalWord} delivery time near ${dayCountText}. If calved, click "Calved"!`;
-      } else if (lang === 'hi') {
-        delNotifTxt = `🍼 ${animalWord} ब्याने का समय नजदीक है ${dayCountText}। यदि ब्या गई है, तो "ब्याया है" बटन दबाएं!`;
-      } else {
-        delNotifTxt = `🍼 ${animalWord} विण्याची वेळ जवळ आली आहे ${dayCountText}. जर पशु विले असेल, तर "वीण झाली आहे" बटण दाबा!`;
-      }
-      alerts.push({ name: animalName, text: delNotifTxt });
+      alerts.push({ name: animalName, text: prepMsg });
     }
   }
 
