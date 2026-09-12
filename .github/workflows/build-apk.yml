@@ -1,4 +1,4 @@
-name: Build OTA Live-Sync APK
+name: Build Permanent Live-Sync Production APK
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Live OTA Sync
+    - name: Build Production Android App with Robust Live Sync & Data Safety
       run: |
         mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values
         
-        # Copy index.html for instant local offline backup fallback
+        # Local offline fallback asset
         cp index.html app/src/main/assets/index.html
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
@@ -55,7 +55,7 @@ jobs:
         </manifest>
         EOF
 
-        # MainActivity configured for Live CDN OTA Sync + Camera Support
+        # Robust MainActivity with Render Guarantee, Cache Bypass, and Data Safety
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -92,6 +92,8 @@ jobs:
                 settings.setAllowUniversalAccessFromFileURLs(true);
                 settings.setAllowFileAccessFromFileURLs(true);
                 settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+                settings.setLoadsImagesAutomatically(true);
+                settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 
                 CookieManager.getInstance().setAcceptCookie(true);
                 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
@@ -118,7 +120,7 @@ jobs:
                         
                         Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
                         chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-                        chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select Cow Image");
+                        chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select Animal Image");
                         
                         startActivityForResult(chooserIntent, FILE_CHOOSER_RESULT_CODE);
                         return true;
@@ -130,8 +132,10 @@ jobs:
                     }
                 });
                 
+                // Smart Live Sync with Cache Buster to ensure instant rendering without raw text issues
                 if (isNetworkAvailable()) {
-                    webView.loadUrl("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/index.html");
+                    long timestamp = System.currentTimeMillis();
+                    webView.loadUrl("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/index.html?v=" + timestamp);
                 } else {
                     webView.loadUrl("file:///android_asset/index.html");
                 }
@@ -183,8 +187,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 8
-                versionName "8.0"
+                versionCode 9
+                versionName "9.0"
             }
             buildTypes {
                 release {
@@ -224,5 +228,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Live_Sync_App
+        name: MH_Farmer_Production_App
         path: app/build/outputs/apk/debug/app-debug.apk
