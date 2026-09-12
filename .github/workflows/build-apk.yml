@@ -72,7 +72,7 @@ jobs:
         </manifest>
         EOF
 
-        # MainActivity using background thread fetch + loadDataWithBaseURL (Zero raw text, instant live sync)
+        # MainActivity using background thread fetch + loadDataWithBaseURL & forceful cache clear support
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -88,6 +88,7 @@ jobs:
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
         import android.webkit.CookieManager;
+        import android.webkit.WebStorage;
         import java.io.BufferedReader;
         import java.io.InputStreamReader;
         import java.net.HttpURLConnection;
@@ -116,6 +117,8 @@ jobs:
                 settings.setLoadsImagesAutomatically(true);
                 settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 
+                webView.clearCache(true);
+                WebStorage.getInstance().deleteAllData();
                 CookieManager.getInstance().setAcceptCookie(true);
                 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
                 
@@ -246,8 +249,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 17
-                versionName "17.0"
+                versionCode 18
+                versionName "18.0"
             }
             buildTypes {
                 release {
@@ -287,5 +290,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Pro_Live_Sync_App
+        name: MH_Farmer_Pro_Live_Sync_App_v18
         path: app/build/outputs/apk/debug/app-debug.apk
