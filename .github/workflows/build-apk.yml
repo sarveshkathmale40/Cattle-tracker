@@ -1,4 +1,4 @@
-name: Build Strict Fresh v23 APK
+name: Build Final Stable v25 APK
 
 on:
   push:
@@ -18,23 +18,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Force Clean and Build Android App with Fresh Index
+    - name: Build Android App with Live Fetcher
       run: |
-        # Remove any cached/stale assets and pull direct raw index from repo explicitly
         rm -f app/src/main/assets/index.html
         mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
-        # Download freshest raw index.html directly during build to bypass any workflow cache
-        curl -sL "https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html" -o app/src/main/assets/index.html
-        
-        # Fallback to local copy if download fails
-        if [ ! -f app/src/main/assets/index.html ] || [ ! -s app/src/main/assets/index.html ]; then
-          cp index.html app/src/main/assets/index.html
-        fi
-
+        cp index.html app/src/main/assets/index.html
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
-        # Custom cow icon setup
         ICON_IMG=""
         for img in cow.png logo.png icon.png; do
           if [ -f "$img" ]; then
@@ -80,7 +71,6 @@ jobs:
         </manifest>
         EOF
 
-        # MainActivity enforcing live fetch with strict raw URL
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -96,7 +86,6 @@ jobs:
         import android.net.ConnectivityManager;
         import android.net.NetworkInfo;
         import android.webkit.CookieManager;
-        import android.webkit.WebStorage;
         import java.io.BufferedReader;
         import java.io.InputStreamReader;
         import java.net.HttpURLConnection;
@@ -174,8 +163,8 @@ jobs:
                                 long timestamp = System.currentTimeMillis();
                                 URL url = new URL("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=" + timestamp);
                                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                conn.setConnectTimeout(8000);
-                                conn.setReadTimeout(8000);
+                                conn.setConnectTimeout(6000);
+                                conn.setReadTimeout(6000);
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                                 StringBuilder html = new StringBuilder();
                                 String line;
@@ -255,8 +244,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 23
-                versionName "23.0"
+                versionCode 25
+                versionName "25.0"
             }
             buildTypes {
                 release {
@@ -296,5 +285,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Fresh_v23
+        name: MH_Farmer_Fresh_v25
         path: app/build/outputs/apk/debug/app-debug.apk
