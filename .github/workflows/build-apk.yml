@@ -1,4 +1,4 @@
-name: Build Final Perfect APK
+name: Build Final Stable APK
 
 on:
   push:
@@ -18,59 +18,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Setup Android Project & Cow Icon
+    - name: Build Android App
       run: |
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi app/src/main/res/drawable
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values
         
-        # Copy index.html into assets
         cp index.html app/src/main/assets/index.html
 
-        # Smart detection of your custom cow PNG image in repository
-        FOUND_PNG=""
-        for img in 192.png 512.png logo.png icon.png; do
-          if [ -f "$img" ]; then
-            FOUND_PNG="$img"
-            break
-          fi
-        done
+        echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
         
-        if [ -z "$FOUND_PNG" ]; then
-          FOUND_PNG=$(ls *.png 2>/dev/null | head -n 1)
-        fi
-
-        # If cow image found, use it as app icon. Otherwise create a professional farmer cow badge drawable.
-        if [ -n "$FOUND_PNG" ] && [ -f "$FOUND_PNG" ]; then
-          echo "Using your custom cow image: $FOUND_PNG"
-          cp "$FOUND_PNG" app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp "$FOUND_PNG" app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-        else
-          echo "Creating professional custom cow badge icon"
-          cat << 'EOF' > app/src/main/res/drawable/cow_badge.xml
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-  <path
-      android:fillColor="#047857"
-      android:pathData="M0,0h108v108h-108z"/>
-  <path
-      android:fillColor="#FFFFFF"
-      android:pathData="M34,42c0,-6 4,-10 10,-10h20c6,0 10,4 10,10v24c0,6 -4,10 -10,10h-20c-6,0 -10,-4 -10,-10zM42,50h6v-6h-6zM60,50h6v-6h-6z"/>
-</vector>
-EOF
-          cp app/src/main/res/drawable/cow_badge.xml app/src/main/res/mipmap-hdpi/ic_launcher.xml
-          cp app/src/main/res/drawable/cow_badge.xml app/src/main/res/mipmap-xxxhdpi/ic_launcher.xml
-        fi
-
-        # Create strings.xml
-        cat << 'EOF' > app/src/main/res/values/strings.xml
-        <resources>
-            <string name="app_name">The MH Farmer</string>
-        </resources>
-        EOF
-        
-        # Create AndroidManifest.xml with unique package name to prevent conflict errors
         cat << 'EOF' > app/src/main/AndroidManifest.xml
         <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -78,8 +33,8 @@ EOF
             <application
                 android:allowBackup="true"
                 android:label="@string/app_name"
-                android:icon="@mipmap/ic_launcher"
-                android:roundIcon="@mipmap/ic_launcher"
+                android:icon="@android:drawable/ic_menu_edit"
+                android:roundIcon="@android:drawable/ic_menu_edit"
                 android:supportsRtl="true"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                 <activity
@@ -95,7 +50,6 @@ EOF
         </manifest>
         EOF
 
-        # Create MainActivity.java with flawless HTML rendering
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -148,7 +102,6 @@ EOF
         }
         EOF
 
-        # Create app/build.gradle
         cat << 'EOF' > app/build.gradle
         plugins {
             id 'com.android.application'
@@ -160,8 +113,8 @@ EOF
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 2
-                versionName "2.0"
+                versionCode 3
+                versionName "3.0"
             }
             buildTypes {
                 release {
@@ -174,7 +127,6 @@ EOF
         }
         EOF
 
-        # Create root build.gradle
         cat << 'EOF' > build.gradle
         buildscript {
             repositories {
@@ -202,5 +154,5 @@ EOF
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Cow_App
+        name: MH_Farmer_Final_App
         path: app/build/outputs/apk/debug/app-debug.apk
