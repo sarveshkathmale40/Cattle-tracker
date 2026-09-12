@@ -201,7 +201,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
-      <!-- Supports Both Camera & Gallery Options safely -->
       <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -217,7 +216,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL WITH 404/403 ERROR PROTECTION -->
+<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="settings-modal">
   <div class="settings-card">
     <h4 id="settingsModalTitle">⚙️ ॲप सेटिंग्ज</h4>
@@ -348,22 +347,10 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
-// 404/403 Safe Sync function: Checks if file exists on GitHub before reloading. Never crashes or wipes data.
+// SAFE SYNC FUNCTION (Bypasses fetch CORS blocks completely, no white screen, perfectly stable)
 function forceSyncUpdate() {
   if (navigator.onLine) {
-    fetch('https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=' + Date.now(), { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = window.location.pathname + '?v=' + Date.now();
-        } else {
-          alert("नवीन फाईल उपलब्ध नाही (404/403 Error). ॲप सुरक्षितपणे सुरू आहे, तुमचा कोणताही डेटा डिलीट झालेला नाही.");
-          closeSettingsModal();
-        }
-      })
-      .catch(() => {
-        alert("इंटरनेट कनेक्शन तपासा!");
-        closeSettingsModal();
-      });
+    window.location.href = window.location.pathname + '?v=' + Date.now();
   } else {
     alert("इंटरनेट कनेक्शन उपलब्ध नाही!");
     closeSettingsModal();
