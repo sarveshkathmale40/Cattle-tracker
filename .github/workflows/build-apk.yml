@@ -1,4 +1,4 @@
-name: Build Pro Live-Sync APK with Settings and Sync
+name: Build Final Stable Live-Sync APK v21
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Pro Settings and Instant Live Sync
+    - name: Build Android App with Permanent Session and Live Sync
       run: |
         mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
@@ -72,7 +72,7 @@ jobs:
         </manifest>
         EOF
 
-        # MainActivity using background thread fetch + loadDataWithBaseURL & forceful cache clear support
+        # MainActivity with robust online fetching and permanent session handling
         cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
         package com.mh.tracker;
         import android.app.Activity;
@@ -117,8 +117,6 @@ jobs:
                 settings.setLoadsImagesAutomatically(true);
                 settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 
-                webView.clearCache(true);
-                WebStorage.getInstance().deleteAllData();
                 CookieManager.getInstance().setAcceptCookie(true);
                 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
                 
@@ -166,10 +164,10 @@ jobs:
                         public void run() {
                             try {
                                 long timestamp = System.currentTimeMillis();
-                                URL url = new URL("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/index.html?v=" + timestamp);
+                                URL url = new URL("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=" + timestamp);
                                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                conn.setConnectTimeout(6000);
-                                conn.setReadTimeout(6000);
+                                conn.setConnectTimeout(8000);
+                                conn.setReadTimeout(8000);
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                                 StringBuilder html = new StringBuilder();
                                 String line;
@@ -183,7 +181,7 @@ jobs:
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            webView.loadDataWithBaseURL("https://cdn.jsdelivr.net/gh/sarveshkathmale40/Cattle-tracker@main/", finalHtml, "text/html", "UTF-8", null);
+                                            webView.loadDataWithBaseURL("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/", finalHtml, "text/html", "UTF-8", null);
                                         }
                                     });
                                     return;
@@ -249,8 +247,8 @@ jobs:
                 applicationId "com.mh.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 18
-                versionName "18.0"
+                versionCode 21
+                versionName "21.0"
             }
             buildTypes {
                 release {
@@ -290,5 +288,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Pro_Live_Sync_App_v18
+        name: MH_Farmer_Final_Stable_v21
         path: app/build/outputs/apk/debug/app-debug.apk
