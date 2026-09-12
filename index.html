@@ -201,7 +201,8 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
-      <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto()">
+      <!-- Safe Camera & Gallery Input -->
+      <input type="file" id="cPhoto" accept="image/*" capture="environment" onchange="previewPhoto()">
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
       <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 रेकॉर्ड सेव्ह करा</button>
@@ -228,7 +229,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <option value="en">English</option>
     </select>
 
-    <button class="btn" type="button" onclick="forceSyncUpdate()" style="background:#d97706; margin-bottom:8px;" id="btnSyncRefresh">🔄 ॲप रिफ्रेश व सिंक</button>
+    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:#d97706; margin-bottom:8px;" id="btnSyncRefresh">🔄 ॲप रिफ्रेश व सिंक</button>
     <button class="btn" type="button" onclick="closeSettingsModal()" id="btnCloseSettings">✅ बंद करा</button>
   </div>
 </div>
@@ -347,10 +348,21 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
-// SAFE SYNC FUNCTION (Bypasses fetch CORS blocks completely, no white screen, perfectly stable)
-function forceSyncUpdate() {
+// SAFE SYNC FUNCTION: Checks if GitHub file exists first, prevents any 404/White screen
+function forceSyncRefresh() {
   if (navigator.onLine) {
-    window.location.href = window.location.pathname + '?v=' + Date.now();
+    fetch('https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=' + Date.now(), { method: 'HEAD' })
+      .then(res => {
+        if (res.ok) {
+          window.location.href = window.location.pathname + '?v=' + Date.now();
+        } else {
+          alert("नवीन फाईल उपलब्ध नाही. ॲप सुरक्षितपणे सुरू आहे.");
+          closeSettingsModal();
+        }
+      })
+      .catch(() => {
+        window.location.reload();
+      });
   } else {
     alert("इंटरनेट कनेक्शन उपलब्ध नाही!");
     closeSettingsModal();
