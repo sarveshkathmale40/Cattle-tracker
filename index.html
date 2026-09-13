@@ -13,22 +13,22 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;}
-body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
+body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100%);min-height:100vh;padding:10px;color:#0f172a;display:flex;justify-content:center;align-items:flex-start;}
 .wrap{width:100%;max-width:420px;margin:0 auto;}
 
 /* Lock Screen */
 #lockScreen{display:flex;flex-direction:column;justify-content:center;min-height:90vh;}
-.lock-card{background:rgba(255,255,255,0.98);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.12);border:2px solid #34d399;text-align:center;}
+.lock-card{background:rgba(255,255,255,0.98);border-radius:28px;padding:26px;box-shadow:0 20px 40px rgba(0,0,0,.15);border:2px solid #10b981;text-align:center;}
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
 /* Header Section */
 .app-header{
-  background:linear-gradient(135deg,#022c22 0%,#064e3b 45%,#047857 100%);
+  background:linear-gradient(135deg,#065f46 0%,#047857 50%,#059669 100%);
   border-radius:20px;
   padding:14px 16px;
   margin-bottom:12px;
-  box-shadow:0 14px 30px -8px rgba(4,120,87,.5);
+  box-shadow:0 14px 30px -8px rgba(4,120,87,.6);
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -42,7 +42,7 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 .tracker-pill{
   display:inline-block;
   background:rgba(0,0,0,0.3);
-  border:1px solid rgba(52,211,153,0.5);
+  border:1px solid rgba(52,211,153,0.6);
   padding:3px 10px;
   border-radius:14px;
   margin-top:4px;
@@ -60,11 +60,11 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 }
 
 /* Settings Gear Modal Button */
-.settings-btn{background:rgba(2,44,34,0.9);color:#ffffff;border:1.5px solid #34d399;border-radius:14px;width:42px;height:42px;display:flex;justify-content:center;align-items:center;font-size:20px;cursor:pointer;flex-shrink:0;}
+.settings-btn{background:linear-gradient(135deg,#022c22,#064e3b);color:#ffffff;border:1.5px solid #34d399;border-radius:14px;width:42px;height:42px;display:flex;justify-content:center;align-items:center;font-size:20px;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
 
-/* Settings Modal (Corner Top Popup with Cross Button) */
+/* Settings Modal */
 .settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:flex-end;align-items:flex-start;padding:16px;}
-.settings-card{background:white;padding:18px;border-radius:20px;width:100%;max-width:280px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:left;border:2px solid #047857;margin-top:55px;position:relative;}
+.settings-card{background:white;padding:18px;border-radius:20px;width:100%;max-width:300px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:left;border:2px solid #059669;margin-top:55px;position:relative;}
 
 /* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
@@ -74,12 +74,12 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.stat{background:white;padding:12px 8px;border-radius:18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
+.stat{background:linear-gradient(135deg,#ffffff,#f0fdf4);padding:12px 8px;border-radius:18px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06);border:2px solid #cbd5e1;}
 .stat-number{font-size:20px;font-weight:900;color:#047857;}
 .stat-label{font-size:11px;color:#475569;font-weight:800;margin-top:2px;text-transform:uppercase;}
 
 /* Form Card */
-.card{background:#ffffff;border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:2px solid #e2e8f0;}
+.card{background:#ffffff;border-radius:24px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.08);border:2px solid #cbd5e1;}
 .card h3{font-size:15.5px;margin-bottom:12px;color:#047857;font-weight:900;display:flex;align-items:center;gap:6px;}
 
 label{display:block;text-align:left;font-size:11.5px;font-weight:800;color:#334155;margin-bottom:5px;margin-left:3px;}
@@ -90,25 +90,25 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 .animal-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
 .animal-btn{border:2px solid #cbd5e1;background:#f8fafc;padding:12px 8px;border-radius:14px;cursor:pointer;font-weight:900;color:#475569;text-align:center;font-size:14px;}
-.animal-btn.active{border-color:#059669;background:#d1fae5;color:#064e3b;}
+.animal-btn.active{border-color:#059669;background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#064e3b;}
 
-.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(5,150,105,.4);}
+.btn{width:100%;background:linear-gradient(135deg,#059669 0%,#047857 50%,#065f46 100%);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;cursor:pointer;margin-top:6px;box-shadow:0 8px 22px rgba(5,150,105,.4);}
 .btn:active{transform:scale(.97);}
 
 .photo-preview{width:70px;height:70px;border-radius:16px;object-fit:cover;display:none;margin:6px auto 10px;cursor:pointer;border:2px solid #059669;}
 
 /* Records Item */
-.item{background:#ffffff;border-radius:20px;padding:14px;border:2px solid #e2e8f0;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.04);contain:content;}
+.item{background:#ffffff;border-radius:20px;padding:14px;border:2px solid #cbd5e1;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 6px 20px rgba(0,0,0,.05);}
 .cow-img{width:76px;height:76px;border-radius:16px;background:#e2e8f0;display:flex;justify-content:center;align-items:center;font-size:34px;flex-shrink:0;overflow:hidden;border:2px solid #cbd5e1;cursor:pointer;}
 .cow-img img{width:100%;height:100%;object-fit:cover;}
 .item-info{flex-grow:1;min-width:0;}
 .item-top{display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:900;font-size:13px;border-bottom:2px solid #f1f5f9;padding-bottom:6px;margin-bottom:6px;}
-.duration-badge{background:#eff6ff;color:#1d4ed8;font-weight:900;font-size:11.5px;padding:4px 9px;border-radius:10px;border:1.5px solid #93c5fd;white-space:nowrap;}
+.duration-badge{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#1d4ed8;font-weight:900;font-size:11.5px;padding:4px 9px;border-radius:10px;border:1.5px solid #93c5fd;white-space:nowrap;}
 
 .row{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11.5px;padding:6px 0;color:#334155;font-weight:700;border-bottom:1px dashed #cbd5e1;}
 .date-badge{background:#fefce8;color:#854d0e;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:900;border:1.5px solid #fef08a;text-align:right;width:95px;flex-shrink:0;}
 
-.due{background:#f0fdf4;padding:7px 10px;border-radius:12px;color:#14532d;font-weight:900;margin-top:8px;font-size:12px;border:1.5px solid #86efac;display:flex;justify-content:space-between;align-items:center;}
+.due{background:linear-gradient(135deg,#f0fdf4,#dcfce7);padding:7px 10px;border-radius:12px;color:#14532d;font-weight:900;margin-top:8px;font-size:12px;border:1.5px solid #86efac;display:flex;justify-content:space-between;align-items:center;}
 .due-badge{background:#16a34a;color:white;padding:3px 8px;border-radius:7px;font-size:11.5px;font-weight:900;text-align:right;width:95px;flex-shrink:0;}
 
 .note-box{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 10px;font-size:11.5px;color:#78350f;margin-top:6px;font-weight:700;display:flex;flex-direction:column;gap:3px;}
@@ -116,9 +116,9 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 /* Action Buttons */
 .action-btns{display:flex;gap:8px;margin-top:10px;}
-.btn-repeat{flex:1;background:#d1fae5;color:#064e3b;border:1px solid #10b981;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
-.btn-calved{flex:1;background:#bae6fd;color:#0c4a6e;border:1px solid #0284c7;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
-.btn-del{flex:0 0 auto;background:#fee2e2;color:#991b1b;border:1px solid #fb7185;padding:11px 12px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+.btn-repeat{flex:1;background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#064e3b;border:1px solid #10b981;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+.btn-calved{flex:1;background:linear-gradient(135deg,#bae6fd,#7dd3fc);color:#0c4a6e;border:1px solid #0284c7;padding:11px 6px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
+.btn-del{flex:0 0 auto;background:linear-gradient(135deg,#fee2e2,#fecaca);color:#991b1b;border:1px solid #fb7185;padding:11px 12px;border-radius:12px;font-weight:900;font-size:11.5px;cursor:pointer;text-align:center;}
 
 .empty{text-align:center;color:#64748b;font-size:13px;padding:24px;font-weight:800;}
 
@@ -126,6 +126,10 @@ input:focus,select:focus{border-color:#059669;background:white;}
 .date-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
 .date-modal-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:330px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
 .date-modal-card h4{font-size:16px;color:#047857;margin-bottom:14px;font-weight:900;}
+
+/* Custom Confirm Modal for Delete */
+#customConfirmModal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
+.confirm-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:300px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #ef4444;}
 
 /* Zoom */
 #imageZoomModal{display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.94);justify-content:center;align-items:center;flex-direction:column;padding:16px;}
@@ -200,8 +204,16 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
-      <!-- Safe Camera & Gallery Input -->
-      <input type="file" id="cPhoto" accept="image/*" capture="environment" onchange="previewPhoto()">
+      <!-- Separate Camera & Gallery Buttons -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+        <button type="button" onclick="document.getElementById('cCameraInput').click()" style="background:linear-gradient(135deg,#0284c7,#0369a1); color:white; border:none; padding:10px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">📸 कॅमेरा उघडा</button>
+        <button type="button" onclick="document.getElementById('cGalleryInput').click()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; border:none; padding:10px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">🖼️ गॅलरी निवडा</button>
+      </div>
+
+      <!-- Hidden Inputs -->
+      <input type="file" id="cCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="cGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
+
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
       <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 रेकॉर्ड सेव्ह करा</button>
@@ -216,7 +228,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL (Corner Top Popup with Cross Button & Update App & Username/Phone) -->
+<!-- SETTINGS MODAL (Updated Order: Update App on Top, Language, Username, Phone Number) -->
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -224,6 +236,9 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <button type="button" onclick="closeSettingsModal()" style="background:none; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; padding:0 4px;">✕</button>
     </div>
     
+    <!-- Update App Button on Top -->
+    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:linear-gradient(135deg,#16a34a,#15803d); margin-top:0; margin-bottom:12px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
+
     <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblSelectLang">भाषा निवडा (Language)</label>
     <select id="langSelect" onchange="changeLanguage()" style="margin-bottom:10px; padding:8px 10px; font-size:13px;">
       <option value="mr">मराठी</option>
@@ -231,10 +246,23 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <option value="en">English</option>
     </select>
 
-    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserPhone">युजरचे नाव / फोन नंबर</label>
-    <input type="text" id="userPhoneInput" placeholder="उदा. 9822XXXXXX" style="margin-bottom:8px; padding:8px 10px; font-size:13px;" oninput="saveUserPhoneInput()">
-    
-    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:#16a34a; margin-top:4px; margin-bottom:8px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserName">युजरचे नाव (User Name)</label>
+    <input type="text" id="userNameInput" placeholder="उदा. सर्वेश" style="margin-bottom:8px; padding:8px 10px; font-size:13px;" oninput="saveUserSettings()">
+
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserPhone">फोन नंबर (Phone Number)</label>
+    <input type="tel" id="userPhoneInput" maxlength="10" placeholder="उदा. 9822XXXXXX" style="margin-bottom:4px; padding:8px 10px; font-size:13px;" oninput="saveUserSettings()">
+  </div>
+</div>
+
+<!-- Custom Delete Confirmation Modal (No URL / No 'The page at') -->
+<div id="customConfirmModal">
+  <div class="confirm-card">
+    <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
+    <div id="confirmTextMsg" style="font-size:14.5px; font-weight:900; color:#1e293b; margin-bottom:16px;">Are you sure you want to delete this record?</div>
+    <div style="display:flex; gap:10px;">
+      <button type="button" onclick="closeConfirmModal(false)" style="flex:1; background:#cbd5e1; color:#334155; border:none; padding:10px; border-radius:12px; font-weight:900; cursor:pointer;">रद्द करा</button>
+      <button type="button" onclick="closeConfirmModal(true)" style="flex:1; background:#dc2626; color:white; border:none; padding:10px; border-radius:12px; font-weight:900; cursor:pointer;">डिलीट</button>
+    </div>
   </div>
 </div>
 
@@ -345,8 +373,10 @@ async function deleteRecordFromDB(id) {
 }
 
 async function openSettingsModal() {
-  const savedUserPhone = (await getSetting('cattle_user_phone')) || '';
-  document.getElementById('userPhoneInput').value = savedUserPhone;
+  const savedName = (await getSetting('cattle_user_name')) || '';
+  const savedPhone = (await getSetting('cattle_user_phone')) || '';
+  document.getElementById('userNameInput').value = savedName;
+  document.getElementById('userPhoneInput').value = savedPhone;
   document.getElementById('settingsModal').style.display = 'flex';
 }
 
@@ -354,12 +384,14 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
-async function saveUserPhoneInput() {
-  const val = document.getElementById('userPhoneInput').value;
-  await setSetting('cattle_user_phone', val);
+async function saveUserSettings() {
+  const nameVal = document.getElementById('userNameInput').value;
+  const phoneVal = document.getElementById('userPhoneInput').value;
+  await setSetting('cattle_user_name', nameVal);
+  await setSetting('cattle_user_phone', phoneVal);
 }
 
-// SAFE SYNC FUNCTION: Checks if GitHub file exists first, prevents any 404/White screen
+// SAFE SYNC FUNCTION
 function forceSyncRefresh() {
   if (navigator.onLine) {
     fetch('https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=' + Date.now(), { method: 'HEAD' })
@@ -393,6 +425,7 @@ function closeImageModal() {
 let cur = 'cow';
 let activeActionId = null;
 let activeActionType = null;
+let recordToDeleteId = null;
 
 function selectAnimal(type) {
   cur = type === 'buffalo' ? 'buffalo' : 'cow';
@@ -402,6 +435,16 @@ function selectAnimal(type) {
   const lang = document.getElementById('langSelect').value;
   const t = langData[lang] || langData.mr;
   document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
+}
+
+function handleFileSelected(input) {
+  const preview = document.getElementById('photoPreview');
+  if (input.files && input.files[0]) {
+    compressImage(input.files[0], (res) => {
+      if (res) { preview.src = res; preview.style.display = 'block'; }
+      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
+    });
+  }
 }
 
 async function openDateModal(type, id) {
@@ -522,7 +565,7 @@ const langData = {
     guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
-    confirmDel:'Are you sure you want to delete this record?',
+    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे کا?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
@@ -530,8 +573,8 @@ const langData = {
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
     lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
     settingsTitle:'⚙️ ॲप सेटिंग्ज', lblSelectLang:'भाषा निवडा (Language)',
-    lblUserPhone:'युजरचे नाव / फोन नंबर',
-    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ बंद करा'
+    lblUserName:'युजरचे नाव (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
+    syncRefreshBtn:'🔄 Update App'
   },
   hi:{
     headerSub:'पशु गर्भधारण ट्रैकर',
@@ -555,7 +598,7 @@ const langData = {
     guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें.',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
-    confirmDel:'Are you sure you want to delete this record?',
+    confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और गुप्त पिन दर्ज करें',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
@@ -563,8 +606,8 @@ const langData = {
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
     lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
     settingsTitle:'⚙️ ऐप सेटिंग्स', lblSelectLang:'भाषा चुनें (Language)',
-    lblUserPhone:'यूजर का नाम / फोन नंबर',
-    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ बंद करें'
+    lblUserName:'यूजर का नाम (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
+    syncRefreshBtn:'🔄 Update App'
   },
   en:{
     headerSub:'CATTLE PREGNANCY TRACKER',
@@ -595,8 +638,8 @@ const langData = {
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
     lblDocField:'Doctor', lblSemenField:'Semen',
     settingsTitle:'⚙️ App Settings', lblSelectLang:'Select Language',
-    lblUserPhone:'User Name / Phone Number',
-    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ Close'
+    lblUserName:'User Name', lblUserPhone:'Phone Number',
+    syncRefreshBtn:'🔄 Update App'
   }
 };
 
@@ -661,8 +704,10 @@ async function changeLanguage() {
 
   document.getElementById('settingsModalTitle').innerText = t.settingsTitle;
   document.getElementById('lblSelectLang').innerText = t.lblSelectLang;
+  document.getElementById('lblUserName').innerText = t.lblUserName;
   document.getElementById('lblUserPhone').innerText = t.lblUserPhone;
   document.getElementById('btnSyncRefresh').innerText = t.syncRefreshBtn;
+  document.getElementById('confirmTextMsg').innerText = t.confirmDel;
 
   draw();
 }
@@ -686,17 +731,6 @@ function compressImage(file, callback) {
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
-}
-
-function previewPhoto() {
-  const input = document.getElementById('cPhoto');
-  const preview = document.getElementById('photoPreview');
-  if (input.files && input.files[0]) {
-    compressImage(input.files[0], (res) => {
-      if (res) { preview.src = res; preview.style.display = 'block'; }
-      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
-    });
-  }
 }
 
 function parseISODate(str) {
@@ -842,7 +876,7 @@ async function draw() {
         html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
       }
       html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
 
     } else {
@@ -873,7 +907,7 @@ async function draw() {
       html += '<div class="action-btns" style="flex-wrap:wrap;">';
       html += '<button class="btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
       html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="delData('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
       html += '</div>';
     }
 
@@ -882,6 +916,21 @@ async function draw() {
 
   box.innerHTML = html;
   checkSmartNotifications(db);
+}
+
+function promptDel(id) {
+  recordToDeleteId = id;
+  document.getElementById('confirmTextMsg').innerText = langData[document.getElementById('langSelect').value].confirmDel;
+  document.getElementById('customConfirmModal').style.display = 'flex';
+}
+
+async function closeConfirmModal(confirmed) {
+  document.getElementById('customConfirmModal').style.display = 'none';
+  if (confirmed && recordToDeleteId !== null) {
+    await deleteRecordFromDB(recordToDeleteId);
+    draw();
+  }
+  recordToDeleteId = null;
 }
 
 function checkSmartNotifications(db) {
@@ -1006,17 +1055,10 @@ async function saveData() {
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
-  document.getElementById('cPhoto').value = '';
+  document.getElementById('cCameraInput').value = '';
+  document.getElementById('cGalleryInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
-  draw();
-}
-
-async function delData(id) {
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  if (!confirm(t.confirmDel)) return;
-  await deleteRecordFromDB(id);
   draw();
 }
 
