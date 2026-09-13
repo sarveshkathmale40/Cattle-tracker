@@ -22,7 +22,7 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 .lock-title{font-size:24px;font-weight:900;color:#064e3b;margin-bottom:8px;letter-spacing:.5px;}
 .lock-sub{font-size:12.5px;color:#475569;margin-bottom:22px;font-weight:700;line-height:1.5;}
 
-/* Header Section (Compact & Clean) */
+/* Header Section */
 .app-header{
   background:linear-gradient(135deg,#065f46 0%,#047857 50%,#059669 100%);
   border-radius:18px;
@@ -36,24 +36,23 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 .header-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1;}
 .header-title{font-size:17px;font-weight:900;color:#ffffff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-/* Compact Clickable Capsule Pill (Dark & Bold, Small Size) */
+/* Small & Clean Capsule Pill */
 .tracker-pill-container{position:relative;width:100%;display:flex;justify-content:center;}
 .tracker-pill{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:6px;
-  background:rgba(255,255,255,0.25);
-  border:1.5px solid #34d399;
-  padding:4px 12px;
-  border-radius:14px;
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);
+  gap:5px;
+  background:rgba(255,255,255,0.2);
+  border:1.2px solid #34d399;
+  padding:3px 10px;
+  border-radius:12px;
   cursor:pointer;
   transition:0.2s;
 }
-.tracker-pill:active{transform:scale(0.97);background:rgba(255,255,255,0.4);}
+.tracker-pill:active{transform:scale(0.97);background:rgba(255,255,255,0.35);}
 .header-sub{
-  font-size:11px;
+  font-size:10px;
   color:#ffffff;
   font-weight:900;
   letter-spacing:.5px;
@@ -182,12 +181,12 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <div id="lockScreen" style="display:none;">
     <div class="lock-card">
       <div class="lock-title">🔐 The MH Farmer</div>
-      <div class="lock-sub" id="lockSubTxt">ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा</div>
-      <label id="lblMob">मोबाईल नंबर (१० अंकी)</label>
+      <div class="lock-sub">ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा</div>
+      <label>मोबाईल नंबर (१० अंकी)</label>
       <input type="tel" id="loginMob" maxlength="10" inputmode="numeric" placeholder="१० अंकी मोबाईल नंबर">
-      <label id="lblPin">सिक्रेट पिन (PIN)</label>
+      <label>सिक्रेट पिन (PIN)</label>
       <input type="password" id="loginPin" maxlength="4" inputmode="numeric" placeholder="४ अंकी पिन">
-      <button class="btn" type="button" id="btnLogin" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
+      <button class="btn" type="button" onclick="verifyLogin()">ॲप सुरू करा 🚀</button>
     </div>
   </div>
 
@@ -204,11 +203,11 @@ input:focus,select:focus{border-color:#059669;background:white;}
         <button class="settings-btn" type="button" onclick="openSettingsModal()" title="Settings">⚙️</button>
       </div>
 
-      <!-- Compact Clickable Capsule Pill -->
+      <!-- Small & Clean Capsule Pill -->
       <div class="tracker-pill-container">
         <div class="tracker-pill" onclick="togglePillDropdown(event)">
-          <span style="font-size:11px;">🐄</span>
-          <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker ▾</div>
+          <span style="font-size:10px;">🐄</span>
+          <div class="header-sub">Cattle Pregnancy Tracker ▾</div>
         </div>
         
         <!-- Dropdown Options Inside Capsule -->
@@ -220,53 +219,53 @@ input:focus,select:focus{border-color:#059669;background:white;}
     </div>
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
-      <div class="notif-title" id="notifTitleText">🔔 महत्त्वाचे अलर्ट्स व सूचना</div>
+      <div class="notif-title">🔔 महत्त्वाचे अलर्ट्स व सूचना</div>
       <div id="notifListContainer" class="notif-list"></div>
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label" id="lblTotal">एकूण नोंद</div></div>
-      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label" id="lblCow">गाय</div></div>
-      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label" id="lblBuf">म्हैस</div></div>
+      <div class="stat"><div class="stat-number" id="totalCount">0</div><div class="stat-label">एकूण नोंद</div></div>
+      <div class="stat"><div class="stat-number" id="cowCount">0</div><div class="stat-label">गाय</div></div>
+      <div class="stat"><div class="stat-number" id="buffaloCount">0</div><div class="stat-label">म्हैस</div></div>
     </div>
 
     <div class="card">
-      <h3 id="formTitle">➕ नवीन पशु नोंद</h3>
+      <h3>➕ नवीन पशु नोंद</h3>
       
       <div class="animal-buttons">
-        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span id="btnCowTxt">गाय</span></button>
-        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span id="btnBufTxt">म्हैस</span></button>
+        <button class="animal-btn active" id="cowBtn" type="button" onclick="selectAnimal('cow')">🐄 <span>गाय</span></button>
+        <button class="animal-btn" id="buffaloBtn" type="button" onclick="selectAnimal('buffalo')">🐃 <span>म्हैस</span></button>
       </div>
 
-      <label id="lblNameLbl">पशुचे नाव / टॅग नंबर</label>
+      <label>पशुचे नाव / टॅग नंबर</label>
       <input type="text" id="cName" placeholder="उदा. कावेरी">
 
       <label id="lblDate">गाय गाभण राहिल्याची तारीख</label>
       <input type="date" id="cDate">
 
-      <label id="lblNoteLbl">डॉक्टर व सिमेन तपशील (पर्यायी)</label>
+      <label>डॉक्टर व सिमेन तपशील (पर्यायी)</label>
       <div class="split-inputs">
         <input type="text" id="cDoc" placeholder="डॉक्टरचे नाव">
         <input type="text" id="cSemen" placeholder="सिमेन ब्रँड/नाव">
       </div>
 
-      <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
+      <label>पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-        <button type="button" onclick="triggerCamera()" style="background:linear-gradient(135deg,#bae6fd,#38bdf8); color:#0369a1; border:1.5px solid #0284c7; padding:11px; border-radius:12px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 3px 10px rgba(2,132,199,0.15);" id="btnCameraTxt">📸 कॅमेरा (Camera)</button>
-        <button type="button" onclick="triggerGallery()" style="background:linear-gradient(135deg,#ddd6fe,#a78bfa); color:#5b21b6; border:1.5px solid #7c3aed; padding:11px; border-radius:12px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 3px 10px rgba(124,58,237,0.15);" id="btnGalleryTxt">🖼️ गॅलरी (Gallery)</button>
+        <button type="button" onclick="openDirectCamera()" style="background:linear-gradient(135deg,#bae6fd,#38bdf8); color:#0369a1; border:1.5px solid #0284c7; padding:11px; border-radius:12px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 3px 10px rgba(2,132,199,0.15);">📸 कॅमेरा</button>
+        <button type="button" onclick="openDirectGallery()" style="background:linear-gradient(135deg,#ddd6fe,#a78bfa); color:#5b21b6; border:1.5px solid #7c3aed; padding:11px; border-radius:12px; font-weight:900; font-size:13px; cursor:pointer; box-shadow:0 3px 10px rgba(124,58,237,0.15);">🖼️ गॅलरी</button>
       </div>
 
-      <!-- Camera & Gallery Inputs with Fallback -->
-      <input type="file" id="realCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
-      <input type="file" id="realGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
+      <!-- Direct Camera & Gallery Inputs with strict capture for APK/WebView -->
+      <input type="file" id="strictCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="strictGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
-      <button class="btn" id="btnSave" type="button" onclick="saveData()">💾 रेकॉर्ड सेव्ह करा</button>
+      <button class="btn" type="button" onclick="saveData()">💾 रेकॉर्ड सेव्ह करा</button>
     </div>
 
     <div class="card">
-      <h3 id="listTitle">📋 पशु रेकॉर्ड यादी</h3>
+      <h3>📋 पशु रेकॉर्ड यादी</h3>
       <div id="list"></div>
     </div>
 
@@ -278,23 +277,16 @@ input:focus,select:focus{border-color:#059669;background:white;}
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
-      <h4 id="settingsModalTitle" style="font-size:15px; color:#047857; font-weight:900; margin:0;">⚙️ ॲप सेटिंग्ज</h4>
+      <h4 style="font-size:15px; color:#047857; font-weight:900; margin:0;">⚙️ ॲप सेटिंग्ज</h4>
       <button type="button" onclick="closeSettingsModal()" style="background:none; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; padding:0 4px;">✕</button>
     </div>
     
-    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:linear-gradient(135deg,#16a34a,#15803d); margin-top:0; margin-bottom:12px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
+    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:linear-gradient(135deg,#16a34a,#15803d); margin-top:0; margin-bottom:12px; padding:10px; font-size:13.5px;">🔄 Update App</button>
 
-    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblSelectLang">भाषा निवडा (Language)</label>
-    <select id="langSelect" onchange="changeLanguage()" style="margin-bottom:10px; padding:8px 10px; font-size:13px;">
-      <option value="mr">मराठी</option>
-      <option value="hi">हिंदी</option>
-      <option value="en">English</option>
-    </select>
-
-    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserName">युजरचे नाव (User Name)</label>
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">युजरचे नाव (User Name)</label>
     <input type="text" id="userNameInput" placeholder="उदा. सर्वेश" style="margin-bottom:8px; padding:8px 10px; font-size:13px;" oninput="saveUserSettings()">
 
-    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserPhone">फोन नंबर (Phone Number)</label>
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;">फोन नंबर (Phone Number)</label>
     <input type="tel" id="userPhoneInput" maxlength="10" placeholder="उदा. 9822XXXXXX" style="margin-bottom:4px; padding:8px 10px; font-size:13px;" oninput="saveUserSettings()">
   </div>
 </div>
@@ -304,7 +296,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <div class="coming-card">
     <div style="font-size:36px; margin-bottom:8px;">🚀</div>
     <h3 style="color:#047857; font-size:18px; font-weight:900; margin-bottom:6px;" id="csTitle">लवकरच येत आहे!</h3>
-    <p style="color:#475569; font-size:13px; font-weight:700; margin-bottom:16px;" id="csDesc">हे नवीन फिचर पुढील अपडेटमध्ये उपलब्ध होईल.</p>
+    <p style="color:#475569; font-size:13px; font-weight:700; margin-bottom:16px;">हे नवीन फिचर पुढील अपडेटमध्ये उपलब्ध होईल.</p>
     <button class="btn" type="button" onclick="closeComingSoon()">ठीक आहे (OK)</button>
   </div>
 </div>
@@ -313,7 +305,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 <div id="customConfirmModal">
   <div class="confirm-card">
     <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
-    <div id="confirmTextMsg" style="font-size:14.5px; font-weight:900; color:#1e293b; margin-bottom:16px;">Are you sure you want to delete this record?</div>
+    <div style="font-size:14.5px; font-weight:900; color:#1e293b; margin-bottom:16px;">तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?</div>
     <div style="display:flex; gap:10px;">
       <button type="button" onclick="closeConfirmModal(false)" style="flex:1; background:#cbd5e1; color:#334155; border:none; padding:10px; border-radius:12px; font-weight:900; cursor:pointer;">रद्द करा</button>
       <button type="button" onclick="closeConfirmModal(true)" style="flex:1; background:#dc2626; color:white; border:none; padding:10px; border-radius:12px; font-weight:900; cursor:pointer;">डिलीट</button>
@@ -326,14 +318,14 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
     
-    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="modalDateLbl">तारीख निवडा</label>
+    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;">तारीख निवडा</label>
     <input type="date" id="modalDateInput" style="margin-bottom:12px;">
 
     <div id="modalDoctorSemenContainer" style="display:none;">
-      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblDocName">डॉक्टरचे नाव</label>
+      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;">डॉक्टरचे नाव</label>
       <input type="text" id="modalDoctorInput" placeholder="उदा. डाॅ. पाटील" style="margin-bottom:10px;">
 
-      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblSemenName">सिमेन ब्रँड / नाव</label>
+      <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;">सिमेन ब्रँड / नाव</label>
       <input type="text" id="modalSemenInput" placeholder="उदा. एचएफ / जर्सी" style="margin-bottom:14px;">
     </div>
 
@@ -454,20 +446,7 @@ window.addEventListener('click', () => {
 
 function showComingSoon(featureName) {
   document.getElementById('pillDropdownMenu').style.display = 'none';
-  const lang = document.getElementById('langSelect').value;
-  const csTitle = document.getElementById('csTitle');
-  const csDesc = document.getElementById('csDesc');
-  
-  if (lang === 'hi') {
-    csTitle.innerText = featureName + ' - जल्द आ रहा है!';
-    csDesc.innerText = 'यह नया फीचर अगले अपडेट में उपलब्ध होगा।';
-  } else if (lang === 'en') {
-    csTitle.innerText = featureName + ' - Coming Soon!';
-    csDesc.innerText = 'This new feature will be available in the next update.';
-  } else {
-    csTitle.innerText = featureName + ' - लवकरच येत आहे!';
-    csDesc.innerText = 'हे नवीन फिचर पुढील अपडेटमध्ये उपलब्ध होईल.';
-  }
+  document.getElementById('csTitle').innerText = featureName + ' - लवकरच येत आहे!';
   document.getElementById('comingSoonModal').style.display = 'flex';
 }
 
@@ -522,23 +501,20 @@ function selectAnimal(type) {
   cur = type === 'buffalo' ? 'buffalo' : 'cow';
   document.getElementById('cowBtn').classList.toggle('active', cur === 'cow');
   document.getElementById('buffaloBtn').classList.toggle('active', cur === 'buffalo');
-
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
+  document.getElementById('lblDate').innerText = (cur === 'buffalo') ? 'म्हैस गाभण राहिल्याची तारीख' : 'गाय गाभण राहिल्याची तारीख';
 }
 
-function triggerCamera() {
-  const camInput = document.getElementById('realCameraInput');
-  try {
-    camInput.click();
-  } catch (e) {
-    document.getElementById('realGalleryInput').click();
-  }
+// Strict Direct Camera and Gallery Triggers for APK & Web
+function openDirectCamera() {
+  const cam = document.getElementById('strictCameraInput');
+  cam.value = '';
+  cam.click();
 }
 
-function triggerGallery() {
-  document.getElementById('realGalleryInput').click();
+function openDirectGallery() {
+  const gal = document.getElementById('strictGalleryInput');
+  gal.value = '';
+  gal.click();
 }
 
 function handleFileSelected(input) {
@@ -564,12 +540,10 @@ async function openDateModal(type, id) {
   input.max = input.value;
 
   const db = await getAllRecords();
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  let animalType = t.cow;
+  let animalType = 'गाय';
   for (let i = 0; i < db.length; i++) {
     if (Number(db[i].id) === Number(id)) {
-      animalType = (db[i].type === 'buffalo') ? t.buf : t.cow;
+      animalType = (db[i].type === 'buffalo') ? 'म्हैस' : 'गाय';
       break;
     }
   }
@@ -578,28 +552,14 @@ async function openDateModal(type, id) {
     docSemenContainer.style.display = 'block';
     document.getElementById('modalDoctorInput').value = '';
     document.getElementById('modalSemenInput').value = '';
-    document.getElementById('lblDocName').innerText = t.lblDocName;
-    document.getElementById('lblSemenName').innerText = t.lblSemenName;
   } else {
     docSemenContainer.style.display = 'none';
   }
 
-  if (lang === 'hi') {
-    if (type === 'repeat') title.innerText = animalType + ' रिपीट होने के कारण नई तारीख चुनें:';
-    else if (type === 'calved') title.innerText = animalType + ' ब्याने की सटीक तारीख दर्ज करें:';
-    else if (type === 'newPregnancy') title.innerText = 'नया ' + animalType + ' गर्भधारण दिनांक दर्ज करें:';
-    else if (type === 'changeCalve') title.innerText = animalType + ' ब्याने की सटीक तारीख बदलें:';
-  } else if (lang === 'en') {
-    if (type === 'repeat') title.innerText = 'Select new breeding date for ' + animalType + ':';
-    else if (type === 'calved') title.innerText = 'Enter exact calving date for ' + animalType + ':';
-    else if (type === 'newPregnancy') title.innerText = 'Enter new breeding date for ' + animalType + ':';
-    else if (type === 'changeCalve') title.innerText = 'Change calving date for ' + animalType + ':';
-  } else {
-    if (type === 'repeat') title.innerText = animalType + ' पुनरावृत्तीमुळे नवीन गर्भधारणा तारीख निवडा:';
-    else if (type === 'calved') title.innerText = animalType + ' विण्याची अचूक तारीख नोंदवा:';
-    else if (type === 'newPregnancy') title.innerText = 'नवीन ' + animalType + ' गर्भधारणा तारीख नोंदवा:';
-    else if (type === 'changeCalve') title.innerText = 'विण्याची अचूक तारीख बदला:';
-  }
+  if (type === 'repeat') title.innerText = animalType + ' पुनरावृत्तीमुळे नवीन गर्भधारणा तारीख निवडा:';
+  else if (type === 'calved') title.innerText = animalType + ' विण्याची अचूक तारीख नोंदवा:';
+  else if (type === 'newPregnancy') title.innerText = 'नवीन ' + animalType + ' गर्भधारणा तारीख नोंदवा:';
+  else if (type === 'changeCalve') title.innerText = 'विण्याची अचूक तारीख बदला:';
 
   modal.style.display = 'flex';
 }
@@ -612,12 +572,9 @@ function closeDateModal() {
 
 async function submitModalDate() {
   const val = document.getElementById('modalDateInput').value;
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  
-  if (!val) { alert(t.dateRequired); return; }
+  if (!val) { alert('कृपया योग्य तारीख निवडा!'); return; }
   const parsed = parseISODate(val);
-  if (!parsed || parsed > getTodayDate()) { alert(t.futureDateError); return; }
+  if (!parsed || parsed > getTodayDate()) { alert('भविष्यातील तारीख नोंदवता येत नाही!'); return; }
 
   const docName = document.getElementById('modalDoctorInput').value.trim();
   const semenName = document.getElementById('modalSemenInput').value.trim();
@@ -646,116 +603,11 @@ async function submitModalDate() {
   draw();
 }
 
-const langData = {
-  mr:{
-    headerSub:'Cattle Pregnancy Tracker ▾',
-    tot:'एकूण नोंद', cow:'गाय', buf:'म्हैस',
-    formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
-    namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
-    dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा किंवा गॅलरी)',
-    btnCameraTxt:'📸 कॅमेरा (Camera)', btnGalleryTxt:'🖼️ गॅलरी (Gallery)',
-    saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
-    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 गाय पुनरावृत्ती (Repeat)', calvedBtn:'🐄 वीण झाली आहे',
-    setNewDateBtn:'📅 नवीन तारीख नोंदवा',
-    changeCalveDateBtn:'📅 विण्याची तारीख बदला',
-    chk21:'🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span>',
-    milkDry:'🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(६ महिना २५ दिवस)</span>',
-    deworm:'💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span>',
-    trans:'🌾 ट्रान्झिशन आहार <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span>',
-    delivery:'🍼 अंदाजे विण्याची तारीख',
-    calvedDateLbl:'📅 विल्याची तारीख',
-    heatWindowText:'💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील गर्भधारणेची तयारी ठेवा:',
-    assumedNote:'* विण्याचा अपेक्षित काळ पूर्ण झाल्यामुळे पशु विल्याचे गृहीत धरले आहे. अचूक दिवस व पुढील गर्भधारणेची तारीख हवी असल्यास <span style="color:#0284c7; font-weight:900;">विण्याची तारीख बदला</span> हे बटण दाबा.',
-    guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
-    dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
-    storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
-    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
-    notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
-    lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
-    lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
-    lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
-    docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
-    lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
-    settingsTitle:'⚙️ ॲप सेटिंग्ज', lblSelectLang:'भाषा निवडा (Language)',
-    lblUserName:'युजरचे नाव (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
-    syncRefreshBtn:'🔄 Update App'
-  },
-  hi:{
-    headerSub:'Cattle Pregnancy Tracker ▾',
-    tot:'कुल रिकॉर्ड', cow:'गाय', buf:'भैंस',
-    formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
-    namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
-    dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कैमरा या गैलरी)',
-    btnCameraTxt:'📸 कैमरा (Camera)', btnGalleryTxt:'🖼️ गैलरी (Gallery)',
-    saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
-    delBtn:'🗑️ डिलीट', repeatBtn:'🔄 पशु रिपीट हुआ', calvedBtn:'🐄 ब्याया है',
-    setNewDateBtn:'📅 नई तारीख दर्ज करें',
-    changeCalveDateBtn:'📅 ब्याने की तारीख बदलें',
-    chk21:'🔴 उलट जांच <span style="font-size:10px; color:#64748b;">(21वां दिन)</span>',
-    milkDry:'🥛 दूध बंद करना <span style="font-size:10px; color:#64748b;">(6 माह 25 दिन)</span>',
-    deworm:'💊 डिवॉर्मिंग दवा <span style="font-size:10px; color:#64748b;">(30 दिन पहले)</span>',
-    trans:'🌾 ट्रांजिशन चारा <span style="font-size:10px; color:#64748b;">(21 दिन पहले)</span>',
-    delivery:'🍼 अनुमानित ब्याने की तारीख',
-    calvedDateLbl:'📅 ब्याने की तारीख',
-    heatWindowText:'💡 90 दिन के विश्राम काल के बाद इस तारीख से अगली गर्भधारण के लिए तैयार करें:',
-    assumedNote:'* ब्याने की अनुमानित अवधि पूरी होने के कारण पशु ब्याया हुआ माना गया है। सटीक दिन के लिए <span style="color:#0284c7; font-weight:900;">ब्याने की तारीख बदलें</span> बटन दबाएं।',
-    guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें.',
-    dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
-    storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
-    confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
-    notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
-    lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और गुप्त पिन दर्ज करें',
-    lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
-    lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
-    docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
-    lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
-    settingsTitle:'⚙️ ऐप सेटिंग्स', lblSelectLang:'भाषा चुनें (Language)',
-    lblUserName:'यूजर का नाम (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
-    syncRefreshBtn:'🔄 Update App'
-  },
-  en:{
-    headerSub:'CATTLE PREGNANCY TRACKER ▾',
-    tot:'Total Cattle', cow:'Cow', buf:'Buffalo',
-    formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
-    namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
-    dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
-    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera or Gallery)',
-    btnCameraTxt:'📸 Open Camera', btnGalleryTxt:'🖼️ Open Gallery',
-    saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
-    delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
-    setNewDateBtn:'📅 Enter New Date',
-    changeCalveDateBtn:'📅 Change Calving Date',
-    chk21:'🔴 Heat Check <span style="font-size:10px; color:#64748b;">(Day 21)</span>',
-    milkDry:'🥛 Dry Period <span style="font-size:10px; color:#64748b;">(6m 25d)</span>',
-    deworm:'💊 Deworming Medicine <span style="font-size:10px; color:#64748b;">(30 days prior)</span>',
-    trans:'🌾 Transition Feed <span style="font-size:10px; color:#64748b;">(21 days prior)</span>',
-    delivery:'🍼 Est. Delivery Date',
-    calvedDateLbl:'📅 Calving Date',
-    heatWindowText:'💡 Ready for next AI / breeding cycle from:',
-    assumedNote:'* Assumed calved as gestation term is completed. Click <span style="color:#0284c7; font-weight:900;">Change Calving Date</span> to update.',
-    guidanceNote:'💡 When breeding again, please click the <span style="color:#0284c7; font-weight:900;">Enter New Date</span> button below.',
-    dateRequired:'Please select a valid date!', futureDateError:'Future dates cannot be recorded!',
-    storageError:'Storage error! Could not save record.', confirmDel:'Are you sure you want to delete this record?',
-    notifTitle:'🔔 Important Alerts & Notices',
-    lockSubTxt:'Enter your mobile number and secret PIN to access the application',
-    lblMob:'Mobile Number (10 Digits)', lblPin:'Secret PIN', btnLogin:'Start App 🚀',
-    lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
-    docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
-    lblDocField:'Doctor', lblSemenField:'Semen',
-    settingsTitle:'⚙️ App Settings', lblSelectLang:'Select Language',
-    lblUserName:'User Name', lblUserPhone:'Phone Number',
-    syncRefreshBtn:'🔄 Update App'
-  }
-};
-
 async function verifyLogin() {
   const mob = document.getElementById('loginMob').value.trim();
   const pin = document.getElementById('loginPin').value.trim();
-  const lang = document.getElementById('langSelect').value;
-  if (!/^\d{10}$/.test(mob)) { alert(lang==='en'?'Enter valid 10-digit mobile number!':(lang==='hi'?'कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें!':'कृपया वैध १० अंकी मोबाईल नंबर प्रविष्ट करा!')); return; }
-  if (!/^\d{4}$/.test(pin)) { alert(lang==='en'?'Enter 4-digit PIN!':(lang==='hi'?'कृपया 4 अंकों का पिन दर्ज करें!':'कृपया ४ अंकी पिन प्रविष्ट करा!')); return; }
+  if (!/^\d{10}$/.test(mob)) { alert('कृपया वैध १० अंकी मोबाईल नंबर प्रविष्ट करा!'); return; }
+  if (!/^\d{4}$/.test(pin)) { alert('कृपया ४ अंकी पिन प्रविष्ट करा!'); return; }
   
   const expectedPin = mob.substring(0,2) + mob.substring(mob.length-1) + mob.substring(mob.length-1);
   if (pin === expectedPin) {
@@ -765,7 +617,7 @@ async function verifyLogin() {
     document.getElementById('appScreen').style.display = 'block';
     setTodayMaxDate();
     draw();
-  } else { alert(lang==='en'?'Invalid PIN!':(lang==='hi'?'अमान्य पिन!':'चुकीचा पिन प्रविष्ट केला आहे!')); }
+  } else { alert('चुकीचा पिन प्रविष्ट केला आहे!'); }
 }
 
 function setTodayMaxDate() {
@@ -775,50 +627,7 @@ function setTodayMaxDate() {
   const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
   dateInput.value = todayStr;
   dateInput.max = todayStr;
-  
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
-}
-
-async function changeLanguage() {
-  const select = document.getElementById('langSelect');
-  const lang = langData[select.value] ? select.value : 'mr';
-  await setSetting('cattle_lang', lang);
-  const t = langData[lang];
-
-  document.getElementById('mainHeaderSub').innerText = t.headerSub;
-  document.getElementById('lblTotal').innerText = t.tot;
-  document.getElementById('lblCow').innerText = t.cow;
-  document.getElementById('lblBuf').innerText = t.buf;
-  document.getElementById('formTitle').innerText = t.formT;
-  document.getElementById('btnCowTxt').innerText = t.bCow;
-  document.getElementById('btnBufTxt').innerText = t.bBuf;
-  document.getElementById('lblNameLbl').innerText = t.nameLbl;
-  document.getElementById('cName').placeholder = t.namePh;
-  document.getElementById('lblDate').innerText = cur==='buffalo' ? t.dtLblBuf : t.dtLblCow;
-  document.getElementById('lblNoteLbl').innerText = t.noteLbl;
-  document.getElementById('cDoc').placeholder = t.docPlaceholder;
-  document.getElementById('cSemen').placeholder = t.semenPlaceholder;
-  document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
-  document.getElementById('btnCameraTxt').innerText = t.btnCameraTxt;
-  document.getElementById('btnGalleryTxt').innerText = t.btnGalleryTxt;
-  document.getElementById('btnSave').innerText = t.saveBtn;
-  document.getElementById('listTitle').innerText = t.listT;
-
-  document.getElementById('lockSubTxt').innerText = t.lockSubTxt;
-  document.getElementById('lblMob').innerText = t.lblMob;
-  document.getElementById('lblPin').innerText = t.lblPin;
-  document.getElementById('btnLogin').innerText = t.btnLogin;
-
-  document.getElementById('settingsModalTitle').innerText = t.settingsTitle;
-  document.getElementById('lblSelectLang').innerText = t.lblSelectLang;
-  document.getElementById('lblUserName').innerText = t.lblUserName;
-  document.getElementById('lblUserPhone').innerText = t.lblUserPhone;
-  document.getElementById('btnSyncRefresh').innerText = t.syncRefreshBtn;
-  document.getElementById('confirmTextMsg').innerText = t.confirmDel;
-
-  draw();
+  document.getElementById('lblDate').innerText = (cur === 'buffalo') ? 'म्हैस गाभण राहिल्याची तारीख' : 'गाय गाभण राहिल्याची तारीख';
 }
 
 function compressImage(file, callback) {
@@ -870,19 +679,16 @@ function addD(str, days) {
   return formatDate(d);
 }
 
-function getFormattedDuration(str, lang) {
+function getFormattedDuration(str) {
   const start = parseISODate(str);
-  if (!start) return lang==='en'?'0 days':(lang==='hi'?'0 दिन':'० दिवस');
+  if (!start) return '० दिवस';
   const now = getTodayDate();
-  if (now < start) return lang==='en'?'0 days':(lang==='hi'?'0 दिन':'० दिवस');
+  if (now < start) return '० दिवस';
   const yrs = now.getFullYear() - start.getFullYear();
   let m = now.getMonth() - start.getMonth() + (yrs*12);
   let d = now.getDate() - start.getDate();
   if (d < 0) { m--; d += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
   if (m < 0) { m = 0; d = 0; }
-
-  if (lang==='en') return m + ' mos ' + d + ' days';
-  if (lang==='hi') return m + ' महीने ' + d + ' दिन';
   return m + ' महिना ' + d + ' दिवस';
 }
 
@@ -894,8 +700,6 @@ async function draw() {
   const box = document.getElementById('list');
   if (!box) return;
   const db = await getAllRecords();
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
 
   let cows = 0, buffaloes = 0;
   const today = getTodayDate();
@@ -915,7 +719,6 @@ async function draw() {
         await saveRecordToDB(it);
       }
     }
-
     if (it.type==='cow') cows++;
     if (it.type==='buffalo') buffaloes++;
   }
@@ -925,13 +728,12 @@ async function draw() {
   document.getElementById('buffaloCount').innerText = buffaloes;
 
   if (db.length === 0) {
-    box.innerHTML = '<div class="empty">' + escapeHtml(t.empty) + '</div>';
+    box.innerHTML = '<div class="empty">सध्या कोणतीही नोंद उपलब्ध नाही.</div>';
     checkSmartNotifications(db);
     return;
   }
 
   db.sort((a, b) => Number(b.id) - Number(a.id));
-
   let html = '';
 
   for (let i = 0; i < db.length; i++) {
@@ -944,7 +746,7 @@ async function draw() {
     const safeName = escapeHtml(it.name);
     const docName = escapeHtml(it.doctor || '').trim();
     const semenName = escapeHtml(it.semen || '').trim();
-    const animalLabel = isBuffalo ? '🐃 ' + t.buf : '🐄 ' + t.cow;
+    const animalLabel = isBuffalo ? '🐃 म्हैस' : '🐄 गाय';
     const safeId = Number(it.id);
 
     html += '<div class="item">';
@@ -962,61 +764,56 @@ async function draw() {
       const deliveryDate = addD(it.date, tot);
 
       html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge">⏱️ '+escapeHtml(getFormattedDuration(it.date, lang))+'</span></div>';
+      html += '<span class="duration-badge">⏱️ '+escapeHtml(getFormattedDuration(it.date))+'</span></div>';
 
-      html += '<div class="row"><span>📅 '+(isBuffalo?t.dtLblBuf:t.dtLblCow)+'</span><span class="date-badge">'+escapeHtml(start ? formatDate(start) : '---')+'</span></div>';
-      html += '<div class="row"><span>'+t.chk21+'</span><span class="date-badge">'+escapeHtml(check21)+'</span></div>';
-      html += '<div class="row"><span>'+t.milkDry+'</span><span class="date-badge">'+escapeHtml(dryDate)+'</span></div>';
-      html += '<div class="row"><span>'+t.deworm+'</span><span class="date-badge">'+escapeHtml(dewormDate)+'</span></div>';
-      html += '<div class="row"><span>'+t.trans+'</span><span class="date-badge">'+escapeHtml(transDate)+'</span></div>';
+      html += '<div class="row"><span>📅 '+(isBuffalo?'म्हैस गाभण राहिल्याची तारीख':'गाय गाभण राहिल्याची तारीख')+'</span><span class="date-badge">'+escapeHtml(start ? formatDate(start) : '---')+'</span></div>';
+      html += '<div class="row"><span>🔴 उलट तपासणी <span style="font-size:10px; color:#64748b;">(२१ वा दिवस)</span></span><span class="date-badge">'+escapeHtml(check21)+'</span></div>';
+      html += '<div class="row"><span>🥛 दूध आटवणे <span style="font-size:10px; color:#64748b;">(६ महिना २५ दिवस)</span></span><span class="date-badge">'+escapeHtml(dryDate)+'</span></div>';
+      html += '<div class="row"><span>💊 जंतनाशक औषध <span style="font-size:10px; color:#64748b;">(३० दिवस आधी)</span></span><span class="date-badge">'+escapeHtml(dewormDate)+'</span></div>';
+      html += '<div class="row"><span>🌾 ट्रान्झिशन आहार <span style="font-size:10px; color:#64748b;">(२१ दिवस आधी)</span></span><span class="date-badge">'+escapeHtml(transDate)+'</span></div>';
 
-      html += '<div class="due"><span>'+t.delivery+'</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
+      html += '<div class="due"><span>🍼 अंदाजे विण्याची तारीख</span><span class="due-badge">'+escapeHtml(deliveryDate)+'</span></div>';
 
       if (docName || semenName) {
         html += '<div class="note-box">';
-        if (docName) html += '<div>💉 <b>'+t.lblDocField+':</b> ' + docName + '</div>';
-        if (semenName) html += '<div>🧬 <b>'+t.lblSemenField+':</b> ' + semenName + '</div>';
+        if (docName) html += '<div>💉 <b>डॉक्टर:</b> ' + docName + '</div>';
+        if (semenName) html += '<div>🧬 <b>सिमेन:</b> ' + semenName + '</div>';
         html += '</div>';
       }
 
       html += '<div class="action-btns">';
       const calveThreshold = isBuffalo ? 296 : 268;
       if (pDays >= calveThreshold) {
-        html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">'+escapeHtml(t.calvedBtn)+'</button>';
+        html += '<button class="btn-calved" type="button" onclick="openDateModal(\'calved\','+safeId+')">🐄 वीण झाली आहे</button>';
       }
-      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">'+escapeHtml(t.repeatBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'repeat\','+safeId+')">🔄 गाय पुनरावृत्ती (Repeat)</button>';
+      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">🗑️ डिलीट</button>';
       html += '</div>';
 
     } else {
       const calvedDate = parseISODate(it.calvedDate);
       const cDays = calvedDate ? getDayDifference(calvedDate, today) : 0;
       const restDays = 90;
-      
       const heatStart = new Date(calvedDate.getTime());
       heatStart.setDate(heatStart.getDate() + restDays);
 
-      const calvedTitleTxt = lang==='en'?'Calved':(lang==='hi'?'ब्याया है':'वीण झाली');
-      const daysCountLbl = lang==='en'?'Days since calving:':(lang==='hi'?'ब्याने के बाद के दिन:':'विण्यापासून झालेले दिवस:');
-      const daysUnitTxt = lang==='en'?' days':(lang==='hi'?' दिन':' दिवस');
-
       html += '<div class="item-top"><span>'+ animalLabel +' &nbsp; <b>'+safeName+'</b></span>';
-      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 '+calvedTitleTxt+'</span></div>';
+      html += '<span class="duration-badge" style="background:#dcfce7; color:#15803d; border-color:#86efac;">🐄 वीण झाली</span></div>';
 
-      html += '<div class="row"><span>📅 '+daysCountLbl+'</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+daysUnitTxt+'</span></div>';
-      html += '<div class="row"><span>'+t.calvedDateLbl+'</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
-      html += '<div class="row"><span>'+t.heatWindowText+'</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
+      html += '<div class="row"><span>📅 विण्यापासून झालेले दिवस:</span><span class="date-badge" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">'+cDays+' दिवस</span></div>';
+      html += '<div class="row"><span>📅 विल्याची तारीख</span><span class="date-badge">'+escapeHtml(calvedDate ? formatDate(calvedDate) : '---')+'</span></div>';
+      html += '<div class="row"><span>💡 ९० दिवसांच्या विश्रांतीनंतर या तारखेपासून पुढील गर्भधारणेची तयारी ठेवा:</span><span class="date-badge">'+formatDate(heatStart)+'</span></div>';
 
       if (it.isAssumedCalved) {
-        html += '<div class="small-assumption-note">'+t.assumedNote+'</div>';
+        html += '<div class="small-assumption-note">* विण्याचा अपेक्षित काळ पूर्ण झाल्यामुळे पशु विल्याचे गृहीत धरले आहे. अचूक दिवस व पुढील गर्भधारणेची तारीख हवी असल्यास <span style="color:#0284c7; font-weight:900;">विण्याची तारीख बदला</span> हे बटण दाबा.</div>';
       } else {
-        html += '<div class="small-assumption-note">'+t.guidanceNote+'</div>';
+        html += '<div class="small-assumption-note">💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.</div>';
       }
 
       html += '<div class="action-btns" style="flex-wrap:wrap;">';
-      html += '<button class="btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">'+escapeHtml(t.changeCalveDateBtn)+'</button>';
-      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">'+escapeHtml(t.setNewDateBtn)+'</button>';
-      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">'+escapeHtml(t.delBtn)+'</button>';
+      html += '<button class="btn-calved" type="button" onclick="openDateModal(\'changeCalve\','+safeId+')">📅 विण्याची तारीख बदला</button>';
+      html += '<button class="btn-repeat" type="button" onclick="openDateModal(\'newPregnancy\','+safeId+')">📅 नवीन तारीख नोंदवा</button>';
+      html += '<button class="btn-del" type="button" onclick="promptDel('+safeId+')">🗑️ डिलीट</button>';
       html += '</div>';
     }
 
@@ -1029,7 +826,6 @@ async function draw() {
 
 function promptDel(id) {
   recordToDeleteId = id;
-  document.getElementById('confirmTextMsg').innerText = langData[document.getElementById('langSelect').value].confirmDel;
   document.getElementById('customConfirmModal').style.display = 'flex';
 }
 
@@ -1048,10 +844,6 @@ function checkSmartNotifications(db) {
   const list = document.getElementById('notifListContainer');
   if (!banner || !title || !list) return;
 
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
-  title.innerText = t.notifTitle;
-
   const today = getTodayDate();
   const alerts = [];
 
@@ -1059,14 +851,14 @@ function checkSmartNotifications(db) {
     const it = db[i];
     const isBuff = it.type === 'buffalo';
     const animalName = (isBuff ? '🐃' : '🐄') + ' ' + escapeHtml(it.name);
-    const animalWord = isBuff ? (lang==='en'?'Buffalo':(lang==='hi'?'भैंस':'म्हैस')) : (lang==='en'?'Cow':(lang==='hi'?'गाय':'गाय'));
+    const animalWord = isBuff ? 'म्हैस' : 'गाय';
 
     if (it.isCalved) {
       const calvedDate = parseISODate(it.calvedDate);
       if (calvedDate) {
         const cDay = getDayDifference(calvedDate, today);
         if (cDay >= 88 && cDay <= 93) {
-          let heatMsg = lang==='en' ? ('💡 90 days rest completed ('+cDay+' days). Check '+animalWord+' for next Heat & breed.') : (lang==='hi' ? ('💡 ब्याने के 90 दिन पूर्ण ('+cDay+' दिन)। '+animalWord+' की हीट जाँच कर दोबारा गर्भधारण कराएं।') : ('💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर आली असल्यास तपासून AI करा.'));
+          let heatMsg = '💡 विण्यापासून ९० दिवस पूर्ण झाले आहेत ('+cDay+' दिवस). '+animalWord+' माजावर आली असल्यास तपासून AI करा.';
           alerts.push({name: animalName, text: heatMsg});
         }
       }
@@ -1081,20 +873,12 @@ function checkSmartNotifications(db) {
 
     if (pDay >= 18 && pDay <= 22) {
       const rem = 21 - pDay;
-      let msg = '';
-      if (lang === 'en') {
-        msg = rem > 0 ? `🔴 Heat Check upcoming (${rem} days remaining).` : `🔴 Heat Check Day (Day 21) active.`;
-      } else if (lang === 'hi') {
-        msg = rem > 0 ? `🔴 उलट जांच के दिन नजदीक हैं (${rem} दिन शेष)।` : `🔴 आज उलट जांच (21वां दिन) का मुख्य दिन है!`;
-      } else {
-        msg = rem > 0 ? `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी).` : `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे!`;
-      }
+      let msg = rem > 0 ? `🔴 उलट तपासणीचे दिवस जवळ आहेत (${rem} दिवस बाकी).` : `🔴 आज उलट तपासणी (२१ वा दिवस) चा मुख्य दिवस आहे!`;
       alerts.push({ name: animalName, text: msg });
     }
 
     if (pDay >= 205 && pDay <= 215) {
-      let dryMsg = lang==='en' ? '🥛 Dry period schedule is active (6 months 25 days completed). Please arrange to dry off milk production.' : (lang==='hi' ? '🥛 दूध बंद करने का सही समय है (6 माह 25 दिन पूरे)। दूध आटवना शुरू करें।' : '🥛 दूध आटवण्याची योग्य वेळ झाली आहे (६ महिने २५ दिवस पूर्ण झाले आहेत).');
-      alerts.push({ name: animalName, text: dryMsg });
+      alerts.push({ name: animalName, text: '🥛 दूध आटवण्याची योग्य वेळ झाली आहे (६ महिने २५ दिवस पूर्ण झाले आहेत).' });
     }
 
     const prepStartDay = isBuff ? 296 : 268;
@@ -1102,11 +886,11 @@ function checkSmartNotifications(db) {
       const daysLeft = tot - pDay;
       let prepMsg = '';
       if (daysLeft > 0) {
-        prepMsg = lang==='en' ? `🌾 ${animalWord} delivery expected in ${daysLeft} days. Start transition feed and care.` : (lang==='hi' ? `🌾 ${animalWord} ब्याने में ${daysLeft} दिन बाकी। ट्रांजिशन चारा और देखभाल शुरू करें।` : `🌾 ${animalWord} विण्यासाठी ${daysLeft} दिवस बाकी आहेत. ट्रान्झिशन आहार व योग्य काळजी घ्या.`);
+        prepMsg = `🌾 ${animalWord} विण्यासाठी ${daysLeft} दिवस बाकी आहेत. ट्रान्झिशन आहार व योग्य काळजी घ्या.`;
       } else if (daysLeft === 0) {
-        prepMsg = lang==='en' ? `🍼 Est. delivery day for ${animalWord} is today!` : (lang==='hi' ? `🍼 आज ${animalWord} के ब्याने का अनुमानित दिन है!` : `🍼 आज ${animalWord} विण्याची अंदाजे तारीख आहे!`);
+        prepMsg = `🍼 आज ${animalWord} विण्याची अंदाजे तारीख आहे!`;
       } else {
-        prepMsg = lang==='en' ? `🍼 ${animalWord} delivery term completed. If calved, click "Calved"!` : (lang==='hi' ? `🍼 ${animalWord} ब्याने की अवधि पूरी हुई। यदि ब्या गई है, तो "ब्याया है" बटन दबाएं!` : `🍼 ${animalWord} विण्याचा कालावधी पूर्ण झाला आहे. वीण झाली असल्यास "वीण झाली आहे" दाबा!`);
+        prepMsg = `🍼 ${animalWord} विण्याचा कालावधी पूर्ण झाला आहे. वीण झाली असल्यास "वीण झाली आहे" दाबा!`;
       }
       alerts.push({ name: animalName, text: prepMsg });
     }
@@ -1128,14 +912,12 @@ function checkSmartNotifications(db) {
 
 async function saveData() {
   const dt = document.getElementById('cDate').value;
-  const lang = document.getElementById('langSelect').value;
-  const t = langData[lang] || langData.mr;
   const inputDate = parseISODate(dt);
 
-  if (!inputDate) { alert(t.dateRequired); return; }
-  if (inputDate > getTodayDate()) { alert(t.futureDateError); return; }
+  if (!inputDate) { alert('कृपया योग्य तारीख निवडा!'); return; }
+  if (inputDate > getTodayDate()) { alert('भविष्यातील तारीख नोंदवता येत नाही!'); return; }
 
-  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? t.bCow : t.bBuf);
+  const nm = document.getElementById('cName').value.trim() || (cur==='cow' ? 'गाय' : 'म्हैस');
   const doc = document.getElementById('cDoc').value.trim();
   const semen = document.getElementById('cSemen').value.trim();
   const previewImg = document.getElementById('photoPreview');
@@ -1157,15 +939,15 @@ async function saveData() {
   try {
     await saveRecordToDB(newRecord);
   } catch (e) {
-    alert(t.storageError);
+    alert('डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!');
     return;
   }
 
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
-  document.getElementById('realCameraInput').value = '';
-  document.getElementById('realGalleryInput').value = '';
+  document.getElementById('strictCameraInput').value = '';
+  document.getElementById('strictGalleryInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
   draw();
@@ -1185,13 +967,8 @@ async function initApp() {
   document.getElementById('lockScreen').style.display = 'none';
   document.getElementById('appScreen').style.display = 'block';
 
-  let savedLang = 'mr';
-  try {
-    savedLang = (await getSetting('cattle_lang')) || 'mr';
-  } catch (e) {}
-  document.getElementById('langSelect').value = savedLang;
   setTodayMaxDate();
-  changeLanguage();
+  draw();
 }
 
 if (document.readyState === 'loading') {
