@@ -1,4 +1,4 @@
-name: Build Final v26 APK
+name: Build Final Stable v27 APK
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Fresh Package
+    - name: Build Android App Safely
       run: |
         rm -f app/src/main/assets/index.html
         mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
@@ -83,13 +83,7 @@ jobs:
         import android.webkit.PermissionRequest;
         import android.net.Uri;
         import android.content.Intent;
-        import android.net.ConnectivityManager;
-        import android.net.NetworkInfo;
         import android.webkit.CookieManager;
-        import java.io.BufferedReader;
-        import java.io.InputStreamReader;
-        import java.net.HttpURLConnection;
-        import java.net.URL;
 
         public class MainActivity extends Activity {
             private WebView webView;
@@ -110,7 +104,7 @@ jobs:
                 settings.setAllowContentAccess(true);
                 settings.setAllowUniversalAccessFromFileURLs(true);
                 settings.setAllowFileAccessFromFileURLs(true);
-                settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+                settings.setCacheMode(WebSettings.LOAD_DEFAULT);
                 settings.setLoadsImagesAutomatically(true);
                 settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
                 
@@ -151,57 +145,8 @@ jobs:
                     }
                 });
                 
-                loadLiveContent();
-            }
-
-            public void loadLiveContent() {
-                if (isNetworkAvailable()) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                long timestamp = System.currentTimeMillis();
-                                URL url = new URL("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=" + timestamp);
-                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                conn.setConnectTimeout(6000);
-                                conn.setReadTimeout(6000);
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                                StringBuilder html = new StringBuilder();
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    html.append(line);
-                                }
-                                reader.close();
-                                
-                                final String finalHtml = html.toString();
-                                if (finalHtml.length() > 50) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            webView.loadDataWithBaseURL("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/", finalHtml, "text/html", "UTF-8", null);
-                                        }
-                                    });
-                                    return;
-                                }
-                            } catch (Exception e) {}
-                            
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    webView.loadUrl("file:///android_asset/index.html");
-                                }
-                            });
-                        }
-                    }).start();
-                } else {
-                    webView.loadUrl("file:///android_asset/index.html");
-                }
-            }
-
-            private boolean isNetworkAvailable() {
-                ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = cm.getActiveNetworkInfo();
-                return netInfo != null && netInfo.isConnected();
+                // Directly load secure local asset to guarantee instant loading without freezing
+                webView.loadUrl("file:///android_asset/index.html");
             }
 
             @Override
@@ -244,8 +189,8 @@ jobs:
                 applicationId "com.mh.farmer.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 26
-                versionName "26.0"
+                versionCode 27
+                versionName "27.0"
             }
             buildTypes {
                 release {
@@ -285,5 +230,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Fresh_v26
+        name: MH_Farmer_Fresh_v27
         path: app/build/outputs/apk/debug/app-debug.apk
