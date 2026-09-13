@@ -1,4 +1,4 @@
-name: Build Final Clean v29 APK
+name: Build Final Stable v31 APK
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Clean Fullscreen Online WebView App
+    - name: Build Smart Live-Sync WebView App
       run: |
         rm -f app/src/main/assets/index.html
         mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
@@ -83,6 +83,8 @@ jobs:
         import android.webkit.PermissionRequest;
         import android.net.Uri;
         import android.content.Intent;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
         import android.webkit.CookieManager;
 
         public class MainActivity extends Activity {
@@ -111,7 +113,6 @@ jobs:
                 CookieManager.getInstance().setAcceptCookie(true);
                 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
                 
-                // Forces everything to stay strictly inside the app (No Chrome browser popups)
                 webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -146,8 +147,19 @@ jobs:
                     }
                 });
                 
-                // Directly loading your live raw GitHub index.html page inside clean fullscreen WebView
-                webView.loadUrl("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html");
+                // Smart Loader: Tries to load live GitHub Pages version if online, falls back to local asset if offline
+                if (isNetworkAvailable()) {
+                    // Uses GitHub Pages URL which properly renders HTML (Frontend) instead of raw text tags
+                    webView.loadUrl("https://sarveshkathmale40.github.io/Cattle-tracker/");
+                } else {
+                    webView.loadUrl("file:///android_asset/index.html");
+                }
+            }
+
+            private boolean isNetworkAvailable() {
+                ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                return netInfo != null && netInfo.isConnected();
             }
 
             @Override
@@ -190,8 +202,8 @@ jobs:
                 applicationId "com.mh.farmer.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 29
-                versionName "29.0"
+                versionCode 31
+                versionName "31.0"
             }
             buildTypes {
                 release {
@@ -231,5 +243,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Fresh_v29
+        name: MH_Farmer_Fresh_v31
         path: app/build/outputs/apk/debug/app-debug.apk
