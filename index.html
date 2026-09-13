@@ -25,39 +25,77 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 /* Header Section */
 .app-header{
   background:linear-gradient(135deg,#065f46 0%,#047857 50%,#059669 100%);
-  border-radius:20px;
-  padding:14px 16px;
+  border-radius:22px;
+  padding:16px;
   margin-bottom:12px;
   box-shadow:0 14px 30px -8px rgba(4,120,87,.6);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
   color:white;
   border:2px solid #34d399;
-  gap:10px;
 }
+.header-top-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;}
 .header-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
-.header-texts{min-width:0;flex:1;}
-.header-title{font-size:18px;font-weight:900;color:#ffffff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.header-title{font-size:19px;font-weight:900;color:#ffffff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Clickable Capsule Pill */
+.tracker-pill-container{position:relative;width:100%;}
 .tracker-pill{
-  display:inline-block;
-  background:rgba(0,0,0,0.3);
-  border:1px solid rgba(52,211,153,0.6);
-  padding:3px 10px;
-  border-radius:14px;
-  margin-top:4px;
-  max-width:100%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:rgba(255,255,255,0.2);
+  border:1.5px solid rgba(52,211,153,0.8);
+  padding:7px 14px;
+  border-radius:20px;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,0.15);
+  width:100%;
+  cursor:pointer;
+  transition:0.2s;
 }
+.tracker-pill:active{transform:scale(0.98);background:rgba(255,255,255,0.3);}
 .header-sub{
-  font-size:10.5px;
+  font-size:11.5px;
   color:#a7f3d0;
-  font-weight:800;
-  letter-spacing:.5px;
+  font-weight:900;
+  letter-spacing:.8px;
   text-transform:uppercase;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
+/* Dropdown Menu from Capsule */
+.pill-dropdown{
+  display:none;
+  position:absolute;
+  top:105%;
+  left:0;
+  width:100%;
+  background:#022c22;
+  border:1.5px solid #34d399;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  z-index:100;
+  overflow:hidden;
+  animation: fadeInDown 0.2s ease-in-out;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-item{
+  padding:11px 14px;
+  font-size:12.5px;
+  font-weight:800;
+  color:#e2e8f0;
+  border-bottom:1px solid rgba(52,211,153,0.2);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.dropdown-item:last-child{border-bottom:none;}
+.dropdown-item:active{background:rgba(52,211,153,0.3);color:white;}
 
 /* Settings Gear Modal Button */
 .settings-btn{background:linear-gradient(135deg,#022c22,#064e3b);color:#ffffff;border:1.5px solid #34d399;border-radius:14px;width:42px;height:42px;display:flex;justify-content:center;align-items:center;font-size:20px;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.2);}
@@ -65,6 +103,10 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 /* Settings Modal */
 .settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:flex-end;align-items:flex-start;padding:16px;}
 .settings-card{background:white;padding:18px;border-radius:20px;width:100%;max-width:300px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:left;border:2px solid #059669;margin-top:55px;position:relative;}
+
+/* Coming Soon Modal */
+#comingSoonModal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
+.coming-card{background:white;padding:24px;border-radius:24px;width:100%;max-width:300px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #059669;}
 
 /* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
@@ -158,18 +200,29 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
-    <!-- APP HEADER WITH SETTINGS GEAR -->
+    <!-- APP HEADER WITH CLICKABLE CAPSULE PIll & DROPDOWN -->
     <div class="app-header">
-      <div class="header-left">
-        <span style="font-size:24px; flex-shrink:0;">🌾</span>
-        <div class="header-texts">
+      <div class="header-top-row">
+        <div class="header-left">
+          <span style="font-size:26px; flex-shrink:0;">🌾</span>
           <div class="header-title">The MH Farmer</div>
-          <div class="tracker-pill">
-            <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker</div>
-          </div>
+        </div>
+        <button class="settings-btn" type="button" onclick="openSettingsModal()" title="Settings">⚙️</button>
+      </div>
+
+      <!-- Clickable Capsule Pill for Milk Report & Heifer -->
+      <div class="tracker-pill-container">
+        <div class="tracker-pill" onclick="togglePillDropdown(event)">
+          <span style="font-size:13px;">🐄</span>
+          <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker ▾</div>
+        </div>
+        
+        <!-- Dropdown Options -->
+        <div id="pillDropdownMenu" class="pill-dropdown">
+          <div class="dropdown-item" onclick="showComingSoon('Milk Report')">🥛 Milk Report (दुग्ध अहवाल)</div>
+          <div class="dropdown-item" onclick="showComingSoon('Heifer Tracker')">🐄 Heifer Tracker (वढी नोंद)</div>
         </div>
       </div>
-      <button class="settings-btn" type="button" onclick="openSettingsModal()" title="Settings">⚙️</button>
     </div>
 
     <div id="notifBannerBox" class="notification-banner" style="display:none;">
@@ -204,15 +257,14 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
-      <!-- Separate Camera & Gallery Buttons -->
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-        <button type="button" onclick="document.getElementById('cCameraInput').click()" style="background:linear-gradient(135deg,#0284c7,#0369a1); color:white; border:none; padding:10px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">📸 कॅमेरा उघडा</button>
-        <button type="button" onclick="document.getElementById('cGalleryInput').click()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; border:none; padding:10px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;">🖼️ गॅलरी निवडा</button>
+        <button type="button" onclick="triggerCamera()" style="background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:none; padding:12px; border-radius:12px; font-weight:bold; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(2,132,199,0.3);" id="btnCameraTxt">📸 कॅमेरा (Camera)</button>
+        <button type="button" onclick="triggerGallery()" style="background:linear-gradient(135deg,#a78bfa,#7c3aed); color:white; border:none; padding:12px; border-radius:12px; font-weight:bold; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(124,58,237,0.3);" id="btnGalleryTxt">🖼️ गॅलरी (Gallery)</button>
       </div>
 
       <!-- Hidden Inputs -->
-      <input type="file" id="cCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
-      <input type="file" id="cGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="realCameraInput" accept="image/*" capture="camera" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="realGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -228,7 +280,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL (Updated Order: Update App on Top, Language, Username, Phone Number) -->
+<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -236,7 +288,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <button type="button" onclick="closeSettingsModal()" style="background:none; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; padding:0 4px;">✕</button>
     </div>
     
-    <!-- Update App Button on Top -->
     <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:linear-gradient(135deg,#16a34a,#15803d); margin-top:0; margin-bottom:12px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
 
     <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblSelectLang">भाषा निवडा (Language)</label>
@@ -254,7 +305,17 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
-<!-- Custom Delete Confirmation Modal (No URL / No 'The page at') -->
+<!-- COMING SOON MODAL -->
+<div id="comingSoonModal" onclick="if(event.target===this)closeComingSoon()">
+  <div class="coming-card">
+    <div style="font-size:36px; margin-bottom:8px;">🚀</div>
+    <h3 style="color:#047857; font-size:18px; font-weight:900; margin-bottom:6px;" id="csTitle">लवकरच येत आहे!</h3>
+    <p style="color:#475569; font-size:13px; font-weight:700; margin-bottom:16px;" id="csDesc">हे नवीन फिचर पुढील अपडेटमध्ये उपलब्ध होईल.</p>
+    <button class="btn" type="button" onclick="closeComingSoon()">ठीक आहे (OK)</button>
+  </div>
+</div>
+
+<!-- Custom Delete Confirmation Modal -->
 <div id="customConfirmModal">
   <div class="confirm-card">
     <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
@@ -384,6 +445,42 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
+// Toggle Capsule Dropdown Menu
+function togglePillDropdown(event) {
+  event.stopPropagation();
+  const menu = document.getElementById('pillDropdownMenu');
+  menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
+
+// Close dropdown when clicking outside
+window.addEventListener('click', () => {
+  const menu = document.getElementById('pillDropdownMenu');
+  if (menu) menu.style.display = 'none';
+});
+
+function showComingSoon(featureName) {
+  document.getElementById('pillDropdownMenu').style.display = 'none';
+  const lang = document.getElementById('langSelect').value;
+  const csTitle = document.getElementById('csTitle');
+  const csDesc = document.getElementById('csDesc');
+  
+  if (lang === 'hi') {
+    csTitle.innerText = featureName + ' - जल्द आ रहा है!';
+    csDesc.innerText = 'यह नया फीचर अगले अपडेट में उपलब्ध होगा।';
+  } else if (lang === 'en') {
+    csTitle.innerText = featureName + ' - Coming Soon!';
+    csDesc.innerText = 'This new feature will be available in the next update.';
+  } else {
+    csTitle.innerText = featureName + ' - लवकरच येत आहे!';
+    csDesc.innerText = 'हे नवीन फिचर पुढील अपडेटमध्ये उपलब्ध होईल.';
+  }
+  document.getElementById('comingSoonModal').style.display = 'flex';
+}
+
+function closeComingSoon() {
+  document.getElementById('comingSoonModal').style.display = 'none';
+}
+
 async function saveUserSettings() {
   const nameVal = document.getElementById('userNameInput').value;
   const phoneVal = document.getElementById('userPhoneInput').value;
@@ -435,6 +532,14 @@ function selectAnimal(type) {
   const lang = document.getElementById('langSelect').value;
   const t = langData[lang] || langData.mr;
   document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
+}
+
+function triggerCamera() {
+  document.getElementById('realCameraInput').click();
+}
+
+function triggerGallery() {
+  document.getElementById('realGalleryInput').click();
 }
 
 function handleFileSelected(input) {
@@ -544,12 +649,13 @@ async function submitModalDate() {
 
 const langData = {
   mr:{
-    headerSub:'गाभण पशु ट्रॅकर',
+    headerSub:'Cattle Pregnancy Tracker ▾',
     tot:'एकूण नोंद', cow:'गाय', buf:'म्हैस',
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
     namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
     noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा किंवा गॅलरी)',
+    btnCameraTxt:'📸 कॅमेरा (Camera)', btnGalleryTxt:'🖼️ गॅलरी (Gallery)',
     saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 गाय पुनरावृत्ती (Repeat)', calvedBtn:'🐄 वीण झाली आहे',
     setNewDateBtn:'📅 नवीन तारीख नोंदवा',
@@ -565,7 +671,7 @@ const langData = {
     guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
-    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे کا?',
+    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
@@ -577,12 +683,13 @@ const langData = {
     syncRefreshBtn:'🔄 Update App'
   },
   hi:{
-    headerSub:'पशु गर्भधारण ट्रैकर',
+    headerSub:'Cattle Pregnancy Tracker ▾',
     tot:'कुल रिकॉर्ड', cow:'गाय', buf:'भैंस',
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
     namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
     noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कैमरा या गैलरी)',
+    btnCameraTxt:'📸 कैमरा (Camera)', btnGalleryTxt:'🖼️ गैलरी (Gallery)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 पशु रिपीट हुआ', calvedBtn:'🐄 ब्याया है',
     setNewDateBtn:'📅 नई तारीख दर्ज करें',
@@ -610,12 +717,13 @@ const langData = {
     syncRefreshBtn:'🔄 Update App'
   },
   en:{
-    headerSub:'CATTLE PREGNANCY TRACKER',
+    headerSub:'CATTLE PREGNANCY TRACKER ▾',
     tot:'Total Cattle', cow:'Cow', buf:'Buffalo',
     formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
     namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
     dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
     noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera or Gallery)',
+    btnCameraTxt:'📸 Open Camera', btnGalleryTxt:'🖼️ Open Gallery',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
     delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter New Date',
@@ -694,6 +802,8 @@ async function changeLanguage() {
   document.getElementById('cDoc').placeholder = t.docPlaceholder;
   document.getElementById('cSemen').placeholder = t.semenPlaceholder;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
+  document.getElementById('btnCameraTxt').innerText = t.btnCameraTxt;
+  document.getElementById('btnGalleryTxt').innerText = t.btnGalleryTxt;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
 
@@ -1055,8 +1165,8 @@ async function saveData() {
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
-  document.getElementById('cCameraInput').value = '';
-  document.getElementById('cGalleryInput').value = '';
+  document.getElementById('realCameraInput').value = '';
+  document.getElementById('realGalleryInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
   draw();
