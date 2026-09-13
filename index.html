@@ -62,10 +62,9 @@ body{background:radial-gradient(circle at top,#f0fdf4 0%,#e2f8eb 40%,#cbd5e1 100
 /* Settings Gear Modal Button */
 .settings-btn{background:rgba(2,44,34,0.9);color:#ffffff;border:1.5px solid #34d399;border-radius:14px;width:42px;height:42px;display:flex;justify-content:center;align-items:center;font-size:20px;cursor:pointer;flex-shrink:0;}
 
-/* Settings Modal */
-.settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:center;align-items:center;padding:16px;}
-.settings-card{background:white;padding:22px;border-radius:24px;width:100%;max-width:310px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center;border:2px solid #047857;}
-.settings-card h4{font-size:16px;color:#047857;margin-bottom:14px;font-weight:900;}
+/* Settings Modal (Corner Top Popup with Cross Button) */
+.settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:flex-end;align-items:flex-start;padding:16px;}
+.settings-card{background:white;padding:18px;border-radius:20px;width:100%;max-width:280px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:left;border:2px solid #047857;margin-top:55px;position:relative;}
 
 /* Notification Banner */
 .notification-banner{background:linear-gradient(135deg,#fffbeb 0%,#fef3c7 100%);border:2px solid #f59e0b;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 8px 25px rgba(217,119,6,.18);}
@@ -217,20 +216,25 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="settings-modal">
+<!-- SETTINGS MODAL (Corner Top Popup with Cross Button & Update App & Username/Phone) -->
+<div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
-    <h4 id="settingsModalTitle">⚙️ ॲप सेटिंग्ज</h4>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+      <h4 id="settingsModalTitle" style="font-size:15px; color:#047857; font-weight:900; margin:0;">⚙️ ॲप सेटिंग्ज</h4>
+      <button type="button" onclick="closeSettingsModal()" style="background:none; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; padding:0 4px;">✕</button>
+    </div>
     
-    <label style="text-align:left; font-size:11.5px; font-weight:800; color:#334155; margin-bottom:4px;" id="lblSelectLang">भाषा निवडा (Language)</label>
-    <select id="langSelect" onchange="changeLanguage()" style="margin-bottom:12px;">
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblSelectLang">भाषा निवडा (Language)</label>
+    <select id="langSelect" onchange="changeLanguage()" style="margin-bottom:10px; padding:8px 10px; font-size:13px;">
       <option value="mr">मराठी</option>
       <option value="hi">हिंदी</option>
       <option value="en">English</option>
     </select>
 
-    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:#d97706; margin-bottom:8px;" id="btnSyncRefresh">🔄 ॲप रिफ्रेश व सिंक</button>
-    <button class="btn" type="button" onclick="closeSettingsModal()" id="btnCloseSettings">✅ बंद करा</button>
+    <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblUserPhone">युजरचे नाव / फोन नंबर</label>
+    <input type="text" id="userPhoneInput" placeholder="उदा. 9822XXXXXX" style="margin-bottom:8px; padding:8px 10px; font-size:13px;" oninput="saveUserPhoneInput()">
+    
+    <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:#16a34a; margin-top:4px; margin-bottom:8px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
   </div>
 </div>
 
@@ -340,12 +344,19 @@ async function deleteRecordFromDB(id) {
   });
 }
 
-function openSettingsModal() {
+async function openSettingsModal() {
+  const savedUserPhone = (await getSetting('cattle_user_phone')) || '';
+  document.getElementById('userPhoneInput').value = savedUserPhone;
   document.getElementById('settingsModal').style.display = 'flex';
 }
 
 function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
+}
+
+async function saveUserPhoneInput() {
+  const val = document.getElementById('userPhoneInput').value;
+  await setSetting('cattle_user_phone', val);
 }
 
 // SAFE SYNC FUNCTION: Checks if GitHub file exists first, prevents any 404/White screen
@@ -511,7 +522,7 @@ const langData = {
     guidanceNote:'💡 पुढील गर्भधारणा नोंदवण्यासाठी खालील <span style="color:#0284c7; font-weight:900;">नवीन तारीख नोंदवा</span> हे बटण वापरा.',
     dateRequired:'कृपया योग्य तारीख निवडा!', futureDateError:'भविष्यातील तारीख नोंदवता येत नाही!',
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
-    confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
+    confirmDel:'Are you sure you want to delete this record?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
     lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
@@ -519,7 +530,8 @@ const langData = {
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
     lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
     settingsTitle:'⚙️ ॲप सेटिंग्ज', lblSelectLang:'भाषा निवडा (Language)',
-    syncRefreshBtn:'🔄 ॲप रिफ्रेश व सिंक', closeBtn:'✅ बंद करा'
+    lblUserPhone:'युजरचे नाव / फोन नंबर',
+    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ बंद करा'
   },
   hi:{
     headerSub:'पशु गर्भधारण ट्रैकर',
@@ -543,7 +555,7 @@ const langData = {
     guidanceNote:'💡 जब दोबारा गर्भधारण कराएंगे, तब नीचे दिया गया <span style="color:#0284c7; font-weight:900;">नई तारीख दर्ज करें</span> बटन दबाकर तारीख दर्ज करें.',
     dateRequired:'कृपया वैध तारीख चुनें!', futureDateError:'भविष्य की तारीख दर्ज नहीं की जा सकती!',
     storageError:'डेटा स्टोरेज त्रुटि के कारण रिकॉर्ड सहेजा नहीं जा सका!',
-    confirmDel:'क्या आप वाकई इस रिकॉर्ड को हटाना चाहते हैं?',
+    confirmDel:'Are you sure you want to delete this record?',
     notifTitle:'🔔 महत्वपूर्ण अलर्ट और सूचनाएं',
     lockSubTxt:'ऐप उपयोग करने के लिए अपना मोबाइल नंबर और गुप्त पिन दर्ज करें',
     lblMob:'मोबाइल नंबर (10 अंक)', lblPin:'गुप्त पिन (PIN)', btnLogin:'ऐप शुरू करें 🚀',
@@ -551,7 +563,8 @@ const langData = {
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
     lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
     settingsTitle:'⚙️ ऐप सेटिंग्स', lblSelectLang:'भाषा चुनें (Language)',
-    syncRefreshBtn:'🔄 ऐप रिफ्रेश और सिंक', closeBtn:'✅ बंद करें'
+    lblUserPhone:'यूजर का नाम / फोन नंबर',
+    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ बंद करें'
   },
   en:{
     headerSub:'CATTLE PREGNANCY TRACKER',
@@ -582,7 +595,8 @@ const langData = {
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
     lblDocField:'Doctor', lblSemenField:'Semen',
     settingsTitle:'⚙️ App Settings', lblSelectLang:'Select Language',
-    syncRefreshBtn:'🔄 Refresh & Sync App', closeBtn:'✅ Close'
+    lblUserPhone:'User Name / Phone Number',
+    syncRefreshBtn:'🔄 Update App', closeBtn:'✅ Close'
   }
 };
 
@@ -647,8 +661,8 @@ async function changeLanguage() {
 
   document.getElementById('settingsModalTitle').innerText = t.settingsTitle;
   document.getElementById('lblSelectLang').innerText = t.lblSelectLang;
+  document.getElementById('lblUserPhone').innerText = t.lblUserPhone;
   document.getElementById('btnSyncRefresh').innerText = t.syncRefreshBtn;
-  document.getElementById('btnCloseSettings').innerText = t.closeBtn;
 
   draw();
 }
