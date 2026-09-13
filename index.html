@@ -174,7 +174,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 <div class="wrap">
 
-  <!-- LOCK SCREEN -->
   <div id="lockScreen" style="display:none;">
     <div class="lock-card">
       <div class="lock-title">🔐 The MH Farmer</div>
@@ -187,17 +186,14 @@ input:focus,select:focus{border-color:#059669;background:white;}
     </div>
   </div>
 
-  <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
-    <!-- APP HEADER -->
     <div class="app-header">
       <div class="header-top-row">
         <div class="header-left">
           <span style="font-size:24px; flex-shrink:0;">🌾</span>
           <div class="header-texts">
             <div class="header-title">The MH Farmer</div>
-            <!-- Small Capsule Pill with Dropdown inside -->
             <div class="tracker-pill-container">
               <div class="tracker-pill" onclick="togglePillDropdown(event)">
                 <span style="font-size:10px;">🐄</span>
@@ -247,10 +243,11 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा)</label>
       
-      <!-- REAL DIRECT CAMERA STREAM (No File Picker, Opens Real Camera via MediaDevices API) -->
       <div style="margin-bottom:10px;">
-        <button type="button" onclick="openRealCameraModal()" style="width:100%; background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेरा उघडा (Open Camera)</button>
+        <button type="button" onclick="document.getElementById('nativeCameraInput').click()" style="width:100%; background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेरा उघडा (Open Camera)</button>
       </div>
+
+      <input type="file" id="nativeCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -266,17 +263,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- REAL CAMERA MODAL (Direct Camera Stream for Android APK & Web) -->
-<div id="realCameraModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; z-index:999999; flex-direction:column; justify-content:center; align-items:center;">
-  <video id="cameraVideo" autoplay playsinline style="width:100%; max-height:80vh; object-fit:contain;"></video>
-  <canvas id="cameraCanvas" style="display:none;"></canvas>
-  <div style="display:flex; gap:20px; margin-top:20px;">
-    <button type="button" onclick="captureCameraPhoto()" style="background:#22c55e; color:white; border:none; padding:14px 28px; border-radius:30px; font-weight:900; font-size:16px; cursor:pointer;">🟢 फोटो काढा (Capture)</button>
-    <button type="button" onclick="closeRealCameraModal()" style="background:#ef4444; color:white; border:none; padding:14px 28px; border-radius:30px; font-weight:900; font-size:16px; cursor:pointer;">❌ बंद करा (Close)</button>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -301,7 +287,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
-<!-- COMING SOON MODAL -->
 <div id="comingSoonModal" onclick="if(event.target===this)closeComingSoon()">
   <div class="coming-card">
     <div style="font-size:36px; margin-bottom:8px;">🚀</div>
@@ -311,7 +296,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
-<!-- Custom Delete Confirmation Modal -->
 <div id="customConfirmModal">
   <div class="confirm-card">
     <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
@@ -323,7 +307,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
-<!-- Modal -->
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
@@ -344,7 +327,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
-<!-- Zoom -->
 <div id="imageZoomModal" onclick="closeImageModal()">
   <div class="modal-close-btn" onclick="closeImageModal()">&times;</div>
   <img id="zoomedImage" src="" alt="Zoomed Photo" onclick="event.stopPropagation()">
@@ -519,7 +501,6 @@ let cur = 'cow';
 let activeActionId = null;
 let activeActionType = null;
 let recordToDeleteId = null;
-let mediaStream = null;
 
 function selectAnimal(type) {
   cur = type === 'buffalo' ? 'buffalo' : 'cow';
@@ -531,42 +512,14 @@ function selectAnimal(type) {
   document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
 }
 
-// REAL DIRECT CAMERA STREAM OPENER (Works 100% in WebView and APK)
-async function openRealCameraModal() {
-  const modal = document.getElementById('realCameraModal');
-  const video = document.getElementById('cameraVideo');
-  modal.style.display = 'flex';
-  try {
-    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
-    video.srcObject = mediaStream;
-  } catch (err) {
-    alert("कॅमेरा सुरू करण्यात त्रुटी आली! कृपया परवानग्या तपासा.");
-    modal.style.display = 'none';
-  }
-}
-
-function captureCameraPhoto() {
-  const video = document.getElementById('cameraVideo');
-  const canvas = document.getElementById('cameraCanvas');
-  canvas.width = video.videoWidth || 640;
-  canvas.height = video.videoHeight || 480;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-  
+function handleFileSelected(input) {
   const preview = document.getElementById('photoPreview');
-  preview.src = dataUrl;
-  preview.style.display = 'block';
-
-  closeRealCameraModal();
-}
-
-function closeRealCameraModal() {
-  if (mediaStream) {
-    mediaStream.getTracks().forEach(track => track.stop());
-    mediaStream = null;
+  if (input.files && input.files[0]) {
+    compressImage(input.files[0], (res) => {
+      if (res) { preview.src = res; preview.style.display = 'block'; }
+      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
+    });
   }
-  document.getElementById('realCameraModal').style.display = 'none';
 }
 
 async function openDateModal(type, id) {
@@ -1187,6 +1140,7 @@ async function saveData() {
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
+  document.getElementById('nativeCameraInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
   draw();
