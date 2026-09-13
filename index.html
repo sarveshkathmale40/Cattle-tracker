@@ -45,7 +45,7 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
   gap:8px;
   background:rgba(255,255,255,0.2);
   border:1.5px solid rgba(52,211,153,0.8);
-  padding:7px 14px;
+  padding:8px 14px;
   border-radius:20px;
   box-shadow:inset 0 2px 5px rgba(0,0,0,0.15);
   width:100%;
@@ -54,7 +54,7 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 }
 .tracker-pill:active{transform:scale(0.98);background:rgba(255,255,255,0.3);}
 .header-sub{
-  font-size:11.5px;
+  font-size:12px;
   color:#a7f3d0;
   font-weight:900;
   letter-spacing:.8px;
@@ -64,28 +64,23 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
   text-overflow:ellipsis;
 }
 
-/* Dropdown Menu from Capsule */
+/* Dropdown Menu inside Capsule */
 .pill-dropdown{
   display:none;
   position:absolute;
-  top:105%;
+  top:110%;
   left:0;
   width:100%;
   background:#022c22;
   border:1.5px solid #34d399;
   border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
   z-index:100;
   overflow:hidden;
-  animation: fadeInDown 0.2s ease-in-out;
-}
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 .dropdown-item{
-  padding:11px 14px;
-  font-size:12.5px;
+  padding:12px 14px;
+  font-size:13px;
   font-weight:800;
   color:#e2e8f0;
   border-bottom:1px solid rgba(52,211,153,0.2);
@@ -200,7 +195,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
-    <!-- APP HEADER WITH CLICKABLE CAPSULE PIll & DROPDOWN -->
+    <!-- APP HEADER WITH CAPSULE DROPDOWN -->
     <div class="app-header">
       <div class="header-top-row">
         <div class="header-left">
@@ -210,17 +205,17 @@ input:focus,select:focus{border-color:#059669;background:white;}
         <button class="settings-btn" type="button" onclick="openSettingsModal()" title="Settings">⚙️</button>
       </div>
 
-      <!-- Clickable Capsule Pill for Milk Report & Heifer -->
+      <!-- Capsule Pill with Dropdown inside -->
       <div class="tracker-pill-container">
         <div class="tracker-pill" onclick="togglePillDropdown(event)">
           <span style="font-size:13px;">🐄</span>
           <div class="header-sub" id="mainHeaderSub">Cattle Pregnancy Tracker ▾</div>
         </div>
         
-        <!-- Dropdown Options -->
+        <!-- Dropdown Options Inside Capsule -->
         <div id="pillDropdownMenu" class="pill-dropdown">
           <div class="dropdown-item" onclick="showComingSoon('Milk Report')">🥛 Milk Report (दुग्ध अहवाल)</div>
-          <div class="dropdown-item" onclick="showComingSoon('Heifer Tracker')">🐄 Heifer Tracker (वढी नोंद)</div>
+          <div class="dropdown-item" onclick="showComingSoon('Heifer Tracker')">🐄 Heifer (वढी नोंद)</div>
         </div>
       </div>
     </div>
@@ -257,9 +252,10 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
+      <!-- Soft Gradient Camera & Gallery Buttons -->
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-        <button type="button" onclick="triggerCamera()" style="background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:none; padding:12px; border-radius:12px; font-weight:bold; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(2,132,199,0.3);" id="btnCameraTxt">📸 कॅमेरा (Camera)</button>
-        <button type="button" onclick="triggerGallery()" style="background:linear-gradient(135deg,#a78bfa,#7c3aed); color:white; border:none; padding:12px; border-radius:12px; font-weight:bold; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(124,58,237,0.3);" id="btnGalleryTxt">🖼️ गॅलरी (Gallery)</button>
+        <button type="button" onclick="triggerCamera()" style="background:linear-gradient(135deg,#bae6fd,#38bdf8); color:#0369a1; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(2,132,199,0.15);" id="btnCameraTxt">📸 कॅमेरा (Camera)</button>
+        <button type="button" onclick="triggerGallery()" style="background:linear-gradient(135deg,#ddd6fe,#a78bfa); color:#5b21b6; border:1.5px solid #7c3aed; padding:12px; border-radius:12px; font-weight:900; font-size:13.5px; cursor:pointer; box-shadow:0 4px 12px rgba(124,58,237,0.15);" id="btnGalleryTxt">🖼️ गॅलरी (Gallery)</button>
       </div>
 
       <!-- Hidden Inputs -->
@@ -445,7 +441,7 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
-// Toggle Capsule Dropdown Menu
+// Toggle Capsule Dropdown Menu inside Pill
 function togglePillDropdown(event) {
   event.stopPropagation();
   const menu = document.getElementById('pillDropdownMenu');
@@ -673,7 +669,7 @@ const langData = {
     storageError:'डेटा स्टोरेज त्रुटीमुळे रेकॉर्ड सेव्ह होऊ शकला नाही!',
     confirmDel:'तुम्हाला खरोखर हा रेकॉर्ड डिलीट करायचा आहे का?',
     notifTitle:'🔔 महत्त्वाचे अलर्ट्स व सूचना',
-    lockSubTxt:'ॲप वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
+    lockSubTxt:'ॲপ वापरण्यासाठी तुमचा मोबाईल नंबर आणि पिन प्रविष्ट करा',
     lblMob:'मोबाईल नंबर (१० अंकी)', lblPin:'सिक्रेट पिन (PIN)', btnLogin:'ॲप सुरू करा 🚀',
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
