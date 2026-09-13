@@ -1,4 +1,4 @@
-name: Build Final Stable v27 APK
+name: Build Final Clean v29 APK
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App Safely
+    - name: Build Clean Fullscreen Online WebView App
       run: |
         rm -f app/src/main/assets/index.html
         mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
@@ -111,6 +111,7 @@ jobs:
                 CookieManager.getInstance().setAcceptCookie(true);
                 CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
                 
+                // Forces everything to stay strictly inside the app (No Chrome browser popups)
                 webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -145,8 +146,8 @@ jobs:
                     }
                 });
                 
-                // Directly load secure local asset to guarantee instant loading without freezing
-                webView.loadUrl("file:///android_asset/index.html");
+                // Directly loading your live raw GitHub index.html page inside clean fullscreen WebView
+                webView.loadUrl("https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html");
             }
 
             @Override
@@ -189,8 +190,8 @@ jobs:
                 applicationId "com.mh.farmer.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 27
-                versionName "27.0"
+                versionCode 29
+                versionName "29.0"
             }
             buildTypes {
                 release {
@@ -230,5 +231,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Fresh_v27
+        name: MH_Farmer_Fresh_v29
         path: app/build/outputs/apk/debug/app-debug.apk
