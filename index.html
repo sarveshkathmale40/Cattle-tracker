@@ -244,10 +244,10 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा)</label>
       
       <div style="margin-bottom:10px;">
-        <button type="button" onclick="document.getElementById('nativeCameraInput').click()" style="width:100%; background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेरा उघडा (Open Camera)</button>
+        <button type="button" onclick="document.getElementById('nativeCameraInput').click()" style="width:100%; background:linear-gradient(135deg,#0284c7,#0369a1); color:white; border:1.5px solid #0369a1; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेराने फोटो काढा (Camera)</button>
       </div>
 
-      <input type="file" id="nativeCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="nativeCameraInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -423,14 +423,12 @@ function closeSettingsModal() {
   document.getElementById('settingsModal').style.display = 'none';
 }
 
-// Toggle Capsule Dropdown Menu inside Pill
 function togglePillDropdown(event) {
   event.stopPropagation();
   const menu = document.getElementById('pillDropdownMenu');
   menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
 }
 
-// Close dropdown when clicking outside
 window.addEventListener('click', () => {
   const menu = document.getElementById('pillDropdownMenu');
   if (menu) menu.style.display = 'none';
@@ -466,7 +464,6 @@ async function saveUserSettings() {
   await setSetting('cattle_user_phone', phoneVal);
 }
 
-// SAFE SYNC FUNCTION
 function forceSyncRefresh() {
   if (navigator.onLine) {
     fetch('https://raw.githubusercontent.com/sarveshkathmale40/Cattle-tracker/main/index.html?v=' + Date.now(), { method: 'HEAD' })
@@ -625,7 +622,7 @@ const langData = {
     namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
     noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा)',
-    btnCameraTxt:'📸 कॅमेरा उघडा (Open Camera)',
+    btnCameraTxt:'📸 कॅमेराने फोटो काढा (Camera)',
     saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 गाय पुनरावृत्ती (Repeat)', calvedBtn:'🐄 वीण झाली आहे',
     setNewDateBtn:'📅 नवीन तारीख नोंदवा',
@@ -660,7 +657,7 @@ const langData = {
     namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
     noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कैमरा)',
-    btnCameraTxt:'📸 कैमरा खोलें (Open Camera)',
+    btnCameraTxt:'📸 कैमरा से फोटो लें (Camera)',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 पशु रिपीट हुआ', calvedBtn:'🐄 ब्याया है',
     setNewDateBtn:'📅 नई तारीख दर्ज करें',
@@ -695,7 +692,7 @@ const langData = {
     namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
     dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
     noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera)',
-    btnCameraTxt:'📸 Open Camera',
+    btnCameraTxt:'📸 Take Photo (Camera)',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
     delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter New Date',
