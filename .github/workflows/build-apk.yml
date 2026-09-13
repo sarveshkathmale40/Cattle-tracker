@@ -1,4 +1,4 @@
-name: Build Final Stable v25 APK
+name: Build Final v26 APK
 
 on:
   push:
@@ -18,10 +18,10 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build Android App with Live Fetcher
+    - name: Build Android App with Fresh Package
       run: |
         rm -f app/src/main/assets/index.html
-        mkdir -p app/src/main/assets app/src/main/java/com/mh/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
+        mkdir -p app/src/main/assets app/src/main/java/com/mh/farmer/tracker app/src/main/res/values app/src/main/res/mipmap-hdpi app/src/main/res/mipmap-xxxhdpi
         
         cp index.html app/src/main/assets/index.html
         echo '<resources><string name="app_name">The MH Farmer</string></resources>' > app/src/main/res/values/strings.xml
@@ -71,8 +71,8 @@ jobs:
         </manifest>
         EOF
 
-        cat << 'EOF' > app/src/main/java/com/mh/tracker/MainActivity.java
-        package com.mh.tracker;
+        cat << 'EOF' > app/src/main/java/com/mh/farmer/tracker/MainActivity.java
+        package com.mh.farmer.tracker;
         import android.app.Activity;
         import android.os.Bundle;
         import android.webkit.WebSettings;
@@ -238,14 +238,14 @@ jobs:
             id 'com.android.application'
         }
         android {
-            namespace 'com.mh.tracker'
+            namespace 'com.mh.farmer.tracker'
             compileSdk 34
             defaultConfig {
-                applicationId "com.mh.tracker"
+                applicationId "com.mh.farmer.tracker"
                 minSdk 21
                 targetSdk 34
-                versionCode 25
-                versionName "25.0"
+                versionCode 26
+                versionName "26.0"
             }
             buildTypes {
                 release {
@@ -285,5 +285,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MH_Farmer_Fresh_v25
+        name: MH_Farmer_Fresh_v26
         path: app/build/outputs/apk/debug/app-debug.apk
