@@ -90,7 +90,7 @@ body{background:radial-gradient(circle at top,#ecfdf5 0%,#d1fae5 40%,#94a3b8 100
 /* Settings Gear Modal Button */
 .settings-btn{background:linear-gradient(135deg,#022c22,#064e3b);color:#ffffff;border:1.5px solid #34d399;border-radius:12px;width:38px;height:38px;display:flex;justify-content:center;align-items:center;font-size:18px;cursor:pointer;flex-shrink:0;box-shadow:0 3px 10px rgba(0,0,0,0.2);}
 
-/* Settings Modal (Corner Popup) */
+/* Settings Modal */
 .settings-modal{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.65);z-index:99999;justify-content:flex-end;align-items:flex-start;padding:16px;}
 .settings-card{background:white;padding:18px;border-radius:20px;width:100%;max-width:280px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:left;border:2px solid #059669;margin-top:55px;position:relative;}
 
@@ -246,13 +246,11 @@ input:focus,select:focus{border-color:#059669;background:white;}
       </div>
 
       <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा)</label>
-      <!-- ONLY CAMERA BUTTON (Gallery removed completely as requested) -->
+      
+      <!-- REAL DIRECT CAMERA STREAM (No File Picker, Opens Real Camera via MediaDevices API) -->
       <div style="margin-bottom:10px;">
-        <button type="button" onclick="openDirectCamera()" style="width:100%; background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेरा उघडा (Open Camera)</button>
+        <button type="button" onclick="openRealCameraModal()" style="width:100%; background:linear-gradient(135deg,#38bdf8,#0284c7); color:white; border:1.5px solid #0284c7; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेरा उघडा (Open Camera)</button>
       </div>
-
-      <!-- Direct Camera Input forcing camera capture -->
-      <input type="file" id="strictCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -268,7 +266,17 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
-<!-- SETTINGS MODAL (Update App on Top, Language, Username, Phone Number) -->
+<!-- REAL CAMERA MODAL (Direct Camera Stream for Android APK & Web) -->
+<div id="realCameraModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; z-index:999999; flex-direction:column; justify-content:center; align-items:center;">
+  <video id="cameraVideo" autoplay playsinline style="width:100%; max-height:80vh; object-fit:contain;"></video>
+  <canvas id="cameraCanvas" style="display:none;"></canvas>
+  <div style="display:flex; gap:20px; margin-top:20px;">
+    <button type="button" onclick="captureCameraPhoto()" style="background:#22c55e; color:white; border:none; padding:14px 28px; border-radius:30px; font-weight:900; font-size:16px; cursor:pointer;">🟢 फोटो काढा (Capture)</button>
+    <button type="button" onclick="closeRealCameraModal()" style="background:#ef4444; color:white; border:none; padding:14px 28px; border-radius:30px; font-weight:900; font-size:16px; cursor:pointer;">❌ बंद करा (Close)</button>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -276,7 +284,6 @@ input:focus,select:focus{border-color:#059669;background:white;}
       <button type="button" onclick="closeSettingsModal()" style="background:none; border:none; font-size:18px; font-weight:bold; color:#64748b; cursor:pointer; padding:0 4px;">✕</button>
     </div>
     
-    <!-- Update App Button on Top -->
     <button class="btn" type="button" onclick="forceSyncRefresh()" style="background:linear-gradient(135deg,#16a34a,#15803d); margin-top:0; margin-bottom:12px; padding:10px; font-size:13.5px;" id="btnSyncRefresh">🔄 Update App</button>
 
     <label style="text-align:left; font-size:11px; font-weight:800; color:#334155; margin-bottom:3px;" id="lblSelectLang">भाषा निवडा (Language)</label>
@@ -512,6 +519,7 @@ let cur = 'cow';
 let activeActionId = null;
 let activeActionType = null;
 let recordToDeleteId = null;
+let mediaStream = null;
 
 function selectAnimal(type) {
   cur = type === 'buffalo' ? 'buffalo' : 'cow';
@@ -523,21 +531,42 @@ function selectAnimal(type) {
   document.getElementById('lblDate').innerText = cur === 'buffalo' ? t.dtLblBuf : t.dtLblCow;
 }
 
-// Strict Direct Camera Trigger for Android WebView & APK
-function openDirectCamera() {
-  const cam = document.getElementById('strictCameraInput');
-  cam.value = '';
-  cam.click();
+// REAL DIRECT CAMERA STREAM OPENER (Works 100% in WebView and APK)
+async function openRealCameraModal() {
+  const modal = document.getElementById('realCameraModal');
+  const video = document.getElementById('cameraVideo');
+  modal.style.display = 'flex';
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+    video.srcObject = mediaStream;
+  } catch (err) {
+    alert("कॅमेरा सुरू करण्यात त्रुटी आली! कृपया परवानग्या तपासा.");
+    modal.style.display = 'none';
+  }
 }
 
-function handleFileSelected(input) {
+function captureCameraPhoto() {
+  const video = document.getElementById('cameraVideo');
+  const canvas = document.getElementById('cameraCanvas');
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+  
   const preview = document.getElementById('photoPreview');
-  if (input.files && input.files[0]) {
-    compressImage(input.files[0], (res) => {
-      if (res) { preview.src = res; preview.style.display = 'block'; }
-      else { preview.removeAttribute('src'); preview.style.display = 'none'; }
-    });
+  preview.src = dataUrl;
+  preview.style.display = 'block';
+
+  closeRealCameraModal();
+}
+
+function closeRealCameraModal() {
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop());
+    mediaStream = null;
   }
+  document.getElementById('realCameraModal').style.display = 'none';
 }
 
 async function openDateModal(type, id) {
@@ -666,7 +695,8 @@ const langData = {
     lblDocName:'डॉक्टरचे नाव', lblSemenName:'सिमेन ब्रँड / नाव',
     docPlaceholder:'डॉक्टरचे नाव', semenPlaceholder:'सिमेन ब्रँड/नाव',
     lblDocField:'डॉक्टर', lblSemenField:'सिमेन',
-    settingsTitle:'⚙️ ॲप सेटिंग्ज', lblUserName:'युजरचे नाव (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
+    settingsTitle:'⚙️ ॲप सेटिंग्ज', lblSelectLang:'भाषा निवडा (Language)',
+    lblUserName:'युजरचे नाव (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
     syncRefreshBtn:'🔄 Update App', btnCancelDel:'रद्द करा', btnConfirmDel:'डिलीट',
     modalOk:'✅ ओके', modalCancel:'रद्द करा'
   },
@@ -700,7 +730,8 @@ const langData = {
     lblDocName:'डॉक्टर का नाम', lblSemenName:'सीमेन ब्रांड / नाम',
     docPlaceholder:'डॉक्टर का नाम', semenPlaceholder:'सीमेन ब्रांड/नाम',
     lblDocField:'डॉक्टर', lblSemenField:'सीमेन',
-    settingsTitle:'⚙️ ऐप सेटिंग्स', lblUserName:'यूजर का नाम (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
+    settingsTitle:'⚙️ ऐप सेटिंग्स', lblSelectLang:'भाषा चुनें (Language)',
+    lblUserName:'यूजर का नाम (User Name)', lblUserPhone:'फोन नंबर (Phone Number)',
     syncRefreshBtn:'🔄 Update App', btnCancelDel:'रद्द करें', btnConfirmDel:'डिलीट',
     modalOk:'✅ ओके', modalCancel:'रद्द करें'
   },
@@ -733,7 +764,8 @@ const langData = {
     lblDocName:'Doctor Name', lblSemenName:'Semen Brand / Name',
     docPlaceholder:'Doctor Name', semenPlaceholder:'Semen Brand/Name',
     lblDocField:'Doctor', lblSemenField:'Semen',
-    settingsTitle:'⚙️ App Settings', lblUserName:'User Name', lblUserPhone:'Phone Number',
+    settingsTitle:'⚙️ App Settings', lblSelectLang:'Select Language',
+    lblUserName:'User Name', lblUserPhone:'Phone Number',
     syncRefreshBtn:'🔄 Update App', btnCancelDel:'Cancel', btnConfirmDel:'Delete',
     modalOk:'✅ OK', modalCancel:'Cancel'
   }
@@ -800,6 +832,7 @@ async function changeLanguage() {
   document.getElementById('btnLogin').innerText = t.btnLogin;
 
   document.getElementById('settingsModalTitle').innerText = t.settingsTitle;
+  document.getElementById('lblSelectLang').innerText = t.lblSelectLang;
   document.getElementById('lblUserName').innerText = t.lblUserName;
   document.getElementById('lblUserPhone').innerText = t.lblUserPhone;
   document.getElementById('btnSyncRefresh').innerText = t.syncRefreshBtn;
@@ -1020,7 +1053,6 @@ async function draw() {
 
 function promptDel(id) {
   recordToDeleteId = id;
-  document.getElementById('confirmTextMsg').innerText = langData[document.getElementById('langSelectঅ্যাপ' || 'mr')].confirmDel || "Are you sure you want to delete this record?";
   document.getElementById('customConfirmModal').style.display = 'flex';
 }
 
@@ -1155,7 +1187,6 @@ async function saveData() {
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
-  document.getElementById('strictCameraInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
   draw();
