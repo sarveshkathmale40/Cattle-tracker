@@ -174,6 +174,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 <div class="wrap">
 
+  <!-- LOCK SCREEN -->
   <div id="lockScreen" style="display:none;">
     <div class="lock-card">
       <div class="lock-title">🔐 The MH Farmer</div>
@@ -186,14 +187,17 @@ input:focus,select:focus{border-color:#059669;background:white;}
     </div>
   </div>
 
+  <!-- MAIN APP -->
   <div id="appScreen" style="display:none;">
 
+    <!-- APP HEADER -->
     <div class="app-header">
       <div class="header-top-row">
         <div class="header-left">
           <span style="font-size:24px; flex-shrink:0;">🌾</span>
           <div class="header-texts">
             <div class="header-title">The MH Farmer</div>
+            <!-- Small Capsule Pill with Dropdown inside -->
             <div class="tracker-pill-container">
               <div class="tracker-pill" onclick="togglePillDropdown(event)">
                 <span style="font-size:10px;">🐄</span>
@@ -241,13 +245,17 @@ input:focus,select:focus{border-color:#059669;background:white;}
         <input type="text" id="cSemen" placeholder="सिमेन ब्रँड/नाव">
       </div>
 
-      <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा)</label>
+      <label id="lblPhotoLbl">पशुचा फोटो (कॅमेरा किंवा गॅलरी)</label>
       
-      <div style="margin-bottom:10px;">
-        <button type="button" onclick="document.getElementById('nativeCameraInput').click()" style="width:100%; background:linear-gradient(135deg,#0284c7,#0369a1); color:white; border:1.5px solid #0369a1; padding:12px; border-radius:12px; font-weight:900; font-size:14px; cursor:pointer; box-shadow:0 3px 12px rgba(2,132,199,0.25);" id="btnCameraTxt">📸 कॅमेराने फोटो काढा (Camera)</button>
+      <!-- DUAL BUTTONS: Reliable Camera & Gallery Upload Choice -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+        <button type="button" onclick="document.getElementById('apkCameraInput').click()" style="background:linear-gradient(135deg,#0284c7,#0369a1); color:white; border:none; padding:11px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;" id="btnCameraTxt">📸 कॅमेरा उघडा</button>
+        <button type="button" onclick="document.getElementById('apkGalleryInput').click()" style="background:linear-gradient(135deg,#7c3aed,#6d28d9); color:white; border:none; padding:11px; border-radius:12px; font-weight:bold; font-size:13px; cursor:pointer;" id="btnGalleryTxt">🖼️ गॅलरी निवडा</button>
       </div>
 
-      <input type="file" id="nativeCameraInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
+      <!-- Native Camera and Gallery Inputs -->
+      <input type="file" id="apkCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelected(this)">
+      <input type="file" id="apkGalleryInput" accept="image/*" style="display:none;" onchange="handleFileSelected(this)">
 
       <img id="photoPreview" class="photo-preview" alt="Preview" onclick="openImageModal(this.src)">
 
@@ -263,6 +271,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
 
 </div>
 
+<!-- SETTINGS MODAL -->
 <div id="settingsModal" class="settings-modal" onclick="if(event.target===this)closeSettingsModal()">
   <div class="settings-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -287,6 +296,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
+<!-- COMING SOON MODAL -->
 <div id="comingSoonModal" onclick="if(event.target===this)closeComingSoon()">
   <div class="coming-card">
     <div style="font-size:36px; margin-bottom:8px;">🚀</div>
@@ -296,6 +306,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
+<!-- Custom Delete Confirmation Modal -->
 <div id="customConfirmModal">
   <div class="confirm-card">
     <div style="font-size:32px; margin-bottom:8px;">⚠️</div>
@@ -307,6 +318,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
+<!-- Modal -->
 <div id="customDateModal" class="date-modal">
   <div class="date-modal-card">
     <h4 id="modalTitleText">तारीख निवडा</h4>
@@ -327,6 +339,7 @@ input:focus,select:focus{border-color:#059669;background:white;}
   </div>
 </div>
 
+<!-- Zoom -->
 <div id="imageZoomModal" onclick="closeImageModal()">
   <div class="modal-close-btn" onclick="closeImageModal()">&times;</div>
   <img id="zoomedImage" src="" alt="Zoomed Photo" onclick="event.stopPropagation()">
@@ -621,8 +634,8 @@ const langData = {
     formT:'➕ नवीन पशु नोंद', bCow:'गाय', bBuf:'म्हैस',
     namePh:'उदा. कावेरी / टॅग १०२', nameLbl:'पशुचे नाव किंवा टॅग नंबर', 
     dtLblCow:'गाय गाभण राहिल्याची तारीख', dtLblBuf:'म्हैस गाभण राहिल्याची तारीख',
-    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा)',
-    btnCameraTxt:'📸 कॅमेराने फोटो काढा (Camera)',
+    noteLbl:'डॉक्टर व सिमेन तपशील (पर्यायी)', photoLbl:'पशुचा फोटो (कॅमेरा किंवा गॅलरी)',
+    btnCameraTxt:'📸 कॅमेरा उघडा', btnGalleryTxt:'🖼️ गॅलरी निवडा',
     saveBtn:'💾 रेकॉर्ड सेव्ह करा', listT:'📋 पशु रेकॉर्ड यादी', empty:'सध्या कोणतीही नोंद उपलब्ध नाही.',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 गाय पुनरावृत्ती (Repeat)', calvedBtn:'🐄 वीण झाली आहे',
     setNewDateBtn:'📅 नवीन तारीख नोंदवा',
@@ -656,8 +669,8 @@ const langData = {
     formT:'➕ नया पशु रिकॉर्ड', bCow:'गाय', bBuf:'भैंस',
     namePh:'उदा. कावेरी / टैग 102', nameLbl:'पशु का नाम या टैग नंबर', 
     dtLblCow:'गाय गर्भधारण की तारीख', dtLblBuf:'भैंस गर्भधारण की तारीख',
-    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कैमरा)',
-    btnCameraTxt:'📸 कैमरा से फोटो लें (Camera)',
+    noteLbl:'डॉक्टर और सीमेन विवरण (वैकल्पिक)', photoLbl:'पशु की फोटो (कैमरा या गैलरी)',
+    btnCameraTxt:'📸 कैमरा खोलें', btnGalleryTxt:'🖼️ गैलरी चुनें',
     saveBtn:'💾 रिकॉर्ड सहेजें', listT:'📋 पशु रिकॉर्ड सूची', empty:'वर्तमान में कोई रिकॉर्ड उपलब्ध नहीं है।',
     delBtn:'🗑️ डिलीट', repeatBtn:'🔄 पशु रिपीट हुआ', calvedBtn:'🐄 ब्याया है',
     setNewDateBtn:'📅 नई तारीख दर्ज करें',
@@ -691,8 +704,8 @@ const langData = {
     formT:'➕ Add New Entry', bCow:'Cow', bBuf:'Buffalo',
     namePh:'e.g., Kaveri / Tag 102', nameLbl:'Name or Tag No', 
     dtLblCow:'Cow Breeding Date', dtLblBuf:'Buffalo Breeding Date',
-    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera)',
-    btnCameraTxt:'📸 Take Photo (Camera)',
+    noteLbl:'Doctor & Semen Details (Optional)', photoLbl:'Animal Photo (Camera or Gallery)',
+    btnCameraTxt:'📸 Open Camera', btnGalleryTxt:'🖼️ Open Gallery',
     saveBtn:'💾 Save Record', listT:'📋 Animal Records List', empty:'No records available at the moment.',
     delBtn:'🗑️ Delete', repeatBtn:'🔄 Repeat Breeding / Heat', calvedBtn:'🐄 Calved',
     setNewDateBtn:'📅 Enter New Date',
@@ -773,6 +786,7 @@ async function changeLanguage() {
   document.getElementById('cSemen').placeholder = t.semenPlaceholder;
   document.getElementById('lblPhotoLbl').innerText = t.photoLbl;
   document.getElementById('btnCameraTxt').innerText = t.btnCameraTxt;
+  document.getElementById('btnGalleryTxt').innerText = t.btnGalleryTxt;
   document.getElementById('btnSave').innerText = t.saveBtn;
   document.getElementById('listTitle').innerText = t.listT;
 
@@ -1137,7 +1151,8 @@ async function saveData() {
   document.getElementById('cName').value = '';
   document.getElementById('cDoc').value = '';
   document.getElementById('cSemen').value = '';
-  document.getElementById('nativeCameraInput').value = '';
+  document.getElementById('apkCameraInput').value = '';
+  document.getElementById('apkGalleryInput').value = '';
   previewImg.style.display = 'none';
   setTodayMaxDate();
   draw();
